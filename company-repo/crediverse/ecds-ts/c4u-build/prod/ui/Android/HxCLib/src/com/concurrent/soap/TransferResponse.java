@@ -1,0 +1,55 @@
+package com.concurrent.soap;
+
+import com.concurrent.util.IDeserialisable;
+import com.concurrent.util.ISerialiser;
+
+public class TransferResponse extends ResponseHeader implements IDeserialisable
+{
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Fields
+	//
+	// /////////////////////////////////
+	private boolean requiresPIN;
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Properties
+	//
+	// /////////////////////////////////
+	public boolean isRequiresPIN()
+	{
+		return requiresPIN;
+	}
+
+	public void setRequiresPIN(boolean requiresPIN)
+	{
+		this.requiresPIN = requiresPIN;
+	}
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Construction
+	//
+	// /////////////////////////////////
+	/**
+	 * Constructor from Request
+	 */
+	public TransferResponse(TransferRequest request)
+	{
+		super(request);
+	}
+	
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// IDeserialisable
+	//
+	// /////////////////////////////////
+	@Override
+	public void deserialise(ISerialiser serialiser)
+	{
+		super.deserialise(serialiser);
+		requiresPIN = serialiser.getBoolean("requiresPIN", false);
+	}
+
+}

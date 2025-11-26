@@ -1,0 +1,36 @@
+version: "3.3"
+services:
+
+  mobile-application-service:
+    image: "ghcr.io/concurrent-systems/crediverse/mobileapplicationservice:latest"
+    command: /usr/local/bin/mobile_application_service.sh
+    restart: unless-stopped
+    container_name: mobile-application-service
+    hostname: mobile-application-service
+    environment:
+      MAS_JWT_SECRET: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      MAS_APP_VERSION_CONFIG: "./appversions.conf"
+      MAS_ANALYTICS_PATH: "./output/analytics"
+      MAS_FEEDBACK_PATH: "./output/feedback"
+      MAS_API_PORT: 5000
+      LOG_FILE_SIZE_BYTES: 1024000
+      LOG_FILE_COUNT_LIMIT: 100
+      LOG_FILE_COUNT_MIN: 10
+    env_file:
+      - /srv/etc/mas/mas.env
+    ports:
+      - "5000:5000"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /srv/tdr/feedback:/usr/src/mobile_application_service/output/feedback
+      - "${LOG_OUTPUT:-./logs}:/var/log/mas"
+    networks:
+      default:
+        aliases:
+        - mobile-application-service
+
+networks:
+  default:
+    external:
+      name: legacy
+

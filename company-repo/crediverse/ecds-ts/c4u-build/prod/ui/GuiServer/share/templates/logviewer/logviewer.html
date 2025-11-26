@@ -1,0 +1,69 @@
+<style>
+.host-area {
+	float: left;
+	display: inline-block;
+	padding-right: 20px;
+}
+
+.search-area {
+	float: left;
+	max-width: 450px;
+}
+
+</style>
+
+
+<link type="text/css" href="/css/pagecss/logViewer.css" rel="stylesheet" />
+<link type="text/css" href="/css/datetime/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<link type="text/css" href="/css/bootstrap-select.min.css" rel="stylesheet" />
+
+<div class="row">
+  <div class="col-xs-12 col-sm-6 col-md-8 user_heading">Log File Viewer</div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+  	<form id="logViewerForm" name="logViewerForm" autocomplete="on" action="/">
+	  <div class="row">
+	  	<div class="col-lg-11 col-md-11 col-xs-11">
+	  		<div class="host-area">
+				<select id="host" name="host" class="selectpicker">
+					<option value="all">All Hosts</option>
+					<option th:each="host : ${hosts}" th:value="${host}" th:text="${host}"></option>					
+				</select>
+	  		</div>
+
+ 			<div class="input-group search-area">
+  				<span class="input-group-btn">
+        			<button id="logconfig" class="btn btn-default" type="button">
+        				<span class="glyphicon glyphicon glyphicon-cog" aria-hidden="true"></span>
+        			</button>
+      			</span>
+				<input type="text" class="form-control" id="search" name="search" placeholder="Search for..." />
+				<span class="input-group-addon">
+					<label class="checkbox-label">
+						<input id="tail" name="tail" type="checkbox" /><span class="cblabel">Tail</span>
+					</label>
+				</span>
+  			</div>
+	  	</div>
+	  	<div class="col-xs-1 col-lg-1 col-md-1">
+	  		<button id="logsearch" type="button" class="btn btn-success">Search</button>
+	  	</div>
+	  </div>
+	</form>
+  </div>
+  <div id="retrievedContent" class="panel-body">
+  	<div class="mybox">
+  		Click Search above to view current log files
+  	</div>
+  	
+  </div>
+</div>
+
+<div th:include="logviewer/logmodal" />
+
+<script type="text/javascript" src="/js/min/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="/js/datetime/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="/js/pagejs/logger.js"></script>
+<script type="text/javascript" src="/js/pagejs/mancommon.js"></script>

@@ -1,0 +1,63 @@
+<div>
+	<script id="cellItem" type="partial">
+		<div class="view-field">
+			<label>{{i18n label}}</label>
+			{{#if value}}
+				<div>{{ value }}</div>
+			{{else}}
+				<div>{{i18n "notSet"}}</div>
+			{{/if}}
+		</div>
+	</script>
+	<script id="cellItems" type="partial">
+		<h4>{{i18n "cells.cell"}}</h4>
+		{{>cellItem label="cells.mobileCountryCode" value=this.mobileCountryCode}}
+		{{>cellItem label="cells.mobileNetworkCode" value=this.mobileNetworkCode}}
+		{{>cellItem label="cells.localAreaCode" value=this.localAreaCode}}
+		{{>cellItem label="cells.cellID" value=this.cellID}}
+		{{>cellItem label="cells.latitude" value=this.latitude}}
+		{{>cellItem label="cells.longitude" value=this.longitude}}
+		
+	</script>
+	<script id="areasView" type="partial">
+		<div class="view-field">
+			{{#if this.areas}}
+				{{#each this.areas}}	
+					<label>{{i18n "cells.linkedAreaName"}}</label>				
+					<div>{{ name }}</div>
+					<label>{{i18n "cells.linkedAreaType"}}</label>				
+					<div>{{ type }}</div>
+				{{/each}}				
+			{{else}}
+				<div>{{i18n "notSet"}}</div>
+			{{/if}}
+		</div>		
+	</script>
+	<script id="commonView" type="partial">
+		<h4>{{i18n heading}}</h4>
+		{{#if hasData}}
+			{{#if showAreas}}
+				{{> "areasView"}}
+			{{/if}}
+		{{else}}
+			<div>{{i18n "notSet"}}</div>
+		{{/if}}
+	</script>
+	
+	<script id="cellView">
+		<div class="col-xs-12">
+			<div class="box box-primary">
+				<div class="info-panel">
+					<div class="row view-fields" style="margin-left:10px;margin-right:10px;">						
+						<div class="col-lg-4 col-md-6">
+							{{> cellItems}}
+						</div>
+						<div class="col-lg-4 col-md-6">
+							{{> commonView heading="cells.areas" hasData=this.areas showAreas=true}}							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+</div>

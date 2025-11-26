@@ -1,0 +1,7 @@
+{
+   "HermesConfiguration" : {
+      "NumberOfThreads" : "8",
+      "LoggingLevelCeiling" : "8"
+   }
+}
+

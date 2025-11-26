@@ -1,0 +1,98 @@
+project.ext.set("ecdsui.prefix", "/opt/cs/ecdsui")
+project.ext.set("ecdsui.sysconfdir", "/etc/opt/cs/ecdsui")
+project.ext.set("ecdsui.localstatedir", "/var/opt/cs/ecdsui")
+project.ext.set("systemd.servicedir", "/usr/lib/systemd/system")
+project.ext.set("tlsfiles", "proto/tls")
+project.ext.set("protobase", "proto"+project.property("ecdsui.prefix"))
+project.ext.set("protobase.servicedir", "proto"+project.property("systemd.servicedir"))
+project.ext.set("protobase.localstatedir", "proto"+project.property("ecdsui.localstatedir"))
+project.ext.set("protobase.sysconfdir", "proto"+project.property("ecdsui.sysconfdir"))
+project.ext.set("ecdsts.buildId", project.buildId)
+project.ext.set("buildId", project.buildId)
+
+task prepareDockerImage(type: Copy, dependsOn: bootJar) {
+
+    delete "docker_image"
+    mkdir "docker_image"
+    
+    into "docker_image/"
+    
+	from(bootJar.outputs.files) {
+		into project.property("ecdsui.prefix")+'/libexec'
+		fileMode 0644
+	}
+
+	from(project.property("protobase")+'/bin/ecdsui.sh') {
+		into project.property("ecdsui.prefix")+'/bin'
+		fileMode 0755
+	}
+
+	from(project.property("protobase")+'/bin/docker-entrypoint.sh') {
+		into project.property("ecdsui.prefix")+'/bin'
+		fileMode 0755
+	}
+
+	from(project.property("tlsfiles")+'/') {
+		into project.property("ecdsui.prefix")+'/tls'
+		fileMode 0644
+	}
+
+	from(project.property("protobase")+'/share/logback-spring.xml') {
+		into project.property("ecdsui.prefix")+'/share'
+		fileMode 0644
+	}
+	
+	from(project.property("protobase")+'/docs/README.md') {
+		into project.property("ecdsui.prefix")+'/docs'
+		fileMode 0644
+	}
+	
+	from("${sourceSets.main.output.resourcesDir}/git.properties") {
+		into project.property("ecdsui.prefix")+'/docs'
+		rename { String fileName ->
+			fileName.replace("git.properties", "build.properties")
+		}
+		fileMode 0644
+	}
+	
+	from(project.property("protobase.servicedir")+'/ecdsui@.service') {
+		into project.property("systemd.servicedir")
+		fileMode 0644
+	}
+	
+	from("${sourceSets.main.output.resourcesDir}/application-prod.properties") {
+		duplicatesStrategy DuplicatesStrategy.EXCLUDE
+		into project.property("ecdsui.sysconfdir")+'/default'
+		fileMode 0644
+	}
+	
+	from(project.property("protobase.sysconfdir")+'/test/application-prod.properties') {
+		duplicatesStrategy DuplicatesStrategy.EXCLUDE
+		into project.property("ecdsui.sysconfdir")+'/test'
+		fileMode 0644
+	}
+	
+	from(project.property("protobase.sysconfdir")+'/portal/application-prod.properties') {
+		duplicatesStrategy DuplicatesStrategy.EXCLUDE
+		into project.property("ecdsui.sysconfdir")+'/portal'
+		fileMode 0644
+	}
+	
+	from(project.property("protobase.sysconfdir")+'/mobile/application-prod.properties') {
+		duplicatesStrategy DuplicatesStrategy.EXCLUDE
+		into project.property("ecdsui.sysconfdir")+'/mobile'
+		fileMode 0644
+	}
+	
+	from('resources') {
+		into project.property("ecdsui.prefix")+'conf'
+		exclude 'database'
+		fileMode 0755
+	}
+
+    from("${sourceSets.main.output.resourcesDir}/logback.xml") {
+		duplicatesStrategy DuplicatesStrategy.EXCLUDE
+    	into project.property("ecdsui.sysconfdir")+'/default'
+		fileMode 0644
+    }
+}

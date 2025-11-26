@@ -1,0 +1,35 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.connectors.kerberos.KerberosConnector")
+   }
+}
+dependencies {
+    implementation project(':CoreInterfaces')
+    implementation project(':Configuration')
+    implementation project(':Notification')
+    implementation 'org.apache.directory.server:apacheds-i18n'
+    implementation 'org.apache.directory.server:apacheds-kerberos-codec'
+    implementation 'org.apache.directory.api:api-asn1-api'
+    implementation 'org.apache.directory.api:api-asn1-ber'
+    implementation 'org.apache.directory.api:api-i18n'
+    implementation 'org.apache.directory.api:api-ldap-model'
+    implementation 'org.apache.directory.api:api-util'
+    implementation 'org.lucee:commons-codec'
+    implementation 'commons-collections:commons-collections'
+    implementation 'commons-lang:commons-lang'
+    implementation 'net.sf.ehcache:ehcache'
+    implementation 'org.apache.directory.server:kerberos-client'
+    implementation 'org.apache.mina:mina-core'
+    implementation 'org.apache.servicemix.bundles:org.apache.servicemix.bundles.antlr'
+    implementation 'org.slf4j:slf4j-api'
+}

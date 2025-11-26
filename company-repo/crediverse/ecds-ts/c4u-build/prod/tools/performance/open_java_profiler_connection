@@ -1,0 +1,1 @@
+/usr/jdk/jdk1.7.0_55/bin/amd64/jstatd -J-Djava.security.policy=jstatd.all.policy

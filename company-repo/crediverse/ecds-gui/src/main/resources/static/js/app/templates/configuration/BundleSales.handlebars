@@ -1,0 +1,71 @@
+<div>
+
+	<!-- Bundle Sales -->
+	<script id="bundleSalesConfig">
+		<div id="bundleSalesConfig" class="box">
+
+			<!-- Nav tabs -->
+			<div class="nav-tabs-custom">
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active">
+						<a href="#bundleSalesGeneral" aria-controls="bundleSalesGeneral" role="tab" data-toggle="tab">{{i18n "transfer.generalTransferTab"}}</a>
+					</li>
+				</ul>
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane active" id="bundleSalesGeneral">
+				
+						{{>configMainHeading heading="config.bundleSalesHeading" btnclass="showBundleSalesConfigDialog" btntext="global.editBtn" permission="Transaction_ConfigBundleSales"}}
+				
+			            <form class="form-horizontal">
+				        	<div class="box-body">
+				        		{{>configLabelBoolean name="enableDebitNotification" label="config.enableDebitNotification" value=this.enableDebitNotification trueValue="config.yes" falseValue="config.no"}}
+								{{>configNotificationLabel heading="config.senderDebitNotification" notification=this.senderDebitNotification.texts}}
+								{{>configLabelBoolean name="enableDebitBalanceNotification" label="config.enableDebitBalanceNotification" value=this.enableDebitBalanceNotification trueValue="config.yes" falseValue="config.no"}}
+								{{>configNotificationLabel heading="config.senderDebitBalanceNotification" notification=this.senderDebitBalanceNotification.texts}}
+								{{>configLabelBoolean name="enableRefundNotification" label="config.enableRefundNotification" value=this.enableRefundNotification trueValue="config.yes" falseValue="config.no"}}
+								{{>configNotificationLabel heading="config.senderRefundNotification" notification=this.senderRefundNotification.texts}}
+								{{>configLabelBoolean name="enableRefundBalanceNotification" label="config.enableRefundBalanceNotification" value=this.enableRefundBalanceNotification trueValue="config.yes" falseValue="config.no"}}
+								{{>configNotificationLabel heading="config.senderRefundBalanceNotification" notification=this.senderRefundBalanceNotification.texts}}
+								
+				        	</div>
+						</form>
+			
+					</div>
+					
+					<div role="tabpanel" class="tab-pane" id="bundleSalesUssdMenu">
+					<p>Loading ...</p>
+					</div>
+				
+					<div role="tabpanel" class="tab-pane" id="bundleSalesDeduplicationUssdMenu">
+					<p>Loading ...</p>
+					</div>
+				
+				</div>
+			</div>
+			
+		</div>
+	</script>
+	
+	<script id="bundleSalesConfigModal">
+		{{>configModalHeader heading="config.bundleSalesHeading"}}
+		<div class="modal-body">
+			<div class="ruledetails">
+				<form name="bundleSalesConfigForm" class="form-horizontal bundleSalesConfigForm">
+					{{>configAddVariableNote}}
+					{{>booleanRadioInput name="enableDebitNotification" label="config.enableDebitNotification" trueLabel="config.yes" falseLabel="config.no" value=this.enableDebitNotification}}					
+					{{>configNotificationInput name="senderDebitNotification" heading="config.senderDebitNotification" notification=this.senderDebitNotification}}
+					{{>booleanRadioInput name="enableDebitBalanceNotification" label="config.enableDebitBalanceNotification" trueLabel="config.yes" falseLabel="config.no" value=this.enableDebitBalanceNotification}}
+					{{>configNotificationInput name="senderDebitBalanceNotification" heading="config.senderDebitBalanceNotification" notification=this.senderDebitBalanceNotification}}
+					{{>booleanRadioInput name="enableRefundNotification" label="config.enableRefundNotification" trueLabel="config.yes" falseLabel="config.no" value=this.enableRefundNotification}}
+					{{>configNotificationInput name="senderRefundNotification" heading="config.senderRefundNotification" notification=this.senderRefundNotification}}
+					{{>booleanRadioInput name="enableRefundBalanceNotification" label="config.enableRefundBalanceNotification" trueLabel="config.yes" falseLabel="config.no" value=this.enableRefundBalanceNotification}}
+					{{>configNotificationInput name="senderRefundBalanceNotification" heading="config.senderRefundBalanceNotification" notification=this.senderRefundBalanceNotification}}
+					
+				</form>
+			</div>
+		</div>
+		{{>configModalFooter }}
+	</script>
+
+</div>

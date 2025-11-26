@@ -1,0 +1,157 @@
+<div>
+
+	<script id="profiledialogview">
+		<div class="modal-header">
+    		<button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+    		<h4 class="modal-title">{{{dialogTitle}}}</h4>
+		</div>	
+	
+		<div class="modal-body">
+			<div class="groupdetails">
+				<form name="addUser" class="form-horizontal">    						
+					{{>modalSelect name="title" label="profile.viewTitleLabel" data="mr:Mr,miss:Miss,mrs:Mrs,dr:Dr,prof:Prof" hint="profile.viewTitleLabel" value=this.title }}
+					
+					{{>modalInput name="firstName" label="profile.viewFirstNameLabel" hint="profile.viewFirstNameLabel" value=this.firstName }}
+					{{>modalInput name="surname" label="profile.viewSurnameLabel" hint="profile.viewSurnameLabel" value=this.surname }}
+					{{>modalInput name="initials" label="profile.viewInitialsLabel" hint="profile.viewInitialsLabel" value=this.initials }}
+					{{>modalSelect name="language" label="profile.viewLanguageLabel" 
+						data="en:enums.langType.en,fr:enums.langType.fr" 
+						hint="profile.viewLanguageLabel" value=this.language
+					}}
+
+					{{>modalInput name="email" type="email" label="profile.viewEmailLabel" hint="profile.viewEmailLabel" value=this.email}}
+					
+					{{>modalInput name="altPhoneNumber" label="profile.viewaltPhoneNumberLabel" hint="profile.viewaltPhoneNumberLabel" value=this.altPhoneNumber}}
+					
+					{{>modalInputNumber currency="true" name="warningThreshold" label="profile.viewWarningThresholdLabel" hint="profile.viewWarningThresholdLabel" value=this.warningThreshold}}
+					
+					
+					<!-- <div class="info-panel">
+						<h4>{{i18n "profile.viewStreetAddressHeading"}}</h4>
+					
+						{{>modalInput name="streetAddressLine1" 	label="profile.viewStreetAddressLine1Label" hint="profile.viewStreetAddressLine1Label" value=this.streetAddressLine1}}
+						{{>modalInput name="streetAddressLine2" 	label="profile.viewStreetAddressLine2Label" hint="profile.viewStreetAddressLine2Label" value=this.streetAddressLine2}}
+						{{>modalInput name="streetAddressSuburb" 	label="profile.viewStreetAddressSuburbLabel" hint="profile.viewStreetAddressSuburbLabel" value=this.streetAddressSuburb}}
+						{{>modalInput name="streetAddressCity" 		label="profile.viewStreetAddressCityLabel" hint="profile.viewStreetAddressCityLabel" value=this.streetAddressCity}}
+						{{>modalInput name="streetAddressZip" 		label="profile.viewStreetAddressZipLabel" hint="profile.viewStreetAddressZipLabel" value=this.streetAddressZip}}
+					
+					</div>
+					
+					<div class="info-panel">
+						<h4>{{i18n "profile.viewPostalAddressHeading"}}</h4>
+						{{>modalInput name="postalAddressLine1" label="profile.viewPostalAddressLine1Label" hint="profile.viewPostalAddressLine1Label" value=this.postalAddressLine1}}
+						{{>modalInput name="postalAddressLine2" label="profile.viewPostalAddressLine2Label" hint="profile.viewPostalAddressLine2Label" value=this.postalAddressLine2}}
+						{{>modalInput name="postalAddressSuburb" label="profile.viewPostalAddressSuburbLabel" hint="profile.viewPostalAddressSuburbLabel" value=this.postalAddressSuburb}}
+						{{>modalInput name="postalAddressCity" label="profile.viewPostalAddressCityLabel" hint="profile.viewPostalAddressCityLabel" value=this.postalAddressCity}}
+						{{>modalInput name="postalAddressZip" label="profile.viewPostalAddressZipLabel" hint="profile.viewPostalAddressZipLabel" value=this.postalAddressZip}}
+					</div> -->
+				</form>
+			</div>
+		</div>
+		
+		<div class="modal-footer">
+    		<button type="button" class="btn btn-primary profileUpdateButton">{{i18n "global.saveBtn"}}</button>
+    		<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+		</div>
+	</script>
+	
+		<script id="userProfile">
+	    <div id="userProfile" class="col-xs-12">
+			<div class="row">
+				<div class="col-lg-3 col-md-4 col-sm-6">
+					<div class="box box-primary">
+        		    	<div class="box-body box-profile">
+              				<!-- <img class="profile-user-img img-responsive img-circle" src="//placehold.it/300x300" alt="User profile picture"> -->
+    		          		<h2 class="profile-username text-center">{{ this.title }} {{ this.firstName }} {{ this.surname }}</h2>
+    		          		<p class="text-muted text-center">{{ this.domainAccountName }}</p>
+            			</div>
+       				</div>
+				</div>
+				<div class="col-lg-9 col-md-8 col-sm-6">
+					<div class="nav-tabs-custom">
+  						<ul class="nav nav-tabs">
+    						<li class="active"><a href="#profile" data-toggle="tab">Profile</a></li>
+  						</ul>
+  						<div class="tab-content">
+						    <div class="active tab-pane" id="profile" style="margin:8px;">
+						    
+							    <div class="row" style="margin-bottom:20px;margin-left: 0;">
+									<button type="button" class="btn btn-primary editProfileButton">{{i18n "global.editBtn"}}</button>
+								</div>
+								
+								<div class="row view-fields">
+									<div class="col-md-4 col-sm-6">
+										<div class="view-field">
+											<label>{{i18n "userman.uniqueID"}}</label>
+											<div>{{ this.id }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.accountNumber"}}</label>
+											<div>{{ this.accountNumber }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.title"}}</label>
+											<div>{{#if this.title}}{{ this.title }}{{else}}<span class="no-data">(not available)</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.firstName"}}</label>
+											<div>{{#if this.firstName}}{{ this.firstName }}{{else}}<span class="no-data">(not available)</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.surname"}}</label>
+											<div>{{ this.surname }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.initials"}}</label>
+											<div>{{#if this.initials}}{{ this.initials }}{{else}}<span class="no-data">(not available)</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.domainAccountName"}}</label>
+											<div>{{ this.domainAccountName }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.language"}}</label>
+											<div>{{ this.languageName }}</div>
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-6">
+										<div class="view-field">
+											<label>{{i18n "userman.mobileNumber"}}</label>
+											<div>{{#if this.mobileNumber}}{{ this.mobileNumber }}{{else}}<span class="no-data">(not available)</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.email"}}</label>
+											<div>{{#if this.email}}{{ this.email }}{{else}}<span class="no-data">(not available)</span>{{/if}}</div>
+										</div>										
+										<div class="view-field">
+											<label>{{i18n "userman.department"}}</label>
+											<div>{{#if this.departmentName}}{{ this.departmentName }}{{else}}<span class="no-data">(not available)</span>{{/if}}</div>
+										</div>
+										
+										<div class="view-field">
+											<label>{{i18n "global.status"}}</label>
+											<div>
+												{{#ifCond this.state "==" "A"}}<label class="label label-success">{{ i18n "enums.state.active" }}</label>{{/ifCond}}
+												{{#ifCond this.state "==" "S"}}<label class="label label-warning">{{ i18n "enums.state.suspended" }}</label>{{/ifCond}}
+												{{#ifCond this.state "==" "D"}}<label class="label label-danger">{{ i18n "enums.state.deactivated" }}</label>{{/ifCond}}
+												{{#ifCond this.state "==" "P"}}<label class="label label-default">{{ i18n "enums.state.permanent" }}</label>{{/ifCond}}
+											</div>
+										</div>
+
+										<div class="view-field">
+											<label>{{i18n "userman.role"}}</label>
+											<div>{{ this.role.name }}</div>
+										</div>
+									</div>
+								</div>
+    						</div>
+						    <div class="tab-pane" id="transactions">
+   							</div>
+  						</div>
+					</div>				
+				</div>
+			</div>	
+	    </div>
+	</script>	
+
+</div>

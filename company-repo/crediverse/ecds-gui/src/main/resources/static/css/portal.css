@@ -1,0 +1,13 @@
+.dashboard-fields {
+}
+
+.dashboard-fields .dashboard-field {
+	margin-bottom:15px;
+}
+
+.dashboard-fields .dashboard-field label, .light-label {
+	margin-bottom:0; 
+	text-transform:uppercase; 
+	font-weight:bold; 
+	color:#808080;
+}

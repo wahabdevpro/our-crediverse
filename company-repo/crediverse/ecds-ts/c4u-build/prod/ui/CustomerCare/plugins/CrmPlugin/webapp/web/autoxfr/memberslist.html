@@ -1,0 +1,36 @@
+<!--  Beneficiaries -->
+<div th:if="${nobeneficiaries}" class="row" style="padding-left:15px; margin-top: 5px;">
+	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+		<span th:text="#{cc.noconsumers(${msisdn})}" ></span>
+	</div>
+</div>
+
+<div th:each="member : ${beneficiaries.members}" class="panel panel-default" style="margin:5px 10px;">
+	<div class="panel-heading">
+		<div class="row">
+			<div class="col-xs-6 col-sm-6 col-md-5 col-lg-5">
+				<span class="glyphicon glyphicon-phone glyph-space-right"></span><b><span th:text="${member.addressDigits}"></span></b>
+			</div>
+			<div class="col-xs-offset-5 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">
+				<span style="float:right; text-align:right; min-width:90px; margin-right:5px;">
+					<button th:id="${'remcons' + member.addressDigits}" type="button" class="btn btn-danger removeconsumer" 
+						data-toggle="tooltip" data-placement="top" th:title="#{cc.delconsumerbtn}"
+						th:onclick="'javascript:removeMember(\'' + ${msisdn} + '\', \'' + ${sid} + '\', \'' + ${vid} + '\', \'' + ${member.addressDigits}
+						+ '\');return false;'"><span class="glyphicon glyphicon-trash"></span></button>
+					<button th:id="${'ben' + member.addressDigits}" type="button" class="btn btn-primary viewconsumer"
+						data-toggle="tooltip" data-placement="top" th:title="#{cc.viewconsumerquotas}"
+						th:onclick="'javascript:expandMember(\'' + ${msisdn} + '\', \'' + ${sid} + '\', \'' + ${vid} + '\', \'' + ${member.addressDigits}
+						+ '\');return false;'"><span th:id="${'benbtn' + member.addressDigits}" class="glyphicon glyphicon-eye-open"></span></button>
+				</span>
+			</div>
+		</div>
+	</div>
+  	<div th:id="${'benbody' + member.addressDigits}" class="panel-body hide">
+  		<span th:id="${'debdetails' + member.addressDigits}">Details...</span>
+	</div>
+</div>
+
+<script th:inline="javascript" >
+updateMemberListEvents();
+Utils.refreshPlaceholders();
+</script>

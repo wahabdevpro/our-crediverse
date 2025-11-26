@@ -1,0 +1,57 @@
+package hxc.utils.protocol.acip;
+
+import java.util.Date;
+
+import hxc.connectors.air.Air;
+
+/**
+ * PamInformation
+ * 
+ * The pamInformation is enclosed in a <struct> of its own and contains information used for periodic account management. The same structure is used for both requests and responses but due to layout
+ * in this specification the content of the structure is divided in two tables, one for requests and one for responses.
+ */
+public class PamInformation
+{
+	/*
+	 * The pamServiceID parameter specifies the id of the periodic account management service.
+	 */
+	@Air(Mandatory = true, Range = "0:99")
+	public int pamServiceID;
+
+	/*
+	 * The pamClassID parameter specifies the periodic account management class used by the periodic account management service.
+	 */
+	@Air(Mandatory = true, Range = "0:9999")
+	public int pamClassID;
+
+	/*
+	 * The scheduleID parameter contains the schedule that is used by the periodic account management service.
+	 */
+	@Air(Mandatory = true, Range = "0:9999")
+	public int scheduleID;
+
+	/*
+	 * The currentPamPeriod parameter contains the periodic account management period that is currently used for the subscriber.
+	 */
+	@Air(Length = "1:30")
+	public String currentPamPeriod;
+
+	/*
+	 * The deferredToDate parameter contains the deferred to date for the Periodic Account Management service. If deferredToDate is set in the past in a request, the deferred to date will be removed.
+	 */
+	@Air(Range = "DateMin:DateMax")
+	public Date deferredToDate;
+
+	/*
+	 * The lastEvaluationDateparameter contains the date of the last periodic account management evaluation.
+	 */
+	@Air(Range = "DateMin:DateMax")
+	public Date lastEvaluationDate;
+
+	/*
+	 * The pamServicePriority parameter indicates the priority between PAM services at PAM evaluation. Lower value gives higher priority.
+	 */
+	@Air(Range = "0:65535")
+	public Integer pamServicePriority;
+
+}

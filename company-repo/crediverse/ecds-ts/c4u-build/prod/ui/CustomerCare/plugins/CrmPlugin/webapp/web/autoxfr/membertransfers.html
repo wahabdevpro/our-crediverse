@@ -1,0 +1,92 @@
+<style>
+	.user_heading {
+		font-size: 22px;
+		font-weight: bold;
+	}
+	.viewbutton {
+		margin-left: 5px;
+		margin-right: 5px;
+		color: #0099FF;		
+	}
+	.viewbutton:hover {
+		color: blue;
+	}
+	.editbutton {
+		margin-left: 5px;
+		margin-right: 5px;
+		color: #00C000;
+	}
+	.editbutton:hover {
+		color: green;
+	}	
+	.deletebutton {
+		margin-left: 5px;
+		margin-right: 5px;
+		color: #FF3366;		
+	}
+	.deletebutton:hover {
+		color: red;
+	}
+	.table-bordered {
+		border: 0px !important;
+		padding-right: 20px !important;
+	}
+</style>
+
+<!--  Benificiary Quotas -->
+<div class="row" style="border-bottom: 1px solid #EEEEEE;">
+	<div class="col-xs-10 col-sm-10 col-md-10 user_heading" th:text="#{cc.quotasTitle}">Transfer List</div>
+	<div class="col-xs-2 col-sm-2 col-md-2">
+		<button id="addTransfer" type="button" class="btn btn-success btn-xs addquota" style="float:right;" 
+			data-toggle="tooltip" data-placement="top" th:title="#{cc.addQuotabtnTooltip}"
+			th:onclick="'javascript:Act.addTransfer(\'' + ${msisdn} + '\', \'' + ${sid} + '\', \'' + ${vid} + '\', \'' + ${benMsisdn} + '\');return false;'" 
+			title="add quota"><span class="glyphicon glyphicon-plus"></span></button>
+	</div>
+</div>
+
+<!-- Table of quotas -->
+<div th:if="${!notransfers}" class="row" style="padding-left:15px; margin-top: 5px;">
+
+	<div class="row">
+		<table class="table infotable table-hover table-bordered table-striped" >
+			<thead>
+				<tr>
+					<th>Credit Transfer</th>
+					<th>Type</th>
+					<th>Amount</th>
+					<th>Units</th>
+					<th>Next Transfer</th>											
+					<th></th>
+					
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="tran,iterStat : ${transfers}" >
+					<td th:text="${tran.name}"></td>
+					<td th:text="${tran.transferType}"></td>
+					<td th:text="${ utils.displayAmount(tran.amount, tran.scaleNumerator, tran.scaleDenominator) }"></td>
+					<td th:text="${tran.units}"></td>
+					<td th:text="${ utils.formatDate(tran.nextTransfer) }"></td>
+					<td style="text-align:center">
+						<button th:id="${'qta_' + benMsisdn + '_' + iterStat.index}" class="btn btn-xs btn-danger removeQuoata"	
+						data-toggle="tooltip" data-placement="top" th:title="#{cc.removeQuotabtnTooltip}"
+						th:onclick="'javascript:Act.removeTransfer(\'' + ${msisdn} + '\', \'' + ${sid} + '\', \'' + ${vid} + '\', \'' + ${benMsisdn} + '\', \'' + ${tran.transferModeID} + '\');return false;'">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+<div th:if="${notransfers}" class="row" style="padding-left:15px; margin-top: 5px;">
+	<div class="col-lg-6">
+		<span th:text="#{cc.noquotas(${msisdn})}" ></span>
+	</div>
+</div>
+
+<script th:inline="javascript" >
+updateQuotaEvents();
+</script>

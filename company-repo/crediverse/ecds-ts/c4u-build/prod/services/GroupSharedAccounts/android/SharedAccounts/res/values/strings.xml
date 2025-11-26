@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Credit Sharing Service</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="neither_info">This service allows  you to selectively share credit with beneficiaries.</string>
+    <string name="next_button">Next &gt;</string>
+    <string name="title_activity_credit_sharing">Credit Sharing</string>
+    <string name="title_activity_subscribe">Credit Sharing</string>
+    <string name="title_activity_subscribed">Credit Sharing</string>
+    <string name="title_activity_beneficiaries">Beneficiaries</string>
+    <string name="title_activity_add_beneficiary">Add Beneficiary</string>
+    <string name="title_activity_beneficiary">Beneficiary</string>
+    <string name="title_activity_add_benefit">Add Benefit</string>
+    <string name="title_activity_adjust_benefit">Adjust Benefit</string>
+    <string name="title_activity_balances">Balances</string>
+    <string name="title_activity_is_beneficiary">Credit Sharing</string>
+    <string name="title_activity_beneficiary_balances">Beneficiary Balances</string>
+    <string name="title_activity_tell_me_more">Tell Me More</string>
+    <string name="link_tell_me_more">Tell me more &#8230;</string>
+    <string name="title_tell_me_more_1">About Credit Sharing Service</string>
+    <string name="content_tell_me_more_1">With credit sharing you can share some of the balances in your account with other subscribers. You can decide how much to share, what times and days it can be shared and you can choose what services to share.</string>
+    <string name="title_tell_me_more_2">About Subscription Periods;</string>
+    <string name="content_tell_me_more_2">Your subscription period determines how often your beneficiaries will get new benefits. IF you select Daily, each of your beneficiaries will receive the amount of benefits you allocate them in the next steps. You will be charged every time the subscription and benefits are renewed.</string>
+    <string name="title_tell_me_more_3">About Beneficiaries</string>
+    <string name="content_tell_me_more_3">Beneficiaries &#8230;</string>
+    <string name="title_tell_me_more_4">About Beneficiary Balances</string>
+    <string name="content_tell_me_more_4">Balances  &#8230;</string>
+    <string name="title_tell_me_more_5">About Sponsor Functions</string>
+    <string name="content_tell_me_more_5">Sponsors &#8230;</string>
+    <string name="title_tell_me_more_6">About Adding Benefits</string>
+    <string name="content_tell_me_more_6">Adding Benefits &#8230;</string>
+    <string name="title_tell_me_more_7">About Adjusting Benefits</string>
+    <string name="content_tell_me_more_7">Adjusting Benefits &#8230;</string>
+
+</resources>

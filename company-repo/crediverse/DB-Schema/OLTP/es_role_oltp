@@ -1,0 +1,15 @@
+*************************** 1. row ***************************
+       Table: es_role
+Create Table: CREATE TABLE `es_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `description` varchar(80) NOT NULL,
+  `lm_time` datetime NOT NULL,
+  `lm_userid` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `permanent` bit(1) NOT NULL,
+  `version` int(11) NOT NULL,
+  `type` varchar(1) NOT NULL DEFAULT 'W',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `es_role_name` (`company_id`,`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=213 DEFAULT CHARSET=utf8

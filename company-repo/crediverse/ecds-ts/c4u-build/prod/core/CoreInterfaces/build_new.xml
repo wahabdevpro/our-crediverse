@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="CoreInterfaces">
+    <property environment="env"/>
+    <property name="AirConnector.location" value="../../connectors/AirConnector"/>
+    <property name="CLITests.location" value="../../tests/CLITests"/>
+    <property name="Configuration.location" value="../../utils/Configuration"/>
+    <property name="CreditSharingService.location" value="../../services/CreditSharingService"/>
+    <property name="CtrlConnector.location" value="../../connectors/CtrlConnector"/>
+    <property name="GuiServer.location" value="../../ui/GuiServer"/>
+    <property name="HostProcess.location" value="../HostProcess"/>
+    <property name="HsxConnector.location" value="../../connectors/HsxConnector"/>
+    <property name="HttpServer.location" value="../../utils/HttpServer"/>
+    <property name="HuxConnector.location" value="../../connectors/HuxConnector"/>
+    <property name="HxC.location" value="../../ui/cli"/>
+    <property name="LoggerService.location" value="../../services/LoggerService"/>
+    <property name="MySqlConnector.location" value="../../connectors/MySqlConnector"/>
+    <property name="ProcessModel.location" value="../../utils/ProcessModel"/>
+    <property name="Reflection.location" value="../../utils/Reflection"/>
+    <property name="SecurityService.location" value="../../services/SecurityService"/>
+    <property name="ServiceBus.location" value="../ServiceBus"/>
+    <property name="SmppConnector.location" value="../../connectors/SmppConnector"/>
+    <property name="SnmpConnector.location" value="../../connectors/SnmpConnector"/>
+    <property name="SoapConnector.location" value="../../connectors/SoapConnector"/>
+    <property name="Supervisor.location" value="../Supervisor"/>
+    <property name="TransactionService.location" value="../../services/TransactionService"/>
+    <property name="UIConnector.location" value="../../connectors/UIConnector"/>
+    <property name="UIConnectorTests.location" value="../../tests/UIConnectorTests"/>
+    <property name="UnitTests.location" value="../../tests/UnitTests"/>
+    <property name="XmlRpc.location" value="../../utils/XmlRpc"/>
+    <property name="ECLIPSE_HOME" value="../../../../../eclipse"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.7"/>
+    <property name="source" value="1.7"/>
+    <path id="CoreInterfaces.classpath">
+        <pathelement location="classes"/>
+    </path>
+    <target name="init">
+        <mkdir dir="classes"/>
+        <copy includeemptydirs="false" todir="classes">
+            <fileset dir="java">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="classes"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="classes" includeantruntime="false" source="${source}" target="${target}">
+            <src path="java"/>
+            <classpath refid="CoreInterfaces.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects">
+        <ant antfile="build_new.xml" dir="${AirConnector.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${AirConnector.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${CLITests.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${CLITests.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${Configuration.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${Configuration.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${CreditSharingService.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${CreditSharingService.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${CtrlConnector.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${CtrlConnector.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${GuiServer.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${GuiServer.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${HostProcess.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${HostProcess.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${HsxConnector.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${HsxConnector.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${HttpServer.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${HttpServer.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${HuxConnector.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${HuxConnector.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${HxC.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${HxC.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${LoggerService.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${LoggerService.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${MySqlConnector.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${MySqlConnector.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${ProcessModel.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${ProcessModel.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${Reflection.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${Reflection.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${SecurityService.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${SecurityService.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${ServiceBus.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${ServiceBus.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${SmppConnector.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${SmppConnector.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${SnmpConnector.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${SnmpConnector.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${SoapConnector.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${SoapConnector.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${Supervisor.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${Supervisor.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${TransactionService.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${TransactionService.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${UIConnector.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${UIConnector.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${UIConnectorTests.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${UIConnectorTests.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${UnitTests.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${UnitTests.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+        <ant antfile="build_new.xml" dir="${XmlRpc.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build_new.xml" dir="${XmlRpc.location}" inheritAll="false" target="build">
+            <propertyset>
+                <propertyref name="build.compiler"/>
+            </propertyset>
+        </ant>
+    </target>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+</project>

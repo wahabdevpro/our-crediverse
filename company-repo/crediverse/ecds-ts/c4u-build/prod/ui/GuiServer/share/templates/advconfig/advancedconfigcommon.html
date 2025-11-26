@@ -1,0 +1,15 @@
+<!-- Tabbed Content -->
+<ul class="nav nav-tabs">
+	<li th:each="nd, iterstat : ${utils.extractTabs( fields )}" th:class="${(iterstat.count==1)? 'active' : ''}"><a th:href="${'#' + nd.name}" data-toggle="tab" th:text="${nd.description}">-</a></li>
+</ul>
+
+<div class="tab-content">
+	<div th:each="nd, iterstat : ${utils.extractTabs( fields )}" th:class="${'tab-pane tabcontent' + ((iterstat.count==1)? ' active' : '')}" th:id="${nd.name}">
+		<div class="row" >
+			<div class="col-xs-11 col-sm-5 col-md-7 user_heading" style="margin-left: 20px;" th:text="${nd.description}">---</div>
+		</div>	
+		<form th:if="${#strings.endsWith(nd.name,'general')}" id="configForm" name="configForm" class="form-horizontal" role="form">
+			<div th:include="advconfig/general" />
+		</form>
+	</div>
+</div>

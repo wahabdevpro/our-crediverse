@@ -1,0 +1,413 @@
+<div>
+	<script id="navbarmenu">
+    <!-- User Account: style can be found in dropdown.less -->
+    <li class="dropdown user user-menu">
+      <a href="#" class="" >
+        <img src="img/avatar5.png" class="user-image" alt="User Image"/>
+        <span class="hidden-xs">{{user.fullName}}</span>
+      </a>
+      <ul class="dropdown-menu dropdown-user">
+		    <li class="userLogout"><a href="#logout"><i class="fa fa-sign-out fa-fw"></i>{{i18n "global.logout"}}</a>
+		    </li>
+		    <li class="userProfile"><a href="#profile"><i class="fa fa-sign-out fa-fw"></i>{{i18n "global.profile"}}</a>
+		    </li>
+		</ul>
+    </li>
+	</script>
+	
+	<script id="mainsidebar">
+	
+	<!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- Sidebar user panel -->
+      <!-- search form -->
+      <!-- <form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="Search..."/>
+              <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+        </div>
+      </form> -->
+      <!-- /.search form -->
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu">
+      
+        <!-- <li class="header">MAIN NAVIGATION</li> -->
+		<!-- remove dashboard
+        <li class="menuentry active">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>{{dashboard}}</span>
+          </a>
+        </li>
+		-->
+		{{#hasPerms (perm "Agent" "View")}}
+		<li class="menuentry">
+          <a class="routerlink" href="#accountList">
+            <i class="fa fa-users"></i>
+            <span>{{i18n "navbar.agentAccounts"}}</span>
+          </a>
+        </li>
+        {{/hasPerms}}
+        
+        {{#hasPerms "WorkItem_View"}}
+        <li class="menuentry">
+        	<a class="routerlink" href="#taskList">
+          	<i class="fa fa-tasks"></i>
+          	<span>{{i18n "navbar.taskList"}}</span>
+        	</a>
+      	</li>
+    	{{/hasPerms}}
+	   <!-- 
+		<li class="treeview show-on-collapse">
+        	<a href="#accountMenu">
+          		<i class="fa fa-users"></i>
+          		<span>{{i18n "navbar.agentAccounts"}}</span>
+	         	<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+	        </a>
+	        <ul class="treeview-menu menuentry">
+	          <li><a href="#accountList"><i class="fa fa-circle-o"></i>List</a></li>
+	          <li><a href="#accountSearch"><i class="fa fa-circle-o"></i>Search</a></li>
+	        </ul>
+      	</li>
+		-->
+
+		{{#hasPerms "Transaction_View"}}
+      	<li class="menuentry">
+          <a class="routerlink" href="#transactionList">
+            <i class="fa fa-history"></i>
+            <span>{{i18n "navbar.transactions"}}</span>
+          </a>
+        </li>
+        {{/hasPerms}}
+        
+		<!--li class="treeview show-on-collapse">
+        <a href="#transactionMenu">
+          <i class="fa fa-history"></i>
+          <span>Transactions</span>
+         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+        </a>
+        <ul class="treeview-menu menuentry">
+          <li><a href="#transactionList"><i class="fa fa-circle-o"></i>List</a></li>
+          <li><a href="#transactionSearch"><i class="fa fa-circle-o"></i>Search</a></li>
+        </ul>
+      </li-->
+
+	  {{#hasPerms "TransferRule_View"}}
+	  <li class="menuentry">
+          <a href="#rules">
+            <i class="fa fa-random"></i> <span>{{i18n "navbar.transferRules"}}</span>
+          </a>
+      </li>
+      {{/hasPerms}}
+      
+      {{#hasPerms "Tier_View"}}
+      <li class="menuentry">
+          <a href="#tiers">
+            <i class="fa fa-sitemap"></i> <span>{{i18n "navbar.tiers"}}</span>
+          </a>
+      </li>
+      {{/hasPerms}}
+      
+      {{#hasPerms "Group_View"}}
+      <li class="menuentry">
+      	<a href="#groups">
+          <i class="fa fa-reorder"></i> <span>{{i18n "navbar.groups"}}</span>
+        </a>
+      </li>
+      {{/hasPerms}}
+      
+        <!-- <li class="menuentry">
+        <a href="#audit">
+          <i class="fa fa-history"></i>
+          <span>Audit Log</span>
+        </a>
+      </li> --><!-- Coming to a server near you soon -->
+      	
+      	{{#hasPerms "ServiceClass_View"}}
+        <li class="menuentry">
+          <a href="#serviceClasses">
+            <i class="fa fa-flag"></i>
+            <span>{{i18n "navbar.serviceClasses"}}</span>
+          </a>
+        </li>
+        {{/hasPerms}}
+        
+        {{#hasAnyPerms "Area_View" "Cell_View" "CellGroups_View"}}
+        <li class="treeview">
+	        <a href="#location">
+	          <i class="fa fa-key"></i>
+	          <span>{{i18n "navbar.location"}}</span>
+	         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+	        </a>
+	        <ul class="treeview-menu menuentry">
+	        	{{#hasPerms "Area_View"}}
+			        <li class="menuentry">
+			          <a href="#areas">
+			            <i class="fa fa-map-marker"></i>
+			            <span>{{i18n "navbar.areas"}}</span>
+			          </a>
+			        </li>
+				{{/hasPerms}}
+				
+				{{#hasPerms "Cell_View"}}
+		       		<li class="menuentry">
+		          		<a href="#cells">
+		            		<i class="fa fa-cloud"></i>
+		            		<span>{{i18n "navbar.cells"}}</span>
+		          		</a>
+		        	</li>
+		        {{/hasPerms}}
+				
+				{{#hasPerms "CellGroups_View"}}
+		       		<li class="menuentry">
+		          		<a href="#cellGroups">
+		            		<i class="fa fa-cubes"></i>
+		            		<span>{{i18n "navbar.cellGroups"}}</span>
+		          		</a>
+		        	</li>
+		        {{/hasPerms}}
+	        </ul>
+        </li>
+        {{/hasAnyPerms}}
+        
+        {{#hasPerms "Promotion_View"}}
+      	<li class="menuentry">
+        	<a class="routerlink" href="#promotionsList">
+          		<i class="fa fa-trophy"></i>
+          		<span>{{i18n "navbar.promotions"}}</span>
+        	</a>
+      	</li>
+      	{{/hasPerms}}
+		<!--
+        <li class="menuentry">
+	        <a href="#batch">
+	          <i class="glyphicon glyphicon-import"></i> <span>{{i18n "navbar.batchProcessing"}}</span>
+	        </a>
+	    </li>
+		-->
+		
+		{{#hasPerms "Batch_Upload"}}
+		<li class="hide-on-collapse">
+          <a class="routerlink" href="#batch">
+            <i class="glyphicon glyphicon-import"></i>
+            <span>{{i18n "navbar.batchProcessing"}}</span>
+          </a>
+          <a href="#batchHistory" class="routerlink pull-right"><i class="fa fa-search"></i></a>
+        </li>
+	
+	<!-- Functionality on hold MSISDN-RECYCLING - uncomment when re-instated
+		<li class="hide-on-collapse">
+		  <a class="routerlink" href="#msisdnRecyclingUpload">
+			<i class="glyphicon glyphicon-import"></i>
+			<span>{{i18n "navbar.msisdnRecycling"}}</span>
+		  </a>
+		</li>
+	-->	
+        
+		<li class="treeview show-on-collapse">
+        	<a href="#batchMenu">
+          		<i class="glyphicon glyphicon-import"></i>
+          		<span>{{i18n "navbar.batchHistory"}}</span>
+         		<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+        	</a>
+        	<ul class="treeview-menu menuentry">
+          		<li><a href="#batch"><i class="fa fa-circle-o"></i>{{i18n "navbar.batchProcessing"}}</a></li>
+          		<li><a href="#batchHistory"><i class="fa fa-circle-o"></i>{{i18n "navbar.batchHistory"}}</a></li>
+        	</ul>
+      	</li>
+      	{{/hasPerms}}
+      	
+		{{#hasPerms "Analytics_View"}}
+      	<li class="menuentry">
+        	<a href="#analytics">
+          		<i class="fa fa-bar-chart "></i>
+          		<span>{{i18n "navbar.analytics"}}</span>
+        	</a>
+      	</li>
+      	{{/hasPerms}}
+      	
+      	{{#hasPerms "Reports_View"}}
+        <li class="treeview">
+        	<a href="#reports">
+          		<i class="fa fa-file-text"></i>
+          		<span>{{i18n "navbar.reports"}}</span>
+         		<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+        	</a>
+        	<ul class="treeview-menu menuentry">
+          			<li><a href="#retailerPerformanceReportList"><i class="fa fa-circle-o"></i>{{i18n "navbar.retailerPerformanceReport"}}</a></li>
+          			<li><a href="#wholesalerPerformanceReportList"><i class="fa fa-circle-o"></i>{{i18n "navbar.wholesalerPerformanceReport"}}</a></li>
+          			<li><a href="#salesSummaryReportList"><i class="fa fa-circle-o"></i>{{i18n "navbar.salesSummaryReport"}}</a></li>
+          			<li><a href="#dailyGroupSalesReportList"><i class="fa fa-circle-o"></i>{{i18n "navbar.dailyGroupSalesReport"}}</a></li>
+          			<li><a href="#monthlySalesPerformanceReportList"><i class="fa fa-circle-o"></i>{{i18n "navbar.monthlySalesPerformanceReport"}}</a></li>
+					{{#ifCond this.viewReportsByAreaFeature "==" "enabled"}}
+          			<li><a href="#dailySalesByAreaReportList"><i class="fa fa-circle-o"></i>{{i18n "navbar.dailySalesByAreaReport"}}</a></li>
+					{{/ifCond}}
+          			<li><a href="#accountBalanceSummaryReportList"><i class="fa fa-circle-o"></i>{{i18n "navbar.accountBalanceSummaryReport"}}</a></li>
+					<!--
+          			<li><a href="#hourlySmsFlash"><i class="fa fa-circle-o"></i>{{i18n "navbar.hourlySmsFlash"}}</a></li>
+					-->
+        	</ul>
+      	</li>
+      	{{/hasPerms}}
+      	
+      	
+   		{{#hasPerms "AuditLog_View"}}
+         	<li class="menuentry">
+             <a class="routerlink" href="#auditLogList">
+               <i class="fa fa-history"></i>
+               <span>{{i18n "navbar.auditLog"}}</span>
+             </a>
+           </li>
+        {{/hasPerms}}
+      	
+      	
+      	
+      	{{#hasAnyPerms "WebUser_View" "Department_View" "Role_View"}}
+        <li class="treeview">
+        	<a href="#access">
+          		<i class="fa fa-key"></i>
+          		<span>{{i18n "navbar.userAccess"}}</span>
+         		<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+        	</a>
+        	<ul class="treeview-menu menuentry">
+        		{{#hasPerms "WebUser_View"}}
+          			<li><a href="#users"><i class="fa fa-circle-o"></i>{{i18n "navbar.users"}}</a></li>
+          		{{/hasPerms}}
+          		
+         		{{#hasPerms "Department_View"}}
+          			<li><a href="#departments"><i class="fa fa-circle-o"></i>{{i18n "navbar.departments"}}</a></li>
+          		{{/hasPerms}}
+          		
+         		{{#hasPerms "Role_View"}}
+          			<li><a href="#roles"><i class="fa fa-circle-o"></i>{{i18n "navbar.roles"}}</a></li>
+          		{{/hasPerms}}
+          		<!-- <li><a href="#perms"><i class="fa fa-files-o"></i>Permissions</a></li> -->
+        	</ul>
+      	</li>
+      	{{/hasAnyPerms}}
+      	
+      
+	{{#hasPerms "Transaction_ViewConfig"}}
+  	<li class="treeview">
+		<a href="#config">
+			<i class="fa fa-cogs"></i>
+			<span>{{i18n "navbar.config"}}</span>
+			<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+		</a>
+		
+		<ul class="treeview-menu menuentry">
+
+			<li><a href="#config-adjudication"><i class="fa fa-circle-o"></i>{{i18n "navbar.adjudicationConfig"}}</a></li>
+			
+			<li><a href="#config-adjustments"><i class="fa fa-circle-o"></i>{{i18n "navbar.adjustConfig"}}</a></li>
+			
+			<li><a href="#config-agents"><i class="fa fa-circle-o"></i>{{i18n "navbar.agentsConfig"}}</a></li>
+			
+			<li><a href="#config-sales"><i class="fa fa-circle-o"></i>{{i18n "navbar.salesConfig"}}</a></li>
+			
+			<li><a href="#config-querySales"><i class="fa fa-circle-o"></i>{{i18n "navbar.salesQryConfig"}}</a></li>
+			
+			<li><a href="#config-balanceEnquiries"><i class="fa fa-circle-o"></i>{{i18n "navbar.balEnqConfig"}}</a></li>
+			
+			<li><a href="#config-batch"><i class="fa fa-circle-o"></i>{{i18n "navbar.batchConfig"}}</a></li>
+			
+			<li><a href="#config-changePins"><i class="fa fa-circle-o"></i>{{i18n "navbar.chgPinConfig"}}</a></li>
+
+			<li><a href="#config-depositsQuery"><i class="fa fa-circle-o"></i>{{i18n "navbar.depQryConfig"}}</a></li>
+			
+			<li><a href="#config-general"><i class="fa fa-circle-o"></i>{{i18n "navbar.generalConfig"}}</a></li>
+			
+			<li><a href="#config-mobileNumberFormat"><i class="fa fa-circle-o"></i>{{i18n "navbar.mobileNumberFormat"}}</a></li>
+			
+			<li><a href="#config-nonairtimesales"><i class="fa fa-circle-o"></i>{{i18n "navbar.bundlesConfig"}}</a></li>
+
+			<li><a href="#config-lastTransactionEnquiries"><i class="fa fa-circle-o"></i>{{i18n "navbar.lastTrnsConfig"}}</a></li>
+			
+			<li><a href="#config-rewards"><i class="fa fa-circle-o"></i>{{i18n "navbar.rewardsConfig"}}</a></li>
+			
+			<li><a href="#config-registerPins"><i class="fa fa-circle-o"></i>{{i18n "navbar.regPinConfig"}}</a></li>
+
+			<li><a href="#config-replenish"><i class="fa fa-circle-o"></i>{{i18n "navbar.repConfig"}}</a></li>
+			
+			<li><a href="#config-analytics"><i class="fa fa-circle-o"></i>{{i18n "navbar.analyticsConfig"}}</a></li>
+			
+			<li><a href="#config-reporting"><i class="fa fa-circle-o"></i>{{i18n "navbar.reportingConfig"}}</a></li>
+
+			<li><a href="#config-reversal"><i class="fa fa-circle-o"></i>{{i18n "navbar.revConfig"}}</a></li>
+			
+			<li><a href="#config-selfTopUps"><i class="fa fa-circle-o"></i>{{i18n "navbar.topupConfig"}}</a></li>
+
+			<li><a href="#config-transactions"><i class="fa fa-circle-o"></i>{{i18n "navbar.transConfig"}}</a></li>
+
+			<li><a href="#config-transactionStatusEnquiries"><i class="fa fa-circle-o"></i>{{i18n "navbar.transQryConfig"}}</a></li>
+			
+			<li><a href="#config-transfers"><i class="fa fa-circle-o"></i>{{i18n "navbar.transferConfig"}}</a></li>
+			
+			<li><a href="#config-ussdmenu"><i class="fa fa-circle-o"></i>{{i18n "navbar.ussdMenuConfig"}}</a></li>
+			
+			<li><a href="#config-webusers"><i class="fa fa-circle-o"></i>{{i18n "navbar.webUsersConfig"}}</a></li>
+			
+			<li><a href="#config-workflows"><i class="fa fa-circle-o"></i>{{i18n "navbar.workflowConfig"}}</a></li>
+			
+		</ul>
+
+	</li>
+	{{/hasPerms}}
+	
+	{{#hasPerms "Company_Update"}}
+		<li class="menuentry">
+	      	<a class="routerlink" href="#testinfo">
+	        		<i class="fa fa-users"></i>
+	         		<span>Test Info</span>
+	       	</a>
+	     	</li>
+    {{/hasPerms}}
+      
+      </ul>
+	  
+	  <div class="hide-on-collapse" style="margin-top:20px; text-align:center;">
+	  	<img class="customerLogo" style="width:160px;" src="{{currentLogo}}" border="0"/>
+	  </div>
+	  
+	  <div class="hide-on-collapse" style="margin-top:15px; text-align:center;">
+      	 <span class="app-powered-by">Powered by</span>
+      	 <br/>
+      	 <a target="_blank" href="http://concurrent.systems/">
+      	 	<span class="cmp-powered-by">
+      	 		Concurrent Systems (Pty) Ltd.
+      	 	</span>
+      	 </a>
+	  </div>
+      
+	  <div class="hide-on-collapse" style="margin-top:15px; text-align:center;">
+      	<span class="app-version">{{{i18nctx "navbar.version"}}}</span>
+		<br/> 
+		<span class="app-buildNumber">{{{i18nctx "navbar.buildNumber"}}}</span>
+	  </div>
+	  
+    </section>
+    <!-- /.sidebar -->
+    
+    </script>
+
+	<script id="dashboardContent">
+		<div class="col-xs-12">
+   		 	<div class="rootAccountDashBoard"></div>
+  	    
+			<div class="col-sm-offset-2 col-sm-8">
+	  	  	</div>
+		</div>
+		<div class="col-xs-12">
+   		 	<div class="lastTransactionsDashBoard"></div>
+		</div>	
+    </script>
+    
+    <script id="noPermissions">
+    	<center>
+    		<h2>{{i18n "noPermissions.heading"}}</h5>
+    		<h4>{{i18n "noPermissions.content"}}</h5>
+    	</center>
+    </script>
+</div>

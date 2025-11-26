@@ -1,0 +1,20 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+dependencies {
+    implementation project(':GuiWebServer')
+    implementation 'javax.servlet:javax.servlet-api'
+    implementation 'org.eclipse.jetty:jetty-jndi'
+    implementation 'org.eclipse.jetty:jetty-plus'
+    implementation 'org.eclipse.jetty:jetty-server'
+    implementation 'org.eclipse.jetty:jetty-webapp'
+    implementation 'org.thymeleaf:thymeleaf'
+    implementation 'com.google.code.gson:gson'
+}

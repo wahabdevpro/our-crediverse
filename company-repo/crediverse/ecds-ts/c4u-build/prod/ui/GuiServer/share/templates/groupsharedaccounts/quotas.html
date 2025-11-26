@@ -1,0 +1,33 @@
+<div>
+	<div id="" th:if="${#lists.isEmpty(session.Quotas)}">
+		<p>Currently No Quotas defined</p>
+	</div>
+	<div th:if="${!#lists.isEmpty(session.Quotas)}" class="row">
+		<table id="quotasTable" class="table infotable table-hover table-bordered table-striped" style="width: 100%; table-layout: fixed;">
+				<col width="50%" />
+				<col width="15%" />
+				<col width="15%" />
+				<col width="150px" />
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Service</th>
+						<th>Service Type</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+			<tr th:each="quota,iterStat : ${session.Quotas}">
+				<td th:text="${ utils.extractPhraseField(quota, 'name', 'eng') }" th:dir="${directions != null ? directions.length > 0 ? directions[0] : 'ltr' : 'ltr'}">-</td>
+				<td th:text="${ utils.extractPhraseField(quota, 'service', 'eng') }" style="text-align: center">-</td>
+				<td th:text="${ utils.extractField(quota, 'serviceType') }" style="text-align: center">-</td>
+				<td style="text-align: center">
+					<a th:id="${'scview_' + iterStat.index}"  th:onclick="'javascript:showQuotas(\'view\',' + ${iterStat.index} + ');return false;'" href="#"><span class="glyphicon glyphicon-eye-open viewbutton" title="view"></span></a> 
+					<span>|</span>
+					<a th:id="${'scedit_' + iterStat.index}" th:onclick="'javascript:showQuotas(\'edit\',' + ${iterStat.index} + ');return false;'" href="#"><span class="glyphicon glyphicon-pencil editbutton" title="edit"></span></a> 
+					<span>|</span>
+					<a th:id="${'scedit_' + iterStat.index}" th:onclick="'javascript:deleteQuotas(' + ${iterStat.index} + ',\'' + ${ utils.extractField(quota, 'quotaID') } + '\');return false;'" href="#"><span class="glyphicon glyphicon-trash deletebutton" title="delete"></span></a>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>

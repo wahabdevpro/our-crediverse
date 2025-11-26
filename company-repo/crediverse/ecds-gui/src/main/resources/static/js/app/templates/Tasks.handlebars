@@ -1,0 +1,194 @@
+<div>
+	<script id="taskList">
+		<div class="datatablesview col-xs-12">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="callout callout-danger general_error" style="display:none;">
+				        <h4>General Error!</h4>
+				
+				        
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="nav-tabs-custom">
+						<ul class="nav nav-tabs">
+							<li class="active"><a href="#inbox" data-toggle="tab">{{i18n "tasks.inboxTitle"}}</a></li>
+							<li><a href="#mytasks" data-toggle="tab">{{i18n "tasks.myTasksTitle"}}</a></li>
+							<li><a href="#history" data-toggle="tab">{{i18n "tasks.inboxHistoryTitle"}}</a></li>
+						</ul>
+						<!-- <div class='pull-right tasktoolbar'>
+			                <button class='btn btn-primary createTaskBtn'>{{i18n "tasks.createTaskBtn"}}</button>
+			            </div> -->
+						<div class="tab-content">
+							<div class="tab-pane info-panel" id="mytasks">
+								<table class="mytasktable tableview table table-bordered table-hover table-striped" data-sshash-base='taskList'>
+					            </table>
+							</div>
+							<div class="active tab-pane info-panel" id="inbox">
+								<table class="inboxtable tableview table table-bordered table-hover table-striped" data-sshash-base='taskList'>
+					            </table>
+							</div>
+							<div class="tab-pane info-panel" id="history">
+								<table class="historytable tableview table table-bordered table-hover table-striped" data-sshash-base='taskList'>
+				            </table>
+						</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+	
+	<script id="taskSearch">
+		<div class="datatablesview col-xs-12">
+		    <div class="box">
+		        <div class="box-header">
+		            <h3 class="box-title">{{i18n "tasks.taskListTitle"}}</h3>
+					<div class="pull-right">
+						<!-- <button class="btn btn-primary exportTdrsButton" role="button">{{i18n "global.exportBtn"}}</button> -->
+					</div>
+		        </div>
+		        <div class="box-body">
+		            <table class="tasktable tableview table table-bordered table-hover table-striped" data-sshash-base='taskList'>
+		            </table>
+		        </div>
+		    </div>
+		</div>
+	</script>
+	
+	<script id="createWorkItem">
+		<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		    <h4 class="modal-title">{{i18n "tasks.createWorkItemDialogTitle"}}</h4>
+		</div>
+		<div class="modal-body">
+			<div class="ruledetails form-panel">
+				<form name="createTask" class="form-horizontal">
+				
+					{{>modalSelect name="taskType" label="tasks.createTaskType" data="transfer:enums.taskType.transfer,replenish:enums.taskType.replenish" hint="tasks.createTaskTypeHint"}}
+
+					<div class="destination-account form-group" style="display11:none">
+						<div class="row">
+							<label class="col-xs-4 control-label">{{i18n "tasks.destination"}}</label>
+							<div class="col-xs-8">
+								<div class="input-group">
+									<select id="destination" style="width: 100%;" name="destination" class="form-control destination">
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					{{>modalInput name="amount" label="tasks.createAmountLabel" hint="tasks.createAmountHint" value=this.amount}}
+					<div class="destination-bonus" style="display:none">
+						{{>modalInput name="bonus"  label="tasks.createBonusLabel"  hint="tasks.createBonusHint"  value=this.bonus}}
+					<div>
+					
+				</form>
+			</div>
+		</div>
+		<div class="modal-footer">
+		    <div class="form-group">
+		        <div class="col-sm-offset-2 col-sm-10">
+		        	<button type="button" class="btn btn-primary workItemCreateButton">{{i18n "tasks.workItemCreateButton"}}</button>
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "tasks.workItemCancelButton"}}</button>
+		        </div>
+			</div>
+		</div>
+	</script>
+	
+	<script id="taskItemView">
+		<div id="taskItemView" class="datatablesview col-xs-12">
+			
+		    <div class="box">
+		        <div class="box-header">
+		            <h3 class="box-title center-block"><span id="itemAction"> </span> <span id="itemType"></span></h3>
+					<div class="pull-right">
+						<!-- <button class="btn btn-primary exportTdrsButton" role="button">{{i18n "global.exportBtn"}}</button> -->
+					</div>
+		        </div>
+		        <div class="box-body">
+			        <form id="createTaskForm" name="createTaskForm" class="form-horizontal">
+				        <table class="tasktable tasktableview table table-bordered table-hover table-striped" data-sshash-base='taskList' style="display:none">
+			            </table>
+				        <div class="taskdetailview" style="display:none">
+					        
+				        
+					        <div class="form-group descriptionField">
+					        	<label class="col-sm-2 control-label">{{i18n "tasks.workItemDescription"}}</label>
+					        	<div class="col-sm-10">
+					        		<p id="description" class="form-control-static"></p>
+					        	</div>
+					        </div>
+					        <div class="form-group reasonField">
+					        	<label class="col-sm-2 control-label">{{i18n "tasks.workItemReason"}}</label>
+					        	<div class="col-sm-10">
+					        		<p id="reason" class="form-control-static"></p>
+					        	</div>
+					        </div>
+					        <div class="form-group amountField">
+					        	<label class="col-sm-2 control-label">{{i18n "tasks.workItemAmount"}}</label>
+					        	<div class="col-sm-10">
+					        		<p id="amount" class="form-control-static"></p>
+					        	</div>
+					        </div>
+					        <div class="form-group bonusField">
+					        	<label class="col-sm-2 control-label">{{i18n "tasks.workItemBonus"}}</label>
+					        	<div class="col-sm-10">
+					        		<p id="bonus" class="form-control-static"></p>
+					        	</div>
+					        </div>
+				        </div>
+
+				        <div class="form-group updateReasonField" style="display:none">
+				        	<label for="updateReason" class="col-sm-2 control-label">{{i18n "tasks.workItemReason"}}</label>
+				        	<div class="col-sm-10">
+				        		<input type="text" class="form-control" id="updateReason" name="updateReason" placeholder="{{i18n 'tasks.workItemReason'}}">
+				        	</div>
+				        </div>
+				        
+				        <div class="form-group errorField" style="display:none">
+				        	<div class="col-sm-offset-2 col-sm-10">
+				        		<p class="errorText alert alert-danger"> </p>
+				        	</div>
+				        </div>
+				        <div class="form-group workItemOTPField required" style="display:none">
+				        	<label for="workItemOTP" class="col-sm-2 control-label">{{i18n "tasks.workItemOTP"}}</label>
+				        	<div class="col-sm-10">
+				        		<input type="text" class="form-control" id="workItemOTP" name="workItemOTP" placeholder="{{i18n 'tasks.workItemOTP'}}">
+				        	</div>
+				        	<div class="row">
+								<div class="col-xs-offset-2 col-xs-6">
+							    	<div class="checkbox icheck resendPinLink">
+										<label>
+											<a href="#" class="resendPIN">Re-send PIN</a>
+										</label>
+										</div>
+								</div>
+							</div>
+				        </div>
+
+				        <div class="form-group formButtonSection">
+				        	<div class="col-xs-12 right">
+		       			 		<button type="button" class="btn btn-primary previewOKButton">{{i18n "tasks.previewOKButton"}}</button>
+		       			 		<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "tasks.previewCancelButton"}}</button>
+							</div>
+				    	</div>
+				    	<div class="form-group otpButtonSection">
+				        	<div class="col-xs-12 right">
+		       			 		<button type="button" class="btn btn-primary approveOTPButton">{{i18n "tasks.approveOTPButton"}}</button>
+		       			 		<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "tasks.previewCancelButton"}}</button>
+							</div>
+				    	</div>
+			        </form>
+		        </div>
+		        <div class="box-footer">
+	  			  	
+				</div>
+		    </div>
+		   
+		</div>
+	</script>
+</div>

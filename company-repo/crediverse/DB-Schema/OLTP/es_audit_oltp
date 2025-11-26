@@ -1,0 +1,26 @@
+*************************** 1. row ***************************
+       Table: es_audit
+Create Table: CREATE TABLE `es_audit` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `action` varchar(1) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `data_type` varchar(15) NOT NULL,
+  `domain_name` varchar(40) NOT NULL,
+  `ip_address` varchar(45) DEFAULT NULL,
+  `lm_time` datetime NOT NULL,
+  `lm_userid` int(11) NOT NULL,
+  `mac_address` varchar(17) DEFAULT NULL,
+  `machine_name` varchar(16) DEFAULT NULL,
+  `new_value` longtext DEFAULT NULL,
+  `old_value` longtext DEFAULT NULL,
+  `seq_no` varchar(17) NOT NULL,
+  `signature` bigint(20) NOT NULL,
+  `time_stamp` datetime NOT NULL,
+  `version` int(11) NOT NULL,
+  `webuser_id` int(11) NOT NULL,
+  `agentuser_id` int(11) DEFAULT NULL,
+  `reason_code` varchar(64) DEFAULT NULL,
+  `reason_attributes` text DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `time_stamp` (`time_stamp`)
+) ENGINE=InnoDB AUTO_INCREMENT=644034492 DEFAULT CHARSET=utf8

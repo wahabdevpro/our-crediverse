@@ -1,0 +1,117 @@
+<div>
+
+	<script id="promoItem" type="partial">
+		<div class="view-field">
+			<label>{{i18n label}}</label>
+			{{#if value}}
+				<div>{{ value }}</div>
+			{{else}}
+				<div>{{i18n "notSet"}}</div>
+			{{/if}}
+		</div>
+	</script>
+	
+	<script id="promoView" type="partial">
+		<h4>{{i18n "promotions.promotion"}}</h4>
+
+		{{>promoItem label="promotions.name" value=this.name}}
+		{{>promoItem label="promotions.startTime" value=(concat this.startDateString " " this.startTimeString)}}
+		{{>promoItem label="promotions.endTime" value=(concat this.endDateString " " this.endTimeString)}}
+
+		{{>promoItem label="promotions.targetAmount" value=this.targetAmount }}
+		{{>promoItem label="promotions.targetPeriod" value=this.targetPeriodInfo }}
+
+		{{#if retriggerable}}
+			{{>promoItem label="promotions.rewardRetriggerView" value=(i18n "enums.yesNo.yes")}}
+		{{else}}
+			{{>promoItem label="promotions.rewardRetriggerView" value=(i18n "enums.yesNo.no")}}
+		{{/if}}
+
+		{{>promoItem label="promotions.rewardAmount" value=this.rewardAmount}}
+		{{>promoItem label="promotions.rewardPercentage" value=(concat this.guiRewardPercentage " %")}}
+
+		{{#if promoActive}}
+			{{>promoItem label="promotions.stateDescription" value=(i18n "enums.yesNo.yes")}}
+		{{else}}
+			{{>promoItem label="promotions.stateDescription" value=(i18n "enums.yesNo.no")}}
+		{{/if}}
+	</script>
+
+	<script id="transferRulesView" type="partial">
+		{{>promoItem label="rules.ruleNameLabel" value=this.transferRule.name}}
+		{{>promoItem label="rules.ruleTradeBonusPercentageLabel" value=this.transferRule.buyerTradeBonusPercentage}}
+		{{>promoItem label="rules.ruleMinimumAmountLabel" value=this.transferRule.minimumAmount}}
+		{{>promoItem label="rules.ruleMaximumAmountLabel" value=this.transferRule.maximumAmount}}
+	</script>
+	
+	<script id="areaView" type="partial">
+		{{>promoItem label="areas.name" value=this.area.name}}
+		{{>promoItem label="areas.type" value=this.area.type}}
+	</script>
+	
+	<script id="bundleView" type="partial">
+		{{>promoItem label="bundles.name" value=this.bundle.name}}
+		{{>promoItem label="bundles.description" value=this.bundle.description}}
+	</script>
+
+	<script id="serviceClassView" type="partial">
+		{{>promoItem label="serviceclass.name" value=this.serviceClass.name}}
+		{{>promoItem label="serviceclass.description" value=this.serviceClass.description}}
+	</script>
+	
+	<script id="commonView" type="partial">
+		<h4>{{i18n heading}}</h4>
+		
+		{{#if hasData}}
+			{{#if showTransferRule}}
+				{{> "transferRulesView"}}
+			{{/if}}
+
+			{{#if showArea}}
+				{{> "areaView"}}
+			{{/if}}
+
+			{{#if showBundle}}
+				{{> "bundleView"}}
+			{{/if}}
+
+			{{#if showServiceClass}}
+				{{> "serviceClassView"}}
+			{{/if}}
+		{{else}}
+			<div>{{i18n "notSet"}}</div>
+		{{/if}}
+	</script>
+	
+	<script id="promotionView">
+		<div class="col-xs-12">
+			<div class="box box-primary">
+			
+				<div class="info-panel">
+					<div class="row view-fields" style="margin-left:10px;margin-right:10px;">
+						
+						<div class="col-lg-4 col-md-6">
+							{{> promoView}}
+						</div>
+						
+						<div class="col-lg-4 col-md-6">
+							{{> commonView heading="promotions.transferRule" hasData=this.transferRuleID showTransferRule=true}}
+							{{> commonView heading="promotions.area" hasData=this.areaID showArea=true}}
+						</div>
+
+						<div class="col-lg-4 col-md-6">
+							{{> commonView heading="promotions.bundle" hasData=this.bundleID showBundle=true}}
+							
+							{{> commonView heading="promotions.serviceClass" hasData=this.serviceClassID showServiceClass=true}}
+						</div>
+
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		
+		
+	</script>
+	
+</div>

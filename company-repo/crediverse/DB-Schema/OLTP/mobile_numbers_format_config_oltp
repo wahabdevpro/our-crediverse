@@ -1,0 +1,10 @@
+*************************** 1. row ***************************
+       Table: mobile_numbers_format_config
+Create Table: CREATE TABLE `mobile_numbers_format_config` (
+  `id` int(11) NOT NULL,
+  `old_number_length` int(11) NOT NULL DEFAULT 8,
+  `phase` int(11) NOT NULL DEFAULT 0,
+  `wrong_b_number_message_en` varchar(500) DEFAULT NULL,
+  `wrong_b_number_message_fr` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

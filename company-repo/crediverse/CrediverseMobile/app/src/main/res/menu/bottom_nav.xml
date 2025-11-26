@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/first_nav"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/second_nav"
+        android:icon="@drawable/ic_baseline_compare_arrows_24"
+        android:title="@string/transact" />
+    <item
+        android:id="@+id/third_nav"
+        android:icon="@drawable/ic_baseline_people_24"
+        android:title="@string/team" />
+    <item
+        android:id="@+id/fourth_nav"
+        android:icon="@drawable/ic_baseline_query_stats_24"
+        android:title="@string/stats" />
+    <item
+        android:id="@+id/fifth_nav"
+        android:icon="@drawable/ic_baseline_account_balance_wallet_24"
+        android:title="@string/buy_credit" />
+</menu>

@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/benefit_wrapper"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingVertical="2dp">
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:alignItems="center"
+        app:flexDirection="row"
+        app:justifyContent="center">
+
+        <TextView
+            android:id="@+id/benefit_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="4dp"
+            android:text="{Benefit-Value}"
+            android:textAlignment="textEnd"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/benefit_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingHorizontal="4dp"
+            android:text="{Benefit-Name}"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
+
+        <!-- android:fontFamily="@font/fa_solid" -->
+        <TextView
+            android:id="@+id/benefit_icon"
+            android:layout_width="15dp"
+            android:gravity="center"
+            android:layout_marginHorizontal="2dp"
+            android:layout_height="15dp"
+            android:fontFamily="sans-serif"
+            android:text=""
+            android:textAlignment="center"
+            android:textColor="@color/dark_gray"
+            android:textSize="12sp"
+            tools:ignore="HardcodedText" />
+
+    </com.google.android.flexbox.FlexboxLayout>
+
+</LinearLayout>

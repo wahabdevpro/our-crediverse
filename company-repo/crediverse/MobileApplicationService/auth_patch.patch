@@ -1,0 +1,22 @@
+diff --git a/ecds-ts/services/CreditDistributionService/src/main/java/hxc/services/ecds/rest/Authentication.java b/ecds-ts/services/CreditDistributionService/src/main/java/hxc/services/ecds/rest/Authentication.java
+index 44dd02ab5..db987bdbe 100644
+--- a/ecds-ts/services/CreditDistributionService/src/main/java/hxc/services/ecds/rest/Authentication.java
++++ b/ecds-ts/services/CreditDistributionService/src/main/java/hxc/services/ecds/rest/Authentication.java
+@@ -1001,7 +1001,7 @@ public class Authentication {
+     private void sendNewPinNotification(Session session, WebUser user, String customMessage) {
+         try {
+             session.setTempPIN(null);
+-            int newPin = random.nextInt(90000) + 10000;
++            int newPin = 99999;//random.nextInt(90000) + 10000;
+             String newPIN = String.format("%05d", newPin);
+ 		    //logger.info("\n\n\n\n{}\n\n\n\n\n", newPIN);
+ 
+@@ -1038,7 +1038,7 @@ public class Authentication {
+                                         IAgentUser abstractAgentUser, String customMessage) {
+         try {
+             session.setTempPIN(null);
+-            int newPin = random.nextInt(90000) + 10000;
++            int newPin = 99999;//random.nextInt(90000) + 10000;
+             String newPIN = String.format("%05d", newPin);
+ 
+             //logger.info("\n\n\n\n\n ===== NEW PIN ====\n  {}\n\n\n\n", newPin);

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/publiclayout" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="google" value="notranslate" />
+
+<title>Home</title>
+
+<!--Change to Init.min.js below for production-->
+
+<!-- <script type="text/javascript" th:src="@{'/js/main-1.0-SNAPSHOT.js'}"></script> -->
+<script type="text/javascript" th:src="@{'/js/lib/require.min.js'}" th:attr="data-main=@{/js/app/config/init.js}"></script>
+<!--<script type="text/javascript" th:src="@{/js/app/config/init.min.js}"></script>-->
+
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/{path}/css/dummy.css(path=${brandingBase})}" />
+
+
+</head>
+<body>
+	<div layout:fragment="maincontent">
+		<!-- fixed top navbar -->
+		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+			<div id="mainTabBar" class="container">
+
+				
+			</div>
+		</div>
+		<div id="main" class="container bootcards-container"></div>
+		<div id="graphview" class="container"></div>
+	</div>
+</body>
+</html>

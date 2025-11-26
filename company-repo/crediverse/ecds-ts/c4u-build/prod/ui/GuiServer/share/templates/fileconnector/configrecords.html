@@ -1,0 +1,36 @@
+<div>
+	<div id="" th:if="${#arrays.isEmpty(configrecords)}">
+		<p>Currently No Configurations Defined</p>
+	</div>
+	
+	<div th:if="${! #arrays.isEmpty(configrecords)}" class="row" style="margin-left: 20px; margin-right:20px;">
+		<table id="fileconfigurations" class="table infotable table-hover table-bordered table-striped" style="width: 100%; table-layout: fixed;">
+			<col width="33%" />
+			<col width="33%" />
+			<col width="33%" />
+			<col width="150px" />
+			<thead>
+				<tr>
+					<th width="20%">File Type</th>
+					<th width="20%">Server Role</th>
+					<th width="20%">File Processor</th>
+					<th width="150px;">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="record,iterStat : ${configrecords}">
+					<td th:text="${#strings.isEmpty(record.fileType)? 'Empty' : record.fileType}">-</td>
+					<td th:text="${#strings.isEmpty(record.serverRole)? 'Empty' : ((#strings.length(record.serverRole) > 30)? (#strings.substring(record.serverRole,0, 30) + '...') : record.serverRole)}">-</td>
+					<td th:text="${record.fileProcessorType}">-</td>
+					<td>
+						<a th:id="${'infoview_' + iterStat.index}"  th:onclick="'javascript:showRecordInfo(\'view\',' + ${iterStat.index} + ');return false;'" href="#"><span class="glyphicon glyphicon-eye-open viewbutton" title="view"></span></a> 
+						<span>|</span>
+						<a th:id="${'infoedit_' + iterStat.index}" th:onclick="'javascript:showRecordInfo(\'edit\',' + ${iterStat.index} + ');return false;'" href="#"><span class="glyphicon glyphicon-pencil editbutton" title="edit"></span></a> 
+						<span>|</span>
+						<a th:id="${'infodelete_' + iterStat.index}" th:onclick="'javascript:deleteRecordInfo(' + ${iterStat.index} + ',\'' + ${record.fileType} + '\');return false;'" href="#"><span class="glyphicon glyphicon-trash deletebutton" title="delete"></span></a> 
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

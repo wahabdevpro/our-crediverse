@@ -1,0 +1,25 @@
+apply plugin:DynamicDependencyPlugin
+
+import org.gradle.api.artifacts.component.ModuleComponentSelector
+
+class DynamicDependencyPlugin implements Plugin<Project> {
+
+
+    void apply(Project project) {
+        project.getSubprojects().each { subpj ->
+            subpj.getConfigurations().all { config ->
+                resolutionStrategy.dependencySubstitution.all { DependencySubstitution dependency ->
+                    //println("Looking for dependency => ${dependency.requested}")
+                    if (dependency.requested instanceof ModuleComponentSelector && dependency.requested.group == "ga.csys.c4u") {
+                        def targetProject = project.findProject(":${dependency.requested.module}")
+                        if (targetProject != null) {
+                            //println("Converting dependency => ${dependency.requested.group}::${dependency.requested.module}::${dependency.requested.} to Project dependency")
+                            //println("Converting dependency => ${dependency.requested.group}::${dependency.requested.module}::${dependency.requested.} to Project dependency")
+                            dependency.useTarget targetProject
+                        }
+                    }
+                }
+            }
+       }
+    }
+}

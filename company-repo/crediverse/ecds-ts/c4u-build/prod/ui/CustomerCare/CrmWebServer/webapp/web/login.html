@@ -1,0 +1,89 @@
+<html th:if="${! jsonview}">
+  <head>
+    <meta charset="utf-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" ></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" ></meta>
+    <meta name="description" content="m4u login"></meta>
+    <meta name="author" content="me"></meta>
+
+    <title>C4U Customer Care login</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.css" rel="stylesheet" th:href="@{css/bootstrap.min.css}"/>
+
+    <!-- Custom styles for this template -->
+   	<link href="/css/signin.css" rel="stylesheet" th:href="@{css/signin.css}"/>   
+   	<link rel="shortcut icon" href="/img/favicon.png" /> 
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="/js/html5shiv.js" th:href="@{/js/html5shiv.js}"></script>
+      <script src="/js/respond.min.js" th:href="@{/js/respond.min.js}"></script>
+    <![endif]-->
+    
+
+	<style>
+		body {
+		    background-image: url(/img/corner-logo.jpg);
+		    background-repeat: no-repeat;
+		    background-position: right bottom;
+		    background-attachment:fixed;
+		}
+	</style>    
+  </head>
+
+  <body>
+
+    <div class="container">
+
+		<form id="loginForm" class="form-signin well" autocomplete='off'>
+			<center>
+				<img src="/img/login.png" />
+			</center>
+			<legend class="center">
+				<center>
+					<h1 class="form-signin-main-heading"><center>Credit4U</center></h1>
+					<h3>Customer Care</h3>
+				</center>
+			</legend>
+
+			<p style="text-align: center; font-weight:bold; font-size: small;">Revision <span th:text="${VERSION}">0.0.0</span></p>
+			
+			<p id="signinbanner" class="form-signin-heading" style="font-weight:bold;" th:text="#{login.message}">Please sign in</p>	
+					
+			<input type="text" class="form-control" id="user" name="user" th:placeholder="#{login.username}" required="true" autofocus="true" value=""/>
+			<input type="password" class="form-control" id="pass" name="pass" th:placeholder="#{login.password}" required="true" value=""/>
+			<div id="loginfailmessage" class="loginfail alert alert-danger hide" style="padding-top:5px; padding-bottom:5px;text-align:center" th:text="#{login.fail}">
+			</div>
+			
+
+			<button id="signin" type="button" class="btn btn-lg btn-primary btn-block" th:text="#{login.signin}">Sign in</button>
+		</form>
+
+    </div>
+
+  </body>
+
+	<script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
+	
+	<!--[if lt IE 9]>
+		<script type="text/javascript" src="/js/jquery.placeholder.js"></script>
+	<![endif]-->
+		
+	<script type="text/javascript" src="/js/bootstrap.min.js"></script>	
+	<script src="/js/respond.min.js"></script>
+  
+	<link type="text/css" href="/css/bootstrap-select.min.css" rel="stylesheet" />
+	<script src="/js/bootstrap-select.min.js"></script>
+  
+  	<script src="/js/newjs/uicommon.js"></script>
+  	<script src="/js/newjs/uilogin.js"></script>
+
+</html>
+
+<script th:inline="javascript" th:if="${jsonview}">
+// <![CDATA[
+var languagesInfo = {"language":[[#{login.language}]],"username":[[#{login.username}]],"password":[[#{login.password}]],"signin":[[#{login.signin}]],"message":[[#{login.message}]], "signin":[[#{login.signin}]],"fail":[[#{login.fail}]],"soapfail":[[#{login.soapfail}]]};
+// ]]>
+</script>
+

@@ -1,0 +1,5 @@
+rootProject.name = 'ecds-api'
+
+include ':RestProtocol'
+
+project(":RestProtocol").projectDir = file("../common/RestProtocol")

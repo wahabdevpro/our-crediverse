@@ -1,0 +1,97 @@
+<link type="text/css" href="/css/pagecss/enhancedCreditSharing.css" rel="stylesheet" />
+<link type="text/css" href="/css/pagecss/creditSharing.css" rel="stylesheet" />
+
+<div class="row">
+	<div class="col-sm-12">
+		<h1 class="page-header config-prop-headings">Service Configuration Properties</h1>
+	</div>
+</div>
+
+<!-- Tabbed Content -->
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#general" data-toggle="tab">General</a></li>
+  <li><a href="#serviceclasses" data-toggle="tab">Service Classes</a></li>
+  <li><a href="#variants" data-toggle="tab">Variants</a></li>
+  <li><a href="#returnCodes" data-toggle="tab">Return Codes</a></li>
+  <li><a href="#vasCommands" data-toggle="tab">VAS Commands</a></li>
+</ul>
+
+<div class="tab-content">
+
+	<!--  General Configuration -->
+	<div class="tab-pane tabcontent active" id="general">
+		<div id="generalinfo" th:include="friendsandfamily/general" />
+	</div>
+	
+	<!--  Service Classes -->
+	<div class="tab-pane tabcontent" id="serviceclasses">
+		<div class="row" >
+			<div class="col-xs-11 col-sm-5 col-md-7 user_heading" style="margin-left: 20px;">Service Classes</div>
+			<div class="col-xs-6 col-md-4" style="float:right; margin-right:20px" >
+				<button type="button" class="btn btn-success btn-xs" style="float:right;" data-toggle="modal" onclick="showAddServiceClass();" title="add service class"><span class="glyphicon glyphicon-plus"></span></button>
+			</div>
+		</div>
+		<div id="scinfo" th:include="friendsandfamily/serviceclasses" />
+	</div>
+	
+	<!-- Return Codes -->
+	<div class="tab-pane tabcontent" id="returnCodes">
+		<div class="row" >
+				<div class="col-xs-11 col-sm-5 col-md-7 user_heading" style="margin-left: 20px;">Return Codes</div>
+		</div>	
+		<form th:if="${not no_config}" id="configReturnCodeForm" name="configReturnCodeForm" class="form-horizontal" role="form">
+			<div th:include="advconfig/returnCodesTexts" />
+		</form>
+	</div>
+	
+	<!--  Variants -->
+	<div class="tab-pane tabcontent" id="variants">
+		<div class="row" >
+			<div class="col-xs-11 col-sm-5 col-md-7 user_heading" style="margin-left: 20px;">Variants</div>
+			<div class="col-xs-6 col-md-4" style="float:right; margin-right:20px" >
+				<button type="button" class="btn btn-success btn-xs" style="float:right;" data-toggle="modal" onclick="showAddVariants();" title="add variant"><span class="glyphicon glyphicon-plus"></span></button>
+			</div>
+		</div>
+		<div id="varinfo" th:include="friendsandfamily/variants" />
+	</div>
+		
+	<!-- Vas Commands -->
+	<div class="tab-pane tabcontent" id="vasCommands">
+	</div>	
+	
+</div>
+
+<!-- Update Buttons -->
+<div th:include="common :: updateAndNotify" th:with="std=${'true'}, forms=${'config,configReturnCode'}"/>
+
+<!-- Add/Edit Modals -->
+<div th:include="friendsandfamily/serviceclassmodal" />
+<div th:include="friendsandfamily/variantsmodal" />
+<div th:include="advconfig/vasCommandsModal" />
+
+<!--  Delete Modal -->
+<div th:include="common :: deleteModal" />
+
+<link type="text/css" href="/css/bootstrap-select.min.css" rel="stylesheet" />
+<script src="/js/min/bootstrap-select.min.js"></script>
+<script src="/js/pagejs/mancommon.js"></script>
+
+<script type="text/javascript" src="/js/pagejs/commonAdvConfig.js"></script>
+<script type="text/javascript" src="/js/full/resultcode.js"></script>
+<script type="text/javascript" src="/js/full/complex-config.js"></script>
+<script type="text/javascript" src="/js/full/vascommands.js"></script>
+<script type="text/javascript" src="/js/pagejs/friendsandfamilyservice.js"></script>
+
+<script th:inline="javascript">
+$(document).ready(function() {
+	try {
+		initMessaging();
+	} catch(err) {
+		alert("page error: " + err);
+	}
+	registerInputs();
+	$(".returncodetexts").resultCodeController({
+	});
+});
+</script>
+

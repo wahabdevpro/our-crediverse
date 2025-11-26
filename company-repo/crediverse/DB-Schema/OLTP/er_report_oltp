@@ -1,0 +1,20 @@
+*************************** 1. row ***************************
+       Table: er_report
+Create Table: CREATE TABLE `er_report` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `agent_id` int(11) NOT NULL DEFAULT 0,
+  `description` varchar(80) NOT NULL,
+  `internal_name` varchar(50) DEFAULT NULL,
+  `lm_time` datetime NOT NULL,
+  `lm_userid` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `originator` varchar(64) DEFAULT NULL,
+  `parameters` text NOT NULL,
+  `type` varchar(50) NOT NULL,
+  `version` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `er_report_name` (`company_id`,`agent_id`,`name`),
+  UNIQUE KEY `er_report_internal_name` (`company_id`,`agent_id`,`internal_name`),
+  KEY `er_report_agent_id` (`agent_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=423 DEFAULT CHARSET=utf8

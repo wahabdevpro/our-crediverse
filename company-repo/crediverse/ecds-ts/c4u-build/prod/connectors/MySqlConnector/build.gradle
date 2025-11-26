@@ -1,0 +1,29 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.connectors.database.mysql.MySqlConnector")
+   }
+}
+dependencies {
+    implementation project(':CoreInterfaces')
+    implementation project(':Reflection')
+    implementation project(':Configuration')
+    implementation project(':Calendar')
+    implementation project(':Threads')
+    implementation 'mysql:mysql-connector-java'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:2.3.0'
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'com.sun.xml.ws:jaxws-rt'
+    implementation 'com.sun.xml.ws:rt'
+    implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
+    implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
+}

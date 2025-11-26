@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Request Permission Reasons -->
+    <string name="permissions_needed">Permissions Needed</string>
+    <string name="location">Location</string>
+    <string name="read_sms">Read SMS</string>
+    <string name="make_phone_calls">Make Phone Calls</string>
+    <string name="permission_reason_location">Required for analytics</string>
+    <string name="permission_reason_read_sms">In order to get your OTP</string>
+    <string name="permission_reason_make_calls">In order to retrieve the IMSI for added security</string>
+
+    <!-- Agent Account Status -->
+    <string name="active">Active</string>
+    <string name="suspended">Suspended</string>
+    <string name="deactivated">Deactivated</string>
+    <string name="permanent">Permanent</string>
+
+    <!-- Global -->
+    <string name="app_name">Crediverse Mobile</string>
+    <string name="image_logo_text">Company Logo</string>
+    <string name="account_info">Account Info</string>
+    <string name="about_us_dropdown_text">About</string>
+    <string name="about_us">Crediverse Agent App</string>
+    <string name="version_string">Version: <![CDATA[<b>%1$s</b>]]></string>
+    <string name="build_string">Build: <![CDATA[<b>%1$s</b>]]></string>
+    <string name="logout">Logout</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="home">Home</string>
+    <string name="sell">Sell</string>
+    <string name="buy">Buy</string>
+    <string name="airtime">Airtime</string>
+    <string name="data">Data</string>
+    <string name="sms">SMS</string>
+    <string name="transfer">Transfer</string>
+    <string name="recipient">Recipient</string>
+    <string name="amount">Amount</string>
+    <string name="status">Status</string>
+    <string name="bundle">Bundle</string>
+    <string name="bundle_list">Bundle List</string>
+    <string name="history">History</string>
+    <string name="stats">Stats</string>
+    <string name="cancel">Cancel</string>
+    <string name="close">Close</string>
+    <string name="c_ok">OK</string>
+    <string name="later">Later</string>
+    <string name="ref_prefix">Ref: %s</string>
+    <string name="from_prefix">From - %s</string>
+    <string name="to_prefix">To - %s</string>
+    <string name="go_back">Go Back</string>
+    <string name="back">Back</string>
+    <string name="balance">Stock Balance</string>
+    <string name="english">English</string>
+    <string name="french">French</string>
+    <string name="unknown">Unknown</string>
+    <string name="unknown_status">Unknown Status</string>
+    <string name="personal">Personal</string>
+    <string name="account">Account</string>
+    <string name="reference_number">Reference Number</string>
+    <string name="source_to_destination">%1$s to %2$s</string>
+    <string name="please_confirm">Please Confirm?</string>
+    <string name="missing_imsi_permission">To use the app, we need the \"make phone calls\" permission to be granted in order to authorise you with the mobile operator.\n\nPlease agree to the permission request by restarting the app or reinstalling</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="problem">Problem</string>
+    <string name="date_and_time">Date and Time</string>
+    <string name="invalid_amount_dialog">Please check the amount you entered, must be a number and more than zero</string>
+    <string name="more">More</string>
+    <string name="busy">Busy</string>
+
+    <!-- Login Activity -->
+    <string name="login_title">Crediverse Login</string>
+    <string name="login">Login</string>
+    <string name="msisdn_hint">Phone Number</string>
+    <string name="pin_hint">Pin</string>
+    <string name="otp_hint">One Time Pin</string>
+    <string name="check_sms_for_otp">Check your SMSs for your OTP</string>
+    <string name="otp_verify_failed">Verification of OTP unsuccessful</string>
+    <string name="forced_logout">Your session has expired, please login again</string>
+
+    <!-- Navigation Activity -->
+    <string name="navigation_title">Crediverse Navigation</string>
+    <string name="nav_history_limit_reached">Can\'t go back anymore<![CDATA[<br><br><b>Press back again to logout</b>]]></string>
+
+    <!-- Account Info (Navigation Overlay) -->
+    <string name="account_number">Account # %s</string>
+    <string name="title">Title</string>
+    <string name="full_name">Full Name</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
+    <string name="language">Language</string>
+    <string name="state">State</string>
+    <string name="tier_name">Tier Name</string>
+    <string name="close_account_info_floating_button_description">Close Account Info</string>
+    <string name="update_account_information">Update Account Information</string>
+    <string name="update_profile_success">Update Profile successful</string>
+    <string name="account_information">Account Information</string>
+    <string name="get_account_info_busy">Still busy getting account info from server</string>
+    <string name="get_account_info_failure">There was a problem getting the account info, please try again later</string>
+    <string name="invalid_old_pin">Old pin is incorrect</string>
+    <string name="change_pin_success">PIN change successful</string>
+    <string name="change_pin_failure">Could not change pin. Please check the pin format and don\'t reuse your last few pins.</string>
+    <string name="change_pin_oneline">Change PIN</string>
+    <string name="change_pin">Change\nPIN</string>
+    <string name="update_info">Update\nInfo</string>
+    <string name="update_info_online">Update Info</string>
+    <string name="email_hint">Email Address</string>
+    <string name="old_pin_hint">Enter your OLD pin</string>
+    <string name="new_pin_hint">Enter your NEW pin</string>
+    <string name="old_pin">Old pin</string>
+    <string name="new_pin">New pin</string>
+    <string name="make_language_change_effective">To make the language change effective, you will need to logout.\n\nLogout now?</string>
+    <!-- Title Options -->
+    <string name="title_mr">Mr.</string>
+    <string name="title_mrs">Mrs.</string>
+    <string name="title_miss">Miss</string>
+
+    <!-- Home Fragment -->
+    <string name="welcome_text">Mr %s</string>
+    <string name="total_balance">Total Balance</string>
+    <string name="on_hold_balance">On Hold Balance</string>
+    <string name="bonus_balance">Bonus Balance</string>
+
+    <!-- Transfer Fragment -->
+    <string name="transfer_credit">Transfer Credit</string>
+    <string name="transfer_amount_hint">Credit amount</string>
+    <string name="transfer_confirm">You will transfer a credit amount of <![CDATA[<b>%1$s</b>]]> to <![CDATA[<b>%2$s</b>]]>.\nAre you sure?</string>
+    <!-- transfer errors -->
+    <string name="transfer_success_title">Credit Transferred</string>
+    <string name="transfer_failure_title">Problem with transfer</string>
+    <string name="transfer_error_invalid_channel">Cannot transfer to/from this channel</string>
+    <string name="transfer_error_no_rule">You are not allowed to perform this transaction</string>
+    <!-- -->
+
+    <!-- transaction types -->
+    <string name="type_transfer">Transfer</string>
+    <string name="type_sell">Airtime Sale</string>
+    <string name="type_reverse">Reversal</string>
+    <string name="type_partial_reversal">Partial Reversal</string>
+    <string name="type_promo_reward">Promotion Reward</string>
+    <string name="type_self_topup">Self Top-up</string>
+    <string name="type_adjudicate">Adjudication</string>
+    <string name="type_adjust">Adjustment</string>
+    <string name="type_non_airtime_debit">Bundle Sale</string>
+    <string name="type_non_airtime_refund">Bundle Refund</string>
+    <!-- generic errors -->
+    <string name="error_follow_up">Technical Error. The transaction may not have succeeded, please contact technical support with the reference</string>
+    <string name="error_refill_failed">Refill failed</string>
+    <string name="error_not_self">Cannot send funds to yourself</string>
+    <string name="error_insufficient_funds">Not enough funds for this sale</string>
+    <string name="error_auth">An authentication problem occurred</string>
+    <string name="error_invalid_amount">The amount you entered is not valid</string>
+    <string name="error_invalid_email">The email you entered is not valid</string>
+    <string name="error_invalid_recipient">The recipient is not valid</string>
+    <string name="error_invalid_channel">Cannot transact on this channel</string>
+    <string name="error_balance">0.0 (err)</string>
+    <string name="sell_failure_title">Problem with sale</string>
+
+    <!-- Sell Fragment -->
+    <string name="buy_airtime">Buy Airtime</string>
+    <string name="sell_airtime">Sell Airtime</string>
+    <string name="sell_amount_hint">Sale amount</string>
+    <string name="sell_confirm">You will sell an airtime amount of <![CDATA[<b>%1$s</b>]]> to <![CDATA[<b>%2$s</b>]]>.\nAre you sure?</string>
+    <!-- sell errors -->
+    <string name="sell_success_title">Airtime Sold</string>
+    <string name="sold_airtime">Successfully sold <![CDATA[<b>%1$s</b>]]> to <![CDATA[<b>%2$s</b>]]></string>
+    <!-- -->
+
+    <!-- Bundle Fragment -->
+    <string name="sell_bundle">Sell Bundle</string>
+    <string name="bundle_choose_recipient">Select a Recipient</string>
+    <string name="choose_bundle">Select a Bundle</string>
+    <string name="bundle_sale">Bundle Sale</string>
+    <string name="bundle_amount_hint">Bundle cost</string>
+    <string name="bundle_sale_recipient">Bundle Recipient:<![CDATA[<br><b>%1$s</b>]]></string>
+    <!-- bundle errors -->
+    <string name="bundle_list_empty">No bundles available for this recipient</string>
+    <string name="bundle_listing_failed">Problem retrieving the bundle list, please try again later</string>
+    <string name="bundle_provision_failed">Could not provision the recipient with this bundle</string>
+    <string name="bundle_pin_invalid">Your pin has been changed, please login again in order to perform Bundle Sales.</string>
+    <!-- -->
+
+    <!-- Sale History Fragment -->
+    <string name="history_title">Transaction History</string>
+    <string name="tx_info">Transaction Info</string>
+    <string name="sale_history_transaction_no">Transaction No.</string>
+    <string name="sale_history_transaction_started">Transaction Started</string>
+    <string name="sale_history_balance_after">My Balance After</string>
+    <string name="sale_history_bonus_after">My Bonus After</string>
+    <string name="sale_history_follow_up">Follow Up Required?</string>
+    <string name="sale_history_rolled_back">Rolled Back?</string>
+    <string name="repeat_sale">Repeat Sale</string>
+    <string name="airtime_sold_24h">Sold - 24h</string>
+    <string name="number_of_sales_24h"># Sales - 24h</string>
+    <string name="tx_list_empty">No transactions found</string>
+    <string name="no_more_transactions">No more transactions</string>
+
+    <!-- Sale History Fragment -->
+    <string name="stats_daily_tab_title">Daily</string>
+    <string name="stats_weekly_tab_title">Weekly</string>
+    <string name="stats_monthly_tab_title">Monthly</string>
+
+    <!-- Stats Fragment -->
+    <string name="stats_team_description">See team stats</string>
+    <string name="stats_members_description">See team members stats</string>
+    <string name="stats_self_description">See my own stats</string>
+    <string name="stats_choice_description">Choose the stats to display</string>
+    <string name="tabs_description">Statistics Tabs</string>
+    <string name="airtime_sales_title">Airtime Sales</string>
+    <string name="bundle_sales_title">Bundle Sales</string>
+    <string name="transfers_title">Transfers</string>
+
+    <string name="showing_my_stats">Showing my stats</string>
+
+    <string name="stats_title_prefix">Stats - %1$s</string>
+    <string name="stats_title_suffix_personal">Personal</string>
+    <string name="stats_title_suffix_team">Team</string>
+    <string name="stats_title_suffix_member">Agent, %1$s</string>
+
+    <string name="number_of">Volume of:</string>
+    <string name="amounts">Total:</string>
+
+    <string name="sales_today">Today</string>
+    <string name="sales_yesterday">Yesterday</string>
+    <string name="sales_this_week">This Week</string>
+    <string name="sales_last_week">Last Week</string>
+    <string name="sales_this_month">This Month</string>
+    <string name="sales_last_month">Last Month</string>
+
+    <!-- Agent Feedback Fragment -->
+    <string name="feedback_text">Feedback</string>
+    <string name="feedback_hint">Enter Feedback</string>
+    <string name="invalid_feedback_message">Cannot Submit Empty Feedback</string>
+    <string name="feedback_failure_title">Problem with Feedback</string>
+    <string name="feedback_success_title">Feedback Sent</string>
+    <string name="feedback_success_text">Feedback was sent successfully</string>
+    <string name="feedback_description_text">We\'d love to hear your thoughts!\nPlease provide us with your feedback.</string>
+
+    <!-- Uncategorized  -->
+    <string name="balance_text">Balance: </string>
+    <string name="from_history">From History</string>
+    <string name="submit_button_text">Submit</string>
+
+    <!-- Messages  -->
+    <string name="auth_forbidden">This action requires permission</string>
+    <string name="auth_permission_denied">You no longer have permission and will be logged out</string>
+    <string name="unable_to_authenticate">Unable to authenticate</string>
+    <string name="unable_to_connect">Could not connect to the application server</string>
+    <string name="connection_timeout">Application server taking too long to respond, please try again later</string>
+    <string name="invalid_time">Your phone time is out of sync with the network, please update your time to proceed</string>
+    <string name="internal_server_error">Internal Server Error</string>
+    <string name="request_error">Problem with the request, please contact support for more assistance. API-CODE-%s</string>
+
+    <!-- Sale History Status -->
+    <string name="ALREADY_ADJUDICATED">Already Adjudicated</string>
+    <string name="ALREADY_REGISTERED">Already Registered</string>
+    <string name="ALREADY_REVERSED">Already Reversed</string>
+    <string name="BUNDLE_SALE_FAILED">Bundle Sale Failed</string>
+    <string name="CO_AUTHORIZE">Co Authorize</string>
+    <string name="CO_SIGN_ONLY_SESSION">Co Sign Only Session</string>
+    <string name="DAY_AMOUNT_LIMIT">Daily Amount Limit</string>
+    <string name="DAY_COUNT_LIMIT">Daily Count Limit</string>
+    <string name="FORBIDDEN">Forbidden</string>
+    <string name="HISTORIC_PASSWORD">Historic Password</string>
+    <string name="IMSI_LOCKOUT">IMSI Lockout</string>
+    <string name="INSUFFICIENT_FUNDS">Insufficient Funds</string>
+    <string name="INSUFFICIENT_PROVISN">Insufficient Provision</string>
+    <string name="INTRATIER_TRANSFER">Intra-tier Transfer</string>
+    <string name="INVALID_AGENT">Invalid Agent</string>
+    <string name="INVALID_AMOUNT">Invalid Amount</string>
+    <string name="INVALID_BUNDLE">Invalid Bundle</string>
+    <string name="INVALID_CHANNEL">Invalid Channel</string>
+    <string name="INVALID_PASSWORD">Invalid Password</string>
+    <string name="INVALID_PIN">Invalid Pin</string>
+    <string name="INVALID_RECIPIENT">Invalid Recipient</string>
+    <string name="INVALID_STATE">Invalid State</string>
+    <string name="INVALID_TRAN_TYPE">Invalid Transaction Type</string>
+    <string name="INVALID_VALUE">Invalid Value</string>
+    <string name="MAX_AMOUNT_LIMIT">Max Amount Limit</string>
+    <string name="MONTH_AMOUNT_LIMIT">Monthly Amount Limit</string>
+    <string name="MONTH_COUNT_LIMIT">Monthly Count Limit</string>
+    <string name="NOT_ELIGIBLE">Not Eligible</string>
+    <string name="NOT_REGISTERED">Not Registered</string>
+    <string name="NOT_SELF">Not Self</string>
+    <string name="NOT_WEBUSER_SESSION">Not Webuser Session</string>
+    <string name="NO_IMSI">No IMSI</string>
+    <string name="NO_LOCATION">No Location</string>
+    <string name="NO_TRANSFER_RULE">No Transfer Rule</string>
+    <string name="OTHER_ERROR">Other Error</string>
+    <string name="PASSWORD_LOCKOUT">Password Lockout</string>
+    <string name="PIN_LOCKOUT">Pin Lockout</string>
+    <string name="REFILL_BARRED">Refill Barred</string>
+    <string name="REFILL_DENIED">Refill Denied</string>
+    <string name="REFILL_FAILED">Refill Failed</string>
+    <string name="REFILL_NOT_ACCEPTED">Refill Not Accepted</string>
+    <string name="SESSION_EXPIRED">Session Expired</string>
+    <string name="TECHNICAL_PROBLEM">Technical Problem</string>
+    <string name="TEMPORARY_BLOCKED">Temporarily Blocked</string>
+    <string name="TIMED_OUT">Timed Out</string>
+    <string name="TOO_LARGE">Too Large</string>
+    <string name="TOO_LONG">Too Long</string>
+    <string name="TOO_SHORT">Too Short</string>
+    <string name="TOO_SMALL">Too Small</string>
+    <string name="TX_NOT_FOUND">Transaction Not Found</string>
+    <string name="WRONG_LOCATION">Wrong Location</string>
+    <string name="SUCCESS">Success</string>
+
+    <!-- FLAGS -->
+    <!-- Generally true/false/1/0 ... though some are custom -->
+
+    <!-- MAS Hostname -->
+    <!-- 10.0.2.2 is equivalent of localhost in the emulator -->
+    <!--string name="mas_hostname" translatable="false">10.0.2.2</string-->
+    <string name="mas_hostname" translatable="false">demo.gcp.concurrent.systems</string>
+    <string name="mas_port" translatable="false">5000</string>
+    <string name="ca_path" translatable="false">tls/ca.root.certificate</string>
+
+    <!-- Currency Format Settings -->
+
+    <!-- START -->
+    <!--    <string name="currency_locale_code" translatable="false">en-CI</string>-->
+    <!--    <string name="currency_pattern" translatable="false">\u00A4#,##0</string>-->
+    <!--    <string name="currency_symbol" translatable="false">Fcfa</string>-->
+    <!--    <string name="currency_decimal_separator" translatable="false">.</string>-->
+    <!--    <string name="currency_group_separator" translatable="false">,</string>-->
+    <!-- END -->
+
+    <!-- START -->
+    <string name="currency_locale_code" translatable="false">fr-CI</string>
+    <string name="currency_pattern" translatable="false">#,##0 \u00A4</string>
+    <string name="currency_symbol" translatable="false">Fcfa</string>
+    <string name="currency_decimal_separator" translatable="false">,</string>
+    <string name="currency_group_separator" translatable="false">\u0020</string>
+    <!-- END -->
+
+    <!-- Can be EN/FR/NONE -->
+    <string name="force_language" translatable="false">NONE</string>
+
+    <!-- if primary is true, then secondary is ignored -->
+    <!-- if neither is true, then logo is without a background color -->
+    <string name="logo_has_primary_background" translatable="false">false</string>
+    <string name="logo_has_secondary_background" translatable="false">false</string>
+
+    <!-- Icons -->
+    <string name="fa_house" translatable="false">\uf015</string>
+    <string name="fa_retro_mobile" translatable="false">\ue527</string>
+    <string name="fa_gift" translatable="false">\uf06b</string>
+    <string name="fa_question" translatable="false">\u003f</string>
+    <string name="fa_check_double" translatable="false">\uf560</string>
+    <string name="fa_chevron_left" translatable="false">\uf053</string>
+    <string name="fa_chevron_right" translatable="false">\uf054</string>
+    <string name="fa_x_mark" translatable="false">\uf00d</string>
+    <string name="fa_exclamation" translatable="false">\u0021</string>
+    <string name="fa_triangle_exclamation" translatable="false">\uf071</string>
+    <string name="fa_info" translatable="false">\uf129</string>
+    <string name="fa_eraser" translatable="false">\uf12d</string>
+    <string name="fa_clock_rotate_left" translatable="false">\uf1da</string>
+    <string name="fa_chart_column" translatable="false">\ue0e3</string>
+    <string name="fa_ellipsis_vertical" translatable="false">\uf142</string>
+    <string name="fa_arrow_right_from_bracket" translatable="false">\uf08b</string>
+    <string name="fa_arrow_right" translatable="false">\uf061</string>
+    <string name="fa_arrow_left" translatable="false">\uf060</string>
+    <string name="fa_comment" translatable="false">\uf075</string>
+    <string name="fa_arrow_rotate" translatable="false">\uf021</string>
+    <string name="fa_arrow_right_to_bracket" translatable="false">\uf090</string>
+    <string name="fa_fingerprint" translatable="false">\uf577</string>
+    <string name="fa_users" translatable="false">\uf0c0</string>
+    <string name="fa_user_tie" translatable="false">\uf508</string>
+    <string name="fa_user_pen" translatable="false">\uf4ff</string>
+
+    <!-- Bundles -->
+    <!-- ___ PROVISION -->
+    <string name="fa_plus" translatable="false">\u002b</string>
+    <!-- ___ SUBSCRIBE -->
+    <string name="fa_repeat" translatable="false">\uf363</string>
+    <!-- ___ EXTEND -->
+    <string name="fa_up_right_and_down_left_from_center" translatable="false">\uf424</string>
+    <!-- ___ CANCEL -->
+    <!-- SAME AS X-MARK -->
+    <!-- ___ Airtime -->
+    <string name="fa_phone" translatable="false">\uf095</string>
+    <!-- ___ SMS -->
+    <string name="fa_message" translatable="false">\uf27a</string>
+    <!-- ___ DATA -->
+    <string name="fa_globe" translatable="false">\uf0ac</string>
+    <!-- ___ NIGHT DATA -->
+    <string name="fa_moon" translatable="false">\uf186</string>
+
+    <!-- self top-up -->
+    <string name="fa_wallet" translatable="false">\uf555</string>
+    <!-- adjust -->
+    <string name="fa_sliders" translatable="false">\uf1de</string>
+    <!-- transfer -->
+    <string name="fa_arrow_right_arrow_left" translatable="false">\uf0ec</string>
+    <!-- adjudicate -->
+    <string name="fa_scale_unbalanced" translatable="false">\uf515</string>
+    <!-- partial/complete reversal -->
+    <string name="fa_backward" translatable="false">\uf04a</string>
+    <!-- reward -->
+    <string name="fa_hand_holding_dollar" translatable="false">\uf4c0</string>
+</resources>

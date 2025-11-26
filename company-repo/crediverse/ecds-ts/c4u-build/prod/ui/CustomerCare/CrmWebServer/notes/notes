@@ -1,0 +1,63 @@
+JVM scope
+ - The name is unique across the JVM instance, and is visible to all application code. You represent this scope by a null first parameter to the resource declaration. For example:
+
+
+1) Defining the resource using Jetty Server
+
+	EnvEntry maxAmount = new EnvEntry(null, "maxAmount", Double.valueOf(100), true);
+
+2) In servlet
+
+    @Resource(name="someValue")
+    private Double someValue;
+    
+------------------------------------------------------------------------------------------------
+Server scope
+ - The name is unique to a Server instance, and is only visible to code associated with that instance. You represent this scope by referencing the Server instance as the first parameter to the resource declaration. For example:
+   Named resource injection using Jetty Server:
+
+1) Defining the resource using Jetty Server
+
+	EnvEntry maxAmount = new EnvEntry(jettyServer, "maxAmount", Double.valueOf(100), true);
+
+2) In Servlet:
+
+    @Resource(name="maxAmount")
+    private Double maxAmount;
+   
+-------------------------------------------------------------------------------------------------
+Webapp scope
+ - The name is unique to the WebAppContext instance, and is only visible to code associated with that instance.
+   You represent this scope by referencing the WebAppContext instance as the first parameter to the resource declaration. For example:
+    
+Named resource injection using WebApplication (Define an env entry with webapp scope.)
+1) Define the resource using "WebAppContext" 
+
+	org.eclipse.jetty.plus.jndi.EnvEntry woggle = new org.eclipse.jetty.plus.jndi.EnvEntry(webapp, "woggle", Integer.valueOf(4000), true);
+
+2) Using the resource in a servlet
+
+    @Resource(name="woggle")
+    private Integer woggle;
+    
+-------------------------------------------------------------------------------------------------
+Inject Resource using Class Type
+
+1)  Defining the resource (JettyMain)
+	
+
+2) In Servlet
+    @Resource (name="jdbc/mydatasource", type=DataSource.class)
+    private DataSource foo;
+
+
+
+
+-------------------------------------------------------------------------------------------------
+//At runtime, the webapp accesses this as java:comp/UserTransaction
+
+
+
+
+-------------------------------------------------------------------------------------------------
+// Register a  mock DataSource scoped to the webapp   

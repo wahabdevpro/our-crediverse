@@ -1,0 +1,43 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.services.reporting.ReportingService")
+   }
+}
+dependencies {
+    implementation project(':CoreInterfaces')
+    implementation project(':Configuration')
+    implementation project(':Reflection')
+    implementation project(':Calendar')
+    implementation project(':SoapConnector')
+    implementation 'commons-collections:commons-collections'
+    implementation 'commons-digester:commons-digester'
+    implementation 'commons-logging:commons-logging'
+    implementation('net.sf.jasperreports:jasperreports') {
+        exclude( group: "bouncycastle", module: "bcmail-jdk14" )
+        exclude( group: "bouncycastle", module: "bcprov-jdk14" )
+        exclude( group: "bouncycastle", module: "bctsp-jdk14" )
+    }
+    implementation 'jfree:jfreechart'
+    implementation 'jfree:jcommon'
+    implementation('com.lowagie:itext') {
+        exclude( group: "bouncycastle", module: "bcmail-jdk14" )
+        exclude( group: "bouncycastle", module: "bcprov-jdk14" )
+        exclude( group: "bouncycastle", module: "bctsp-jdk14" )
+    }
+    implementation 'org.apache.poi:poi'
+    implementation 'org.lucee:commons-codec'
+    implementation 'commons-beanutils:commons-beanutils-core'
+    implementation 'com.fasterxml.jackson.core:jackson-core'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'org.slf4j:slf4j-api'
+}

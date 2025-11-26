@@ -1,0 +1,20 @@
+#Configuration
+
+basedir=../..
+
+#Build
+
+targetdir=core/HostProcess
+targetdir=ui/cli
+
+targetdir=ui/GuiServer
+targetdir=core/Supervisor
+#target=build.sh
+
+#Unit Tests
+
+testdir=tests/UIConnectorTests
+testdir=tests/UnitTests
+testdir=tests/CLITests
+
+#End

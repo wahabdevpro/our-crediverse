@@ -1,0 +1,23 @@
+version: '3.4'
+services:
+  mariadb:
+    image: 'registry.hub.docker.com/library/mariadb:10.3.10'
+    restart: unless-stopped
+    container_name: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: ${PASSWORD}
+    volumes:
+      - '/srv/db/mariadb:/var/lib/mysql'
+      - '/srv/logs/mariadb:/var/log/mysql'
+      - '/etc/localtime/:/etc/localtime'
+    ports:
+      - '3306:3306'
+    networks:
+      default:
+        aliases:
+          - mariadb
+
+networks:
+  default:
+    external:
+      name: legacy

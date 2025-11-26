@@ -1,0 +1,85 @@
+<style>
+	.serverlabel {
+		 font-weight: bold;
+		 font-size: medium;
+	}
+	.serverinfo {
+		font-size: medium;
+	}
+
+	.rolelabel {
+		 font-weight: bold;
+		 font-size: medium;
+		 float:right;
+	}
+	.roleinfo {
+		font-size: medium;
+	}
+
+	.top-heading {
+		font-size: 20px;
+		font-weight: bold;
+	 	padding-left: 10px;
+	}
+	.section-heading {
+		 font-weight: bold;
+		 font-size: large;
+	}
+	.component-fitness {
+		padding: 5px 20px;
+		margin: 2px 30px;
+	}
+	.component-name {
+		float: left;
+	}
+	.component-health {
+		float: right;
+	}	
+</style>
+
+		
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<span class="top-heading">System fitness</span>
+	</div>
+	<div class="panel-body">
+
+		<div th:if="${#lists.isEmpty(servers)}">
+			There are currently no servers defined.
+		</div>
+
+		<div class="row" th:if="${! #lists.isEmpty(servers)}">
+	
+			<div class="col-xs-4 col-sm-5 col-md-3">
+				<span class='serverlabel'>Check fitness for server</span>
+			</div>
+			
+			<div class="col-md-3">
+				<span class='serverinfo'>
+					<select id="server" onchange="updateServerFitness();">
+					
+						<option th:each="server : ${servers}" th:value="${server}" th:text="${server}" th:selected="${selectedServer == server}"></option>					
+					 
+					</select>
+				</span>
+			</div>
+		</div>
+
+		<div id="serverfitness" th:include="fitness/serverfitness" />
+	</div>
+	
+	<div class="panel-heading">
+		<span class="top-heading">Current Role Owners</span>
+	</div>
+	
+	<div th:if="${!#arrays.isEmpty(serverroles)}" th:each="serverrole : ${serverroles}" class="row">
+		<div class="col-md-2">
+			<span class='rolelabel' th:text="${serverrole.serverRoleName}">Full Name</span>
+		</div>
+		<div class="col-md-4">
+			<span class='roleinfo' th:text="${#strings.isEmpty(serverrole.owner)? '-' :  serverrole.owner}">00</span>
+		</div>
+	</div>	
+</div>
+
+<script src="/js/pagejs/fitness.js"></script>

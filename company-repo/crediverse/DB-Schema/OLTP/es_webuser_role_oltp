@@ -1,0 +1,10 @@
+*************************** 1. row ***************************
+       Table: es_webuser_role
+Create Table: CREATE TABLE `es_webuser_role` (
+  `webuser_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  KEY `FKpwoiu0yasx9wwdn5kvx8yqu3l` (`role_id`),
+  KEY `FK1wyrvmdr2mge50sl3vutxatfu` (`webuser_id`),
+  CONSTRAINT `FK1wyrvmdr2mge50sl3vutxatfu` FOREIGN KEY (`webuser_id`) REFERENCES `es_webuser` (`id`),
+  CONSTRAINT `FKpwoiu0yasx9wwdn5kvx8yqu3l` FOREIGN KEY (`role_id`) REFERENCES `es_role` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

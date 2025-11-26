@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="build" name="AntFileCreator">
+	<property environment="env"/>
+	<property name="ECLIPSE_HOME" value="../../../../../eclipse"/>
+	<property name="c4u.debug" value="true"/>
+	<property name="c4u.debuglevel" value="lines,vars,source"/>
+	<property name="target" value="1.7"/>
+	<property name="source" value="1.7"/>
+	<path id="AntFileCreator.classpath">
+		<pathelement location="classes"/>
+	</path>
+	<target name="init">
+		<mkdir dir="classes"/>
+		<copy includeemptydirs="false" todir="classes">
+			<fileset dir="src/main/java">
+				<exclude name="**/*.java"/>
+			</fileset>
+		</copy>
+	</target>
+	<target name="clean">
+		<delete dir="classes"/>
+	</target>
+	<target name="cleanall" depends="clean">
+	</target>
+	<target name="build-subprojects">
+	</target>
+	<target name="build-project" depends="init">
+		<echo message="${ant.project.name}: ${ant.file}"/>
+		<javac debug="${c4u.debug}" encoding="UTF-8" debuglevel="${c4u.debuglevel}" destdir="classes" includeantruntime="false" source="${source}" target="${target}">
+			<src path="src/main/java"/>
+			<classpath refid="AntFileCreator.classpath"/>
+		</javac>
+	</target>
+	<target name="build" depends="build-subprojects,build-project,build-jar"/>
+	<target name="build-jar">
+		<delete file="dist/UpdateAnts.jar" />
+		<jar destfile="dist/UpdateAnts.jar" filesetmanifest="mergewithoutmain">
+			<manifest>
+				<attribute name="Main-Class" value="fixants.FixAnts"/>
+				<attribute name="Class-Path" value="."/>
+			</manifest>
+			<fileset dir="classes"/>
+		</jar>
+	</target>
+</project>

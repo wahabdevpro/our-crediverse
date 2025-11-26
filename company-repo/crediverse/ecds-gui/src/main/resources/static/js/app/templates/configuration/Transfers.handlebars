@@ -1,0 +1,142 @@
+<!-- vim: set ft=html sts=4 ts=4 sw=4 noexpandtab fo-=t: -->
+<div>
+<!-- Transfers -->
+<!--  https://files.slack.com/files-pri/T041ZQMM8-F5BU4S8QY/download/transaction_menu_text.docx  -->
+	<script id="transfersConfig">
+		<div id="transfersConfig" class="box">
+
+			<!-- Nav tabs -->
+			<div class="nav-tabs-custom">
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active">
+						<a href="#transferGeneral" aria-controls="transferGeneral" role="tab" data-toggle="tab">{{i18n "transfer.generalTransferTab"}}</a>
+					</li>
+			    	<li role="presentation">
+			    		<a href="#transferUssdMenu" aria-controls="transferUssdMenu" role="tab" data-toggle="tab">{{i18n "transfer.ussdMenuTransferTab"}}</a>
+			    	</li>
+			    	<li role="presentation">
+			    		<a href="#transferDeduplicationUssdMenu" aria-controls="transferDeduplicationUssdMenu" role="tab" data-toggle="tab">{{i18n "transfer.ussdDeduplicationMenuTransferTab"}}</a>
+			    	</li>
+				</ul>
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane active" id="transferGeneral">
+						{{>configMainHeading heading="config.transferHeading" btnclass="showTransfersConfigDialog" btntext="global.editBtn" permission="Transaction_ConfigTransfers"}}
+						
+			            <form class="form-horizontal">
+				        	<div class="box-body">
+				        	
+				        		{{>configSectionHeading heading="config.nonDeterministicErrorCodes"}}
+				        		
+				        		{{>configLabel label="config.ErrorCodes" forceDisplay=true value=this.nonDeterministicErrorCodes}}
+								<hr/>
+				        		{{>configSectionHeading heading="config.generalSettings"}}
+				        		{{>configLabel label="config.ussdCommand" value=this.ussdCommand.texts.en forceDisplay=true }}
+				        		{{>configLabelBoolean name="forceLocationOfAgent" label="config.forceLocationOfAgent" value=this.forceLocationOfAgent trueValue="config.always" falseValue="config.whenRequired" }}
+				        		{{>configLabelBoolean name="enableBNumberConfirmation" label="config.enableBNumberConfirmation" value=this.enableBNumberConfirmation trueValue="config.yes" falseValue="config.no"}}
+								{{>configNotificationLabel heading="config.bNumberConfirmMessage" notification=this.numberConfirmMessage.texts}}
+								{{>configNotificationLabel heading="config.bNumberErrorMessage" notification=this.numberErrorMessage.texts}}
+		                        
+		                        <div id="disregardTradeBonusCalculationId">
+									{{>configLabelBoolean name="disregardTradeBonusCalculation" label="config.disregardTradeBonusCalculation" value=this.disregardTradeBonusCalculation trueValue="config.yes" falseValue="config.no"}}
+									<hr/>
+								</div>
+
+								{{>configSectionHeading heading="config.deduplicationSettings"}}
+								{{>configLabelBoolean name="enableDeduplication" label="config.enableDeduplication" value=this.enableDeDuplication trueValue="config.yes" falseValue="config.no"}}
+								{{>configLabel label="config.maxDuplicateCheckMinutes" value=this.maxDuplicateCheckMinutes forceDisplay=true }}
+								<hr/>
+								{{>configSectionHeading heading="config.refillSettings"}}
+								{{>configLabel label="config.externalData1" value=this.refillExternalData1.texts.en forceDisplay=true }}
+								{{>configLabel label="config.externalData2" value=this.refillExternalData2.texts.en forceDisplay=true }}
+								{{>configLabel label="config.externalData3" value=this.refillExternalData3.texts.en forceDisplay=true }}
+								{{>configLabel label="config.externalData4" value=this.refillExternalData4.texts.en forceDisplay=true }}
+				        		<hr/>
+				        		
+								<!--
+								{{>configLabel name="charge" label="Charge" hint="Charge" value=this.charge forceDisplay=true}}
+								<hr/>
+								-->
+				
+								{{>configNotificationLabel heading="config.smsCommand" notification=this.smsCommand.texts}}
+								{{>configNotificationLabel heading="config.senderNotification" notification=this.senderNotification.texts}}				
+								{{>configNotificationLabel heading="config.recipientNotification" notification=this.recipientNotification.texts}}				
+								{{>configNotificationLabel heading="config.requesterNotification" notification=this.requesterNotification.texts}}				
+								
+				        	</div>
+						</form>
+					</div>
+					
+					<div role="tabpanel" class="tab-pane" id="transferUssdMenu">
+					<p>Loading ...</p>
+					</div>
+					
+					<div role="tabpanel" class="tab-pane" id="transferDeduplicationUssdMenu">
+					<p>Loading ...</p>
+					</div>
+				
+				</div>
+			</div>
+		
+		</div>
+	</script>
+	
+	<script id="transfersConfigModal">
+		{{>configModalHeader heading="config.transferHeading"}}
+		<div class="modal-body">
+			<div class="ruledetails">
+				<form name="adjustmentConfigForm" class="form-horizontal transfersConfigForm">
+					{{>configAddVariableNote}}
+					
+					<h5 class="configDialogSectionHeading">{{i18n "config.nonDeterministicErrorCodes"}}</h5>
+					
+					{{>configInput class="tagboxsetting" name="nonDeterministicErrorCodes" label="config.ErrorCodes" hint="" value=this.nonDeterministicErrorCodes}}
+					
+					<h5 class="configDialogSectionHeading">{{i18n "config.generalSettings"}}</h5>
+					{{>configEnglishInput name="ussdCommand" heading="config.ussdCommand" notification=this.ussdCommand}}
+	  				<div class="row form-group dialog-spacing" style="margin-bottom:0;">
+	        			<label for="roleType" class="col-sm-3 control-label">{{i18n "config.forceLocationOfAgent"}}</label>
+	              		<div class="col-sm-9">
+							<div style="margin-top:6px;">
+					 			<input id="retrieve-location-yes" name="forceLocationOfAgent" value="true" class="retrieve-location-dumps custom-radio-fa" type="radio" {{#ifCond this.forceLocationOfAgent "!=" "0"}}checked="checked"{{/ifCond}}/>
+								<label for="retrieve-location-yes">{{i18n "config.always"}}</label>
+							</div>
+							<div>
+					 			<input id="retrieve-location-no" name="forceLocationOfAgent" value="false" class="retrieve-location-dumps custom-radio-fa" type="radio" {{#ifCond this.forceLocationOfAgent "==" "0"}}checked="checked"{{/ifCond}}/>
+								<label for="retrieve-location-no">{{i18n "config.whenRequired"}}</label>
+							</div>
+						</div>	
+					</div>
+					{{>booleanRadioInput name="enableBNumberConfirmation" label="config.enableBNumberConfirmation" trueLabel="config.yes" falseLabel="config.no" value=this.enableBNumberConfirmation}}
+					{{>configNotificationInput name="numberConfirmMessage" heading="config.bNumberConfirmMessage" notification=this.numberConfirmMessage}}
+					{{>configNotificationInput name="numberErrorMessage" heading="config.bNumberErrorMessage" notification=this.numberErrorMessage}}
+		            
+		            <div id="disregardTradeBonusCalculationDialogId">
+						{{>booleanRadioInputWithWarning name="disregardTradeBonusCalculation" label="config.disregardTradeBonusCalculation" trueLabel="config.yes" falseLabel="config.no" value=this.disregardTradeBonusCalculation warning="config.warningDisregardTradeBonusCalculation" value=this.warningDisregardTradeBonusCalculation}}
+						<hr/>
+					</div>
+					
+					<h5 class="configDialogSectionHeading">{{i18n "config.deduplicationSettings"}}</h5>
+					{{>booleanRadioInput name="enableDeDuplication" label="config.enableDeduplication" trueLabel="config.yes" falseLabel="config.no" value=this.enableDeDuplication}}
+					{{>configInput name="maxDuplicateCheckMinutes" label="config.maxDuplicateCheckMinutes" hint="maxDuplicateCheckMinutes" value=this.maxDuplicateCheckMinutes}}
+					<hr/>
+					<h5 class="configDialogSectionHeading">{{i18n "config.refillSettings"}}</h5>
+					{{>configEnglishInput name="refillExternalData1" heading="config.externalData1" notification=this.refillExternalData1}}
+					{{>configEnglishInput name="refillExternalData2" heading="config.externalData2" notification=this.refillExternalData2}}
+					{{>configEnglishInput name="refillExternalData3" heading="config.externalData3" notification=this.refillExternalData3}}
+					{{>configEnglishInput name="refillExternalData4" heading="config.externalData4" notification=this.refillExternalData4}}
+					<hr/>
+					<!--
+	      			{{>configInput name="charge" label="Charge" hint="Charge" value=this.charge}}
+					-->
+					
+					{{>configNotificationInput name="smsCommand" heading="config.smsCommand" notification=this.smsCommand}}
+					{{>configNotificationInput name="senderNotification" heading="config.senderNotification" notification=this.senderNotification}}
+					{{>configNotificationInput name="recipientNotification" heading="config.recipientNotification" notification=this.recipientNotification}}
+					{{>configNotificationInput name="requesterNotification" heading="config.requesterNotification" notification=this.requesterNotification}}
+				</form>
+			</div>
+		</div>
+		{{>configModalFooter }}
+	</script>
+</div>

@@ -1,0 +1,51 @@
+package hxc.ecds.protocol.rest;
+
+public class GenerateWorkItemCoSignOTPResponse extends ResponseHeader
+{
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Constants
+	//
+	// /////////////////////////////////
+
+	public static final String RETURN_CODE_OTHER_ERROR = "OTHER_ERROR";
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Fields
+	//
+	// /////////////////////////////////
+	private String coSignatoryTransactionID;
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Properties
+	//
+	// /////////////////////////////////
+	public String getCoSignatoryTransactionID()
+	{
+		return this.coSignatoryTransactionID;
+	}
+
+	public GenerateWorkItemCoSignOTPResponse setCoSignatoryTransactionID( String coSignatoryTransactionID )
+	{
+		this.coSignatoryTransactionID = coSignatoryTransactionID;
+		return this;
+	}
+
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Construction
+	//
+	// /////////////////////////////////
+	public GenerateWorkItemCoSignOTPResponse()
+	{
+	}
+
+	public GenerateWorkItemCoSignOTPResponse(GenerateWorkItemCoSignOTPRequest request)
+	{
+		super(request);
+	}
+}

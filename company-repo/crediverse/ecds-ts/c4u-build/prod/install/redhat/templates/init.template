@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec systemctl "${1}" c4u-supervisor.service

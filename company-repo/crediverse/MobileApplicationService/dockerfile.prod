@@ -1,0 +1,68 @@
+FROM rust:1.83.0-slim as base
+
+RUN apt-get -y update && apt-get -y install apt-utils runit wget unzip libssl-dev pkg-config build-essential && rm -rf /var/lib/apt/lists/*
+
+RUN wget https://github.com/protocolbuffers/protobuf/releases/download/v23.2/protoc-23.2-linux-x86_64.zip
+
+RUN unzip protoc-23.2-linux-x86_64.zip -d /usr/local/
+
+RUN mkdir src 
+
+ARG CI_DOCKER_TAG
+ENV CI_DOCKER_TAG $CI_DOCKER_TAG
+
+ARG CI_GITHUB_TAG
+ENV CI_GITHUB_TAG $CI_GITHUB_TAG
+
+ARG CI_BRANCH_NAME
+ENV CI_BRANCH_NAME $CI_BRANCH_NAME
+
+ARG CI_BUILD_NUMBER
+ENV CI_BUILD_NUMBER $CI_BUILD_NUMBER
+
+ARG CI_BUILD_DATETIME
+ENV CI_BUILD_DATETIME $CI_BUILD_DATETIME
+
+ARG CI_COMMIT_REF
+ENV CI_COMMIT_REF $CI_COMMIT_REF
+
+WORKDIR /usr/src/mobile_application_service
+
+# Create a dummy source file, so we can run `cargo fetch` to cache dependencies
+
+COPY . .
+
+#ENV TARGET x86_64-unknown-linux-musl
+RUN cargo install --path . --bin dummy
+#RUN rustup target add "$TARGET"
+COPY . .
+
+RUN cargo install --profile release --path . --locked 
+#RUN cargo build --release --offline --target "$TARGET"
+ENTRYPOINT ["/usr/src/mobile_application_service/target/release/mas-service"]
+
+
+FROM rust:1.83.0-slim
+RUN apt-get -y update && apt-get -y install apt-utils runit wget unzip   && rm -rf /var/lib/apt/lists/*
+
+RUN wget https://github.com/protocolbuffers/protobuf/releases/download/v23.2/protoc-23.2-linux-x86_64.zip
+
+RUN unzip protoc-23.2-linux-x86_64.zip -d /usr/local/
+
+WORKDIR /usr/src/mobile_application_service
+
+ARG mas_api_port=5000 
+
+EXPOSE $mas_api_port
+
+ENV MAS_API_PORT=$mas_api_port 
+RUN mkdir -p output/feedback
+
+RUN mkdir -p /var/log/mas
+ADD mobile_application_service.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/mobile_application_service.sh
+COPY --from=base /usr/src/mobile_application_service/tls /usr/src/mobile_application_service/tls
+COPY --from=base /usr/src/mobile_application_service/target/release/mas-service /usr/local/bin
+COPY --from=base /usr/src/mobile_application_service/src/build_info.rs /usr/src/mobile_application_service/src/
+
+CMD ["/usr/local/bin/mobile_application_service.sh"]

@@ -1,0 +1,27 @@
+<!-- Variables:
+	label: 	Description Label
+	field:  Field variable name
+	tab:	Optional Tab reference
+	state:	if set this expands the panel (null: normal, 1: expanded)
+	always: if set always expanded
+-->
+
+<div th:fragment="messagePanel">
+	<div class="panel-heading permissions-panel-heading">
+	    <h4 class="panel-title permissions-panel-title">
+			<a th:if="${always == null }" data-toggle="collapse" data-parent="#qt_accordion" th:href="${'#qt_' + ((tab != null)? tab : '') +  field}"  th:text="${label}">Service/Monetary units name</a>
+			<a th:if="${always != null }" data-parent="#qt_accordion" th:href="${'#qt_' + ((tab != null)? tab : '') +  field}"  th:text="${label}">Service/Monetary units name</a>
+		</h4>
+	</div>
+	<div th:id="${'qt_' + ((tab != null)? tab : '') + field}" th:class="${(always != null)? '' :  ((state == null)? 'panel-collapse collapse' : 'panel-collapse collapse in') }">
+		<div class="panel-body">										
+			<div th:each="lang,iterStat : ${langs}">
+				<div th:if="${! #strings.isEmpty(lang.langDesc)}" class="form-group">
+					<label th:for="${field + '_' + lang.langCode}" th:text="${lang.langDesc}" >Default</label>
+					<input th:id="${field + '_' + lang.langCode}" th:name="${field + '_' + lang.langCode}" class="form-control modalInput" type="text" placeholder="Enter Text" th:dir="${directions != null ? directions[iterStat.count - 1] : ltr}"/>
+					<span th:id="${field + '_' + lang.langCode + '_error'}" class="error_message hide"></span>
+				</div>
+			</div>											
+		</div>
+	</div>
+</div>

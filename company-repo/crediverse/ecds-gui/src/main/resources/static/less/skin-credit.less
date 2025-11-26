@@ -1,0 +1,231 @@
+/*
+ * Skin: Concurrent (Default)
+ * ----------
+ */
+@import "lib/bootstrap-variables.less";
+@import "lib/adminlte-variables.less";
+@import "lib/mixins.less";
+
+@credi-blue-light: #00aeef;
+@credi-blue: #005e81;
+@credi-grey: #c4afb4 ;
+@credi-dark: #1e282c;
+@credi-orange: #f77100;
+
+@credi-logo-horizontal: "../../img/logos/crediverse-hor-small.png";
+@credi-logo-small: "../../img/logos/crediverse-arrows-small.png";
+
+.skin-credit {
+  //Navbar
+  .main-header {
+    .navbar {
+      .navbar-variant(@credi-blue; #fff);
+      .sidebar-toggle {
+        color: white;
+        &:hover {
+          background-color: darken(@credi-blue, 5%);
+        }
+      }
+      @media (max-width: @screen-header-collapse) {
+        .dropdown-menu {
+          li {
+            &.divider {
+              background-color: rgba(255, 255, 255, 0.1);
+            }
+            a {
+              color: white;
+              &:hover {
+                background: darken(@credi-blue, 5%);
+              }
+            }
+          }
+        }
+      }
+    }
+    //Logo
+    .logo {
+      .logo-variant(darken(@credi-blue, 5%));
+    }
+
+    li.user-header {
+      background-color: @credi-blue;
+    }
+  }
+
+  //Content Header
+  .content-header {
+    background: transparent;
+  }
+
+  //Create the sidebar skin
+  .skin-dark-sidebar(@credi-blue);
+}
+
+.skin-credit.layout-top-nav .main-header > .logo {
+  .logo-variant(@credi-blue);
+}
+
+.skin-credit.layout-top-nav {
+	.main-header {
+		>.logo {
+			background-color: #2e2e2e;
+			color: white;
+			border-bottom: 0 solid transparent;
+			&:hover {
+				background-color: #3b8ab8;
+			}
+		}
+	}
+}
+
+.skin-credit {
+	.sidebar-menu {
+		>li {
+			&:hover {
+				>a.pull-right {
+					color: white;
+					background: @credi-dark;
+					border-left-color: @credi-dark;
+				}
+			}
+		}
+		>li.active {
+			>a.pull-right {
+				color: white;
+				background: @credi-dark;
+				border-left-color: @credi-dark;
+			}
+		}
+	}
+}
+
+.app-version {
+	font-size: 11px;
+	display: inline-block;
+	font-weight: 400;
+	color: @credi-blue-light;
+}
+
+.app-powered-by {
+	display: inline-block;
+	color: @credi-blue-light;
+}
+
+.cmp-powered-by {
+	display: inline-block;
+	color: @credi-grey;
+	font-weight: normal;
+}
+
+.logo-image {
+	height: 50px;
+	background-image:url(@credi-logo-horizontal);
+	background-size: auto 50px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.logo-image-small {
+	height: 50px;
+	background-image:url(@credi-logo-small);
+	background-size: auto 50px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+/*** NAV-TABS ***/
+.nav-tabs-custom {
+	.nav-tabs {
+		border-bottom: 2px solid rgba(136, 136, 136, 0.75);
+		background-image: linear-gradient(90deg, #eee, white);
+		>li {
+			>a {
+				color: #444;
+				&:hover {
+					color: #777;
+					background-color: #ddd;
+					border-color: transparent;
+				}
+				&:focus {
+					color: #777;
+					background-color: #ddd;
+					border-color: transparent;
+				}
+			}
+		}
+		>.open {
+			>a {
+				color: #777;
+				background-color: #ddd;
+				border-color: transparent;
+				&:hover {
+					color: #777;
+					background-color: #ddd;
+					border-color: transparent;
+				}
+				&:focus {
+					color: #777;
+					background-color: #ddd;
+					border-color: transparent;
+				}
+			}
+		}
+		>li.active {
+			>a {
+				color: #005e81;
+				background-color: #fff;
+				border-color: #ddd;
+				border-bottom-color: transparent;
+				box-shadow: 0 -4px #005e81, 0 3px white, -3px 0 4px -3px rgba(136, 136, 136, 0.75), 3px 0 4px -3px rgba(136, 136, 136, 0.75);
+				&:hover {
+					color: #005e81;
+					background-color: #fff;
+					border-color: #ddd;
+					border-bottom-color: transparent;
+					box-shadow: 0 -4px #005e81, 0 3px white, -3px 0 4px -3px rgba(136, 136, 136, 0.75), 3px 0 4px -3px rgba(136, 136, 136, 0.75);
+				}
+				&:focus {
+					color: #005e81;
+					background-color: #fff;
+					border-color: #ddd;
+					border-bottom-color: transparent;
+					box-shadow: 0 -4px #005e81, 0 3px white, -3px 0 4px -3px rgba(136, 136, 136, 0.75), 3px 0 4px -3px rgba(136, 136, 136, 0.75);
+				}
+			}
+		}
+		>li.dropdown {
+			.dropdown-menu {
+				background-color: #f5f5f5;
+				border-color: #ddd;
+				>li {
+					>a {
+						color: #777;
+						&:hover {
+							background-color: #ddd;
+						}
+						&:focus {
+							background-color: #ddd;
+						}
+					}
+				}
+				>.active {
+					>a {
+						color: #fff;
+						background-color: #555;
+						&:hover {
+							color: #fff;
+							background-color: #555;
+						}
+						&:focus {
+							color: #fff;
+							background-color: #555;
+						}
+					}
+				}
+			}
+		}
+	}
+	.nav-justified {
+		margin-bottom: -1px;
+	}
+}

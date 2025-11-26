@@ -1,0 +1,541 @@
+<wsdl:definitions xmlns:ns1="urn:concurrent-systems:ssim-api:1.0:wsdl:1.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SsimPort" targetNamespace="urn:concurrent-systems:ssim-api:1.0:wsdl:1.0">
+  <wsdl:types>
+    <xs:schema xmlns:tns="urn:concurrent-systems:ssim-api:1.0:wsdl:1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="urn:concurrent-systems:ssim-api:1.0:wsdl:1.0" version="1.0">
+      <xs:element name="activateRequest" type="tns:ActivateRequest"></xs:element>
+      <xs:element name="activateResponse" type="tns:ActivateResponse"></xs:element>
+      <xs:element name="customiseBundleSuggestionRequest" type="tns:CustomiseBundleSuggestionRequest"></xs:element>
+      <xs:element name="customiseBundleSuggestionResponse" type="tns:CustomiseBundleSuggestionResponse"></xs:element>
+      <xs:element name="deactivateRequest" type="tns:DeactivateRequest"></xs:element>
+      <xs:element name="deactivateResponse" type="tns:DeactivateResponse"></xs:element>
+      <xs:element name="extendValidityRequest" type="tns:ExtendValidityRequest"></xs:element>
+      <xs:element name="extendValidityResponse" type="tns:ExtendValidityResponse"></xs:element>
+      <xs:element name="faultResponse" type="tns:FaultResponse"></xs:element>
+      <xs:element name="getBundleSuggestionsRequest" type="tns:GetBundleSuggestionsRequest"></xs:element>
+      <xs:element name="getBundleSuggestionsResponse" type="tns:GetBundleSuggestionsResponse"></xs:element>
+      <xs:element name="getServiceInstancesRequest" type="tns:GetServiceInstancesRequest"></xs:element>
+      <xs:element name="getServiceInstancesResponse" type="tns:GetServiceInstancesResponse"></xs:element>
+      <xs:element name="getServiceNamesRequest" type="tns:GetServiceNamesRequest"></xs:element>
+      <xs:element name="getServiceNamesResponse" type="tns:GetServiceNamesResponse"></xs:element>
+      <xs:element name="migrateRequest" type="tns:MigrateRequest"></xs:element>
+      <xs:element name="migrateResponse" type="tns:MigrateResponse"></xs:element>
+      <xs:element name="purchaseBundleRequest" type="tns:PurchaseBundleRequest"></xs:element>
+      <xs:element name="purchaseBundleResponse" type="tns:PurchaseBundleResponse"></xs:element>
+      <xs:element name="requestHeader" type="tns:RequestHeader"></xs:element>
+      <xs:element name="responseHeader" type="tns:ResponseHeader"></xs:element>
+      <xs:element name="startAutoLifeCycleEventsRequest" type="tns:StartAutoLifeCycleEventsRequest"></xs:element>
+      <xs:element name="startAutoLifeCycleEventsResponse" type="tns:StartAutoLifeCycleEventsResponse"></xs:element>
+      <xs:element name="stopAutoLifeCycleEventsRequest" type="tns:StopAutoLifeCycleEventsRequest"></xs:element>
+      <xs:element name="stopAutoLifeCycleEventsResponse" type="tns:StopAutoLifeCycleEventsResponse"></xs:element>
+      <xs:element name="subscribeRequest" type="tns:SubscribeRequest"></xs:element>
+      <xs:element name="subscribeResponse" type="tns:SubscribeResponse"></xs:element>
+      <xs:element name="topUpBenefitsRequest" type="tns:TopUpBenefitsRequest"></xs:element>
+      <xs:element name="topUpBenefitsResponse" type="tns:TopUpBenefitsResponse"></xs:element>
+      <xs:element name="unsubscribeRequest" type="tns:UnsubscribeRequest"></xs:element>
+      <xs:element name="unsubscribeResponse" type="tns:UnsubscribeResponse"></xs:element>
+      <xs:complexType name="Tag">
+        <xs:all>
+          <xs:element name="namespace" type="xs:string"></xs:element>
+          <xs:element name="key" type="xs:string"></xs:element>
+          <xs:element name="value" type="xs:string"></xs:element>
+          <xs:element name="tags" type="tns:Tags"></xs:element>
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="Tags">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="tag" nillable="true" type="tns:Tag"></xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="PurchaseBundleRequest">
+        <xs:all>
+          <xs:element name="chargedSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="benefitingSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="serviceDefinitionId" type="tns:CompoundServiceDefinitionId"></xs:element>
+          <xs:element minOccurs="0" name="options" type="tns:Tags"></xs:element>
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="CompoundServiceDefinitionId">
+        <xs:all>
+          <xs:element name="namespace" type="xs:string"></xs:element>
+          <xs:element name="definitionId" type="xs:string"></xs:element>
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="RequestHeader">
+        <xs:all>
+          <xs:element name="transactionGroupId" type="xs:string"></xs:element>
+          <xs:element name="transactionId" type="xs:string"></xs:element>
+          <xs:element name="dateTime" type="xs:dateTime"></xs:element>
+          <xs:element name="contextId" type="xs:string"></xs:element>
+          <xs:element name="userId" type="xs:string"></xs:element>
+          <xs:element name="systemType" type="xs:string"></xs:element>
+          <xs:element name="hostName" type="xs:string"></xs:element>
+          <xs:element name="channel" type="xs:string"></xs:element>
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="PurchaseBundleResponse">
+        <xs:sequence>
+          <xs:element name="serviceInstance" type="tns:ServiceInstance"></xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ServiceInstance">
+        <xs:all>
+          <xs:element name="id" type="tns:NillableCompoundServiceInstanceId"></xs:element>
+          <xs:element minOccurs="0" name="chargedSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="benefitingSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="methods" type="tns:Methods"></xs:element>
+          <xs:element name="tags" type="tns:Tags"></xs:element>
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="NillableCompoundServiceInstanceId">
+        <xs:all>
+          <xs:element name="namespace" type="xs:string"></xs:element>
+          <xs:element name="definitionId" type="xs:string"></xs:element>
+          <xs:element name="instanceId" nillable="true" type="xs:string"></xs:element>
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="Methods">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="method" nillable="true" type="tns:Method"></xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Method">
+        <xs:all>
+          <xs:element name="id" type="tns:MethodId"></xs:element>
+          <xs:element minOccurs="0" name="charge" type="xs:long"></xs:element>
+          <xs:element minOccurs="0" name="disallowed" type="tns:Disallowed"></xs:element>
+          <xs:element minOccurs="0" name="tags" type="tns:Tags"></xs:element>
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="Disallowed">
+        <xs:sequence>
+          <xs:element name="reasons" type="tns:DisallowedReasons"></xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DisallowedReasons">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="reason" nillable="true" type="tns:DisallowedReason"></xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DisallowedReason">
+        <xs:all>
+          <xs:element name="message" type="xs:string"></xs:element>
+          <xs:element name="code" type="xs:string"></xs:element>
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="ResponseHeader">
+        <xs:all>
+          <xs:element name="transactionGroupId" type="xs:string"></xs:element>
+          <xs:element name="transactionId" type="xs:string"></xs:element>
+          <xs:element name="dateTime" type="xs:dateTime"></xs:element>
+          <xs:element name="status" type="tns:ResponseStatus"></xs:element>
+          <xs:element name="code" type="xs:string"></xs:element>
+          <xs:element name="message" type="xs:string"></xs:element>
+          <xs:element name="charge" type="xs:long"></xs:element>
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="FaultResponse">
+        <xs:sequence></xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ExtendValidityRequest">
+        <xs:all>
+          <xs:element name="chargedSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="benefitingSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="serviceInstanceId" type="tns:CompoundServiceInstanceId"></xs:element>
+          <xs:element minOccurs="0" name="options" type="tns:Tags"></xs:element>
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="CompoundServiceInstanceId">
+        <xs:all>
+          <xs:element name="namespace" type="xs:string"></xs:element>
+          <xs:element name="definitionId" type="xs:string"></xs:element>
+          <xs:element name="instanceId" type="xs:string"></xs:element>
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="ExtendValidityResponse">
+        <xs:sequence>
+          <xs:element name="serviceInstance" type="tns:ServiceInstance"></xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TopUpBenefitsRequest">
+        <xs:all>
+          <xs:element name="chargedSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="benefitingSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="serviceInstanceId" type="tns:CompoundServiceInstanceId"></xs:element>
+          <xs:element minOccurs="0" name="options" type="tns:Tags"></xs:element>
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="TopUpBenefitsResponse">
+        <xs:sequence>
+          <xs:element name="serviceInstance" type="tns:ServiceInstance"></xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetBundleSuggestionsRequest">
+        <xs:all>
+          <xs:element name="chargedSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="benefitingSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="hintTags" type="tns:Tags"></xs:element>
+          <xs:element minOccurs="0" name="options" type="tns:Tags"></xs:element>
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="GetBundleSuggestionsResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="serviceInstance" nillable="true" type="tns:ServiceInstance"></xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ActivateRequest">
+        <xs:all>
+          <xs:element name="chargedSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="benefitingSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="serviceDefinitionId" type="tns:CompoundServiceDefinitionId"></xs:element>
+          <xs:element minOccurs="0" name="options" type="tns:Tags"></xs:element>
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="ActivateResponse">
+        <xs:sequence>
+          <xs:element name="serviceInstance" type="tns:ServiceInstance"></xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DeactivateRequest">
+        <xs:all>
+          <xs:element name="chargedSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="benefitingSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="serviceInstanceId" type="tns:CompoundServiceInstanceId"></xs:element>
+          <xs:element minOccurs="0" name="options" type="tns:Tags"></xs:element>
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="DeactivateResponse">
+        <xs:sequence>
+          <xs:element name="serviceInstance" type="tns:ServiceInstance"></xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CustomiseBundleSuggestionRequest">
+        <xs:all>
+          <xs:element name="chargedSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="benefitingSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="serviceDefinitionId" type="tns:CompoundServiceDefinitionId"></xs:element>
+          <xs:element name="hintTags" type="tns:Tags"></xs:element>
+          <xs:element minOccurs="0" name="options" type="tns:Tags"></xs:element>
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="CustomiseBundleSuggestionResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="serviceInstance" nillable="true" type="tns:ServiceInstance"></xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetServiceNamesRequest">
+        <xs:all>
+          <xs:element name="namespace" type="xs:string"></xs:element>
+          <xs:element minOccurs="0" name="options" type="tns:Tags"></xs:element>
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="GetServiceNamesResponse">
+        <xs:sequence>
+          <xs:element name="definitionIds" type="tns:CompoundServiceDefinitionIdSequence"></xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CompoundServiceDefinitionIdSequence">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="definitionId" nillable="true" type="tns:CompoundServiceDefinitionId"></xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MigrateRequest">
+        <xs:all>
+          <xs:element name="chargedSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="benefitingSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="sourceServiceInstanceId" type="tns:CompoundServiceInstanceId"></xs:element>
+          <xs:element name="destinationServiceDefinitionId" type="tns:CompoundServiceDefinitionId"></xs:element>
+          <xs:element minOccurs="0" name="options" type="tns:Tags"></xs:element>
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="MigrateResponse">
+        <xs:sequence>
+          <xs:element name="serviceInstance" type="tns:ServiceInstance"></xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="UnsubscribeRequest">
+        <xs:all>
+          <xs:element name="chargedSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="benefitingSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="serviceInstanceId" type="tns:CompoundServiceInstanceId"></xs:element>
+          <xs:element minOccurs="0" name="options" type="tns:Tags"></xs:element>
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="UnsubscribeResponse">
+        <xs:sequence>
+          <xs:element name="serviceInstance" type="tns:ServiceInstance"></xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="StopAutoLifeCycleEventsRequest">
+        <xs:all>
+          <xs:element name="chargedSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="benefitingSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="serviceInstanceId" type="tns:CompoundServiceInstanceId"></xs:element>
+          <xs:element minOccurs="0" name="options" type="tns:Tags"></xs:element>
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="StopAutoLifeCycleEventsResponse">
+        <xs:sequence>
+          <xs:element name="serviceInstance" type="tns:ServiceInstance"></xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="StartAutoLifeCycleEventsRequest">
+        <xs:all>
+          <xs:element name="chargedSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="benefitingSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="serviceInstanceId" type="tns:CompoundServiceInstanceId"></xs:element>
+          <xs:element minOccurs="0" name="options" type="tns:Tags"></xs:element>
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="StartAutoLifeCycleEventsResponse">
+        <xs:sequence>
+          <xs:element name="serviceInstance" type="tns:ServiceInstance"></xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SubscribeRequest">
+        <xs:all>
+          <xs:element name="chargedSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="benefitingSubscriberId" type="xs:string"></xs:element>
+          <xs:element name="serviceDefinitionId" type="tns:CompoundServiceDefinitionId"></xs:element>
+          <xs:element minOccurs="0" name="options" type="tns:Tags"></xs:element>
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="SubscribeResponse">
+        <xs:sequence>
+          <xs:element name="serviceInstance" type="tns:ServiceInstance"></xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="GetServiceInstancesRequest">
+        <xs:all>
+          <xs:element name="subscriberId" type="xs:string"></xs:element>
+          <xs:element name="partialInstanceId" type="tns:PartialCompoundServiceInstanceId"></xs:element>
+          <xs:element name="requiredTags" type="tns:Tags"></xs:element>
+          <xs:element minOccurs="0" name="options" type="tns:Tags"></xs:element>
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="PartialCompoundServiceInstanceId">
+        <xs:all>
+          <xs:element minOccurs="0" name="namespace" type="xs:string"></xs:element>
+          <xs:element minOccurs="0" name="definitionId" type="xs:string"></xs:element>
+          <xs:element minOccurs="0" name="instanceId" type="xs:string"></xs:element>
+        </xs:all>
+      </xs:complexType>
+      <xs:complexType name="GetServiceInstancesResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="serviceInstance" nillable="true" type="tns:ServiceInstance"></xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="MethodId">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="activate"></xs:enumeration>
+          <xs:enumeration value="deactivate"></xs:enumeration>
+          <xs:enumeration value="getServiceInstances"></xs:enumeration>
+          <xs:enumeration value="subscribe"></xs:enumeration>
+          <xs:enumeration value="unsubscribe"></xs:enumeration>
+          <xs:enumeration value="migrate"></xs:enumeration>
+          <xs:enumeration value="extendValidity"></xs:enumeration>
+          <xs:enumeration value="topUpBenefits"></xs:enumeration>
+          <xs:enumeration value="stopAutoLifeCycleEvents"></xs:enumeration>
+          <xs:enumeration value="startAutoLifeCycleEvents"></xs:enumeration>
+          <xs:enumeration value="getBundleSuggestions"></xs:enumeration>
+          <xs:enumeration value="customiseBundleSuggestion"></xs:enumeration>
+          <xs:enumeration value="purchaseBundle"></xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="ResponseStatus">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="success"></xs:enumeration>
+          <xs:enumeration value="warning"></xs:enumeration>
+          <xs:enumeration value="rejection"></xs:enumeration>
+          <xs:enumeration value="unchangedStateFailure"></xs:enumeration>
+          <xs:enumeration value="unknownStateFailure"></xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="topUpBenefitsResponse">
+    <wsdl:part element="ns1:topUpBenefitsResponse" name="responseParameters"></wsdl:part>
+    <wsdl:part element="ns1:responseHeader" name="responseHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getServiceInstancesResponse">
+    <wsdl:part element="ns1:getServiceInstancesResponse" name="responseParameters"></wsdl:part>
+    <wsdl:part element="ns1:responseHeader" name="responseHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="startAutoLifeCycleEvents">
+    <wsdl:part element="ns1:startAutoLifeCycleEventsRequest" name="requestParameters"></wsdl:part>
+    <wsdl:part element="ns1:requestHeader" name="requestHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="customiseBundleSuggestionResponse">
+    <wsdl:part element="ns1:customiseBundleSuggestionResponse" name="responseParameters"></wsdl:part>
+    <wsdl:part element="ns1:responseHeader" name="responseHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="unsubscribeResponse">
+    <wsdl:part element="ns1:unsubscribeResponse" name="responseParameters"></wsdl:part>
+    <wsdl:part element="ns1:responseHeader" name="responseHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="migrateResponse">
+    <wsdl:part element="ns1:migrateResponse" name="responseParameters"></wsdl:part>
+    <wsdl:part element="ns1:responseHeader" name="responseHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="customiseBundleSuggestion">
+    <wsdl:part element="ns1:customiseBundleSuggestionRequest" name="requestParameters"></wsdl:part>
+    <wsdl:part element="ns1:requestHeader" name="requestHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getServiceNames">
+    <wsdl:part element="ns1:getServiceNamesRequest" name="requestParameters"></wsdl:part>
+    <wsdl:part element="ns1:requestHeader" name="requestHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="subscribe">
+    <wsdl:part element="ns1:subscribeRequest" name="requestParameters"></wsdl:part>
+    <wsdl:part element="ns1:requestHeader" name="requestHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="startAutoLifeCycleEventsResponse">
+    <wsdl:part element="ns1:startAutoLifeCycleEventsResponse" name="responseParameters"></wsdl:part>
+    <wsdl:part element="ns1:responseHeader" name="responseHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="purchaseBundle">
+    <wsdl:part element="ns1:purchaseBundleRequest" name="requestParameters"></wsdl:part>
+    <wsdl:part element="ns1:requestHeader" name="requestHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="extendValidity">
+    <wsdl:part element="ns1:extendValidityRequest" name="requestParameters"></wsdl:part>
+    <wsdl:part element="ns1:requestHeader" name="requestHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="activate">
+    <wsdl:part element="ns1:activateRequest" name="requestParameters"></wsdl:part>
+    <wsdl:part element="ns1:requestHeader" name="requestHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deactivate">
+    <wsdl:part element="ns1:deactivateRequest" name="requestParameters"></wsdl:part>
+    <wsdl:part element="ns1:requestHeader" name="requestHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="topUpBenefits">
+    <wsdl:part element="ns1:topUpBenefitsRequest" name="requestParameters"></wsdl:part>
+    <wsdl:part element="ns1:requestHeader" name="requestHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getBundleSuggestions">
+    <wsdl:part element="ns1:getBundleSuggestionsRequest" name="requestParameters"></wsdl:part>
+    <wsdl:part element="ns1:requestHeader" name="requestHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deactivateResponse">
+    <wsdl:part element="ns1:deactivateResponse" name="responseParameters"></wsdl:part>
+    <wsdl:part element="ns1:responseHeader" name="responseHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getServiceInstances">
+    <wsdl:part element="ns1:getServiceInstancesRequest" name="requestParameters"></wsdl:part>
+    <wsdl:part element="ns1:requestHeader" name="requestHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="FaultResponse_Exception">
+    <wsdl:part element="ns1:faultResponse" name="FaultResponse_Exception"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="purchaseBundleResponse">
+    <wsdl:part element="ns1:purchaseBundleResponse" name="responseParameters"></wsdl:part>
+    <wsdl:part element="ns1:responseHeader" name="responseHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="stopAutoLifeCycleEventsResponse">
+    <wsdl:part element="ns1:stopAutoLifeCycleEventsResponse" name="responseParameters"></wsdl:part>
+    <wsdl:part element="ns1:responseHeader" name="responseHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getServiceNamesResponse">
+    <wsdl:part element="ns1:getServiceNamesResponse" name="responseParameters"></wsdl:part>
+    <wsdl:part element="ns1:responseHeader" name="responseHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="subscribeResponse">
+    <wsdl:part element="ns1:subscribeResponse" name="responseParameters"></wsdl:part>
+    <wsdl:part element="ns1:responseHeader" name="responseHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="migrate">
+    <wsdl:part element="ns1:migrateRequest" name="requestParameters"></wsdl:part>
+    <wsdl:part element="ns1:requestHeader" name="requestHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="extendValidityResponse">
+    <wsdl:part element="ns1:extendValidityResponse" name="responseParameters"></wsdl:part>
+    <wsdl:part element="ns1:responseHeader" name="responseHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="stopAutoLifeCycleEvents">
+    <wsdl:part element="ns1:stopAutoLifeCycleEventsRequest" name="requestParameters"></wsdl:part>
+    <wsdl:part element="ns1:requestHeader" name="requestHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="unsubscribe">
+    <wsdl:part element="ns1:unsubscribeRequest" name="requestParameters"></wsdl:part>
+    <wsdl:part element="ns1:requestHeader" name="requestHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="activateResponse">
+    <wsdl:part element="ns1:activateResponse" name="responseParameters"></wsdl:part>
+    <wsdl:part element="ns1:responseHeader" name="responseHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getBundleSuggestionsResponse">
+    <wsdl:part element="ns1:getBundleSuggestionsResponse" name="responseParameters"></wsdl:part>
+    <wsdl:part element="ns1:responseHeader" name="responseHeader"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="SsimPort">
+    <wsdl:operation name="purchaseBundle" parameterOrder="requestParameters requestHeader responseHeader">
+      <wsdl:input message="ns1:purchaseBundle" name="purchaseBundle"></wsdl:input>
+      <wsdl:output message="ns1:purchaseBundleResponse" name="purchaseBundleResponse"></wsdl:output>
+      <wsdl:fault message="ns1:FaultResponse_Exception" name="FaultResponse_Exception"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="extendValidity" parameterOrder="requestParameters requestHeader responseHeader">
+      <wsdl:input message="ns1:extendValidity" name="extendValidity"></wsdl:input>
+      <wsdl:output message="ns1:extendValidityResponse" name="extendValidityResponse"></wsdl:output>
+      <wsdl:fault message="ns1:FaultResponse_Exception" name="FaultResponse_Exception"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="topUpBenefits" parameterOrder="requestParameters requestHeader responseHeader">
+      <wsdl:input message="ns1:topUpBenefits" name="topUpBenefits"></wsdl:input>
+      <wsdl:output message="ns1:topUpBenefitsResponse" name="topUpBenefitsResponse"></wsdl:output>
+      <wsdl:fault message="ns1:FaultResponse_Exception" name="FaultResponse_Exception"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getBundleSuggestions" parameterOrder="requestParameters requestHeader responseHeader">
+      <wsdl:input message="ns1:getBundleSuggestions" name="getBundleSuggestions"></wsdl:input>
+      <wsdl:output message="ns1:getBundleSuggestionsResponse" name="getBundleSuggestionsResponse"></wsdl:output>
+      <wsdl:fault message="ns1:FaultResponse_Exception" name="FaultResponse_Exception"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="activate" parameterOrder="requestParameters requestHeader responseHeader">
+      <wsdl:input message="ns1:activate" name="activate"></wsdl:input>
+      <wsdl:output message="ns1:activateResponse" name="activateResponse"></wsdl:output>
+      <wsdl:fault message="ns1:FaultResponse_Exception" name="FaultResponse_Exception"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deactivate" parameterOrder="requestParameters requestHeader responseHeader">
+      <wsdl:input message="ns1:deactivate" name="deactivate"></wsdl:input>
+      <wsdl:output message="ns1:deactivateResponse" name="deactivateResponse"></wsdl:output>
+      <wsdl:fault message="ns1:FaultResponse_Exception" name="FaultResponse_Exception"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="customiseBundleSuggestion" parameterOrder="requestParameters requestHeader responseHeader">
+      <wsdl:input message="ns1:customiseBundleSuggestion" name="customiseBundleSuggestion"></wsdl:input>
+      <wsdl:output message="ns1:customiseBundleSuggestionResponse" name="customiseBundleSuggestionResponse"></wsdl:output>
+      <wsdl:fault message="ns1:FaultResponse_Exception" name="FaultResponse_Exception"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getServiceNames" parameterOrder="requestParameters requestHeader responseHeader">
+      <wsdl:input message="ns1:getServiceNames" name="getServiceNames"></wsdl:input>
+      <wsdl:output message="ns1:getServiceNamesResponse" name="getServiceNamesResponse"></wsdl:output>
+      <wsdl:fault message="ns1:FaultResponse_Exception" name="FaultResponse_Exception"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="migrate" parameterOrder="requestParameters requestHeader responseHeader">
+      <wsdl:input message="ns1:migrate" name="migrate"></wsdl:input>
+      <wsdl:output message="ns1:migrateResponse" name="migrateResponse"></wsdl:output>
+      <wsdl:fault message="ns1:FaultResponse_Exception" name="FaultResponse_Exception"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="unsubscribe" parameterOrder="requestParameters requestHeader responseHeader">
+      <wsdl:input message="ns1:unsubscribe" name="unsubscribe"></wsdl:input>
+      <wsdl:output message="ns1:unsubscribeResponse" name="unsubscribeResponse"></wsdl:output>
+      <wsdl:fault message="ns1:FaultResponse_Exception" name="FaultResponse_Exception"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="stopAutoLifeCycleEvents" parameterOrder="requestParameters requestHeader responseHeader">
+      <wsdl:input message="ns1:stopAutoLifeCycleEvents" name="stopAutoLifeCycleEvents"></wsdl:input>
+      <wsdl:output message="ns1:stopAutoLifeCycleEventsResponse" name="stopAutoLifeCycleEventsResponse"></wsdl:output>
+      <wsdl:fault message="ns1:FaultResponse_Exception" name="FaultResponse_Exception"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="startAutoLifeCycleEvents" parameterOrder="requestParameters requestHeader responseHeader">
+      <wsdl:input message="ns1:startAutoLifeCycleEvents" name="startAutoLifeCycleEvents"></wsdl:input>
+      <wsdl:output message="ns1:startAutoLifeCycleEventsResponse" name="startAutoLifeCycleEventsResponse"></wsdl:output>
+      <wsdl:fault message="ns1:FaultResponse_Exception" name="FaultResponse_Exception"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="subscribe" parameterOrder="requestParameters requestHeader responseHeader">
+      <wsdl:input message="ns1:subscribe" name="subscribe"></wsdl:input>
+      <wsdl:output message="ns1:subscribeResponse" name="subscribeResponse"></wsdl:output>
+      <wsdl:fault message="ns1:FaultResponse_Exception" name="FaultResponse_Exception"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getServiceInstances" parameterOrder="requestParameters requestHeader responseHeader">
+      <wsdl:input message="ns1:getServiceInstances" name="getServiceInstances"></wsdl:input>
+      <wsdl:output message="ns1:getServiceInstancesResponse" name="getServiceInstancesResponse"></wsdl:output>
+      <wsdl:fault message="ns1:FaultResponse_Exception" name="FaultResponse_Exception"></wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

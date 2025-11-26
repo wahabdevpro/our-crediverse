@@ -1,0 +1,97 @@
+<xsd:schema
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xhtml="http://www.w3.org/1999/xhtml"
+	xmlns:dcbk="http://docbook.org/ns/docbook"
+	xmlns:csxbaset="urn:concurrent-systems:cxx:libbase:1.0"
+	dcbk:version="5.0"
+	xml:lang="en"
+	attributeFormDefault="unqualified"
+	elementFormDefault="unqualified"
+	version="5.0.1.0"
+	targetNamespace="urn:concurrent-systems:cxx:libbase:1.0"
+	xsi:schemaLocation="
+		http://www.w3.org/2001/XMLSchema-instance http://www.w3.org/2001/XMLSchema-instance
+		http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd
+		http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-strict.xsd
+		http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
+	">
+
+	<xsd:simpleType name="stringx.boolean">
+		<!--
+			invalid -> false
+		-->
+		<xsd:union memberTypes="xsd:boolean">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="yes"/>
+					<xsd:enumeration value="no"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[Yy][Ee][Ss]"/>
+					<xsd:pattern value="[Nn][Oo]"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="y"/>
+					<xsd:enumeration value="n"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[Yy]"/>
+					<xsd:pattern value="[Nn]"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[Tt][Rr][Uu][Ee]"/>
+					<xsd:pattern value="[Ff][Aa][Ll][Ss][Ee]"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:integer">
+					<xsd:enumeration value="0"/>
+					<xsd:enumeration value="1"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:union>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="stringx.boolean.novalid">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="stringx.integer">
+		<xsd:union memberTypes="xsd:integer">
+		</xsd:union>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="stringx.integer.novalid">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="stringx.long">
+		<xsd:union memberTypes="xsd:integer">
+		</xsd:union>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="stringx.long.novalid">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="stringx.double">
+		<xsd:union memberTypes="xsd:decimal">
+		</xsd:union>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="stringx.unsingedInteger">
+		<xsd:union memberTypes="xsd:unsignedInt">
+		</xsd:union>
+	</xsd:simpleType>
+
+</xsd:schema>
+

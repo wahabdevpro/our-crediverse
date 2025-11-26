@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="C4uEclipseTemplate.category1"
+            name="C4U">
+      </category>
+      <wizard
+            category="C4uEclipseTemplate.category1"
+            class="c4ueclipsetemplate.NewWizard"
+            icon="resources/cash-icon.png"
+            id="C4uEclipseTemplate.wizard1"
+            name="C4U Plugin"
+            project="true">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="org.eclipse.ui.navigator.CommonNavigator"
+            icon="resources/cash-icon.png"
+            id="c4ueclipsetemplate"
+            name="C4U Plugin Navigator">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.ui.resourcePerspective">
+         <view
+               id="c4ueclipsetemplate"
+               ratio="0.5"
+               relationship="stack"
+               relative="org.eclipse.ui.navigator.ProjectExplorer">
+         </view>
+      </perspectiveExtension>
+   </extension>
+
+</plugin>

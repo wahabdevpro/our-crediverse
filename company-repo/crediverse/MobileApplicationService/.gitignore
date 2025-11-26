@@ -1,0 +1,8 @@
+/target/
+Cargo.lock
+testing_jig/logs/
+/output
+.vscode
+logs/
+config.json
+appversion.conf

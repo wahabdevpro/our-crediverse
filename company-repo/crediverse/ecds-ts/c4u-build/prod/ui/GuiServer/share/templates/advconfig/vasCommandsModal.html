@@ -1,0 +1,63 @@
+<style>
+.my-modal-header {
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #5cb85c;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+ }
+</style>
+
+<!-- Modal Server Info -->
+<div class="modal fade" id="vasCommandModal" tabindex="-1" role="dialog" aria-labelledby="vasCommandModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div id="vasCommandModalHeader" class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="vasCommandModalTitle">Vas Command</h4>
+      </div>
+      <div class="modal-body">
+      	<form id="vasCommandModalForm" name="vascommandModalForm">
+			
+				<!-- General Configuration -->
+				<div class="tab-pane active" id="scconfig">
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+						<label for="process" class="control-label">Process</label>
+							<select id="Process" name="Process" class="selectpicker">
+							</select>
+							<span id="Process_error" class="error_message hide"></span>
+						</div>
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-12">
+						<label for="Command" class="control-label">Input sequence</label>
+							<input type="text" class="form-control vasinputor modalInput" id="Command" name="Command" placeholder="Input sequence" />
+							<span id="Command_error" class="error_message hide"></span>
+						</div>
+					</div>
+				</div>
+      	</form>
+      	
+		<div id="vasCommandModalError" class="row alert alert-danger hide">
+				Things went wrong!!
+		</div>
+		<div class="modal-footer">
+			<img id="vasCommandModalWaiting" src="/img/cell_wait.gif" class="waiting hide" />
+			<button type="button" class="btn btn-default" data-dismiss="modal" >Cancel</button>
+			<button id="vasCommandModalSave" type="button" class="btn btn-primary savebtn" >Save Command</button>
+		</div>
+		
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script language="javascript">
+	bindDragable("vasCommandModal", "vasCommandModalHeader");
+</script>

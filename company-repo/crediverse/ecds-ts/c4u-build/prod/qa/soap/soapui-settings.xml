@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-settings xmlns:con="http://eviware.com/soapui/config"><con:setting id="WsdlSettings@excluded-types">&lt;con:entry xmlns:con="http://eviware.com/soapui/config">schema@http://www.w3.org/2001/XMLSchema&lt;/con:entry></con:setting><con:setting id="WebRecordingSettings@excluded-headers"><![CDATA[<xml-fragment><con:entry xmlns:con="http://eviware.com/soapui/config">Cookie</con:entry><con:entry xmlns:con="http://eviware.com/soapui/config">Set-Cookie</con:entry><con:entry xmlns:con="http://eviware.com/soapui/config">Referer</con:entry><con:entry xmlns:con="http://eviware.com/soapui/config">Keep-Alive</con:entry><con:entry xmlns:con="http://eviware.com/soapui/config">Connection</con:entry><con:entry xmlns:con="http://eviware.com/soapui/config">Proxy-Connection</con:entry><con:entry xmlns:con="http://eviware.com/soapui/config">Pragma</con:entry><con:entry xmlns:con="http://eviware.com/soapui/config">Cache-Control</con:entry><con:entry xmlns:con="http://eviware.com/soapui/config">Transfer-Encoding</con:entry><con:entry xmlns:con="http://eviware.com/soapui/config">Date</con:entry></xml-fragment>]]></con:setting><con:setting id="WsdlSettings@name-with-binding">true</con:setting><con:setting id="HttpSettings@http_version">1.1</con:setting><con:setting id="HttpSettings@max_total_connections">2000</con:setting><con:setting id="HttpSettings@response-compression">true</con:setting><con:setting id="HttpSettings@leave_mockengine">true</con:setting><con:setting id="UISettings@auto_save_projects_on_exit">true</con:setting><con:setting id="UISettings@show_descriptions">true</con:setting><con:setting id="WsdlSettings@xml-generation-always-include-optional-elements">true</con:setting><con:setting id="WsaSettings@useDefaultRelatesTo">true</con:setting><con:setting id="WsaSettings@useDefaultRelationshipType">true</con:setting><con:setting id="UISettings@show_startup_page">true</con:setting><con:setting id="UISettings@gc_interval">60</con:setting><con:setting id="WsdlSettings@cache-wsdls">true</con:setting><con:setting id="WsdlSettings@pretty-print-response-xml">true</con:setting><con:setting id="HttpSettings@include_request_in_time_taken">true</con:setting><con:setting id="HttpSettings@include_response_in_time_taken">true</con:setting><con:setting id="UISettings@auto_save_interval">0</con:setting><con:setting id="WsaSettings@soapActionOverridesWsaAction">true</con:setting><con:setting id="WsaSettings@overrideExistingHeaders">true</con:setting><con:setting id="WsaSettings@enableForOptional">true</con:setting><con:setting id="VersionUpdateSettings@auto-check-version-update">true</con:setting><con:setting id="ProxySettings@autoProxy">true</con:setting><con:setting id="ProxySettings@enableProxy">true</con:setting><con:setting id="WSISettings@location">/home/louiseg/SmartBear/SoapUI-4.6.4/wsi-test-tools</con:setting><con:setting id="GlobalPropertySettings@properties">&lt;xml-fragment/></con:setting><con:setting id="com.eviware.soapui.SoapUI@versionToSkip">5.1.0</con:setting><con:setting id="SoapUIProSettings@default_request_editor">Form</con:setting><con:setting id="SoapUIProSettings@default_response_editor">Outline</con:setting><con:setting id="SoapUIProSettings@outline_editor_limit">400000</con:setting><con:setting id="SoapUIProSettings@form_editor_limit">200000</con:setting><con:setting id="Script Library">/home/louiseg/SmartBear/SoapUI-Pro-4.6.4-m-SNAPSHOT/bin/scripts</con:setting><con:setting id="UISettings@desktop-type">Tabbed</con:setting><con:setting id="CodeTemplates"><![CDATA[<xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  <con:entry key="grut" value="def groovyUtils = new com.eviware.soapui.support.GroovyUtils( context )\n|"/>
+  <con:entry key="xhre" value="def holder = groovyUtils.getXmlHolder( &quot;|#Response&quot; )\n"/>
+</xml-fragment>]]></con:setting><con:setting id="JdbcDriversSettings@drivers"><![CDATA[<xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  <con:driver>
+    <con:name>MySql/com.mysql.jdbc.Driver</con:name>
+    <con:connectionTemplateString><![CDATA[jdbc:mysql://<HOST:127.0.0.1>:<PORT:3306>/<DB>?user=<USER>&password=<PASSWORD>]]]]>><![CDATA[</con:connectionTemplateString>
+  </con:driver>
+  <con:driver>
+    <con:name>PostgreSQL/org.postgresql.Driver</con:name>
+    <con:connectionTemplateString><![CDATA[jdbc:postgresql://<HOST:127.0.0.1>:<PORT:5432>/<DB:postgres>?user=<USER>&password=<PASSWORD>]]]]>><![CDATA[</con:connectionTemplateString>
+  </con:driver>
+  <con:driver>
+    <con:name>IBMDB2/COM.ibm.db2.jdbc.app.DB2Driver</con:name>
+    <con:connectionTemplateString><![CDATA[jdbc:db2://<HOST:127.0.0.1>:<PORT:50000>/<DB>?user=<USER:db2admin>&password=<PASSWORD:db2admin>;]]]]>><![CDATA[</con:connectionTemplateString>
+  </con:driver>
+  <con:driver>
+    <con:name>IBMDB2(type2)/com.ibm.db2.jcc.DB2Driver</con:name>
+    <con:connectionTemplateString>jdbc:db2://&lt;HOST:127.0.0.1>:&lt;PORT:50000>/&lt;DB>:user=&lt;USER:db2admin>;password=&lt;PASSWORD:db2admin>;</con:connectionTemplateString>
+  </con:driver>
+  <con:driver>
+    <con:name>JDBC-ODBCBridge/sun.jdbc.odbc.JdbcOdbcDriver</con:name>
+    <con:connectionTemplateString>jdbc:odbc:&lt;DB>?user=&lt;USER>&amp;password=&lt;PASSWORD></con:connectionTemplateString>
+  </con:driver>
+  <con:driver>
+    <con:name>MSSQL(MicrosoftDriver)/com.microsoft.sqlserver.jdbc.SQLServerDriver</con:name>
+    <con:connectionTemplateString>jdbc:sqlserver://&lt;HOST:127.0.0.1>:&lt;PORT:1433>;databaseName=&lt;DB>;user=&lt;USER>;password=&lt;PASSWORD></con:connectionTemplateString>
+  </con:driver>
+  <con:driver>
+    <con:name>MSSQL(Weblogic)/weblogic.jdbc.mssqlserver4.Driver</con:name>
+    <con:connectionTemplateString><![CDATA[jdbc:weblogic:mssqlserver4:<DB>@<HOST:127.0.0.1>:<PORT:1433>?user=<USER>&password=<PASSWORD>]]]]>><![CDATA[</con:connectionTemplateString>
+  </con:driver>
+  <con:driver>
+    <con:name>MSSQL(SprintaDriver)/com.inet.tds.TdsDriver</con:name>
+    <con:connectionTemplateString><![CDATA[jdbc:inetdae:<HOST:127.0.0.1>:<PORT:1433>?database=<DB>?user=<USER>&password=<PASSWORD>]]]]>><![CDATA[</con:connectionTemplateString>
+  </con:driver>
+  <con:driver>
+    <con:name>MicrosoftSQLServer(JTurboDriver)/&lt;br/>com.ashna.jturbo.driver.Driver</con:name>
+    <con:connectionTemplateString>jdbc:JTurbo://&lt;HOST:127.0.0.1>:&lt;PORT:1433>/&lt;DB>/user=&lt;USER>/password=&lt;PASSWORD></con:connectionTemplateString>
+  </con:driver>
+  <con:driver>
+    <con:name>OracleThin/oracle.jdbc.driver.OracleDriver</con:name>
+    <con:connectionTemplateString>jdbc:oracle:thin:&lt;USER>/&lt;PASSWORD>@&lt;HOST:127.0.0.1>:&lt;PORT:1521>:&lt;SID></con:connectionTemplateString>
+  </con:driver>
+  <con:driver>
+    <con:name>Oracle(OranhoDriver)/com.inet.pool.PoolDriver</con:name>
+    <con:connectionTemplateString><![CDATA[jdbc:inetpool:inetora:<HOST:127.0.0.1>?database=<DB>&user=<USER>&password=<PASSWORD>&sid=<SID>]]]]>><![CDATA[</con:connectionTemplateString>
+  </con:driver>
+  <con:driver>
+    <con:name>Sybase(jConnect5.2)/com.sybase.jdbc2.jdbc.SybDriver</con:name>
+    <con:connectionTemplateString>jdbc:sybase:Tds:&lt;HOST:127.0.0.1>:&lt;PORT:5000>?user=&lt;USER>&amp;password=&lt;PASSWORD></con:connectionTemplateString>
+  </con:driver>
+  <con:driver>
+    <con:name>PointBaseEmbeddedServer/com.pointbase.jdbc.jdbcUniversalDriver</con:name>
+    <con:connectionTemplateString>jdbc:pointbase://embedded:&lt;PORT:9092>/&lt;DB>?user=&lt;USER>&amp;password=&lt;PASSWORD></con:connectionTemplateString>
+  </con:driver>
+  <con:driver>
+    <con:name>Cloudscape/COM.cloudscape.core.JDBCDriver</con:name>
+    <con:connectionTemplateString>jdbc:cloudscape:&lt;DB>?user=&lt;USER>&amp;password=&lt;PASSWORD></con:connectionTemplateString>
+  </con:driver>
+  <con:driver>
+    <con:name>CloudscapeRMI/RmiJdbc.RJDriver</con:name>
+    <con:connectionTemplateString><![CDATA[jdbc:rmi://<HOST:127.0.0.1>:<PORT:1099>/jdbc:cloudscape:<DB>?user=<USER>&password=<PASSWORD>]]]]>><![CDATA[</con:connectionTemplateString>
+  </con:driver>
+  <con:driver>
+    <con:name>Firebird(JCA-JDBCDriver)/org.firebirdsql.jdbc.FBDriver</con:name>
+    <con:connectionTemplateString><![CDATA[jdbc:firebirdsql://<HOST:127.0.0.1>:<PORT:3050>/<DB>?user=<USER>&password=<PASSWORD>]]]]>><![CDATA[</con:connectionTemplateString>
+  </con:driver>
+  <con:driver>
+    <con:name>IDSServer/ids.sql.IDSDriver</con:name>
+    <con:connectionTemplateString><![CDATA[jdbc:ids://<HOST:127.0.0.1>:<PORT:12>/conn?dsn='<ODBC_DSN_NAME>'?user=<USER>&password=<PASSWORD>]]]]>><![CDATA[</con:connectionTemplateString>
+  </con:driver>
+  <con:driver>
+    <con:name>InformixDynamicServer/com.informix.jdbc.IfxDriver</con:name>
+    <con:connectionTemplateString><![CDATA[jdbc:informix-sqli://<HOST:127.0.0.1>:<PORT:1526>/<DB>:INFORMIXSERVER=<SERVER_NAME>?user=<USER>&password=<PASSWORD>]]]]>><![CDATA[</con:connectionTemplateString>
+  </con:driver>
+  <con:driver>
+    <con:name>InstantDB/org.enhydra.instantdb.jdbc.idbDriver</con:name>
+    <con:connectionTemplateString>jdbc:idb:&lt;DB>>?user=&lt;USER>&amp;password=&lt;PASSWORD></con:connectionTemplateString>
+  </con:driver>
+  <con:driver>
+    <con:name>Interbase(InterClientDriver)/interbase.interclient.Driver</con:name>
+    <con:connectionTemplateString>jdbc:interbase://&lt;HOST:127.0.0.1>/&lt;DB>?user=&lt;USER>&amp;password=&lt;PASSWORD></con:connectionTemplateString>
+  </con:driver>
+  <con:driver>
+    <con:name>HypersonicSQL/org.hsql.jdbcDriver</con:name>
+    <con:connectionTemplateString>jdbc:HypersonicSQL:&lt;DB>?user=&lt;USER>&amp;password=&lt;PASSWORD></con:connectionTemplateString>
+  </con:driver>
+</xml-fragment>]]></con:setting><con:setting id="RecentProjects"><![CDATA[<xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  <con:entry key="/home/louiseg/andries-soapui-project.xml" value="andries"/>
+  <con:entry key="/home/louiseg/credit4u/account_sharing_success-04-03-2014-6325/overview-frame.html" value="overview-frame.html"/>
+  <con:entry key="/home/louiseg/lish-soapui-project.xml" value="lish"/>
+  <con:entry key="/home/louiseg/c4u10.tmp" value="c4u10.tmp"/>
+  <con:entry key="/home/louiseg/load-soapui-project.xml" value="load"/>
+  <con:entry key="/home/louiseg/ad-soapui-project.xml" value="ad"/>
+  <con:entry key="/home/louiseg/airsim-soapui-project.xml" value="airsim"/>
+  <con:entry key="/home/louiseg/c4u/repository/c4u/prod/qa/soap/soapv1-soapui-project.xml" value="C4U cameroon"/>
+  <con:entry key="/home/louiseg/c4u-soap-soapui-project.xml" value="c4u soap"/>
+  <con:entry key="/home/louiseg/2julybackup.xml" value="C4U cameroonn"/>
+  <con:entry key="/home/louiseg/john-soapui-project.xml" value="john"/>
+  <con:entry key="/home/louiseg/credit4U-soapui-project.xml" value="credit4U"/>
+  <con:entry key="/home/louiseg/testwis-soapui-project.xml" value="testwis"/>
+  <con:entry key="/home/louiseg/REST-Project-1-soapui-project.xml" value="REST Project 1"/>
+  <con:entry key="/home/louiseg/kev-soapui-project.xml" value="kev"/>
+  <con:entry key="/home/louiseg/192-168-0-soapui-project.xml" value="192.168.0"/>
+  <con:entry key="/home/louiseg/adries-soapui-project.xml" value="adries"/>
+  <con:entry key="/home/louiseg/backup.xml" value="C4U cameroonn"/>
+  <con:entry key="/home/louiseg/AD-soapui-project.xml" value="AD"/>
+  <con:entry key="/home/louiseg/demo-soapui-project.xml" value="demo"/>
+  <con:entry key="/home/louiseg/sdfshdf-soapui-project.xml" value="sdfshdf"/>
+  <con:entry key="/home/louiseg/hsldlk-soapui-project.xml" value="hsldlk"/>
+  <con:entry key="/home/louiseg/C4U-soapui-project.xml" value="C4U"/>
+  <con:entry key="/home/louiseg/ggggrrrrrrrrr.xml" value="C4U cameroonn"/>
+  <con:entry key="/home/louiseg/Andries-soapui-project.xml" value="Andries"/>
+  <con:entry key="/home/louiseg/c4u/repository/c4u/prod/qa/soap/C4U-soapui-project.xml" value="C4U"/>
+</xml-fragment>]]></con:setting><con:setting id="GlobalPropertySettings@security_scans_properties"><![CDATA[<xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  <con:property>
+    <con:name>~(?s).*(s|S)tack ?(t|T)race.*</con:name>
+    <con:value>[Stacktrace] Can give hackers information about which software or language you are using</con:value>
+  </con:property>
+  <con:property>
+    <con:name>~(?s).*STACK\s?TRACE.*</con:name>
+    <con:value>[Stacktrace] Can give hackers information about which software or language you are using</con:value>
+  </con:property>
+  <con:property>
+    <con:name>~(?s).*(s|S)tack:.*</con:name>
+    <con:value>[Stacktrace] Can give hackers information about which software or language you are using</con:value>
+  </con:property>
+  <con:property>
+    <con:name>~(?s).*(s|S)yntax (e|E)rror\s.*</con:name>
+    <con:value>[Stacktrace] Can give hackers information about which software or language you are using</con:value>
+  </con:property>
+  <con:property>
+    <con:name>~(?s).*((I|i)ncorrect|(I|i)nvalid) (s|S)yntax.*</con:name>
+    <con:value>[Stacktrace] Can give hackers information about which software or language you are using</con:value>
+  </con:property>
+  <con:property>
+    <con:name>~(?s).*Runtime (E|e)rror.*</con:name>
+    <con:value>[Stacktrace] Can give hackers information about which software or language you are using</con:value>
+  </con:property>
+  <con:property>
+    <con:name>~(?s).*Error in process &lt;\d+\.\d+\.\d+> with exit value:.*</con:name>
+    <con:value>[Stacktrace] Can give hackers information about which software or language you are using</con:value>
+  </con:property>
+  <con:property>
+    <con:name>~(?s).*at [a-zA-Z][\w\$]*(\.[a-zA-Z][\w\$]*)+\((Unknown Source|Native Method|[a-zA-Z][\w\$]*\.([a-zA-Z]{3,5}):\d+)\).*</con:name>
+    <con:value>[Stacktrace] Can give hackers information about which software or language you are using</con:value>
+  </con:property>
+  <con:property>
+    <con:name>~(?s).*&lt;\w+:frame\s*class=".*"\s*line=".*"\s*method=".*"\s*/>.*</con:name>
+    <con:value>[Stacktrace] Can give hackers information about which software or language you are using</con:value>
+  </con:property>
+  <con:property>
+    <con:name>~(?s).*[^\s]+\.rb:\d+:in `.+'.*</con:name>
+    <con:value>[Stacktrace] Can give hackers information about which software or language you are using</con:value>
+  </con:property>
+  <con:property>
+    <con:name>~(?s).*at [\w\$]+(\.[\w\$&lt;>\[\],]+|\.\.ctor)+(\((([\w\$&lt;>\`\[\]]+ [\w\$&lt;>]+, )*(([\w\$&lt;>\`\[\]]+ [\w\$&lt;>]+)))\)|\(\)).*</con:name>
+    <con:value>[Stacktrace] Can give hackers information about which software or language you are using</con:value>
+  </con:property>
+  <con:property>
+    <con:name>~(?s).*from [\w\$]+(\.[\w\$&lt;>]+)+:\d+:in `.+'.*</con:name>
+    <con:value>[Stacktrace] Can give hackers information about which software or language you are using</con:value>
+  </con:property>
+  <con:property>
+    <con:name>~(?s).*Warning: [\w]+\(\) .+ in .+ on line \d{1,6}.*</con:name>
+    <con:value>[Stacktrace] Can give hackers information about which software or language you are using</con:value>
+  </con:property>
+  <con:property>
+    <con:name>~(?s).*Traceback \(most recent call last\):.*</con:name>
+    <con:value>[Stacktrace] Can give hackers information about which software or language you are using</con:value>
+  </con:property>
+  <con:property>
+    <con:name>~(?s).*File ".+", line [0-9]{1,6}, in .*</con:name>
+    <con:value>[Stacktrace] Can give hackers information about which software or language you are using</con:value>
+  </con:property>
+  <con:property>
+    <con:name>~(?s).*(v|V)ersion:? \d\.\d{1,2}\.{1,3}-?.*</con:name>
+    <con:value>[Version x.y.z] Exposing version numbers gives 
+			unnecessary hints on your systems vulnerabilities</con:value>
+  </con:property>
+  <con:property>
+    <con:name>~(?s).*(p|P)owered by:? ([a-zA-Z]+)( [a-zA-Z]+){0,3}( |/)\d\.\d{1,2}\.\d{1,3}.*</con:name>
+    <con:value>[Version x.y.z] Exposing version numbers gives 
+			unnecessary hints on your systems vulnerabilities</con:value>
+  </con:property>
+  <con:property>
+    <con:name>~(?s).*((A|a)pache|vBulletin|MySQL|PostgreSQL|phpBB|Internet Information Services)( |/)\d{1,2}(\.\d{1,3})+.*</con:name>
+    <con:value>[Version x.y.z] Exposing version numbers gives 
+			unnecessary hints on your systems vulnerabilities</con:value>
+  </con:property>
+  <con:property>
+    <con:name>~(?s).*\w+/\d{1,2}(\.\d{1,3})+.*</con:name>
+    <con:value>[Version x.y.z] Exposing version numbers gives 
+			unnecessary hints on your systems vulnerabilities</con:value>
+  </con:property>
+  <con:property>
+    <con:name>~(?s).*SQLSTATE: [A-Z0-9] .*</con:name>
+    <con:value>[Database error messages] Internal database information can be misused by hackers</con:value>
+  </con:property>
+  <con:property>
+    <con:name>~(?s).*Invalid column name\s.*</con:name>
+    <con:value>[Database error messages] Internal database information can be misused by hackers</con:value>
+  </con:property>
+  <con:property>
+    <con:name>~(?s).*(e|E)rror was:\s.*</con:name>
+    <con:value>[Database error messages] Internal database information can be misused by hackers</con:value>
+  </con:property>
+  <con:property>
+    <con:name>~(?s).*(ORA|EXP|IMP|KUP|UDE|UDI|DBV|LCD|QSM|OCI|RMAN|LFI|PLS|PLQ|AMD|CLSR|PROC|PROT|TNS|NNC|NLP|NNF|NMP|NCR|NZE|O2F|O2I|O2U|PCB|PCC|SQL|AUD|IMG|VID|DRG|LPX|LSX)-\d{5}\s.*</con:name>
+    <con:value>[Database error messages] Internal database information can be misused by hackers</con:value>
+  </con:property>
+</xml-fragment>]]></con:setting><con:setting id="RecentAssertionSettings@recent-assertions"><![CDATA[<xml-fragment><con:entry xmlns:con="http://eviware.com/soapui/config">XPath Match</con:entry><con:entry xmlns:con="http://eviware.com/soapui/config">Contains</con:entry></xml-fragment>]]></con:setting><con:setting id="WsdlSettings@xml-generation-skip-comments">false</con:setting></con:soapui-settings>

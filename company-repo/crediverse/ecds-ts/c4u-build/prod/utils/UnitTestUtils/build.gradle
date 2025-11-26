@@ -1,0 +1,17 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+dependencies {
+    implementation 'junit:junit'
+    implementation 'org.hamcrest:hamcrest-core'
+    implementation project(':CoreInterfaces')
+    implementation project(':LoggerService')
+    implementation project(':Configuration')
+}

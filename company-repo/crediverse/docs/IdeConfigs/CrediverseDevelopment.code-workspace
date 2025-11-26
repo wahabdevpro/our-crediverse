@@ -1,0 +1,77 @@
+/*
+  Crediverse Workspace
+  The below paths are relative to where this file is saved.
+  Clone the repositories from the projects under
+  https://gitlab.com/csys/products/ecds
+*/
+{
+  "folders": [
+    {
+      "name": "crediverse",
+      "path": "../../crediverse"
+    },
+    {
+      "path": "../../ecds-ts"
+    },
+    {
+      "path": "../../ecds-gui"
+    },
+    {
+      "path": "../../ecds-api"
+    }
+  ],
+  "settings": {
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "files.exclude": {
+      "ecds-ts": true,
+      "ecds-gui": true,
+      "ecds-api": true,
+    },
+  },
+  "launch": {
+    "configurations": [
+      {
+        "type": "java",
+        "name": "ECDS Admin GUI",
+        "request": "launch",
+        "mainClass": "cs.Application",
+        "projectName": "ecds-gui",
+        "cwd": "${workspaceFolder:ecds-gui}"
+      },
+      {
+        "type": "java",
+        "name": "ECDS Portal GUI",
+        "request": "launch",
+        "mainClass": "cs.Application",
+        "vmArgs": "-Dspring.profiles.active=portal -Dserver.port=8085",
+        "projectName": "ecds-gui",
+        "cwd": "${workspaceFolder:ecds-gui}"
+      },
+      {
+        "type": "java",
+        "name": "ECDS TestHost",
+        "request": "launch",
+        "mainClass": "hxc.test.EcdsTestHost",
+        "projectName": "EcdsTestHost",
+        "cwd": "${workspaceFolder:ecds-ts}"
+      },
+      {
+        "type": "java",
+        "name": "Launch HostObject",
+        "request": "launch",
+        "mainClass": "hxc.test.HostObject",
+        "projectName": "HostProcess",
+        "cwd": "${workspaceFolder:ecds-ts}"
+      },
+      {
+        "type": "java",
+        "name": "Launch C4U GUI",
+        "request": "launch",
+        "mainClass": "hxc.userinterfaces.gui.jetty.JettyMain",
+        "projectName": "GuiServer",
+        "cwd": "${workspaceFolder:ecds-ts}"
+      }
+    ],
+    "compounds": []
+  }
+}

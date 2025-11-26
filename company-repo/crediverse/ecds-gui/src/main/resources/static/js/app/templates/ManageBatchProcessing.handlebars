@@ -1,0 +1,272 @@
+<div>
+	<script id="manageimports">
+		<div id="manageimports" class="datatablesview col-xs-12 fuelux">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="wizard" data-initialize="wizard" id="importWizard" ><!-- data-restrict="previous" -->
+					<div class="steps-container">
+						<ul class="steps">
+							<li data-step="1" data-name="campaign" class="active">
+								<span class="badge">1</span>{{i18n "batch.wizardStep1"}}
+								<span class="chevron"></span>
+							</li>
+							<li data-step="2" class="noselect">
+								<span class="badge">2</span>{{i18n "batch.wizardStep2"}}
+								<span class="chevron"></span>
+							</li>
+							<li data-step="3"  class="noselect" data-name="template">
+								<span class="badge">3</span>{{i18n "batch.wizardStep3"}}
+								<span class="chevron"></span>
+							</li>
+							<li data-step="4"  class="noselect" data-name="template">
+								<span class="badge">4</span>{{i18n "batch.wizardStep4"}}
+								<span class="chevron"></span>
+							</li>
+							<li data-step="5" class="noselect" data-name="template">
+								<span class="badge">5</span>{{i18n "batch.wizardStep5"}}
+								<span class="chevron"></span>
+							</li>
+							<li data-step="6" data-name="template">
+							<span class="badge">6</span>{{i18n "batch.wizardStep6"}}
+							<span class="chevron"></span>
+						</li>
+						</ul>
+					</div>
+					<!-- <div class="actions">
+						<button type="button" class="btn btn-default btn-cancel">
+							restart
+						</button>
+						<button type="button" class="btn btn-default btn-prev">
+							<span class="glyphicon glyphicon-arrow-left"></span>Prev</button>
+						<button type="button" class="btn btn-primary btn-next" data-last="Complete">Next
+							<span class="glyphicon glyphicon-arrow-right"></span>
+						</button>
+					</div> -->
+					<div class="step-content">
+						<div class="step-pane active sample-pane" data-step="1">
+							<div class="row">
+								<div class="col-xs-12 form-inline">
+									<div class="form-group pull-right">
+										<span class="btn btn-primary fileinput-button">
+									        <i class="glyphicon glyphicon-plus"></i>
+									        <span>{{i18n "batch.fileInputButtonText"}}</span>
+									        <!-- The file input field used as target for the file upload widget -->
+									        <input id="file-import" name="fileimport" type="file" class="form-control file-import">
+									    </span>
+									</div>
+								</div>
+							</div>
+							
+							<p>
+							{{i18n "batch.batchProcessingIntroText"}}
+							</p>
+							
+							<p>
+							{{i18n "batch.batchFilenameConformsText"}}<br /><br />
+									
+									ci_ecds_&lt;batch_id&gt;_yyyymmdd_hhmmss.csv
+									
+									{{i18n "batch.batchIdTableIntroText:"}}<br /><br />
+										<div class="row">
+									<div class="col-xs-offset-1 col-xs-8">
+										<p>{{{i18n "batch.batchDownloadTemplateNote"}}}</p>
+										<table class="table table-condensed">
+									<head>
+									<tr>
+									<th>{{i18n "batch.BatchTableItemHeading"}}</th>
+									<th>{{i18n "batch.BatchTableIDHeading"}}</th>
+									<th>{{i18n "batch.BatchTableNotesHeading"}}</th>
+									</tr>
+									</head>
+									<tbody>
+									<tr>
+										<td><a href="#" class="downloadsample" data-id="user">{{i18n "batch.BatchTableEntryUser"}}</a></td><td><b>user</b></td><td>{{i18n "batch.BatchTableEntryUserNote"}}</td>
+									</tr>
+									<!-- <tr>
+									<td>{{i18n "batch.BatchTableEntryCell"}}</td><td><b>cell</b></td><td>{{i18n "batch.BatchTableEntryCellNote"}}</td>
+									</tr>
+									<tr>
+									<td>{{i18n "batch.BatchTableEntryArea"}}</td><td><b>area</b></td><td>{{i18n "batch.BatchTableEntryAreaNote"}}</td>
+									</tr> -->
+									<tr>
+										<td><a href="#" class="downloadsample" data-id="tier">{{i18n "batch.BatchTableEntryTier"}}</a></td><td><b>tier</b></td><td>{{i18n "batch.BatchTableEntryTierNote"}}</td>
+									</tr>
+									<tr>
+										<td><a href="#" class="downloadsample" data-id="sc">{{i18n "batch.BatchTableEntrySc"}}</a></td><td><b>sc</b></td><td>{{i18n "batch.BatchTableEntryScNote"}}</td>
+									</tr>
+									<tr>
+										<td><a href="#" class="downloadsample" data-id="account">{{i18n "batch.BatchTableEntryAccount"}}</a></td><td><b>account</b></td><td>{{i18n "batch.BatchTableEntryAccountNote"}}</td>
+									</tr>
+									<tr>
+										<td><a href="#" class="downloadsample" data-id="group">{{i18n "batch.BatchTableEntryGroup"}}</a></td><td><b>group</b></td><td>{{i18n "batch.BatchTableEntryGroupNote"}}</td>
+									</tr>
+									<tr>
+										<td><a href="#" class="downloadsample" data-id="rule">{{i18n "batch.BatchTableEntryRule"}}</a></td><td><b>rule</b></td><td>{{i18n "batch.BatchTableEntryRuleNote"}}</td>
+									</tr>
+									<tr>
+										<td><a href="#" class="downloadsample" data-id="adjust/exclusive">{{i18n "batch.BatchTableEntryExclusiveAdjust"}}</a></td><td><b>adjust</b></td><td>{{i18n "batch.BatchTableEntryExclusiveAdjustNote"}}</td>
+									</tr>
+									<tr>
+										<td><a href="#" class="downloadsample" data-id="adjust/inclusive">{{i18n "batch.BatchTableEntryInclisiveAdjust"}}</a></td><td><b>adjust</b></td><td>{{i18n "batch.BatchTableEntryInclusiveAdjustNote"}}</td>
+									</tr>
+									<tr>
+										<td><a href="#" class="downloadsample" data-id="dept">{{i18n "batch.BatchTableEntryDepartment"}}</a></td><td><b>dept</b></td><td>{{i18n "batch.BatchTableEntryDepartmentNote"}}</td>
+									</tr>
+									<tr>
+										<td><a href="#" class="downloadsample" data-id="area">{{i18n "batch.BatchTableEntryArea"}}</a></td><td><b>area</b></td><td>{{i18n "batch.BatchTableEntryAreaNote"}}</td>
+									</tr>
+									<tr>
+										<td><a href="#" class="downloadsample" data-id="cell">{{i18n "batch.BatchTableEntryCell"}}</a></td><td><b>cell</b></td><td>{{i18n "batch.BatchTableEntryCellNote"}}</td>
+									</tr>
+									<tr>
+										<td><a href="#" class="downloadsample" data-id="cellgroup">{{i18n "batch.BatchTableEntryCellGroup"}}</a></td><td><b>cellgroup</b></td><td>{{i18n "batch.BatchTableEntryCellGroupNote"}}</td>
+									</tr>
+									<tr>
+										<td><a href="#" class="downloadsample" data-id="prom">{{i18n "batch.BatchTableEntryPromotion"}}</a></td><td><b>prom</b></td><td>{{i18n "batch.BatchTableEntryPromotionNote"}}</td>
+									</tr>
+									</tbody>
+									</table>
+										</div>
+										</div>
+							</p>
+							{{i18n "batch.batchRfcListIntroText"}}<br /><br />
+								<ul>
+									<li>{{i18n "batch.batchRfcListIntroList1"}}</li>
+	
+									<li>{{i18n "batch.batchRfcListIntroList2"}}</li>
+	
+									<li>{{i18n "batch.batchRfcListIntroList3"}}</li>
+	
+									<li>{{i18n "batch.batchRfcListIntroList4"}}</li>
+	
+									<li>{{i18n "batch.batchRfcListIntroList5"}}</li>
+	
+									<li>{{i18n "batch.batchRfcListIntroList6"}}</li>
+	
+									<li>{{i18n "batch.batchRfcListIntroList7"}}</li>
+	
+									<li>{{i18n "batch.batchRfcListIntroList8"}}</li>
+								</ul>
+						</div>
+						<div class="step-pane sample-pane bg-info" data-step="2">
+							<h4>{{i18n "batch.wizardPaneStep2heading"}}</h4>
+							<div id="uploadProgress" class="progress">
+				        		<div class="progress-bar progress-bar-success"></div>
+				    		</div>
+						</div>
+						<div class="step-pane sample-pane bg-info" data-step="3">
+							<h4>{{i18n "batch.wizardPaneStep3heading"}}</h4>
+							<div id="verifyProgress" class="progress" style="min-width: 2em;">
+				        		<div class="progress-bar progress-bar-success"></div>
+				    		</div>
+				    		<div id="verifyStatus" class="">
+				    		</div>
+						</div>
+						<div id="fileimport" class="step-pane sample-pane" data-step="4">
+							<div class="box box-danger">
+					            <div class="box-header">
+					            	<h4>{{i18n "batch.wizardPaneStep4heading"}}</h4>
+					            </div>
+					            <div class="box-body row">
+						            
+					            
+					            
+					            <div class="col-sm-12">
+					            
+						            {{#hasPerms "WorkItem_Add"}}
+							            <ul id="tablist" class="nav nav-tabs" role="tablist">
+							            	<li class="active" role="presentation"><a data-toggle="tab" role="tab" href="#coauthorisation">{{i18n "dashboard.authorizeImmediate"}}</a></li>
+							            	<li role="presentation"><a data-toggle="tab" role="tab" href="#coauthorisation-request">{{i18n "dashboard.authorizeRequest"}}</a></li>
+							          	</ul>
+							          	<div id="authorisationTabs" class="tab-content">
+							          	
+							          		<div id="coauthorisation" class="coauthorisation tab-pane fade in active">
+												<p>Auth Control Here</p>
+							    			</div>
+							    			<div id="coauthorisation-request" class="coauthorisation-request tab-pane fade">
+								    			<div class="row top-buffer">
+									    			<div class="col-sm-12">
+										    			<form id="batchCoauthForm" name="batchForm" class="form-horizontal center-div">
+											    			<div class="form-group">
+											    				<label for="reason" class="col-sm-2 control-label">{{i18n "tasks.reasonLabel"}}</label>
+											    				<div class="col-sm-8">
+											    					<input type="text" class="form-control" id="reason" name="reason" placeholder="{{i18n "tasks.reasonPlaceHolder"}}">
+											    				</div>
+											    			</div>
+											    			<div class="form-group">
+											    				<div class="col-sm-offset-2 col-sm-8">
+											    					<button id="coauthorisationRequestButton" class='btn btn-primary coauthorisationRequestButton right'>{{i18n "tasks.coauthorisationRequestButton"}}</button>
+											    				</div>
+											    			</div>
+										    				
+										    			</form>
+									    			</div>
+									    		</div>
+							    			</div>
+							          	</div>
+							        {{else}}
+								        <div id="coauthorisation" class="coauthorisation tab-pane fade in active">
+											<p>Auth Control Here</p>
+						    			</div>
+							        {{/hasPerms}}
+						          	
+					            </div>
+					            
+					            
+					            </div>
+					        </div>
+						</div>
+						
+						<div class="step-pane sample-pane bg-info" data-step="5">
+						<center><h3>{{i18n "batch.wizardPaneStep5heading"}}</h3></center>
+						<div id="updatingDatabase" class="spinner" style="min-width: 2em;">
+				              Please be patient, for larger files, this can take some time.
+				            <div class="overlay largeSpinner">
+				              <i class="fa fa-refresh fa-spin"></i>
+				            </div>
+			    		</div>
+					</div>
+						
+						<div id="outcomepane" class="step-pane sample-pane bg-info" data-step="6">
+							<div class="box box-solid">
+								<div class="box-header">
+						          <h3 class="box-title">{{{i18n "batch.wizardPaneStep6heading"}}} <span class="status"></span></h3>
+						        </div>
+						        <div class="box-body">
+							        <div id="outcomeJson" class="">
+									</div>
+									
+									<div id="outcomeMessage" class="">
+									</div>
+									<div id="outcomeStatus" class="">
+										<div class="row">
+											<div class="col-xs-2 text-center"><h4>{{i18n "batch.batchOutcomeStatusTableType"}}</h4></div>
+											<div class="col-xs-2 text-center"><h4>{{i18n "batch.batchOutcomeStatusTableTotal"}}</h4></div>
+											<div class="col-xs-2 text-center"><h4>{{i18n "batch.batchOutcomeStatusTableInserts"}}</h4></div>
+											<div class="col-xs-2 text-center"><h4>{{i18n "batch.batchOutcomeStatusTableUpdates"}}</h4></div>
+											<div class="col-xs-2 text-center"><h4>{{i18n "batch.batchOutcomeStatusTableDeletes"}}</h4></div>
+										</div>
+										<div class="row">
+											<div class="col-xs-2 text-center recordtype"></div>
+											<div class="col-xs-2 text-center recordcount"></div>
+											<div class="col-xs-2 text-center recordinserts"></div>
+											<div class="col-xs-2 text-center recordupdates"></div>
+											<div class="col-xs-2 text-center recorddeletes"></div>
+										</div>
+						    		</div>
+						    		<div id="outcomeIssues" class="">
+										<table class="issuetable  table table-bordered table-hover table-striped">
+										</table>
+									</div>
+									<div id="outcomeErrors" class="">
+									</div>
+						        </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+	</script>
+</div>

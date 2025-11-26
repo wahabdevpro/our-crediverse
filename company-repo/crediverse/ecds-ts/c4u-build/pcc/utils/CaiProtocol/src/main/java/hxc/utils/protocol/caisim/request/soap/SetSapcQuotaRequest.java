@@ -1,0 +1,30 @@
+package hxc.utils.protocol.caisim.request.soap;
+
+import hxc.utils.protocol.caisim.SapcQuota;
+
+public class SetSapcQuotaRequest extends SoapRequest
+{
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Properties
+	//
+	// /////////////////////////////////
+		
+	private SapcQuota quota = new SapcQuota();
+	
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Accessor Method
+	//
+	// /////////////////////////////////
+	
+	public SapcQuota getGroup()
+	{
+		return quota;
+	}
+	
+	public void setGroup(SapcQuota quota)
+	{
+		this.quota = quota;
+	}
+}

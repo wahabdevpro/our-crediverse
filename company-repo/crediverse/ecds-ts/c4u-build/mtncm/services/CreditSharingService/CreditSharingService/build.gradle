@@ -1,0 +1,25 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+dependencies {
+    implementation project(':Configuration')
+    implementation project(':CoreInterfaces')
+    implementation project(':TransactionService')
+    implementation project(':AirConnector')
+    implementation project(':ProcessModel')
+    implementation project(':HuxProtocol')
+    implementation project(':SoapProtocol')
+    implementation project(':HuxConnector')
+    implementation project(':Notification')
+    implementation project(':AirProtocol')
+    implementation project(':Calendar')
+    implementation project(':AirSimService')
+    implementation project(':Instrumentation')
+}

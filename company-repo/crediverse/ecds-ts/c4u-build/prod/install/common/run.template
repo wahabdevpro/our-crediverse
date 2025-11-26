@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ -z "${C4U_JAVA_HOME}" ]
+then
+	exec java -cp "${CLASSPATH}" "${MAIN_CLASS}" "${@}" 2>&1
+else
+	exec "${C4U_JAVA_HOME}/bin/java" -cp "${CLASSPATH}" "${MAIN_CLASS}" "${@}" 2>&1
+fi
+
+

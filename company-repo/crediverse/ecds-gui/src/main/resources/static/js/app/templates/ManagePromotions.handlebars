@@ -1,0 +1,235 @@
+<div>
+	<script id="promotionsSearchForm" type="partial">
+		<div class="advancedSearchForm" style="display:none">
+			<form id="promoSearchForm" name="searchForm" class="form-horizontal">
+
+				<div class="row">
+					
+					<div class="col-sm-8 col-md-6">
+						{{>modalInputAgents name="id" label="global.uniqueID" hint="global.uniqueID"}}
+						{{>modalInputAgents name="name" label="promotions.name" hint="promotions.nameHint"}}
+						{{>selectInput name="targetPeriod" label="promotions.targetPeriod"}}
+						{{>selectInput name="state" label="agentAccounts.searchAccountStatusLabel"}}
+					</div>
+					
+					<div class="col-sm-8 col-md-6">
+						{{>selectInput name="transferRuleID" label="promotions.transferRule"}}
+						{{>selectInput name="areaID" label="promotions.area"}}
+						{{>selectInput name="serviceClassID" label="promotions.serviceClass"}}
+						{{>selectInput name="bundleID" label="promotions.bundle"}}
+					</div>
+					
+				</div>
+
+				<div style="border-top:1px solid #eaeaea; padding-top:10px; margin-bottom:20px;">
+					<div class="form-group">
+						<div class="right">
+							<button type="submit" class="btn btn-primary searchButton"><i class="fa fa-search"></i> {{i18n "global.searchBtn"}}</button>
+							<button type="button" class="btn btn-default searchResetButton">{{i18n "global.clearBtn"}}</button>
+							<button type="button" class="btn btn-default searchCancelButton">{{i18n "global.hideBtn"}}</button>
+							&nbsp;&nbsp;&nbsp;
+							<div class="pull-right">
+								<div id="error_general_message" class="alert alert-danger" style="padding:6px 15px; margin-right:20px; display:none;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</form>
+		</div>
+	</script>
+
+	<script id="managepromotions">
+		<div class="datatablesview col-xs-12">
+			<div class="box">
+			
+				<!-- advancedSearchInput -->
+				<div id="dtButtonBarTemplate" style="display:none;">
+					{{#hasPerms "Batch_Download"}}
+        				<button class="btn btn-primary exportPromotionButton" role="button">{{i18n "global.exportBtn"}}</button>
+        			{{/hasPerms}}
+        			{{#hasPerms "Batch_Upload"}}
+            			<a href="#batch" class="btn btn-primary routerlink" role="button">{{i18n "global.importBtn"}}</a>
+            		{{/hasPerms}}
+            		{{#hasPerms "Promotion_Add"}}
+            			<button class='btn btn-primary createPromotionButton'>{{i18n "promotions.addPromotionBtn"}}</button>
+            		{{/hasPerms}}
+        		</div>
+				
+        		<div class="box-body">
+        			<div>
+	                	<div class="advancedSearchInput" style="margin-bottom:15px;">
+	        			 	<button type="button" class="btn btn-primary searchExpandButton">{{i18n "global.advancedSearchBtn"}}</button>
+            			</div>
+
+        				{{>promotionsSearchForm}}
+        			</div>
+
+        			<div class="advancedSearchResults">
+	            		<table class="accountstable tableview table table-bordered table-hover table-striped"  data-sshash-base='promotionsList'>
+	            		</table>
+            		</div>
+        		</div>
+        		
+			</div>
+		</div>
+	</script>
+	
+	
+	<script id="timeChecks" type="partial">
+		<h5>{{i18n "promotions.timeChecksHeading"}}</h5>
+							
+		<div class="form-group">
+			<label class="col-xs-4 control-label">{{i18n "promotions.startTime"}}</label>
+			<div class="col-xs-8">
+				<div class="row">
+					<div class="col-xs-6">
+						{{>modalInputField name="startDateString" label="rules.ruleTimeOfDayStartLabel" hint="promotions.dateFormatHint" class="fix-right-padding" value=this.startDateString}}
+					</div>
+					<div class="col-xs-6">
+						{{>modalInputField name="startTimeString" label="rules.ruleTimeOfDayEndLabel" hint="promotions.timeFormatHint" value=this.startTimeString}}
+					</div>
+				</div>
+			</div>
+		</div>
+							
+		<div class="form-group">
+			<label class="col-xs-4 control-label">{{i18n "promotions.endTime"}}</label>
+			<div class="col-xs-8">
+				<div class="row">
+					<div class="col-xs-6">
+						{{>modalInputField name="endDateString" label="rules.ruleTimeOfDayStartLabel" hint="promotions.dateFormatHint" class="fix-right-padding" value=this.endDateString}}
+					</div>
+					<div class="col-xs-6">
+						{{>modalInputField name="endTimeString" label="rules.ruleTimeOfDayEndLabel" hint="promotions.timeFormatHint" value=this.this.endTimeString}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+	
+	<script id="modalCheckboxInput" type="partial">
+		<div class="form-group">
+			<label class="col-xs-4 control-label">{{i18n label}}</label>			
+			<div class="col-xs-8 col-sm-7" style="line-height:35px;">
+				<input id="{{name}}" name="{{name}}" class="custom-checkbox-fa" value="" {{#if active}}checked="checked"{{/if}} type="checkbox">
+				<label for="{{name}}">{{i18n confirm}}</label>
+			</div>
+		</div>
+	</script>
+	
+	<script id="targetChecks" type="partial">
+		<h5>{{i18n "promotions.targetHeading"}}</h5>
+		
+		{{>modalInputNumber name="targetAmount" label="promotions.targetAmount" currency=true value=this.targetAmount hint="promotions.targetAmount" }}
+		{{>modalSelect name="targetPeriod" label="promotions.targetPeriod" data="1:enums.period.perDay,2:enums.period.perWeek,3:enums.period.perMonth,11:enums.period.perCalendarDay,12:enums.period.perCalendarWeek,13:enums.period.perCalendarMonth" value=this.targetPeriod}}
+		{{>modalCheckboxInput name="retriggerable" active=this.retriggerable label="promotions.rewardRetrigger" confirm="promotions.retriggerConfirm"}}
+	</script>
+	
+	<script id="rewardChecks" type="partial">
+		<h5>{{i18n "promotions.rewardsHeading"}}</h5>
+
+		<h6>{{i18n "promotions.rewardMessage"}}</h6>
+		
+		<div class="row form-group required">
+			<div class="col-sm-4" style="margin-top:4px;">
+				<div>
+					<input id="rewardTypeAmount" name="rewardTypeAmount" value="amount" class="custom-checkbox-fa" type="checkbox" {{#if this.rewardAmount}}checked="checked"{{/if}}/>
+					<label for="rewardTypeAmount">{{i18n "promotions.rewardAmount"}}</label>
+				</div>
+			</div>	
+
+			<div class="col-sm-8" id="rewardAmountType">
+				<input id="rewardAmount" type="text" name="rewardAmount" class="form-control autonum currency" 
+					placeholder="{{i18n 'promotions.rewardAmount'}}" value="{{rewardAmount}}" />
+			</div>
+		</div>
+
+		<div class="row form-group required">
+			<div class="col-sm-4" style="margin-top:4px;">
+				<div>
+					<input id="rewardTypePercentage" name="rewardTypePercentage" value="perc" class="custom-checkbox-fa" type="checkbox" {{#if this.guiRewardPercentage}}checked="checked"{{/if}}/>
+					<label for="rewardTypePercentage">{{i18n "promotions.rewardPercentage"}}</label>
+				</div>
+			</div>	
+
+			<div class="col-sm-8" id="rewardPercentageType">
+				<div class="input-group">
+					<input id="guiRewardPercentage" type="text" name="guiRewardPercentage" class="form-control autonum currency" 
+						placeholder="{{i18n 'promotions.rewardAmount'}}" value="{{guiRewardPercentage}}" />
+					<span class="input-group-addon">%</span>
+				</div>
+			</div>
+		</div>
+
+	</script>
+	
+	<script id="ruleSelect" type="partial">
+		<div class="form-group">
+			<label class="col-xs-4 control-label">{{i18n label}}</label>
+			<div class="col-xs-8">
+				<select id="{{name}}" style="width: 100%;" name="{{name}}" class="form-control">
+					{{#if valueId}}
+						<option value="{{valueId}}" selected="selected">{{valueName}}</option>
+					{{/if}}
+				</select>
+			</div>
+		</div>
+	</script>
+	
+	<script id="promotionsDialog">
+		<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		    <h4 class="modal-title">{{{dialogTitle}}}</h4>
+		</div>
+		<div class="modal-body">
+			<div class="promodetails form-panel">
+				
+				<form name="updatePromotions" class="form-horizontal">
+					
+					<div class="row">
+						<div class="col-sm-6">
+							{{>modalInputTransfer name="name" label="promotions.name" hint="promotions.name" value=this.name}}
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+								<div class="col-xs-12" style="padding-top:8px;">
+									<input id="promoActive" name="promoActive" class="custom-checkbox-fa" value="" {{#if promoActive}}checked="checked"{{/if}} type="checkbox">
+									<label for="promoActive">{{i18n "promotions.stateDescription"}}</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-sm-6">
+							{{>timeChecks}}
+							
+							{{>rewardChecks}}
+						</div>
+						
+						<div class="col-sm-6">
+							{{>targetChecks}}
+							
+							<h5>{{i18n "promotions.ruleChecksHeading"}}</h5>
+							
+							{{>ruleSelect name="transferRuleID" label="promotions.transferRule" valueId=this.transferRuleID valueName=this.transferRuleName }}
+							{{>ruleSelect name="areaID" label="promotions.area" valueId=this.areaID valueName=this.areaName }}
+							{{>ruleSelect name="serviceClassID" label="promotions.serviceClass" valueId=this.serviceClassID valueName=this.serviceClassName }}
+							{{>ruleSelect name="bundleID" label="promotions.bundle" valueId=this.bundleID valueName=this.bundleName }}
+							
+						</div>			
+					</div>
+				
+				</form>
+				
+			</div>
+		</div>
+		
+		<div class="modal-footer">
+			<button type="button" class="btn btn-primary promoSaveButton">{{i18n "global.saveBtn"}}</button>
+			<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+		</div>
+	</script>
+	
+</div>

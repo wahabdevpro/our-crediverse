@@ -1,0 +1,240 @@
+@navbar-hover-color: #f6f6f6;
+@lime-green: #b5dc10;
+
+skin-moov {
+	.main-header {
+		.navbar {
+			background-color: #3a3a3a;
+		}
+	}
+}
+.skin-moov {
+	.main-header {
+		.navbar {
+			.nav {
+				>li {
+					>a {
+						color: #fff;
+						&:hover {
+							background: rgba(0, 0, 0, 0.1);
+							color: @navbar-hover-color;
+						}
+						&:active {
+							background: rgba(0, 0, 0, 0.1);
+							color: #f6f6f6;
+						}
+						&:focus {
+							background: rgba(0, 0, 0, 0.1);
+							color: #f6f6f6;
+						}
+					}
+				}
+				.open {
+					>a {
+						background: rgba(0, 0, 0, 0.1);
+						color: #f6f6f6;
+						&:hover {
+							background: rgba(0, 0, 0, 0.1);
+							color: #f6f6f6;
+						}
+						&:focus {
+							background: rgba(0, 0, 0, 0.1);
+							color: #f6f6f6;
+						}
+					}
+				}
+				>.active {
+					>a {
+						background: rgba(0, 0, 0, 0.1);
+						color: #f6f6f6;
+					}
+				}
+			}
+			.sidebar-toggle {
+				color: #fff;
+				color: #fff;
+				&:hover {
+					color: #f6f6f6;
+					background: rgba(0, 0, 0, 0.1);
+					background-color: #ed2f24;
+				}
+			}
+		}
+		.logo {
+			background-color: #2e2e2e;
+			color: #fff;
+			border-bottom: 0 solid transparent;
+			&:hover {
+				background-color: #ed2f24;
+			}
+		}
+		li.user-header {
+			background-color: #b5dc10;
+		}
+	}
+	.content-header {
+		background: transparent;
+	}
+	.wrapper {
+		background-color: #3a3a3a;
+	}
+	.main-sidebar {
+		background-color: #3a3a3a;
+	}
+	.left-side {
+		background-color: #3a3a3a;
+	}
+	.user-panel {
+		>.info {
+			color: #fff;
+			>a {
+				color: #fff;
+			}
+		}
+	}
+	.sidebar-menu {
+		>li.header {
+			color: #4b646f;
+			background: #1a2226;
+		}
+		>li {
+			>a {
+				border-left: 3px solid transparent;
+			}
+			&:hover {
+				>a {
+					color: #fff;
+					background: #2e2e2e;
+					border-left-color: #ed2f24;
+				}
+				>a.pull-right {
+					color: #fff;
+					background: #2e2e2e;
+					border-left-color: #2e2e2e;
+				}
+			}
+			>.treeview-menu {
+				margin: 0 1px;
+				background: #2c3b41;
+			}
+		}
+		>li.active {
+			>a {
+				color: #fff;
+				background: #2e2e2e;
+				border-left-color: #ed2f24;
+			}
+			>a.pull-right {
+				color: #fff;
+				background: #2e2e2e;
+				border-left-color: #2e2e2e;
+			}
+		}
+	}
+	.sidebar {
+		a {
+			color: #b5dc10;
+			&:hover {
+				text-decoration: none;
+			}
+		}
+	}
+	.treeview-menu {
+		>li {
+			>a {
+				color: #8aa4af;
+				&:hover {
+					color: #fff;
+				}
+			}
+		}
+		>li.active {
+			>a {
+				color: #fff;
+			}
+		}
+	}
+	.sidebar-form {
+		border-radius: 3px;
+		border: 1px solid #374850;
+		margin: 10px 10px;
+		input[type="text"] {
+			box-shadow: none;
+			background-color: #374850;
+			border: 1px solid transparent;
+			height: 35px;
+			color: #666;
+			border-top-left-radius: 2px;
+			border-top-right-radius: 0;
+			border-bottom-right-radius: 0;
+			border-bottom-left-radius: 2px;
+			&:focus {
+				background-color: #fff;
+				color: #666;
+			}
+			&:focus+.input-group-btn {
+				.btn {
+					background-color: #fff;
+					color: #666;
+					border-left-color: #fff;
+				}
+			}
+		}
+		.btn {
+			box-shadow: none;
+			background-color: #374850;
+			border: 1px solid transparent;
+			height: 35px;
+			color: #999;
+			border-top-left-radius: 0;
+			border-top-right-radius: 2px;
+			border-bottom-right-radius: 2px;
+			border-bottom-left-radius: 0;
+		}
+	}
+}
+.skin-moov.layout-top-nav {
+	.main-header {
+		>.logo {
+			background-color: #2e2e2e;
+			color: #fff;
+			border-bottom: 0 solid transparent;
+			&:hover {
+				background-color: #3b8ab8;
+			}
+		}
+	}
+}
+@media (max-width:767px) {
+	.skin-moov {
+		.main-header {
+			.navbar {
+				.dropdown-menu {
+					li.divider {
+						background-color: rgba(255, 255, 255, 0.1);
+					}
+					li {
+						a {
+							color: #fff;
+							&:hover {
+								background: #ed2f24;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.app-version {
+	font-size: 11px;
+	display: inline-block;
+	font-weight: 400;
+	color: @lime-green;
+}
+
+.app-powered-by {
+	display: inline-block;
+	color: @lime-green;
+}

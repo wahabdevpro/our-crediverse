@@ -1,0 +1,124 @@
+<!-- Modal Server Info -->
+<div class="modal fade" id="variantsModal" tabindex="-1" role="dialog" aria-labelledby="variantsModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div id="variantsModalHeader" class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="variantsModalTitle">Add New Variant</h4>
+      </div>
+      <div class="modal-body">
+      	<form id="variantsModalForm" name="variantsModalForm">
+      		<ul class="nav nav-tabs">
+			  	<li class="active"><a href="#variantsModalBusConfig" data-toggle="tab">Business Configuration</a></li>
+			  	<li><a href="#variantsModalConfig" data-toggle="tab">Technical Configuration</a></li>
+      			<li><a href="#variantsModalTexts" data-toggle="tab">Multilingual Text</a></li>
+			</ul>
+			
+			<div class="tab-content">
+				<!-- Technical Configuration -->
+				<div class="tab-pane modalconent" id="variantsModalConfig">
+				
+					<div class="row modalrowcontent" id="variantIDdiv">
+						<div class="col-md-6">
+							<label for="variantID" class="control-label">Variant ID</label>
+							<input type="text" class="form-control modalInput" id="variantID" name="variantID" placeholder="Variant Identifier" />
+							<span id="variantID_error" class="error_message hide"></span>
+						</div>
+					</div>
+				
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="subscriptionOfferID" class="control-label">Subscription (Account) Offer ID</label>
+							<input type="text" class="form-control numericfields modalInput" id="subscriptionOfferID" name="subscriptionOfferID" placeholder="Subscription Offer ID" />
+							<span id="subscriptionOfferID_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="consumerOfferID" class="control-label">Beneficiary (Account) Offer ID</label>
+							<input type="text" class="form-control numericfields modalInput" id="consumerOfferID" name="consumerOfferID" placeholder="Beneficiary Offer ID" />
+							<span id="consumerOfferID_error" class="error_message hide"></span>
+						</div>
+					</div>
+				</div>
+				
+				<!-- Business Configuration -->
+				<div class="tab-pane modalconent active" id="variantsModalBusConfig">
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="isperpetual">Perpetual Variant</label>
+							<div class="checkbox modalcheckbox">
+							  <label>
+							    <input id="isperpetual" name="isperpetual" type="checkbox" class="modalInput" />Is Perpetual
+							  </label>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<label for="validityPeriodDays" class="control-label">Validity Period (in days)</label>
+							<input type="text" class="form-control numericfields modalInput" id="validityPeriodDays" name="validityPeriodDays" placeholder="Validity Period" />
+							<span id="validityPeriodDays_error" class="error_message hide"></span>
+						</div>
+					</div>
+				
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="firstRenewalWarningHoursBefore" class="control-label">First renewal warning (hours)</label>
+							<input type="text" class="form-control numericfields modalInput" id="firstRenewalWarningHoursBefore" name="firstRenewalWarningHoursBefore" placeholder="Hours before expiry warning time" />
+							<span id="firstRenewalWarningHoursBefore_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="secondRenewalWarningHoursBefore" class="control-label">Second renewal warning (hours)</label>
+							<input type="text" class="form-control numericfields modalInput" id="secondRenewalWarningHoursBefore" name="secondRenewalWarningHoursBefore" placeholder="Hours before expiry warning time" />
+							<span id="secondRenewalWarningHoursBefore_error" class="error_message hide"></span>
+						</div>
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="subscriptionCharge" class="control-label" th:text="${'Subscription Charge (' + session.curSymbol + ')'}">Subscription Charge (USD)</label>
+							<input type="text" class="form-control currencyfields modalInput" id="subscriptionCharge" name="subscriptionCharge" placeholder="Subscription Charge" />
+							<span id="subscriptionCharge_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="renewalCharge" class="control-label" th:text="${'Renewal Charge (' + session.curSymbol + ')'}">Renewal Charge (USD)</label>
+							<input type="text" class="form-control currencyfields modalInput" id="renewalCharge" name="renewalCharge" placeholder="Renewal Charge" />
+							<span id="renewalCharge_error" class="error_message hide"></span>
+						</div>						
+					</div>
+					
+
+									
+				</div>
+				
+				<!--  Text Configuration -->
+				 <div class="tab-pane modalconent" id="variantsModalTexts">
+					 <div class="row modalrowcontent">
+						<div class="panel-group modaltexts" id="vr_accordion">
+							
+							<div th:include="advconfig/phraseField :: messagePanel" th:with="label=${'Bundle name'}, field=${'names'}, tab=${'var'}, state=${'1'}" class="panel panel-default"/>
+
+						</div>	
+					 </div>
+				 </div>
+				 
+			</div>
+
+      	</form>
+      	
+		<div id="variantsModalError" class="row alert alert-danger hide">
+				Things went wrong!!
+		</div>
+		<div class="modal-footer">
+			<img id="variantsModalWaiting" src="/img/cell_wait.gif" class="waiting hide" />
+			<button type="button" class="btn btn-default" data-dismiss="modal" >Cancel</button>
+			<button id="variantsModalSave" type="button" class="btn btn-primary savebtn" onclick="saveModalCall()">Save</button>
+		</div>
+			
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<script language="javascript">
+	bindDragable("variantsModal", "variantsModalHeader");
+</script>
+

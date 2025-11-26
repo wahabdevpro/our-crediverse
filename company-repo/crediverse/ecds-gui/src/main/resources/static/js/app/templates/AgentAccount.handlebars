@@ -1,0 +1,860 @@
+<div>
+	<script id="TdrsXContent" type="partial">
+		<div>
+            <div class="advancedSearchForm">
+				<form id="searchform" name="searchForm" class="form-horizontal">
+		        <div>
+		            <div>
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="row form-group" style="margin-bottom:15px;">
+									<label for="msisdn-a" class="col-xs-4 control-label pad-right-min">{{i18n "transactions.relation"}}</label>
+									<div class="col-xs-8 pad-right-min pad-left-min">
+										<select id="relation" name="relation" class="form-control novalidate">
+											<option value="own">{{i18n "enums.transactionRelation.own"}}</option>
+											<option value="ownA">{{i18n "enums.transactionRelation.ownA"}}</option>
+											<option value="ownB">{{i18n "enums.transactionRelation.ownB"}}</option>
+											<option value="ownerA">{{i18n "enums.transactionRelation.ownerA"}}</option>
+											<option value="ownerB">{{i18n "enums.transactionRelation.ownerB"}}</option>
+											<option value="all">{{i18n "enums.transactionRelation.all"}}</option>
+										</select>
+									</div>
+								</div>	
+
+								{{>modalInput name="number" className="novalidate" label="transactions.tranactionNumber" hint="transactions.tranactionNumber" divClassName="pad-left-min" labelClassName="pad-right-min"}}
+								
+								{{>modalSelectTDS name="type" className="novalidate" divClassName="pad-left-min" labelClassName="pad-right-min" label="transactions.transactionType" data=":enums.transactionType.ALL,RP:enums.transactionType.REPLENISH,TX:enums.transactionType.TRANSFER,SL:enums.transactionType.SELL,ND:enums.transactionType.NON_AIRTIME_DEBIT,NR:enums.transactionType.NON_AIRTIME_REFUND,PR:enums.transactionType.REGISTER_PIN,CP:enums.transactionType.CHANGE_PIN,BE:enums.transactionType.BALANCE_ENQUIRY,ST:enums.transactionType.SELF_TOPUP,TS:enums.transactionType.TRANSACTION_STATUS_ENQUIRY,LT:enums.transactionType.LAST_TRANSACTION_ENQUIRY,AJ:enums.transactionType.ADJUST,SQ:enums.transactionType.SALES_QUERY,DQ:enums.transactionType.DEPOSITS_QUERY,FR:enums.transactionType.REVERSE,PA:enums.transactionType.REVERSE_PARTIALLY,RW:enums.transactionType.PROMOTION_REWARD,AD:enums.transactionType.ADJUDICATE" hint="transactions.transactionType" }}
+							</div>
+							<div class="col-sm-6">
+								<div class="row" style="margin-bottom:15px;">
+										<label for="date-from" class="col-xs-4 col-sm-4 control-label pad-right-min">{{i18n "transactions.transactionDateFrom"}}</label>
+										<div class="col-xs-8 col-sm-8 pad-right-min pad-left-min">
+											<div class="row">
+												<div class="col-xs-7" style="padding-right:1px">
+													<input id="date-from" type="text" name="dateFrom" class="form-control novalidate" placeholder="YYYY-MM-DD" data-date-format="yyyy-mm-dd"  />
+												</div>
+												<div class="col-xs-5" style="padding-left:1px;">
+													<div class="input-group clockpicker time-from-picker" data-placement="left" data-align="top" data-autoclose="true">
+												    	<input id="time-from" name="timeFrom" type="text" class="form-control novalidate" placeholder="00:00" value="">
+													</div>
+												</div>
+											</div>
+										</div>
+								</div>	
+								<div class="row" style="margin-bottom:15px;">
+										<label for="date-from" class="col-xs-4 col-sm-4 control-label pad-right-min">{{i18n "transactions.transactionDateTo"}}</label>
+										<div class="col-xs-8 col-sm-8 pad-right-min pad-left-min">
+											<div class="row">
+												<div class="col-xs-7" style="padding-right:1px;">
+													<input id="date-to" type="text" name="dateTo" class="form-control novalidate" placeholder="YYYY-MM-DD" data-date-format="yyyy-mm-dd" />
+												</div>
+												<div class="col-xs-5" style="padding-left:1px;">
+													<div class="input-group clockpicker time-to-picker" data-placement="left" data-align="top" data-autoclose="true">
+												    	<input id="time-to" name="timeTo" type="text" class="form-control novalidate" placeholder="23:59" value="">
+													</div>
+												</div>
+											</div>
+										</div>
+								</div>	
+							</div>
+						</div>
+		            </div>
+					<div class="" style="border-top:1px solid #eaeaea; padding-top:10px; margin-bottom:20px;">
+		  			  	<div class="form-group">
+		  			  		<!--<div class="col-sm-8">
+							</div-->
+							<div class="clearfix">
+								<div class="col-xs-4 col-sm-5 col-md-8">
+									<div class="pull-left" style="margin-right:30px;">
+										<input id="withquery" name="withquery" class="custom-checkbox-fa" value="false" type="checkbox">
+										<label for="withquery" title="{{i18n "global.includeQueryTransactionsHint"}}" data-toggle="tooltip" class="">{{i18n "global.includeQueryTransactions"}} <i class="fa fa-info-circle"></i></label>									
+				  			  		</div>
+				  			  		<div class="pull-left">
+										<input id="withcount" name="withcount" class="custom-checkbox-fa" value="false" type="checkbox">
+										<label for="withcount" title="{{i18n "global.retrieveRecordCountHint"}}" data-toggle="tooltip" class="">{{i18n "global.retrieveRecordCount"}} <i class="fa fa-info-circle"></i></label>								
+				  			  		</div>
+								</div>
+											  			  		
+					        	<div class="col-xs-8 col-sm-7 col-md-4 right">
+		           			 		<button type="submit" class="btn btn-primary tdrSearchButton"><i class="fa fa-search"></i> {{i18n "global.searchBtn"}}</button>
+									<button type="button" class="btn btn-primary exportTdrsButton" role="button">{{i18n "global.exportBtn"}}</button>
+					           		<button type="button" class="btn btn-default tdrSearchResetButton">{{i18n "global.clearBtn"}}</button>
+									<!--&nbsp;&nbsp;&nbsp;-->
+									<div class="pull-right right">
+										<div id="error_general_message" class="alert alert-danger" style="padding:6px 15px; margin-right:20px; display:none;"></div>
+									</div>
+								</div>
+							</div>
+				    	</div>
+					</div>
+		        </div>
+				</form>	
+		    </div>
+			<table class="tdrstablex tableview table table-bordered table-hover table-striped">
+			</table>
+		</div>
+	</script>
+		<script id="summarySpinner" type="partial">
+		<div class="row view-fields" style="height: 300px">
+			<div class="col-md-12" style="top:100px">
+				{{>bigSpinner}}
+			</div>
+		</div>
+	</script>
+	<script id="accountdetails">
+	    <div class="col-xs-12">
+			<div id="accountdetails" class="row">
+				<div class="col-lg-4 col-md-5">
+					<div class="box box-primary">
+        		    	<div class="box-body box-profile">
+              				<!-- <img class="profile-user-img img-responsive img-circle" src="//placehold.it/300x300" alt="User profile picture"> -->
+    		          		<h2 class="text-center"><strong>
+							{{#ifCond this.state "!=" "P"}}
+								{{ this.title }} 
+								{{ this.firstName }} 
+							{{/ifCond}}
+								{{ this.surname }}</strong></h2>
+							{{#ifCond this.state "!=" "P"}}
+							<h4 class="text-muted text-center">{{i18n "agentAccounts.viewUniqueID"}}: {{ this.id }}</h4>
+    		          		<h4 class="text-muted text-center">{{i18n "agentAccounts.viewAccountNumber"}} {{ this.accountNumber }}</h4>
+							{{/ifCond}}
+							<hr/>
+							<div class="row">
+								<div class="col-xs-12" style="text-align:center;">
+									<label class="light-label">{{i18n "agentAccounts.viewAccountTotalBalance"}}</label>		
+									<h2 style="margin-top:10px;"><strong>{{ this.formatted_totalBalance }}</strong></h2>
+								</div>	
+								<div class="col-xs-12" style="text-align:center;">
+									<label class="light-label">{{i18n "agentAccounts.viewAccountBalance"}}</label>		
+									<h2 style="margin-top:10px;"><strong>{{ this.formatted_balance }}</strong></h2>
+								</div>
+								<div class="col-xs-12" style="text-align:center;">
+									<label class="light-label">{{i18n "agentAccounts.viewAccountTradeBonus"}}</label>		
+									<h2 style="margin-top:10px;"><strong>{{ this.formatted_bonusBalance }}</strong></h2>
+								</div>	
+								<div class="col-xs-12" style="text-align:center;">
+									<label class="light-label">{{i18n "agentAccounts.viewAccountOnHoldBalance"}}</label>		
+									<h2 style="margin-top:10px;"><strong>{{ this.formatted_onHoldBalance }}</strong></h2>
+								</div>	
+							</div>
+							<hr/>
+							<div class="row" style="text-align:center; margin-bottom:20px;">
+								{{#hasPerms "Agent_Delete"}}
+									<button type="button" class="btn btn-xs btn-danger deleteAccountButton">{{i18n "agentAccounts.deleteAgentAccountButton"}}</button>
+								{{/hasPerms}}
+							</div>
+            			</div>
+            			<!-- /.box-body -->
+       				</div>
+				</div>
+				<div class="col-lg-8 col-md-7">
+					<div class="nav-tabs-custom">
+  						<ul class="nav nav-tabs">
+    						<li class="active"><a href="#profile" data-tab="" data-toggle="tab">{{i18n "agentAccounts.viewAccountProfileTab"}}</a></li>
+    						<li><a href="#amllimits" data-tab="" data-toggle="tab">{{i18n "agentAccounts.viewAccountAmlTab"}}</a></li>
+    						{{#hasPerms "Transaction_View"}}
+    							<!--
+    							<li><a href="#transactionsa" data-tab="A" data-toggle="tab">{{i18n "agentAccounts.viewTransactionsATab"}}</a></li>
+    							<li><a href="#transactionsb" data-tab="B" data-toggle="tab">{{i18n "agentAccounts.viewTransactionsBTab"}}</a></li>
+    							-->
+    							<li><a href="#transactionsx" class="transactionsXTab" data-tab="X" data-toggle="tab">{{i18n "agentAccounts.viewTransactionsXTab"}}</a></li>
+    						{{/hasPerms}}
+    						{{#hasPerms "AgentUser_View"}}
+    							<li><a href="#agentusers" data-tab="agentUsers" data-toggle="tab">{{i18n "agentAccounts.viewAgentUsersTab"}}</a></li>
+    							<li><a href="#apiusers" data-tab="apiUsers" data-toggle="tab">{{i18n "agentAccounts.viewApiUsersTab"}}</a></li>
+    						{{/hasPerms}}
+  						</ul>
+  						<div id="viewSingleAgent" class="tab-content">
+						    <div class="active tab-pane info-panel" id="profile" style="margin:8px;">
+							    <div class="row availableOperations" style="display:none;">
+								    <div class="col-lg-12 col-md-12">
+									    <div class="btn-group" role="group" aria-label="...">
+									    	{{#notIn this.currentState 'SUSPENDED' 'DEACTIVATED' }}
+												{{#in this.tierTypeCode "W" "T" "R"}}
+													{{#hasPerms "Transaction_TransferFromRoot"}}
+														{{>viewButtonTemplate class='performTransferButton' icon='fa-money' label="agentAccounts.menuTransferBtn"}}
+													{{/hasPerms}}
+												{{/in}}
+											{{/notIn}}
+											
+											{{#in this.tierTypeCode "."}}
+												{{#hasPerms "Transaction_Replenish"}}
+													{{>viewButtonTemplate class='performReplenishButton' icon='fa-money' label="agentAccounts.menuReplenishBtn"}}
+												{{/hasPerms}}
+											{{else}}
+												{{#hasPerms "Transaction_Adjust"}}
+													{{>viewButtonTemplate class='performAdjustmentButton' icon='fa-money' label="agentAccounts.menuAdjustBtn"}}
+												{{/hasPerms}}
+											{{/in}}
+											
+											{{#hasPerms "Agent_Update"}}
+												{{>viewButtonTemplate class='editAgentButton' icon='fa-pencil' label="agentAccounts.menuEditBtn"}}
+											{{/hasPerms}}
+									    
+									    	{{#ifCond this.currentState "!=" "PERMANENT"}}
+												{{#hasPerms "Agent_Update"}}
+													{{#ifCond this.authenticationMethod "==" "A"}}
+														{{>viewButtonTemplate class='agentPinResetButton' icon='fa-key' label="agentAccounts.menuPasswordResetBtn"}}
+													{{else}}
+														{{>viewButtonTemplate class='agentPinResetButton' icon='fa-key' label="agentAccounts.menuPinResetBtn"}}
+													{{/ifCond}}
+													{{#ifCond this.currentState "==" "ACTIVE"}}
+														{{>viewButtonTemplate class='suspendAgentButton' icon='fa-ban' label="agentAccounts.menuSuspendBtn"}}
+													{{/ifCond}}
+													
+													{{#ifCond this.currentState "==" "SUSPENDED"}}
+														{{>viewButtonTemplate class='unsuspendAgentButton' icon='fa-check' label="agentAccounts.menuUnsuspendBtn"}}
+													{{/ifCond}}
+														
+													{{#ifCond this.currentState "==" "DEACTIVATED"}}
+														{{>viewButtonTemplate class='reactivateAgentButton' icon='fa-check' label="agentAccounts.menuReactivateBtn"}}
+													{{else}}
+														{{>viewButtonTemplate class='deactivateAgentButton' icon='fa-trash-o' label="agentAccounts.menuDeactivateBtn"}}
+													{{/ifCond}}
+												{{/hasPerms}}
+											{{/ifCond}}
+										</div>
+									</div>
+								</div>
+								<div class="row view-fields">
+									<div class="col-lg-4 col-md-6">
+										
+										<h4>{{i18n "agentAccounts.viewPersonalDetails"}}</h4>
+
+										<div style="margin-left:10px;">
+
+										{{#ifCond this.state "!=" "P"}}
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewTitleLabel"}}</label>
+											<div>{{ this.title }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewFirstNameLabel"}}</label>
+											<div>{{ this.firstName }}</div>
+										</div>
+										{{/ifCond}}
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewSurnameLabel"}}</label>
+											<div>{{ this.surname }}</div>
+										</div>
+										{{#ifCond this.state "!=" "P"}}
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewInitialsLabel"}}</label>
+											<div>{{ this.initials }}</div>
+										</div>
+										{{/ifCond}}
+										
+										<div class="view-field">
+											<label>{{i18n "userman.authenticationMethod"}}</label>
+											<div>
+											{{#ifCond this.authenticationMethod "==" "A"}}{{ i18n "enums.authenticationMethod.password" }}{{/ifCond}}
+											{{#ifCond this.authenticationMethod "==" "P"}}{{ i18n "enums.authenticationMethod.pin" }}{{/ifCond}}
+											{{#ifCond this.authenticationMethod "==" "X"}}{{ i18n "enums.authenticationMethod.external" }}{{/ifCond}}
+											{{#ifCond this.authenticationMethod "==" ""}}<span class="no-data">{{i18n "notSet"}}</span>{{/ifCond}}
+											</div>
+										</div>
+										
+										{{#ifCond this.authenticationMethod "!=" "P"}}
+											<div class="view-field">
+												<label>{{i18n (concat "enums.usernameType." this.authenticationMethod)  }}</label>
+												<div>{{#if this.domainAccountName}}{{ this.domainAccountName }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+											</div>
+										{{/ifCond}}
+										
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewLanguageLabel"}}</label>
+											{{#if this.language}}
+												<div>{{ i18n (concat "enums.langType." (toLowerCase this.language)) }}</div>
+											{{else}}
+												<div class="no-data">{{ i18n "notSet" }}</div>
+											{{/if}}
+										</div>
+										
+										{{#ifCond this.state "!=" "P"}}
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewGenderLabel"}}</label>
+											<div>
+												{{#if this.gender}}
+													{{#ifCond this.gender "==" "M"}}{{i18n "agentAccounts.viewGenderValueMale"}}{{/ifCond}}
+													{{#ifCond this.gender "==" "F"}}{{i18n "agentAccounts.viewGenderValueFemale"}}{{/ifCond}}
+													{{#ifCond this.gender "==" "O"}}{{i18n "agentAccounts.viewGenderValueOther"}}{{/ifCond}}
+													{{#ifCond this.gender "==" ""}}<span class="no-data">{{i18n "notSet"}}</span>{{/ifCond}}
+												{{else}}
+													<div class="no-data">{{ i18n "notSet" }}</div>
+												{{/if}}
+											</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewDOBLabel"}}</label>
+											<div id="dateOfBirth">
+												{{#if this.dateOfBirth}}
+														{{ this.dateOfBirth }}
+												{{else}}
+													<span class="no-data">{{i18n "notSet"}}</span>
+												{{/if}}
+											</div>
+										</div>
+										{{/ifCond}}
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewEmailLabel"}}</label>
+											<div>
+												{{#if this.email}}
+													{{ this.email }}
+												{{else}}
+													<span class="no-data">{{i18n "notSet"}}</span>
+												{{/if}}
+											</div>	
+										</div>
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewMobileNumberLabel"}}</label>
+											<div>{{ this.mobileNumber }}</div>
+										</div>
+										
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewRoleLabel"}}</label>
+											<div>{{ this.roleName }}</div>
+										</div>
+										
+										</div>
+									</div>
+									<div class="col-lg-4 col-md-6">
+										
+										<h4>{{i18n "agentAccounts.viewSegmentationHeading"}}</h4>
+
+										<div style="margin-left:10px;">
+
+										{{#ifCond this.state "!=" "P"}}
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewTierTypeLabel"}}</label>
+											<div>
+												{{#if this.tierTypeCode}}
+												{{#ifCond this.tierTypeCode "==" "."}}{{i18n "enums.tierType.root"}}{{/ifCond}}
+												{{#ifCond this.tierTypeCode "==" "T"}}{{i18n "enums.tierType.store"}}{{/ifCond}}
+												{{#ifCond this.tierTypeCode "==" "W"}}{{i18n "enums.tierType.wholesaler"}}{{/ifCond}}
+												{{#ifCond this.tierTypeCode "==" "R"}}{{i18n "enums.tierType.retailer"}}{{/ifCond}}
+												{{#ifCond this.tierTypeCode "==" "S"}}{{i18n "enums.tierType.subscriber"}}{{/ifCond}}
+												{{else}}
+													<span class="no-data">{{i18n "notSet"}}</span>
+												{{/if}}
+											</div>
+										</div>
+										{{/ifCond}}
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewTierNameLabel"}}</label>
+											<div>{{ this.tierName }}</div>
+										</div>
+										{{#ifCond this.state "!=" "P"}}
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewGroupNameLabel"}}</label>
+											<div>{{#if this.groupName}}{{ this.groupName }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewServiceClassLabel"}}</label>
+											<div>{{#if this.serviceClassName}}{{ this.serviceClassName }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+										</div>
+										{{/ifCond}}
+
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewAreaLabel"}}</label>
+											<div>{{#if this.areaName}}{{ this.areaName }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+										</div>
+
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewAreaTypeLabel"}}</label>
+											<div>{{#if this.areaType}}{{ this.areaType }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+										</div>
+
+										</div>
+
+										{{#ifCond this.state "!=" "P"}}
+										<h4>{{i18n "agentAccounts.viewIdentificationHeading"}}</h4>
+
+										<div style="margin-left:10px;">
+
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewImeiLabel"}}</label>
+											<div>{{#if this.imei}}{{ this.imei }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewLastImeiUpdateLabel"}}</label>
+											<div id="lastImeiUpdate">{{#if this.lastImeiUpdate}}{{ this.lastImeiUpdate }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewImsiLabel"}}</label>
+											<div>{{#if this.imsi}}{{ this.imsi }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+											{{#if this.imsiLockedOut}}
+												<div><span class="label label-danger">{{i18n "agentAccounts.viewLockedOut"}}</span>&nbsp;&nbsp;
+													{{#hasPerms "Agent_ResetImsi"}}
+														<button type="button" class="imsiUnlockButton btn btn-xs btn-default"><i class="fa fa-unlock-alt"></i>{{i18n "agentAccounts.viewUnlockButton"}}</button>
+													{{/hasPerms}}
+												</div>
+											{{/if}}
+											<!--TODO: Add this logic system wide:
+											<div class="view-field">
+												<label>{{i18n "agentAccounts.viewLastImsiChangeLabel"}}</label>
+												<div id="lastImsiChange">{{#if this.lastImsiChange}}{{ this.lastImsiChange }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+											</div>
+											-->
+										</div>
+
+										{{#if this.pinLockedOut}}
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewPinStatusLabel"}}</label>
+											
+											<div><span class="label label-danger">{{i18n "agentAccounts.viewPinLockedOut"}}</span>&nbsp;&nbsp;
+												<button type="button" class="agentPinResetButton btn btn-xs btn-default"><i class="fa fa-unlock-alt"></i>{{i18n "agentAccounts.viewUnlockButton"}}</button>
+											</div>
+											
+										</div>
+										{{/if}}
+										
+										</div>
+										{{/ifCond}}
+									</div>
+									<div class="col-lg-4 col-md-6">
+										
+										<h4>{{i18n "agentAccounts.viewOtherHeading"}}</h4>
+
+										<div style="margin-left:10px;">
+										
+										{{#ifCond this.state "!=" "P"}}
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewOwnerAgentName"}}</label>
+											<div id="ownerAgentName">{{#if this.ownerName}}<a class="routerlink" href="#account/{{ this.ownerAgentID }}">{{ this.ownerName }}</a>{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewUpstreamAgentName"}}</label>
+											<div id="upstreamAgentName">{{#if this.supplierName}}<a class="routerlink" href="#account/{{ this.supplierAgentID }}">{{ this.supplierName }}</a>{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+										</div>
+										{{/ifCond}}
+
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewActivationDate"}}</label>
+											<div id="activationDate">{{ this.activationDate }}</div>
+										</div>
+										{{#ifCond this.state "!=" "P"}}
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewdeactivationDate"}}</label>
+											<div id="deactivationDate">{{#if this.deactivationDate}}{{ this.deactivationDate }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewExpiryDate"}}</label>
+											<div id="expirationDate">{{#if this.expirationDate}}{{ this.expirationDate }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewChannelLabel"}}</label>
+											<div>
+												<label class="label label-{{#if this.channelUssd}}success{{else}}default{{/if}}">{{i18n "agentAccounts.viewChannelUssdLabel"}}</label>
+												<label class="label label-{{#if this.channelSms}}success{{else}}default{{/if}}">{{i18n "agentAccounts.viewChannelSmsLabel"}}</label>
+												<label class="label label-{{#if this.channelApi}}success{{else}}default{{/if}}">{{i18n "agentAccounts.viewChannelApiLabel"}}</label>
+												<label class="label label-{{#if this.channelWui}}success{{else}}default{{/if}}">{{i18n "agentAccounts.viewChannelWuiLabel"}}</label>
+												<label class="label label-{{#if this.channelApp}}success{{else}}default{{/if}}">{{i18n "agentAccounts.viewChannelAppLabel"}}</label>
+											</div>
+										</div>
+										
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.confirmUssdPrefix"}}</label>
+											<div>
+												<label class="label label-{{#if this.confirmUssd}}success{{else}}default{{/if}}">{{i18n "agentAccounts.confirmUssdLabel"}}</label>
+											</div>
+										</div>
+										<div class="view-field">
+											<div>
+												<label class="label label-{{#if this.sendBundleCommissionReport}}success{{else}}default{{/if}}">{{i18n "agentAccounts.sendBundleCommissionReportLabel"}}</label>
+											</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewTempPinLabel"}}</label>
+											<div>{{ this.temporaryPin }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewWarningThresholdLabel"}}</label>
+											<div>{{#if this.warningThreshold}}{{ this.warningThreshold }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+										</div>
+										{{/ifCond}}
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewStatusLabel"}}</label>
+											<div>
+												{{#ifCond this.state "==" "A"}}<label class="label label-success">{{ this.currentState }}</label>{{/ifCond}}
+												{{#ifCond this.state "==" "S"}}<label class="label label-warning">{{ this.currentState }}</label>{{/ifCond}}
+												{{#ifCond this.state "==" "D"}}<label class="label label-danger">{{ this.currentState }}</label>{{/ifCond}}
+												{{#ifCond this.state "==" "P"}}<label class="label label-default">{{ this.currentState }}</label>{{/ifCond}}
+											</div>
+										</div>
+										
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewTamperedWith"}}</label>
+											<div>{{#if this.tamperedWith}} {{ i18n "enums.yesNo.yes" }}{{else}}{{i18n "enums.yesNo.no"}}{{/if}}</div>
+										</div>
+										
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewAccountTamperedWith"}}</label>										
+											<div>{{#if this.accountTamperedWith}} {{ i18n "enums.yesNo.yes" }}{{else}}{{i18n "enums.yesNo.no"}}{{/if}}</div>
+										</div>
+										
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewReportCountLimitLabel"}}</label>										
+											<div>{{#if this.reportCountLimit}}{{ this.reportCountLimit }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewReportDailyScheduleLimitLabel"}}</label>										
+											<div>{{#if this.reportDailyScheduleLimit}}{{ this.reportDailyScheduleLimit }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+										</div>
+										</div>
+									</div>	
+								</div>
+    						</div>
+
+						    <div class="tab-pane info-panel" id="amllimits" style="margin:8px;">
+								<div class="row view-fields">
+									<div class="col-md-4 col-sm-6">
+										<h4>{{i18n "agentAccounts.viewAmlLimitHeading"}}</h4>
+
+										<div style="margin-left:10px;">
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewMaxDailyCountLabel"}}</label>
+											<div>{{#if this.maxTransactionAmount}}{{ this.maxTransactionAmount }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewMaxDailyAmountLabel"}}</label>
+											<div>{{#if this.maxDailyCount}}{{ this.maxDailyCount }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewMaxTransAmountLabel"}}</label>
+											<div>{{#if this.maxDailyAmount}}{{ this.maxDailyAmount }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewMaxMonthlyCountLabel"}}</label>
+											<div>{{#if this.maxMonthlyCount}}{{ this.maxMonthlyCount }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewMaxMonthlyAmountLabel"}}</label>
+											<div>{{#if this.maxMonthlyAmount}}{{ this.maxMonthlyAmount }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+										</div>
+
+										</div>
+									</div>
+								</div>
+   							</div>
+							<!--OLD Transaction Tabs-->
+							<!--
+						    <div class="tab-pane info-panel advancedSearchResults" id="transactionsa" style="margin:8px;">
+								<div id="dtButtonBarTdrATemplate" style="display:none;">
+									{{#hasPerms "Batch_Download"}}
+										<button class="btn btn-primary exportTdrsAButton" role="button">{{i18n "global.exportBtn"}}</button>
+									{{/hasPerms}}
+	          					</div>
+		            			<table class="tdrstableA tableview table table-bordered table-hover table-striped">
+		            			</table>
+							</div>
+							
+						    <div class="tab-pane info-panel advancedSearchResults" id="transactionsb" style="margin:8px;">
+								<div id="dtButtonBarTdrBTemplate" style="display:none;">
+									{{#hasPerms "Batch_Download"}}
+										<button class="btn btn-primary exportTdrsBButton" role="button">{{i18n "global.exportBtn"}}</button>
+									{{/hasPerms}}
+	          					</div>
+		            			<table class="tdrstableB tableview table table-bordered table-hover table-striped">
+		            			</table>
+							</div>
+						    -->
+						    <!-- Transactions -->
+							<div class="tab-pane info-panel" id="transactionsx" style="margin:8px;">
+								{{>summarySpinner}}
+							</div>
+						    
+							<div class="tab-pane info-panel advancedSearchResults" id="agentusers" style="margin:8px;">
+								<div id="dtButtonBarAgentUsersTemplate" style="display:none;">
+									{{#hasPerms "AgentUser_Add"}}
+										<button class="btn btn-primary createAgentUsersButton" role="button">{{i18n "agentAccounts.addAgentUserButton"}}</button>
+									{{/hasPerms}}
+	          					</div>
+		            			<table class="agentuserstable tableview table table-bordered table-hover table-striped">
+		            			</table>
+							</div>
+							<div class="tab-pane info-panel advancedSearchResults" id="apiusers" style="margin:8px;">
+								<div id="dtButtonBarApiUsersTemplate" style="display:none;">
+									{{#hasPerms "AgentUser_Add"}}
+										<button class="btn btn-primary createApiUsersButton" role="button">{{i18n "agentAccounts.addApiUserButton"}}</button>
+									{{/hasPerms}}
+	          					</div>
+		            			<table class="apiuserstable tableview table table-bordered table-hover table-striped">
+		            			</table>
+							</div>
+							
+  						</div>
+					</div>				
+				</div>
+			</div>	
+	    </div>
+	</script>
+	
+	<script id="agentuserdialogview">
+		<div class="modal-header">
+    		<button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+    		<h4 class="modal-title">{{{dialogTitle}}}</h4>
+		</div>	
+	
+		<div class="modal-body">
+			<div class="groupdetails">
+				<form name="addUser" class="form-horizontal">   
+					<input id="agentID" name="agentID" value="{{ this.agentID }}" type="hidden"/>
+					{{>modalInput name="accountNumber" label="userman.accountNumber" hint="userman.accountNumberHint" value=this.accountNumber }}
+					{{>modalInput name="title" label="userman.title" hint="userman.title" value=this.title }}
+					
+					{{>modalInput name="firstName" label="userman.firstName" hint="userman.firstNameHint" value=this.firstName }}
+					{{>modalInput name="surname" label="userman.surname" hint="userman.surnameHint" value=this.surname }}
+					{{>modalInput name="initials" label="userman.initials" hint="userman.initialsHint" value=this.initials }}
+		
+					<div class="form-group {{#if required}}required{{/if}}">
+						<label for="useDomainAccount" class="col-xs-4 control-label" id="spacerUseDomainAccount">{{i18n "agentAccounts.editUseDomainAccount"}}</label>			
+						<div class="col-xs-8" style="line-height:35px;">
+							<input id="useDomainAccount" name="useDomainAccount" value="" class="custom-checkbox-fa" type="checkbox" {{#ifCond this.authenticationMethod "==" "X"}}checked="checked"{{/ifCond}}/>					
+							<label for="useDomainAccount"></label>
+						</div>
+					</div>
+
+					<div class="domainAccountNameItemGroup">
+						{{>modalInput name="domainAccountName" label="enums.usernameType.X" hint="enums.usernameTypeComment.X" comment="enums.usernameTypeComment.X" value=this.domainAccountName}}
+					</div>
+
+					{{>modalInput name="mobileNumber" label="userman.mobileNumber" hint="userman.mobileNumberHint" value=this.mobileNumber }}
+					
+					{{>modalInput name="email" type="email" label="userman.email" hint="userman.emailHint" value=this.email}}							
+					
+					{{>modalSelect name="language" label="userman.language" 
+						data="en:enums.langType.en,fr:enums.langType.fr" 
+						hint="userman.languageHint" value=this.language
+					}}
+					
+					{{>modalInput name="department" label="userman.department" hint="userman.departmentHint" value=this.department }}
+				
+					<div class="form-group" style="margin-bottom:0;">
+						<label class="col-xs-4 control-label">{{i18n "agentAccounts.viewChannelLabel"}}</label>
+						<div class="col-xs-8" style="line-height:35px;">
+							<input id="channel-ussd" name="channelUssd" value="" class="custom-checkbox-fa" type="checkbox" {{#unless this.channelUssdAvailable}}disabled="disabled"{{/unless}} {{#if this.channelUssd}}checked="checked"{{/if}}/>
+							<label for="channel-ussd">{{i18n "agentAccounts.viewChannelUssdLabel"}}</label>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<input id="channel-sms" name="channelSms" value="" class="custom-checkbox-fa" type="checkbox" {{#unless this.channelSmsAvailable}}disabled="disabled"{{/unless}} {{#if this.channelSms}}checked="checked"{{/if}}/>
+							<label for="channel-sms">{{i18n "agentAccounts.viewChannelSmsLabel"}}</label>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<input id="channel-wui" name="channelWui" value="" class="custom-checkbox-fa" type="checkbox" {{#unless this.channelWuiAvailable}}disabled="disabled"{{/unless}} {{#if this.channelWui}}checked="checked"{{/if}}/>
+							<label for="channel-wui">{{i18n "agentAccounts.viewChannelWuiLabel"}}</label>
+							<br/>
+							<input id="channel-app" name="channelApp" value="" class="custom-checkbox-fa" type="checkbox" {{#unless this.channelAppAvailable}}disabled="disabled"{{/unless}} {{#if this.channelApp}}checked="checked"{{/if}}/>
+							<label for="channel-app">{{i18n "agentAccounts.viewChannelAppLabel"}}</label>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<!--<input id="channel-api" name="channelApi" value="" class="custom-checkbox-fa" type="checkbox" {{#unless this.channelApiAvailable}}disabled="disabled"{{/unless}} {{#if this.channelApi}}checked="checked"{{/if}}/>
+							<label for="channel-api">{{i18n "agentAccounts.viewChannelApiLabel"}}</label>-->
+							
+						</div>
+					</div>
+					
+					{{>modalSelect name="state" label="userman.accountState" 
+						data="A:enums.state.active,D:enums.state.deactivated" 
+						hint="userman.accountState" value=this.state
+					}}							
+					
+					<div  class="form-group">
+						<label class="col-xs-4 control-label">{{i18n "userman.role"}}</label>
+						<div class="col-xs-5">
+							<select id="roleID" name="roleID" class="form-control" value="{{roleID}}">
+								{{#each availRoles}}
+									<option value="{{id}}">{{name}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+				
+					
+				</form>
+			</div>
+		</div>
+		
+		<div class="modal-footer">
+    		<button type="button" class="btn btn-primary userCreateButton">{{i18n "global.saveBtn"}}</button>
+    		<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+		</div>
+	</script>
+	
+	<script id="apiuserdialogview">
+		<div class="modal-header">
+    		<button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+    		<h4 class="modal-title">{{{dialogTitle}}}</h4>
+		</div>	
+	
+		<div class="modal-body">
+			<div class="groupdetails">
+				<form name="addUser" class="form-horizontal">   
+					<input id="agentID" name="agentID" value="{{ this.agentID }}" type="hidden"/>
+					<input id="authenticationMethod" name="authenticationMethod" value="A" type="hidden"/>
+					<input id="channel-ussd" name="channelSms" value="false" type="hidden" checked="checked"/>
+					<input id="channel-sms" name="channelSms" value="false" type="hidden" checked="checked"/>
+					<input id="channel-app" name="channelApp" value="false" type="hidden" checked="checked"/>
+					<input id="channel-wui" name="channelWui" value="true" type="hidden" checked="checked"/>
+					<input id="channel-api" name="channelApi" value="true" type="hidden" checked="checked"/>
+					
+					{{>modalInput name="accountNumber" label="userman.accountNumber" hint="userman.accountNumberHint" value=this.accountNumber }}
+					{{>modalInput name="title" label="userman.title" hint="userman.title" value=this.title }}
+					
+					{{>modalInput name="firstName" label="userman.firstName" hint="userman.firstNameHint" value=this.firstName }}
+					{{>modalInput name="surname" label="userman.surname" hint="userman.surnameHint" value=this.surname }}
+					{{>modalInput name="initials" label="userman.initials" hint="userman.initialsHint" value=this.initials }}
+					{{>modalInput name="domainAccountName" label="enums.usernameType.A" hint="enums.usernameTypeComment.A" value=this.domainAccountName}}
+					{{>modalInput name="mobileNumber" label="userman.mobileNumber" hint="userman.mobileNumberHint" value=this.mobileNumber }}
+					
+					{{>modalInput name="email" type="email" label="userman.email" hint="userman.emailHint" value=this.email}}							
+					
+					{{>modalSelect name="language" label="userman.language" 
+						data="en:enums.langType.en,fr:enums.langType.fr" 
+						hint="userman.languageHint" value=this.language
+					}}
+
+					{{>modalSelect name="state" label="userman.accountState" 
+						data="A:enums.state.active,D:enums.state.deactivated" 
+						hint="userman.accountState" value=this.state
+					}}							
+					
+					<div  class="form-group">
+						<label class="col-xs-4 control-label">{{i18n "userman.role"}}</label>
+						<div class="col-xs-8">
+							<select id="roleID" name="roleID" class="form-control" value="{{roleID}}">
+								{{#each availRoles}}
+									<option value="{{id}}">{{name}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+					{{#ifCond this.channelTypeFeature "==" "enabled"}}
+					<div class="form-group" id="channelTypeOption">
+						<label class="col-xs-4 control-label">{{i18n "userman.channelType"}}</label>
+						<div class="col-xs-8">
+							<select id="channelType" name="channelType" class="form-control" value="{{channelType}}">
+								{{#each availableChannelTypes}}
+									<option value="{{id}}">{{name}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+					{{/ifCond}}
+					
+				</form>
+			</div>
+		</div>
+		
+		<div class="modal-footer">
+    		<button type="button" class="btn btn-primary userCreateButton">{{i18n "global.saveBtn"}}</button>
+    		<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+		</div>
+	</script>
+	
+	
+	<script id="apiuserdialogview">
+		<div class="modal-header">
+    		<button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+    		<h4 class="modal-title">{{{dialogTitle}}}</h4>
+		</div>	
+	
+		<div class="modal-body">
+			<div class="groupdetails">
+				<form name="addUser" class="form-horizontal">   
+					<input id="agentID" name="agentID" value="{{ this.agentID }}" type="hidden"/>
+					{{>modalInput name="accountNumber" label="userman.accountNumber" hint="userman.accountNumberHint" value=this.accountNumber }}
+					{{>modalInput name="title" label="userman.title" hint="userman.title" value=this.title }}
+					
+					{{>modalInput name="firstName" label="userman.firstName" hint="userman.firstNameHint" value=this.firstName }}
+					{{>modalInput name="surname" label="userman.surname" hint="userman.surnameHint" value=this.surname }}
+					{{>modalInput name="initials" label="userman.initials" hint="userman.initialsHint" value=this.initials }}
+
+					<!--Add back later: A:enums.authenticationMethod.password,-->					
+					{{>modalSelect name="authenticationMethod" label="agentAccounts.editAuthenticationMethodLabel" data="
+						P:enums.authenticationMethod.pin,
+						X:enums.authenticationMethod.external" value=this.authenticationMethod}}
+						
+					<div class="domainAccountNameItemGroup">
+						{{>modalInput name="domainAccountName" label="enums.usernameType.A" hint="enums.usernameTypeComment.A" comment="enums.usernameTypeComment.A" value=this.domainAccountName}}
+					</div>
+					
+					{{>modalInput name="mobileNumber" label="userman.mobileNumber" hint="userman.mobileNumberHint" value=this.mobileNumber }}
+					
+					{{>modalInput name="email" type="email" label="userman.email" hint="userman.emailHint" value=this.email}}							
+					
+					{{>modalSelect name="language" label="userman.language" 
+						data="en:enums.langType.en,fr:enums.langType.fr" 
+						hint="userman.languageHint" value=this.language
+					}}
+					
+					{{>modalInput name="department" label="userman.department" hint="userman.departmentHint" value=this.department }}
+				
+					<div class="form-group" style="margin-bottom:0;">
+						<label class="col-xs-4 control-label">{{i18n "agentAccounts.viewChannelLabel"}}</label>
+						<div class="col-xs-8" style="line-height:35px;">
+							<input id="channel-ussd" name="channelUssd" value="" class="custom-checkbox-fa" type="checkbox" {{#unless this.channelUssdAvailable}}disabled="disabled"{{/unless}} {{#if this.channelUssd}}checked="checked"{{/if}}/>
+							<label for="channel-ussd">{{i18n "agentAccounts.viewChannelUssdLabel"}}</label>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<input id="channel-sms" name="channelSms" value="" class="custom-checkbox-fa" type="checkbox" {{#unless this.channelSmsAvailable}}disabled="disabled"{{/unless}} {{#if this.channelSms}}checked="checked"{{/if}}/>
+							<label for="channel-sms">{{i18n "agentAccounts.viewChannelSmsLabel"}}</label>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<input id="channel-wui" name="channelWui" value="" class="custom-checkbox-fa" type="checkbox" {{#unless this.channelWuiAvailable}}disabled="disabled"{{/unless}} {{#if this.channelWui}}checked="checked"{{/if}}/>
+							<label for="channel-wui">{{i18n "agentAccounts.viewChannelWuiLabel"}}</label>
+							<br/>
+							<input id="channel-app" name="channelApp" value="" class="custom-checkbox-fa" type="checkbox" {{#unless this.channelAppAvailable}}disabled="disabled"{{/unless}} {{#if this.channelApp}}checked="checked"{{/if}}/>
+							<label for="channel-app">{{i18n "agentAccounts.viewChannelAppLabel"}}</label>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<input id="channel-api" name="channelApi" value="" class="custom-checkbox-fa" type="checkbox" {{#unless this.channelApiAvailable}}disabled="disabled"{{/unless}} {{#if this.channelApi}}checked="checked"{{/if}}/>
+							<label for="channel-api">{{i18n "agentAccounts.viewChannelApiLabel"}}</label>
+							
+						</div>
+					</div>
+					
+					{{>modalSelect name="state" label="userman.accountState" 
+						data="A:enums.state.active,D:enums.state.deactivated" 
+						hint="userman.accountState" value=this.state
+					}}							
+					
+					<div  class="form-group">
+						<label class="col-xs-4 control-label">{{i18n "userman.role"}}</label>
+						<div class="col-xs-5">
+							<select id="roleID" name="roleID" class="form-control" value="{{roleID}}">
+								{{#each availRoles}}
+									<option value="{{id}}">{{name}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+				
+					
+				</form>
+			</div>
+		</div>
+		
+		<div class="modal-footer">
+    		<button type="button" class="btn btn-primary userCreateButton">{{i18n "global.saveBtn"}}</button>
+    		<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+		</div>
+	</script>
+	
+	<script id="permanentuserdialogview">
+		<div class="modal-header">
+    		<button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+    		<h4 class="modal-title">{{{dialogTitle}}}</h4>
+		</div>	
+	
+		<div class="modal-body">
+			<div class="groupdetails">
+				<form name="addUser" class="form-horizontal">
+					
+					{{>modalInput name="domainAccountName" label="userman.domainAccountName" hint="userman.domainAccountNameHint" comment="userman.domainAccountNameComment" value=this.domainAccountName}}
+					{{>modalInput name="mobileNumber" label="userman.mobileNumber" hint="userman.mobileNumberHint" value=this.mobileNumber }}
+					
+				</form>
+			</div>
+		</div>
+		
+		<div class="modal-footer">
+    		<button type="button" class="btn btn-primary userCreateButton">{{i18n "global.saveBtn"}}</button>
+    		<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+		</div>
+	</script>
+	
+</div>

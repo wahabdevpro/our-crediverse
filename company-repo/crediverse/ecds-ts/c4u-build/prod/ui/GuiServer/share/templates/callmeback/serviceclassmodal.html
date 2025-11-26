@@ -1,0 +1,89 @@
+<!-- Modal Server Info -->
+<div class="modal fade" id="serviceClassModal" tabindex="-1" role="dialog" aria-labelledby="serviceClassModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div id="ecsserviceClassModalHeader" class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="serviceClassModalTitle">Add New Service Class</h4>
+      </div>
+      <div class="modal-body">
+      	<form id="serviceClassModalForm" name="serviceClassModalForm">
+      		<ul class="nav nav-tabs">
+			  <li class="active"><a href="#scconfig" data-toggle="tab">Configuration</a></li>
+			  <li><a href="#sctexts" data-toggle="tab">Multilingual Text</a></li>
+			</ul>
+			
+			<div class="tab-content">
+				<!-- General Configuration -->
+				<div class="tab-pane modalconent active" id="scconfig">
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+						<label for="serviceClassID" class="control-label">Service Class ID</label>
+							<input type="text" class="form-control numericfields modalInput" id="serviceClassID" name="serviceClassID" placeholder="Service Class ID" />
+							<span id="serviceClassID_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="minBal" class="control-label">Minimum Balance</label>
+							<input type="text" class="form-control modalInput" id="minBal" name="minBal" placeholder="Minimum Allowed balanced" />
+							<span id="minBal_error" class="error_message hide"></span>
+						</div>
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="variantString" class="control-label">Variants Allowed</label>
+							<input type="text" class="form-control modalInput" id="variantString" name="variantString" placeholder="Variants Allowed" />
+							<span id="variantString_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="maxBal" class="control-label">Maximum Balance</label>
+							<input type="text" class="form-control modalInput" id="maxBal" name="maxBal" placeholder="Maximum Allowed balanced" />
+							<span id="maxBal_error" class="error_message hide"></span>
+						</div>
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="postPaid">Post Paid</label>
+							<div class="checkbox modalcheckbox">
+							  <label>
+							    <input id="postPaid" name="postPaid" type="checkbox" />This is a post-paid account
+							  </label>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				
+				<!--  Text Configuration -->
+				 <div class="tab-pane modalconent" id="sctexts">
+				 
+					 <div class="row modalrowcontent">
+						<div class="panel-group modaltexts" id="accordion">
+						
+							<div th:include="advconfig/phraseField :: messagePanel" th:with="label=${'Name'}, field=${'name'}, tab=${'sc'}, always=${'1'}, state=${'1'}" class="panel panel-default"/>
+
+						</div>	
+					 </div>
+				 </div>
+				 
+			</div>
+      	</form>
+      	
+		<div id="serviceClassModalError" class="row alert alert-danger hide">
+				Things went wrong!!
+		</div>
+		<div class="modal-footer">
+			<img id="serviceClassModalWaiting" src="/img/cell_wait.gif" class="waiting hide" />
+			<button type="button" class="btn btn-default" data-dismiss="modal" >Cancel</button>
+			<button id="serviceClassModalSave" type="button" class="btn btn-primary savebtn" onclick="saveModalCall()">Add Host</button>
+		</div>
+		
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script language="javascript">
+	bindDragable("serviceClassModal", "ecsserviceClassModalHeader");
+</script>

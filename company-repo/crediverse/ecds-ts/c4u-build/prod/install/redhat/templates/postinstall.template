@@ -1,0 +1,104 @@
+#!/bin/sh -x
+echo 'installation complete. configuring to run as service'
+
+# reload systemd units
+systemctl daemon-reload
+
+#log directory
+mkdir -p /var/opt/cs/c4u/log
+chmod 777 /var/opt/cs/c4u/log
+
+#Call data records directory
+mkdir -p /var/opt/cs/c4u/cdr
+chmod 777 /var/opt/cs/c4u/cdr
+
+#Config directory
+mkdir -p /var/opt/cs/c4u/config
+chmod 777 /var/opt/cs/c4u/config
+
+#Configuration directory
+mkdir -p /var/opt/cs/c4u/etc
+
+#Recommended deployment directory which includes sample scripts
+INSTALL_DIR=/var/opt/cs/c4u/installations
+mkdir -p $INSTALL_DIR
+
+#Create the attach and detach command
+
+#Get the interface
+INTERFACE=`/sbin/ifconfig -a | sed -n '1 p' | awk '{print $1}'`
+NEW_INTERFACE="$INTERFACE:1"
+IP="172.17.5.47"
+
+if [ ! -f $INSTALL_DIR/attach_vip.sh ]; then
+	echo "Creating attach script."
+	touch $INSTALL_DIR/attach_vip.sh
+	echo "#!/bin/bash
+	#/sbin/ifconfig $NEW_INTERFACE plumb
+	#/sbin/ifconfig $NEW_INTERFACE $IP netmask 255.255.254.0 up" > $INSTALL_DIR/attach_vip.sh
+	echo "Making attach script executable."
+	chmod +x $INSTALL_DIR/attach_vip.sh
+fi
+
+if [ ! -f $INSTALL_DIR/detach_vip.sh ]; then
+	echo "Creating detach script."
+	touch $INSTALL_DIR/detach_vip.sh
+	echo "#!/bin/bash
+	#/sbin/ifconfig $NEW_INTERFACE unplumb" > $INSTALL_DIR/detach_vip.sh
+	echo "Making detach script executable."
+	chmod +x $INSTALL_DIR/detach_vip.sh
+fi
+
+if [ ! -f $INSTALL_DIR/health_script.sh ]; then
+	echo "Creating health script."
+	touch $INSTALL_DIR/health_script.sh
+	echo "#!/bin/bash
+
+if [ -z \$1 ]; then
+	echo \"Error: No Peer supplied as parameter\"
+	exit 1
+fi
+
+EXISTS=\`ping -c 1 \$1\`
+if [ ! \$? -eq 0 ]; then
+	echo \"Error: \$1 is down\"
+	exit 1
+fi
+
+if [ -z \$2 ]; then
+	echo \"Error: No VIP supplied as parameter\"
+	exit 1
+fi
+VIP=\"\$2\"
+
+EXISTS=\`ping -c 1 \$VIP\`
+if [ ! \$? -eq 0 ]; then
+	echo \"Error: VIP is down\"
+	exit 1
+fi
+
+HOSTS=\`ifconfig -a\`
+HASVIP=false
+if [[ \"\$HOSTS\" == *\$VIP* ]];
+then
+	HASVIP=true
+fi
+
+if [ \$HASVIP == true ]; then
+	if [ -z \$3 ]; then
+		echo \"Error: VIP is up, but not server is not incumbent\"
+		exit 1
+	fi
+else
+	if [ ! -z \$3 ]; then
+		echo \"Error: VIP is down, but server is incumbent\"
+		exit 1
+	fi
+fi
+
+exit 0" > $INSTALL_DIR/health_script.sh
+	echo "Making health script executable."
+	chmod +x $INSTALL_DIR/health_script.sh
+fi
+
+echo "completed post installation."

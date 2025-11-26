@@ -1,0 +1,54 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.test.TestHost")
+   }
+}
+dependencies {
+    implementation project(':AirSimService')
+    implementation project(':CoreInterfaces')
+    implementation project(':CtrlConnector')
+    implementation project(':LoggerService')
+    implementation project(':MySqlConnector')
+    implementation project(':NumberPlanService')
+    implementation project(':SecurityService')
+    implementation project(':ServiceBus')
+    implementation project(':UIConnector')
+    implementation project(':SoapProtocol')
+    implementation project(':CreditDistributionService')
+    implementation project(':RestProtocol')
+    implementation project(':SmppConnector')
+    implementation project(':SmtpConnector')
+    implementation project(':AirConnector')
+    implementation project(':KerberosConnector')
+    implementation project(':HmxConnector')
+    implementation project(':HuxConnector')
+    implementation project(':SoapConnector')
+    implementation project(':C4USuTConnector')
+    implementation project(':DataWarehouseConnector')
+    implementation project(':LifecycleConnector')
+    implementation project(':TransactionService')
+    implementation project(':ReportingService')
+    implementation project(':PccBundleConnector')
+    implementation project(':CaiSimService')
+    implementation project(':PCCSuTConnector')
+    implementation project(':CaiConnector')
+    implementation project(':ArchivingConnector')
+    implementation project(':DiagnosticConnector')
+    implementation project(':FileConnector')
+    implementation project(':SnmpConnector')
+    implementation project(':TamperCheckConnector')
+    implementation 'org.snmp4j:snmp4j'
+    implementation 'org.snmp4j:snmp4j-agent'
+    implementation project(':UnitTestUtils')
+    implementation 'junit:junit'
+}

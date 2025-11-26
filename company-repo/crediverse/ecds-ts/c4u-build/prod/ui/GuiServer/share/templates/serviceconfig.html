@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<link href="/css/pagecss/serviceconfig.css" rel="stylesheet" th:href="@{/css/pagecss/serviceconfig.css}"/>
+
+
+<style>
+<!-- 	
+	.bread {
+		margin-bottom: 0;
+	}
+	
+	.tree-icon {
+		font-size: 10px;
+		padding: 0px;
+		margin: 0px;
+	}
+	
+	.content-height {
+		height: 100px;
+	}
+	
+	.tree-item {
+		display:block;
+		bottom: 25px;
+  		right: 6px;
+  		font-size: 12px;
+  		font-weight: normal;
+  		color: rgba(0,0,0,0.9);
+  		line-height: 1.5em;
+  		padding: 2px 4px;
+   	}
+   	
+   	.tree-item a {
+   		text-decoration: none;
+   	}
+	
+	.tree-item:hover {
+   		background: rgba(225,225,225,0.55);
+   		font-decoration: bold;
+   		text-decoration: none;
+   		cursor: pointer;
+   	}
+	
+	.tree-item:link, .tree-item:visited {
+   		text-decoration: none;
+   		background: rgba(225,225,225,0.55);
+  		font-weight: bold;
+  		border-right: 4px solid #458ae0 !important;
+   	}
+   
+   	.buffer {
+   		margin-top: -15px;
+   		margin-bottom: -15px;
+   	}
+   	
+	.affix,.affix-top {
+   		position:static;
+	}
+}
+	
+-->
+</style>
+
+<div class="row">   
+   <div class="col-md-12">
+   		<div class="row">
+   		    <div class="col-md-3 col-xs-3" style="min-width:260px !important">
+		     	<div id="sidebar">
+		     		<div class="panel-heading h3" th:text="${serviceConfigHeading}"></div>
+		     		<div class="panel-body">
+		     			<div class="row buffer" id="menu_contents">
+			     			<img src="/img/load.gif" />
+							<input id="configmenu" type="hidden" th:value="${serviceConfigMenu}" />
+						</div>
+		     		</div>
+		     	</div>
+		    </div>
+			<div class ="col-md-9 col-xs-9" style="min-width:740px !important">
+				<div class="panel panel-primary">
+					<div id="service_heading" class="panel-heading">&nbsp;</div>
+				</div>
+				<div class="tabbable">
+					<ul class="nav nav-tabs nav-justified">
+						<li class="active">
+							<a href="#content-configuration" data-toggle="tab" class="toptab">Configurable Settings</a>
+						</li>
+						<li>
+							<a href="#msg-configuration" data-toggle="tab" class="toptab">Notifications</a>
+						</li>
+					</ul>
+					<br/>
+					<div class="tab-content">
+						<div class="tab-pane active" id="content-configuration">
+						</div>
+						<div class="tab-pane" id="msg-configuration">
+							<div><span contenteditable="true" id="textarea"></span></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix visible-xs"></div>
+   		</div>
+   </div>
+</div>
+
+<script type="text/javascript" src="/js/pagejs/mancommon.js"></script>
+<script type="text/javascript" src="/js/pagejs/serviceconfig.js"></script>
+
+<script>
+$(document).ready(function() {
+	registerInputs();
+});
+</script>

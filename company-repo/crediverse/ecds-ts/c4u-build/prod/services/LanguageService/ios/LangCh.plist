@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>LangCh</key>
+	<string>Language Change Property List</string>
+	<key>eng</key>
+	<dict>
+		<key>welcome</key>
+		<string>Welcome to</string>
+		<key>service_description</key>
+		<string>This service allows you to change the language globally for all of the available services.</string>
+		<key>select_language</key>
+		<string>Select the language to migrate to:</string>
+		<key>language</key>
+		<string>Language:</string>
+		<key>save</key>
+		<string>Save</string>
+		<key>migrating</key>
+		<string>Migrating</string>
+	</dict>
+	<key>fre</key>
+	<dict>
+		<key>welcome</key>
+		<string>Bienvenue à</string>
+		<key>service_description</key>
+		<string>Ce service vous permet de changer la langue à l&apos;échelle mondiale pour l&apos;ensemble des services disponibles.</string>
+		<key>select_language</key>
+		<string>Sélectionnez la langue de migrer vers:</string>
+		<key>language</key>
+		<string>Langue:</string>
+		<key>save</key>
+		<string>Sauvegarder</string>
+		<key>migrating</key>
+		<string>émigrer</string>
+	</dict>
+</dict>
+</plist>

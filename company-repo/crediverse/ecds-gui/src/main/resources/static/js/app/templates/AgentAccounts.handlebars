@@ -1,0 +1,714 @@
+<div>
+	<!-- Agent Accounts -->
+	<script id="agentAccountDialog">
+		<div class="modal-header">
+      		<button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+	    	<h4 class="modal-title">{{{dialogTitle}}}</h4>
+		</div>
+		
+		<div class="modal-body">
+			<form name="addAgent" class="form-horizontal">
+				{{#ifCond this.state "!=" "P"}}
+				<div class="row">
+					<div class="col-sm-6">
+						{{>modalInputAgentsStretched name="title"  label="agentAccounts.editTitleLabel" hint="agentAccounts.editTitleHint" value=this.title}}
+						{{>modalInputAgentsStretched name="firstName" label="agentAccounts.editFirstNameLabel" hint="agentAccounts.editFirstNameHint" value=this.firstName}}
+						{{>modalInputAgentsStretched name="surname" label="agentAccounts.editSurnameLabel" hint="agentAccounts.editSurnameHint" value=this.surname}}
+						{{>modalInputAgentsStretched name="initials" label="agentAccounts.editInitialsLabel" hint="agentAccounts.editInitialsHint" value=this.initials}}
+						{{>modalInputAgentsStretched name="email" type="email" label="agentAccounts.editEmailLabel" hint="agentAccounts.editEmailHint" value=this.email}}
+						{{>modalInputAgentsStretched name="mobileNumber" label="agentAccounts.editMobilePhoneLabel" hint="agentAccounts.editMobilePhoneHint" value=this.mobileNumber}}
+						{{>modalInputAgentsStretched name="altPhoneNumber" label="agentAccounts.editAltPhoneLabel" hint="agentAccounts.editAltPhoneHint" value=this.altPhoneNumber}}
+
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 control-label">{{i18n "agentAccounts.editAgentTierLabel"}}</label>
+							<div class="col-xs-8 col-sm-8">
+								<select id="tierID" style="width: 100%;" name="tierID" class="form-control" placeholder="{{i18n "agentAccounts.editAgentTierHint"}}">
+								 	<option value="{{tierID}}" selected="selected">{{tierName}}</option>
+								</select>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 control-label">{{i18n "agentAccounts.editGroupLabel"}}</label>
+							<div class="col-xs-8 col-sm-8">
+								<select id="groupID" style="width: 100%;" name="groupID" class="form-control">
+									<option value="{{groupID}}" selected="selected">{{groupName}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 control-label">{{i18n "agentAccounts.editServiceClassLabel"}}</label>
+							<div class="col-xs-8 col-sm-8">
+								<select id="serviceClassID" style="width: 100%;" name="serviceClassID" class="form-control">
+									<option value="{{serviceClassID}}" selected="selected">{{serviceClassName}}</option>
+								</select>
+							</div>
+						</div>
+						
+						
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 control-label">{{i18n "agentAccounts.editOwnerAgentLabel"}}</label>
+							<div class="col-xs-8 col-sm-8">
+								<select id="ownerAgentID" style="width: 100%;" name="ownerAgentID" class="form-control">
+									<option value="{{ownerAgentID}}" selected="selected">{{ownerName}}</option>
+								</select>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 control-label">{{i18n "agentAccounts.editUpstreamAgentLabel"}}</label>
+							<div class="col-xs-8 col-sm-8">
+								<select id="supplierAgentID" style="width: 100%;" name="supplierAgentID" class="form-control">
+									<option value="{{supplierAgentID}}" selected="selected">{{supplierName}}</option>
+								</select>
+							</div>
+						</div>
+					
+					</div>
+					
+					<div class="col-sm-6">
+						{{>modalInputAgentsStretched name="accountNumber" label="agentAccounts.editAccountNumberLabel" hint="agentAccounts.editAccountNumberHint" value=this.accountNumber}}
+						<!--Add back later: A:enums.authenticationMethod.password,-->
+						{{>modalSelectAgentsStreched name="authenticationMethod" label="agentAccounts.editAuthenticationMethodLabel" data="
+							P:enums.authenticationMethod.pin,
+							X:enums.authenticationMethod.external" hint="userman.authenticationMethod" value=this.authenticationMethod def="P"}}
+						<div class="domainAccountNameItemGroup">					
+							{{>modalInputAgentsStretched name="domainAccountName" label="agentAccounts.editDomainAccountLabel" hint="agentAccounts.editDomainAccountHint" comment="agentAccounts.editDomainAccountComment" value=this.domainAccountName}}
+						</div>
+						{{>modalInputAgentsStretched name="dateOfBirth" label="agentAccounts.editDobLabel" hint="agentAccounts.editDobHint" value=this.dateOfBirth}}
+						{{>modalSelectAgentsStreched name="language" label="agentAccounts.editLanguageLabel" data="en:enums.langType.en,fr:enums.langType.fr" hint="agentAccounts.editLanguageHint" value=this.language def="agentAccounts.editLanguageDefault"}}
+						{{>modalSelectAgentsStreched name="gender" label="agentAccounts.editGenderLabel" data="M:enums.sexType.m,F:enums.sexType.f,O:enums.sexType.o" hint="agentAccounts.editGenderHint" value=this.gender}}
+						{{>modalInputAgentsStretched name="warningThreshold" label="agentAccounts.editWarningLabel" hint="agentAccounts.editWarningHint" value=this.warningThreshold}}
+						{{>modalInputAgentsStretched name="expirationDate" label="agentAccounts.editExpirationLabel" hint="agentAccounts.editExpirationHint" value=this.expirationDate}}
+						{{>modalSelectAgentsStreched name="state" label="agentAccounts.editStateLabel" data="A:enums.state.active,S:enums.state.suspended,D:enums.state.deactivated" hint="agentAccounts.editStateHint" value=this.state}}
+				
+						<div class="form-group" style="margin-bottom:0;">
+							<label class="col-xs-4 col-sm-4 control-label">Channels</label>
+							<div class="col-xs-8 col-sm-8" style="line-height:35px;">
+								 <input id="channel-ussd" name="channelUssd" value="" class="custom-checkbox-fa" type="checkbox" {{#if this.channelUssd}}checked="checked"{{/if}}/>
+								 <label for="channel-ussd">{{i18n "agentAccounts.viewChannelUssdLabel"}}</label>
+								 &nbsp;&nbsp;&nbsp;&nbsp;
+								 <input id="channel-sms" name="channelSms" value="" class="custom-checkbox-fa" type="checkbox" {{#if this.channelSms}}checked="checked"{{/if}}/>
+								 <label for="channel-sms">{{i18n "agentAccounts.viewChannelSmsLabel"}}</label>
+								 <br/>
+								 <input id="channel-api" name="channelApi" value="" class="custom-checkbox-fa" type="checkbox" {{#if this.channelApi}}checked="checked"{{/if}}/>
+								 <label for="channel-api">{{i18n "agentAccounts.viewChannelApiLabel"}}</label>
+								 &nbsp;&nbsp;&nbsp;&nbsp;
+								 <input id="channel-wui" name="channelWui" value="" class="custom-checkbox-fa" type="checkbox" {{#if this.channelWui}}checked="checked"{{/if}}/>
+								 <label for="channel-wui">{{i18n "agentAccounts.viewChannelWuiLabel"}}</label>
+								 <input id="channel-app" name="channelApp" value="" class="custom-checkbox-fa" type="checkbox" {{#if this.channelApp}}checked="checked"{{/if}}/>
+								 <label for="channel-app">{{i18n "agentAccounts.viewChannelAppLabel"}}</label>								 
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 control-label">{{i18n "agentAccounts.editAgentRoleLabel"}}</label>
+							<div class="col-xs-8 col-sm-8">
+								 <select id="roleID" style="width: 100%;" name="roleID" class="form-control" placeholder="{{i18n "agentAccounts.editAgentRoleHint"}}" ">
+									<option value="{{roleID}}" selected="selected">{{roleName}}</option>
+								</select>
+							</div>
+						</div>
+						
+						<div class="form-group" style="margin-bottom:0;">
+							<label class="col-xs-4 col-sm-4 control-label">{{i18n "agentAccounts.confirmUssdPrefix"}}</label>
+							<div class="col-xs-8 col-sm-8" style="line-height:35px;">
+								 <input id="confirm-ussd" name="confirmUssd" value="" class="custom-checkbox-fa" type="checkbox" {{#if this.confirmUssd}}checked="checked"{{/if}}/>
+								 <label for="confirm-ussd">{{i18n "agentAccounts.confirmUssdLabel"}}</label>							 
+							</div>
+						</div>
+						<div class="form-group" style="margin-bottom:0;">
+    						<div class="col-xs-8 col-sm-8 col-xs-offset-4 col-sm-offset-4" style="line-height:35px;">								  <input id="send-bundle-commission-report" name="sendBundleCommissionReport" value="" class="custom-checkbox-fa" type="checkbox" {{#if this.sendBundleCommissionReport}}checked="checked"{{/if}}/>
+        						  <label for="send-bundle-commission-report">{{i18n "agentAccounts.sendBundleCommissionReportLabel"}}</label>							 
+							</div>
+						</div>	
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-6 col-sm-6">
+						<div class="form-group">
+							<label class="col-xs-4 col-sm-4 control-label">{{i18n "agentAccounts.editAreaLabel"}}</label>
+							<div class="col-xs-8 col-sm-8">							
+								<select id="areaID" style="width: 100%;" name="areaID" class="form-control" placeholder="{{i18n "agentAccounts.editAreaHint"}}">
+									<option value="{{areaID}}" selected="selected">{{areaName}}</option>
+								</select>
+							</div>						
+						</div>
+					</div>
+				</div>
+				
+				<div class="row" style="border-top:1px solid #e0e0e0; padding-top:20px;">
+					<div class="col-sm-6">
+						<div class="row form-group">
+							<label class="col-xs-4 col-sm-4 control-label">{{i18n "agentAccounts.editStreetAddressHeading"}}</label>
+							<div class="col-xs-8 col-sm-8">
+								<div style="height:41px">{{>modalInputField name="streetAddressLine1" label="agentAccounts.editAddressLine1Label" hint="agentAccounts.editAddressLine1Hint" value=this.streetAddressLine1}}</div>
+								<div style="height:41px">{{>modalInputField name="streetAddressLine2" label="agentAccounts.editAddressLine2Label" hint="agentAccounts.editAddressLine2Hint" value=this.streetAddressLine2}}</div>
+								<div style="height:41px">{{>modalInputField name="streetAddressSuburb" label="agentAccounts.editAddressSuburbLabel" hint="agentAccounts.editAddressSuburbHint" value=this.streetAddressSuburb}}</div>
+								<div style="height:41px">{{>modalInputField name="streetAddressCity" label="agentAccounts.editAddressCityLabel" hint="agentAccounts.editAddressCityHint" value=this.streetAddressCity}}</div>
+								<div style="height:41px">{{>modalInputField name="streetAddressZip" label="agentAccounts.editAddressZipLabel" hint="agentAccounts.editAddressZipHint" value=this.streetAddressZip}}</div>
+							</div>
+						</div>
+					</div>	
+				
+					<div class="col-sm-6">
+						<div class="row form-group">
+							<label class="col-xs-4 col-sm-4 control-label">{{i18n "agentAccounts.editPostalAddressHeading"}}</label>
+							<div class="col-xs-8 col-sm-8">
+								<div style="height:41px">{{>modalInputField name="postalAddressLine1" label="agentAccounts.editAddressLine1Label" hint="agentAccounts.editAddressLine1Hint" value=this.postalAddressLine1}}</div>
+								<div style="height:41px">{{>modalInputField name="postalAddressLine2" label="agentAccounts.editAddressLine2Label" hint="agentAccounts.editAddressLine2Hint" value=this.postalAddressLine2}}</div>
+								<div style="height:41px">{{>modalInputField name="postalAddressSuburb" label="agentAccounts.editAddressSuburbLabel" hint="agentAccounts.editAddressSuburbHint" value=this.postalAddressSuburb}}</div>
+								<div style="height:41px">{{>modalInputField name="postalAddressCity" label="agentAccounts.editAddressCityLabel" hint="agentAccounts.editAddressCityHint" value=this.postalAddressCity}}</div>
+								<div style="height:41px">{{>modalInputField name="postalAddressZip" label="agentAccounts.editAddressZipLabel" hint="agentAccounts.editAddressZipHint" value=this.postalAddressZip}}</div>
+							</div>
+						</div>
+					</div>
+				</div>
+					
+				<div class="row" style="border-top:1px solid #e0e0e0; padding-top:20px;">
+					<div class="col-sm-6">
+						{{>modalInputAgentsStretched name="maxTransactionAmount" label="agentAccounts.viewMaxTransCountLabel" hint="agentAccounts.viewMaxTransCountHint" value=this.maxTransactionAmount}}
+						{{>modalInputAgentsStretched name="maxDailyCount" label="agentAccounts.viewMaxDailyCountLabel" hint="agentAccounts.viewMaxDailyCountHint" value=this.maxDailyCount}}
+						{{>modalInputAgentsStretched name="maxDailyAmount" label="agentAccounts.viewMaxDailyAmountLabel" hint="agentAccounts.viewMaxDailyAmountHint" value=this.maxDailyAmount}}
+					</div>
+					<div class="col-sm-6 agent-popup-sm-margin">
+						{{>modalInputAgentsStretched name="maxMonthlyCount" label="agentAccounts.viewMaxMonthlyCountLabel" hint="agentAccounts.viewMaxMonthlyCountHint" value=this.maxMonthlyCount}}
+						{{>modalInputAgentsStretched name="maxMonthlyAmount" label="agentAccounts.viewMaxMonthlyAmountLabel" hint="agentAccounts.viewMaxMonthlyAmountHint" value=this.maxMonthlyAmount}}
+					</div>
+				</div>
+				
+				<div class="row" style="border-top:1px solid #e0e0e0; padding-top:20px;">
+					<div class="col-sm-6">
+						{{>modalInputAgentsStretched name="reportCountLimit" label="agentAccounts.viewReportCountLimitLabel" hint="agentAccounts.viewReportCountLimitHint" value=this.reportCountLimit}}
+					</div>
+					<div class="col-sm-6">
+						{{>modalInputAgentsStretched name="reportDailyScheduleLimit" label="agentAccounts.viewReportDailyScheduleLimitLabel" hint="agentAccounts.viewReportDailyScheduleLimitHint" value=this.reportDailyScheduleLimit}}
+					</div>
+				</div>
+				{{/ifCond}}
+
+				{{#ifCond this.state "==" "P"}}
+				<div class="row">
+					<div class="col-sm-12">
+						{{>modalInputAgentsStretched name="mobileNumber" label="agentAccounts.editMobilePhoneLabel" hint="agentAccounts.editMobilePhoneHint" value=this.mobileNumber}}
+						{{>modalInputAgentsStretched name="domainAccountName" label="agentAccounts.editDomainAccountLabel" hint="agentAccounts.editDomainAccountLabel" comment="agentAccounts.editDomainAccountComment" value=this.domainAccountName}}
+						{{>modalSelectAgentsStreched name="language" label="agentAccounts.editLanguageLabel" data="en:enums.langType.en,fr:enums.langType.fr" hint="agentAccounts.editLanguageHint" value=this.language def="agentAccounts.editLanguageDefault"}}
+					</div>
+				</div>
+				<hr/>
+				<div class="row">
+					<div class="col-sm-12">
+						{{>modalInputAgentsStretched name="maxTransactionAmount" label="agentAccounts.viewMaxTransAmountLabel" hint="agentAccounts.viewMaxTransAmountHint" value=this.maxTransactionAmount}}
+						{{>modalInputAgentsStretched name="maxDailyCount" label="agentAccounts.viewMaxDailyCountLabel" hint="agentAccounts.viewMaxDailyCountHint" value=this.maxDailyCount}}
+						{{>modalInputAgentsStretched name="maxDailyAmount" label="agentAccounts.viewMaxDailyAmountLabel" hint="agentAccounts.viewMaxDailyAmountHint" value=this.maxDailyAmount}}
+						{{>modalInputAgentsStretched name="maxMonthlyCount" label="agentAccounts.viewMaxMonthlyCountLabel" hint="agentAccounts.viewMaxMonthlyCountHint" value=this.maxMonthlyCount}}
+						{{>modalInputAgentsStretched name="maxMonthlyAmount" label="agentAccounts.viewMaxMonthlyAmountLabel" hint="agentAccounts.viewMaxMonthlyAmountHint" value=this.maxMonthlyAmount}}
+					</div>
+				</div>
+				{{/ifCond}}
+			</form>
+		</div>
+		
+		<div class="modal-footer">
+	    	<div class="form-group">
+	        	<div class="col-sm-offset-2 col-sm-10">
+	     		  	<button type="button" class="btn btn-primary agentSaveButton">{{i18n "global.saveBtn"}}</button>
+	       			<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+				</div>
+	    	</div>
+	  	</div>		
+	</script>
+
+    <!-- Duplicate Number Info -->
+    <script id="recycleDialog">
+		<div class="modal-header text-center" style="padding-top:1em">
+            <button type="button" class="close cancelBtn" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+			<div class="icon-box" style="padding: 1em 0;">
+				<i class="fa fa-exclamation-triangle" style="font-size:3em; color: #fbb034;"></i>
+			</div>
+			<h4 class="modal-title"><strong>{{{i18n "msisdnRecycling.modalHeaderTitle"}}}</strong></h4>
+			<p>{{{i18nctx "msisdnRecycling.modalHeaderDescription"}}}</p>
+		</div>
+
+		<div class="modal-body text-center">
+			<div class="row">
+				<div class="col-sm-5 text-right">
+					<i class="fa fa-user" style="font-size:7em; color: #cce5ff;"></i>
+				</div>
+				<div class="col-sm-7 text-left">
+					<div>{{i18n "msisdnRecycling.modalBodyAgentId"}} : {{agentId}} </div>
+					<div>{{i18n "msisdnRecycling.modalBodyStatus"}} : {{agentState}} </div>
+					<div>{{i18n "msisdnRecycling.modalBodyAccountBalance"}} : {{balance}}</div>
+					<div>{{i18n "msisdnRecycling.modalBodyAccountOnHoldBalance"}} : {{onHoldBalance}}</div>
+					<div>{{i18n "msisdnRecycling.modalBodyLastTransaction"}} : {{lastTransactionDate}}</div>
+					<div>{{i18n "msisdnRecycling.modalBodyCreatedOn"}} : {{activationDate}}</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal-footer" style="padding-bottom:2em">
+			<div class="form-group">
+				<div class="col-sm-12 text-center" style="padding-bottom:1.5em">
+					<div class="alert" style="color: #856404; background-color: #fff3cd; border-color: #ffeeba;">
+						<span style="font-weight:bold">{{i18n "msisdnRecycling.modalFooterButtonDescription"}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+
+	<script id="accountmaster">
+		<div class="datatablesview">
+	        <div class="box">
+				<div id="dtButtonBarTemplate" style="display:none;">
+					{{#hasPerms "Batch_Download"}}
+	            		<button class="btn btn-primary exportAgentButton" role="button">{{i18n "global.exportBtn"}}</button>
+	            	{{/hasPerms}}
+            		{{#hasPerms "Batch_Upload"}}
+	                	<a href="#batch" class="btn btn-primary routerlink" role="button">{{i18n "global.importBtn"}}</a>
+	                {{/hasPerms}}
+                	{{#hasPerms "Agent_Add"}}
+	                	<button class='btn btn-primary createAgentButton'>{{i18n "agentAccounts.masterCreateAgentButton"}}</button>
+	                {{/hasPerms}}
+					{{!-- Button to show deactivate modal --}}
+					<button class="btn btn-primary quickDeactivateAgent" role="button"> Deactivate Agent </button>
+	            </div>
+
+	            <div class="box-body">
+	            <div class="">
+	            	<div class="advancedSearchInput" style="margin-bottom:15px;">
+	            		<!-- <input id="searchInput" type="text" name="firstName" class="form-control searchInput" placeholder="{{i18n "agentAccounts.searchInputHint"}}" /> -->
+					 	<button type="button" class="btn btn-primary accountSearchExpandButton">{{i18n "global.advancedSearchBtn"}}</button>
+	            	</div>
+			            <div class="advancedSearchForm" style="display:none">
+				            <form id="searchform" name="searchForm" class="form-horizontal">
+						        <div>
+						            <div>
+											<div class="row">
+												<div class="col-sm-8 col-md-6">
+													<div class="row" style="margin-bottom:15px;">
+														<label for="firstName" class="col-xs-4 col-sm-5 control-label">{{i18n "agentAccounts.searchAccountFirstNameLabel"}}</label>
+														<div class="col-xs-4 col-sm-3">
+															<input id="firstName" type="text" name="firstName" data-toggle="tooltip" title='{{i18n "agentAccounts.searchAccountSearchHint"}}' class="form-control" placeholder="{{i18n "agentAccounts.searchAccountFirstNameHint"}}" />
+														</div>
+														<div class="col-xs-4 col-sm-4">
+															<input id="surname" type="text" name="surname" data-toggle="tooltip" title='{{i18n "agentAccounts.searchAccountSearchHint"}}' class="form-control" placeholder="{{i18n "agentAccounts.searchAccountSurnameHint"}}" />
+														</div>
+													</div>	
+													{{>modalInputAgents name="id" label="agentAccounts.searchUniqueIDLabel" hint="agentAccounts.searchUniqueIDHint"}}
+													{{>modalInputAgents name="accountNumber" label="agentAccounts.searchAccountNumberLabel" toggle="tooltip" title="agentAccounts.searchAccountSearchHint" hint="agentAccounts.searchAccountNumberHint"}}
+													{{>modalInputAgents name="mobileNumber" label="agentAccounts.editMobilePhoneLabel" toggle="tooltip" title="agentAccounts.searchAccountSearchHint" hint="agentAccounts.editMobilePhoneHint"}}
+													<!-- {{>modalInputAgents name="domainAccountName" label="agentAccounts.editDomainAccountLabel" comment="agentAccounts.editDomainAccountComment" hint="agentAccounts.editDomainAccountHint"}} -->
+													<div class="form-group">
+														<label class="col-xs-4 col-sm-5 control-label">{{i18n "agentAccounts.searchAccountStatusLabel"}}</label>
+														<div class="col-xs-8 col-sm-7">
+															 <select id="state" name="state" class="form-control" placeholder="{{i18n "agentAccounts.searchAccountStatusHint"}}" value="">
+															 	<option value="">{{i18n "agentAccounts.searchAccountStatusHint"}}</option>
+															 	<option value="A">{{i18n "enums.state.active"}}</option>
+															 	<option value="S">{{i18n "enums.state.suspended"}}</option>
+															 	<option value="D">{{i18n "enums.state.deactivated"}}</option>
+															 	<option value="P">{{i18n "enums.state.permanent"}}</option>
+															</select>
+														</div>
+													</div>
+												</div>
+
+												<div class="col-sm-8 col-md-6">
+													<div class="form-group">
+														<label class="col-xs-4 col-sm-5 control-label">{{i18n "agentAccounts.searchAccountTierLabel"}}</label>
+														<div class="col-xs-8 col-sm-7">
+															 <select id="tierID" style="width: 100%;" name="tierID" class="form-control" value="">
+															   	<option value="{{id}}">{{i18n "agentAccounts.searchAccountTierHint"}}</option>
+																{{#each tierList}}
+															    	<option value="{{id}}">{{name}}</option>
+															  	{{/each}}
+															</select>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-xs-4 col-sm-5 control-label">{{i18n "agentAccounts.searchAccountGroupLabel"}}</label>
+														<div class="col-xs-8 col-sm-7">
+															<select id="groupID" style="width: 100%;" name="groupID" class="form-control">
+																<option value="" selected="selected">{{i18n "agentAccounts.searchAccountGroupHint"}}</option>
+															</select>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-xs-4 col-sm-5 control-label">{{i18n "agentAccounts.searchAccountServiceClassLabel"}}</label>
+														<div class="col-xs-8 col-sm-7">
+															<select id="serviceClassID" style="width: 100%;" name="serviceClassID" class="form-control">
+																<option value="" selected="selected">{{i18n "agentAccounts.searchAccountServiceClassHint"}}</option>
+															</select>
+														</div>
+													</div>								
+													<div class="form-group">
+														<label class="col-xs-4 col-sm-5 control-label">{{i18n "agentAccounts.searchOwnerAgentLabel"}}</label>
+														<div class="col-xs-8 col-sm-7">
+															<select id="ownerAgentID" style="width: 100%;" name="ownerAgentID" class="form-control">
+																<option value="" selected="selected">{{i18n "agentAccounts.searchOwnerAgentHint"}}</option>
+															</select>
+														</div>
+													</div>
+													<!--
+													<div class="form-group">
+														<label class="col-xs-4 col-sm-5 control-label">{{i18n "agentAccounts.searchSupplierAgentLabel"}}</label>
+														<div class="col-xs-8 col-sm-7">
+															<select id="supplierAgentID" style="width: 100%;" name="supplierAgentID" class="form-control">
+																<option value="" selected="selected">{{i18n "agentAccounts.searchSupplierAgentHint"}}</option>
+															</select>
+														</div>
+													</div>
+													-->
+													<div class="form-group">
+														<label class="col-xs-4 col-sm-5 control-label">{{i18n "agentAccounts.searchAreaLabel"}}</label>
+														<div class="col-xs-8 col-sm-7">
+															<select id="areaID" style="width: 100%;" name="areaID" class="form-control">
+																<option value="" selected="selected">{{i18n "agentAccounts.searchAreaHint"}}</option>
+															</select>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+						            
+									<div class="" style="border-top:1px solid #eaeaea; padding-top:10px; margin-bottom:20px;">
+						  			  	<div class="form-group">
+								        	<div class="right">
+					           			 		<button type="submit" class="btn btn-primary accountSearchButton"><i class="fa fa-search"></i> {{i18n "global.searchBtn"}}</button>
+					           			 		<button type="button" class="btn btn-default accountSearchResetButton">{{i18n "global.clearBtn"}}</button>
+					           			 		<button type="button" class="btn btn-default accountSearchCancelButton">{{i18n "global.hideBtn"}}</button>
+												&nbsp;&nbsp;&nbsp;
+												<div class="pull-right">
+													<div id="error_general_message" class="alert alert-danger" style="padding:6px 15px; margin-right:20px; display:none;"></div>
+												</div>
+											</div>
+								    	</div>
+									</div>
+						        </div>
+							</form>
+						</div>
+		    		</div>
+		    		<div class="advancedSearchResults">
+			            <table class="accountstable tableview table table-bordered table-hover table-striped"  data-sshash-base='accountList'>
+			            </table>
+		            </div>
+	            </div>
+	        </div>
+	    </div>
+	</script>	
+	
+	<script id="singleUser">
+		<div class="user">
+			<div class="pull-left userCircle">
+				<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+			</div>
+			<h4 class="list-group-item-heading">{{surname}}</h4>
+			<p class="list-group-item-text">{{accountNumber}}</p>
+		</div>
+	</script>
+	
+	<script id="userdetail">
+		<div id="contactCard">
+			<!-- User Details Panel -->
+			<div class="panel panel-default">
+				<!-- Main Heading -->
+				<div class="panel-heading clearfix">
+					<h3 class="panel-title pull-left">{{i18n "agentAccounts.userDetailsHeading"}}</h3>
+					<a class="btn btn-danger pull-right userDeleteButton" href="#"
+						{{#if isPermanent}}
+							disabled="disabled"
+						{{/if}}
+						data-toggle="modal" data-target="#deleteModal">
+						<i class="fa fa-remove"></i><span>{{i18n "agentAccounts.userDetailsDelete"}}</span>
+					</a>
+					<a class="btn btn-primary userButtonSpacing pull-right editUser" href="#"
+						{{#if isPermanent}}
+							disabled="disabled"
+						{{/if}}
+						data-toggle="modal" data-target="#editModal">
+						<i class="fa fa-pencil"></i><span>{{i18n "agentAccounts.userDetailsEdit"}}</span>
+					</a>
+				</div>
+	
+				<div class="list-group">
+					{{>userDetailInfo label="agentAccounts.userDetailsAccountNameLabel" details=this.accountName }}
+					{{>userDetailInfo label="agentAccounts.userDetailsUserNameLabel" details=this.name }}
+					{{>userDetailInfo label="agentAccounts.userDetailsSurnameLabel" details=this.surname }}
+					{{>userDetailInfo label="agentAccounts.userDetailsActivationDtLabel" details=this.activationDate }}
+					{{>userDetailInfo label="agentAccounts.userDetailsLanguageLabel" details=this.language }}
+				</div>
+		
+				<div class="panel-footer">
+					<small class="pull-left"></small>
+				</div>
+			</div>
+			
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix">
+					<h3 class="panel-title pull-left">{{i18n "agentAccounts.userDetailsRolesHeading"}}</h3>
+				    
+					<div class="btn-group pull-right">
+						<a class="btn btn-success {{actionClass}}" href="#">
+							<i class="fa fa-edit"></i>
+							<span>{{action}}</span>
+						</a>					
+				    </div>				    
+				</div>
+				
+				{{#if hasNoRoles}}
+			      	<div id="noDetails" class="list-group assignedRolesInstructions">
+			      		<ul class="fa-ul">
+				      		<h4>{{i18n "agentAccounts.userDetailsRolesHeading"}}</h4>
+				      		<ul class="fa-ul">
+			      				<li><i class="fa-li fa fa-comment"></i>
+			      				{{i18n "agentAccounts.userDetailsRolesCommentPrefix"}} <a class="btn btn-success btn-xs" ><i class="fa fa-edit userAddButtonPlus"></i><span>{{i18n "agentAccounts.userDetailsRolesCommentName"}}</span></a> {{i18n "agentAccounts.userDetailsRolesCommentSuffix"}}
+			  					</li>
+				      		</ul>
+			      		</ul>
+			      	</div>
+			    {{/if}}
+			     
+				<div class="list-group assignedRoles">
+				</div>
+			
+				<div class="panel-footer">
+					<small class="pull-left"></small>
+				</div>
+			</div>
+		</div>
+	</script>
+	
+	<script id="assignedRoleDetail">
+	<a class="list-group-item userRoleListItem">
+		{{#if hasRole}}
+			<i class="fa fa-thumbs-up fa-2x pull-left roleEnabled"></i>
+		{{else}}
+			<i class="fa fa-lock fa-2x pull-left roleDisabled"></i>
+		{{/if}}
+		
+		<h4 class="list-group-item-heading">{{name}}</h4>
+		<p class="list-group-item-text">{{description}}</p>
+	</a>
+	</script>
+	
+	<script id="emptyUser">
+		<div class="panel panel-default">
+			<div class="panel-heading clearfix">
+		    	<h3 class="panel-title pull-left">{{i18n "agentAccounts.userDetailsRolesCommentPrefix"}}</h3>
+	    	</div>
+		    <div class="list-group">
+		    
+		      	<div id="noDetails" class="list-group-item">
+		      		<ul class="fa-ul">
+	      				<li><i class="fa-li fa fa-comment"></i>
+	      				{{i18n "agentAccounts.emptyUserCommentGroup"}}
+      					</li>
+    	      				<li><i class="fa-li fa fa-comment"></i>
+    	      				{{i18n "agentAccounts.emptyUserCommentGroup"}} <a class="btn btn-primary btn-xs" ><i class="fa fa-plus userAddButtonPlus"></i><span>{{i18n "agentAccounts.emptyUserCommentAddName"}}</span></a> {{i18n "agentAccounts.emptyUserCommentAddSuffix"}}
+      					</li>
+		      		</ul>
+		      	</div>
+		      	
+		    </div>
+			<div class="panel-footer">
+		    	<small></small>
+		  	</div>
+		</div>
+	</script>
+	
+	<script id="transferViewRulesErrors">
+		<div>
+			<strong>{{ i18n "agentAccounts.transferNotAllowedMessage" }}</strong>
+		</div>
+		{{#if ruleIssues}}
+			<span class="font-normal">
+				{{ i18n "agentAccounts.transferRulesListHeading"}}</span> 
+				<ul>
+					{{#each ruleIssues}}
+						<li>
+							{{i18nctx (concat "agentAccounts.transferIssues." issue) }}
+						</li>
+					{{/each}}
+				</ul>
+		{{/if}}
+	</script> 
+
+	<script id="transferView">
+		<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		    <h4 class="modal-title">{{i18n "agentAccounts.transferTitlePrefix"}} <b>{{accountNumber}}</b> {{i18n "agentAccounts.transferTitleItem"}}: <b>{{mobileNumber}}</b></h4>
+		</div>
+		<div class="modal-body">
+			<div class="replenishdetails">
+				<form name="replenish" class="form-horizontal">
+					<div id="error_message" class="alert alert-danger" style="padding:6px 15px; display:none;"></div>
+					
+					<div class="authorisation-type form-group hide-on-error">
+						<div class="row">
+							<label class="col-xs-3 control-label">{{i18n "dashboard.authorizeType"}}</label>
+							<div class="input-group authorization-buttons">
+								<div class="input-group-btn">
+								  <button type="button" class="immediateBtn btn btn-default active">{{i18n "dashboard.authorizeImmediate"}}</button>
+								  <button type="button" class="requestBtn btn btn-default">{{i18n "dashboard.authorizeRequest"}}</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div id="amount" class="form-group">
+						<label class="col-xs-3 control-label">{{i18n "agentAccounts.transferAmountLabel"}}</label>
+						<div class="col-xs-9 input-group">
+							<input id="amount" name="amount" class="form-control amountField autonum currency" placeholder="{{i18n "agentAccounts.transferAmountHint"}}" value="" type="text">
+						</div>
+					</div>
+					
+					<div class="authorisationContainer">
+						<div class="authorisation"></div>
+					</div>
+					
+					<div class="authorisation-request" class="form-group" style="display:none">
+						<div class="row">
+							<label class="col-xs-3 control-label">{{i18n "dashboard.authorizeBy"}}</label>
+							<div class="col-xs-8">
+								<div class="input-group">
+									<select id="authorizedBy" style="width: 100%;" name="authorizedBy" class="form-control">
+										<option value="groupauth" selected="selected">Any Available User</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</form>
+			</div>
+		</div>
+		<div class="modal-footer">
+		    <div class="form-group">
+		        <div class="col-sm-offset-2 col-sm-10">
+		        	<button type="button" class="btn btn-default authorizeBtn" disabled="disabled">{{i18n "dashboard.authorizeBtn"}}</button>
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+		        </div>
+			</div>
+		</div>
+	</script>
+	
+	<script id="adjustmentView">
+		<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		    <h4 class="modal-title">{{i18n "agentAccounts.adjustTitlePrefix"}}: <b>{{accountNumber}}</b> {{i18n "agentAccounts.adjustTitleItem"}}: <b>{{mobileNumber}}</b></h4>
+		</div>
+		<div class="modal-body">
+			<div class="adjustmentdetails">
+				<form name="adjustment" class="form-horizontal">
+					<div class="row">
+						<div class="col-sm-10">
+							<div class="authorisation-type form-group hide-on-error">
+								<label class="col-xs-4 col-sm-5 control-label">{{i18n "dashboard.authorizeType"}}</label>
+								<div class="col-xs-8 col-sm-7 input-group authorization-buttons">
+									<div class="input-group-btn">
+									  <button type="button" class="immediateBtn btn btn-default active">{{i18n "dashboard.authorizeImmediate"}}</button>
+									  <button type="button" class="requestBtn btn btn-default">{{i18n "dashboard.authorizeRequest"}}</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				
+					<div class="row">
+						<div class="col-sm-10">
+						
+							{{>modalInputAgents name="amount" label="agentAccounts.adjustAmountLabel" hint="agentAccounts.adjustAmountHint" currency=true}}
+							{{#if 0}}{{>modalInputAgents name="bonusAmount" label="agentAccounts.adjustBonusAmountLabel" hint="agentAccounts.adjustBonusAmountHint" value=this.bonusBalance}}{{/if}}
+							{{>modalInputAgents name="reason" label="agentAccounts.adjustReasonLabel" hint="agentAccounts.adjustReasonHint" value=this.reason}}
+							
+						</div>
+					</div>
+					<div class="authorisation">
+						<div class="form-group">
+					        <div class="col-sm-offset-2 col-sm-10">
+					        	<button type="button" class="pull-right btn btn-default authorizeButton">{{i18n "global.authorizeBtn"}}</button>
+					        </div>
+						</div>					
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="modal-footer">
+		    <div class="form-group">
+		        <div class="col-sm-offset-2 col-sm-10">
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+		        </div>
+			</div>
+		</div>
+	</script>
+	
+	<script id="tableMenuView">
+		<div class="unusedwrapper">
+			<div class="btn-group actionDropdown">
+				<a class="btn btn-primary btn-xs routerlink" style="padding-left:10px; padding-right:10px; margin-right:0;" href="#account/{{ this.rowID }}">{{i18n "agentAccounts.menuViewBtn"}}</a>
+				<button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right:0;">
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu dropdown-menu-right">
+					{{#if this.canChange}}
+						{{#if this.transferFromRoot}}
+							{{#hasPerms "Transaction_TransferFromRoot"}}
+								{{>menuButtonTemplate class='performTransferButton' icon='fa-money' label="agentAccounts.menuTransferBtn"}}
+							{{/hasPerms}}
+						{{/if}}
+					{{/if}}
+					
+					{{#if this.isRoot}}
+						{{#hasPerms "Transaction_Replenish"}}
+							{{>menuButtonTemplate class='performReplenishButton' icon='fa-money' label="agentAccounts.menuReplenishBtn"}}
+						{{/hasPerms}}
+					{{else}}
+						{{#hasPerms "Transaction_Adjust"}}
+							{{>menuButtonTemplate class='performAdjustmentButton' icon='fa-money' label="agentAccounts.menuAdjustBtn"}}
+						{{/hasPerms}}
+					{{/if}}
+					
+					{{#if this.notPermanent}}
+						{{#hasPerms "Agent_Update"}}
+							{{#ifCond this.authenticationMethod "==" "A"}}
+								{{>menuButtonTemplate class='pinResetButton' icon='fa-key' label="agentAccounts.menuPasswordResetBtn"}}
+							{{else}}
+								{{>menuButtonTemplate class='pinResetButton' icon='fa-key' label="agentAccounts.menuPinResetBtn"}}
+							{{/ifCond}}
+							<li role="separator" class="divider"></li>
+						{{/hasPerms}}
+					{{/if}}
+					
+					{{#hasPerms "Agent_Update"}}
+						{{>menuButtonTemplate class='editAgentButton' icon='fa-pencil' label="agentAccounts.menuEditBtn"}}
+					{{/hasPerms}}
+					
+					{{#if this.notPermanent}}
+						{{#hasPerms "Agent_Update"}}
+							<li role="separator" class="divider"></li>
+							{{#if this.isActive}}
+								{{>menuButtonTemplate class='suspendAgentButton' icon='fa-ban' label="agentAccounts.menuSuspendBtn"}}
+							{{/if}}
+							
+							{{#if this.isSuspended}}
+								{{>menuButtonTemplate class='unsuspendAgentButton' icon='fa-check' label="agentAccounts.menuUnsuspendBtn"}}
+							{{/if}}
+								
+							{{#if this.isDeactivated}}
+								{{>menuButtonTemplate class='reactivateAgentButton' icon='fa-check' label="agentAccounts.menuReactivateBtn"}}
+							{{else}}
+								{{>menuButtonTemplate class='deactivateAgentButton' icon='fa-trash-o' label="agentAccounts.menuDeactivateBtn"}}
+							{{/if}}
+						{{/hasPerms}}
+					{{/if}}
+				</ul>
+			</div>
+			<div class="actionButton">
+				<button class="btn btn-primary btn-xs routerlink" href="#account/{{ this.rowID }}">
+					{{i18n "global.viewBtn"}}
+				</button>
+			</div>
+		</div>
+	</script>
+</div>

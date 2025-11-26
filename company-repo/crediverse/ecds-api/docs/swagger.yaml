@@ -1,0 +1,1327 @@
+openapi: "3.0.0"
+info:
+  description: >-
+    This is the Crediverse REST API server.  You can find out more about Crediverse at
+    [http://www.concurrent.systems](http://www.concurrent.systems).
+  version: 1.0.1
+  title: Crediverse 3rd Party REST API Specification
+  #termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: support@concurrent.systems
+  #license:
+  #  name: Apache 2.0
+  #  url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+servers: 
+  - url: 'http://localhost:9084/api'
+    description: Localhost Test Instance
+  - url: 'http://dr.example.com:9084/api'
+    description: 'Example Disaster Recovery / Test Node Instance.'
+  - url: 'http://prod.example.com:9084/api'
+    description: 'Example Production Node'
+tags:
+  - name: account
+    description: In order to begin transacting on the Crediverse system, an account needs to be applied for through the operator for the purpose of selling airtime and bundles to subscribers. Account information includes but not limit to balance, status and contact information.
+  - name: non-airtime
+    description: In addition to selling airtime credit, retailer accounts may also sell Non-airtime items.
+  - name: transaction
+    description: Transactions refer to transactional events which are conducted via USSD, SMS, Web-UI, Smart Phone and this API. Crediverse has the following transaction types - Replenish, Airtime Sale, Bundle Sale, Self Top-up, Adjustment, Pin Registration, Pin Change, Reversal, Partial Reversal, Adjudication and Reward. Only Airtime sales and transfer transactions are supported by this Crediverse API. Transactions usually involve two parties, an 'A' party and a 'B' Party. The A party initiates the transaction whereas the B Party is the receiving subject of the transaction.
+  - name: user
+    description: Users interact with the Crediverse system on behalf their account for the purpose of transferring credit to other account or selling airtime and bundles to subscribers. Therefore each account is composed of a number of users who are required to authenticate in order to transact on behalf of the account. User information typically includes personal and contact information.
+  - name: user's password
+    description: In order to gain access and transact on the Crediverse system, each user is required to authenticate themselves.  Passwords should remain private and not shared with anyone else. 
+security:
+  - oauth2pass: []
+    apiKey: []
+paths:
+  /account:
+    get:
+      tags:
+        - account
+      summary: Query your account details.
+      description: Returns the details of your account which includes contact and account status information.
+      operationId: getAccount
+      responses:
+        '200':
+          description: Successful operation and the account's particulars are returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        default:
+          description: operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - oauth2pass: []
+    put:
+      tags:
+        - account
+      summary: "Update your account's details."
+      description: "Update your account's details. Requires 'Agents:May View Agents' permission."
+      operationId: updateAccount
+      requestBody:
+        description: Account particulars that needs to be updated in the Crediverse system.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountUpdate'
+      responses:
+        '200':
+          description: successful operation
+        default:
+          description: operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - oauth2pass: []
+  /account/balance:
+    get:
+      tags:
+        - account
+      summary: Get account balance information of the user's account
+      description: Returns the account's balance information of the authenticated user's account. Requires 'Transactions:May Query Balance' permission.
+      operationId: getAccountBalance
+      responses:
+        '200':
+          description: The account's information and balances are returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Balance'
+        default:
+          description: operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - oauth2pass: []
+  /account/transaction:
+    get:
+      tags:
+        - transaction
+      summary: Get a list of transactions.
+      description: Get a list of the account's transactions. Requires 'Transactions:May View Transactions' permissions.
+      operationId: getTransactions
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      - name: "sort"
+        in: "query"
+        description: Sort the result set based on the specified list of fields. The following fields are available to sort upon&#58; transactionNo; transactionStarted; transactionEnded; a_msisdn; b_msisdn; bundleId; type; status. Sorting direction is specified by appending either of (-) or (+) to the field. Example status+transactionNo- will primarily sort the result set by transaction status ascending and then by transactionNo decending.
+        required: false
+        schema:
+          type: string
+      - name: "status"
+        in: "query"
+        description: Filter on the status of the transaction.
+        required: false
+        schema:
+          $ref: '#/components/schemas/TransactionStatus'
+      - name: "type"
+        in: "query"
+        description: Filter on a specific transaction type.
+        required: false
+        schema:
+          $ref: '#/components/schemas/TransactionType'
+      - name: "startDate"
+        in: "query" 
+        description: "Start date of the filter in local ISO8601 format."
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: "endDate"
+        in: "query"
+        description: "End date of the filter in local ISO8601 format."
+        required: false
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: A list of the account's transactions are returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
+        default:
+          description: operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - oauth2pass:
+          - 'read:transaction'
+  /account/transaction/last:
+    get:
+      tags:
+        - transaction
+      summary: Get the account's last transaction.
+      description: Get the account's last transaction by type and status. Requires 'Transactions:May View Transactions' permissions.
+      operationId: getLastTransaction
+      parameters:
+      - name: "status"
+        in: "query"
+        description: Filter on the status of the transaction.
+        required: false
+        schema:
+          $ref: '#/components/schemas/TransactionStatus'
+      - name: "type"
+        in: "query"
+        description: Filter on a specific transaction type.
+        required: false
+        schema:
+          $ref: '#/components/schemas/TransactionType'
+      responses:
+        '200':
+          description: The last transaction fulfilling the query criteria is returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        default:
+          description: operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - oauth2pass:
+          - 'read:transaction'
+  /account/transaction/{transactionNo}:
+    get:
+      tags:
+      - transaction
+      summary: Get the details of a single transaction.
+      description: Query the details of a single transaction. Requires 'Transactions:May View Transactions' permissions.
+      operationId: getTransactionById
+      parameters:
+      - name: "transactionNo"
+        in: path
+        description: The ID of the transaction to return.
+        required: true
+        schema:
+          type: "string"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        default:
+          description: operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - oauth2pass:
+          - 'read:transaction'
+
+  /account/transaction/airtime/sale:
+    post:
+      tags:
+        - transaction
+      summary: Sell airtime to a target MSISDN account.
+      description: Transaction whereby retailer accounts transfer airtime to mobile subscribers. Requires 'Transactions:May Sell' permission.
+      operationId: sellAirtime
+      requestBody:
+        description: Request body containing the target MSISDN and amount.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AirtimeSale'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        default:
+          description: operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - oauth2pass: []
+
+  /service/agent/{msisdn}/debit:
+    post:
+      tags:
+        - non-airtime
+      summary: Debit agent
+      description: The API User is able to perform a debit to a Crediverse Agent account, as identified by the agent MSISDN, to charge the agent for a non-airtime sale to a B-Party recipient. The agent PIN is validated as part of the transaction.
+      operationId: debitAgent
+      parameters:
+        - name: "msisdn"
+          in: path
+          description: Agent MSISDN to be debited.
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        description: Request body containing the debit parameters.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Debit'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  clientTransactionId:
+                    type: string
+                  crediverseTransactionId:
+                    type: string
+                    description: Crediverse transaction number.
+                  transactionEndTimestamp:
+                    type: integer
+                    description: UNIX Epoch time (in milliseconds) when the transaction execution ended.
+                  status:
+                    type: string
+                    description: Status of the transaction, e.g. SUCCESS.
+        default:
+          description: operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - oauth2pass: []
+
+  /service/agent/{msisdn}/refund:
+    post:
+      tags:
+        - non-airtime
+      summary: Refund agent
+      description: The API User is able to perform a refund to the Crediverse Agent, as identified by his MSISDN, for a failed non-airtime sale to a B-Party consumer.
+      operationId: refundAgent
+
+      parameters:
+        - name: "msisdn"
+          in: path
+          description: Agent MSISDN to be refunded.
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        description: Request body containing the refund parameters.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Refund'
+
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  clientTransactionId:
+                    type: string
+                  crediverseTransactionId:
+                    type: string
+                    description: Crediverse transaction number.
+                  transactionEndTimestamp:
+                    type: integer
+                    description: UNIX Epoch time when the transaction execution ended.
+                  status:
+                    type: string
+                    description: Status of the transaction, e.g. SUCCESS.
+        default:
+          description: operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - oauth2pass: []
+
+  /service/agent/{msisdn}/details:
+    get:
+      tags:
+        - non-airtime
+      summary: Return details for particular agent.
+      description: An API User can obtain basic Agent Account profile details when querying a specific agent MSISDN.
+      operationId: getAgentDetails
+
+      parameters:
+        - name: "msisdn"
+          in: path
+          required: true
+          schema:
+            type: "string"
+
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  agentId:
+                    type: string
+                  tier:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        description: "The tier type, e.g. Retailer."
+                      name:
+                        type: string
+                        description: "The tier name, e.g. eCabine."
+                    description: Agent tier in Crediverse.
+                  status:
+                    type: string
+                    description: Status of the agent (Indicates the account state, i.e. Active, suspended, deactivated).
+        default:
+          description: operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - oauth2pass: []
+        
+  /service/agent/{msisdn}/transaction/{clientTransactionId}/status:
+    get:
+      tags:
+        - non-airtime
+      summary: Return status of particular transaction.
+      description: This endpoint can be used to determine the status of a transaction with a particular Client transaction ID.
+      operationId: getTransactionStatusByClientTxnId
+
+      parameters:
+        - name: "msisdn"
+          in: path
+          required: true
+          schema:
+            type: "string"
+            
+        - name: "clientTransactionId"
+          in: path
+          required: true
+          schema:
+            type: "string"
+
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  clientTransactionId:
+                    type: string
+                  crediverseTransactionId:
+                    type: string
+                    description: Crediverse transaction number.
+                  transactionEndTimestamp:
+                    type: integer
+                    description: UNIX Epoch time (in milliseconds) when the transaction execution ended.
+                  status:
+                    type: string
+                    description: Status of the transaction, e.g. SUCCESS.
+        default:
+          description: operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - oauth2pass: [ ]
+
+  /account/transaction/notify:
+    post:
+      tags:
+        - transaction
+      summary: TBD
+      description: TBD
+      operationId: transactionNotify
+      requestBody:
+        description: Request body containing the notify parameters.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionNotificationCallback'
+      responses:
+        '200':
+          description: successful operation
+        default:
+          description: operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - oauth2pass: []
+  /account/transaction/transfer:
+    post:
+      tags:
+        - transaction
+      summary: Transfer credit from your account to another account.
+      description: Crediverse account holders can transfer credit to other wholesalers and retailers. Transfer transactions are subject to strict transfer rules defined by the operator.
+      operationId: transfer
+      requestBody:
+        description: Request body containing the transfer parameters.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transfer'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+        default:
+          description: operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - oauth2pass: []
+  /account/transaction/inbox/{transactionNo}:
+    get:
+      tags:
+        - transaction
+      summary: "Long poll for new transactions."
+      description: "Accounts can be notified in realtime about transactions through long polling the transaction inbox endpoint. Long polling means opening an HTTP request and keeping it open until the server sends a response, then repeating the process over and over to receive updated responses. The API client shall send the last transactionNo processed by the client. If there have been subsequent transactions since the transactionNo specified then the Crediverse system will return immediately with those transactions.  If there have been no transactions since the specified transactionNo, then the request will block until a transaction occurs or the request times-out. The client should repeat the process to remain informed about transactions that involve the authenticated user's account."
+      operationId: getTransactionsFromInbox
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      - name: "timeout"
+        in: "query"
+        description: The maximum time in seconds the request should wait before returning back to the client.
+        required: false
+        schema:
+          type: "integer"
+          format: "int64"
+      - name: "transactionNo"
+        in: path
+        description: The last transaction ID received by the client system. A list of subsequent transactions will be returned.
+        required: true
+        schema:
+          type: "string"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transaction'
+        '504':
+          description: The request timed out while waiting for transaction to occur.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - oauth2pass: []
+  /account/user:
+    get:
+      tags:
+        - user
+      summary: Get particulars of authenticated user
+      description: Returns the particulars of the authenticated user. Information includes personal, contact and meta-data relating to the account that the user is associated with.
+      operationId: getUser
+      responses:
+        '200':
+          description: Successful operation and the user's particulars are returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        default:
+          description: operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - oauth2pass: []
+    put:
+      tags:
+        - user
+      summary: "Update the authenticated user's particulars"
+      description: "Update the authenticated user's personal details and contact information. Requires 'Agents:May Update Agent Users' permission."
+      operationId: updateUser
+      requestBody:
+        description: Updated particulars of the current authenticated user.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+      responses:
+        '200':
+          description: Successful operation
+        default:
+          description: operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - oauth2pass: []
+  /account/user/password:
+    post:
+      tags:
+        - user's password
+      summary: Change the authentication credentials of the current authenticated user.
+      description: Change the authentication credentials of the current authenticated user. The specified password is required to be new and cannot match the current password (not idempotent). The new password must comply with the following password requirements one lowercase letter; one uppercase letter; one number; one special character  !"#$%&'()*+,-./:;<=>?\[@]^_`{|}~ and length according to specification defined by the network operator. Requires 'Transactions:May Change Password' permission.
+      operationId: updatePassword
+      requestBody:
+        description: Account object that needs to be updated in the Crediverse system.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordChangeRequest'
+      responses:
+        '200':
+          description: The result of the password change operation.
+        default:
+          description: operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - oauth2pass: []
+  /account/user/password/rules:
+    get:
+      tags:
+        - user's password
+      summary: Obtain the password rules and constraints.
+      description: Request the constraint parameters for changing passwords; minimum and maximum length, required special character list.
+      operationId: getPasswordRules
+      responses:
+        '200':
+          description: Password rules and constraints are returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasswordRules'
+        default:
+          description: operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - oauth2pass: []
+  /logout:
+    post:
+      tags:
+        - logout and close the authenticated session.
+      summary: Logout and terminate the session with the Crediverse Transaction Server.
+      description: Logout and terminate the session with the Crediverse Transaction Server.
+      operationId: logout
+      responses:
+        '200':
+          description: Session has been successfully terminated.
+        default:
+          description: operation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - oauth2pass: []
+components:
+  parameters:
+    offset:      # Can be referenced via '#/components/parameters/offset'
+      name: offset
+      in: query
+      description: Number of items to skip before returning the results.
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        default: 0
+    limit:       # Can be referenced as '#/components/parameters/limitParam'
+      name: limit
+      in: query
+      description: Maximum number of items to return.
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 100
+        default: 20
+  schemas:
+    #Factorized ENUMS
+    TransactionStatus:
+      type: string
+      description: Nested ENUM listing the possible transaction status values
+      enum:
+        - REFILL_FAILED
+        - TECHNICAL_PROBLEM
+        - INVALID_CHANNEL
+        - FORBIDDEN
+        - INTRATIER_TRANSFER
+        - NO_TRANSFER_RULE
+        - NO_LOCATION
+        - WRONG_LOCATION
+        - CO_AUTHORIZE
+        - INSUFFICIENT_FUNDS
+        - INSUFFICIENT_PROVISN
+        - DAY_COUNT_LIMIT
+        - DAY_AMOUNT_LIMIT
+        - MONTH_COUNT_LIMIT
+        - MONTH_AMOUNT_LIMIT
+        - MAX_AMOUNT_LIMIT
+        - ALREADY_REGISTERED
+        - ALREADY_ADJUDICATED 
+        - NOT_REGISTERED
+        - INVALID_STATE
+        - INVALID_PIN
+        - INVALID_PASSWORD
+        - HISTORIC_PASSWORD
+        - NOT_ELIGIBLE
+        - PIN_LOCKOUT
+        - PASSWORD_LOCKOUT
+        - NOT_SELF
+        - TX_NOT_FOUND
+        - IMSI_LOCKOUT
+        - INVALID_AGENT
+        - INVALID_AMOUNT
+        - INVALID_TRAN_TYPE
+        - INVALID_BUNDLE
+        - ALREADY_REVERSED
+        - NOT_WEBUSER_SESSION
+        - CO_SIGN_ONLY_SESSION
+        - SESSION_EXPIRED
+        - TIMED_OUT
+        - INVALID_RECIPIENT
+        - OTHER_ERROR
+        - REFILL_BARRED
+        - TEMPORARY_BLOCKED
+        - REFILL_NOT_ACCEPTED
+        - REFILL_DENIED
+        - NO_IMSI
+        - BUNDLE_SALE_FAILED
+        - INVALID_VALUE
+        - TOO_SMALL
+        - TOO_LARGE
+        - TOO_LONG
+        - TOO_SHORT
+    TransactionType:
+      type: string
+      description: Nested ENUM listing the possible transaction status values
+      enum:
+        - REPLENISH
+        - TRANSFER
+        - SELL
+        - SELL_BUNDLE
+        - REGISTER_PIN
+        - CHANGE_PIN
+        - BALANCE_ENQUIRY
+        - SELF_TOPUP
+        - TRANSACTION_STATUS_ENQUIRY
+        - LAST_TRANSACTION_ENQUIRY
+        - ADJUST
+        - SALES_QUERY
+        - DEPOSITS_QUERY
+        - REVERSE
+        - REVERSE_PARTIALLY
+        - PROMOTION_REWARD
+        - ADJUDICATE
+    Account:
+      type: object
+      properties:
+        accountID:
+          type: number
+          format: int64
+          description: The unique account identifier for which the balance information pertains.
+        accountNumber:
+          type: string
+          description: Account number is secondary unique identifier for use within the operator's internal processes.
+        msisdn:
+          type: string
+          description: The mobile number of the account.
+        title:
+          type: string
+          description: The title of the primary contact person of the account holder.
+        firstName:
+          type: string
+          description: The name of the primary contact person of the account holder.
+        initials:
+          type: string
+          description: The initials of the primary contact person of the account holder.
+        surname:
+          type: string
+          description: The surname of the primary contact person of the account holder.
+        language:
+          type: string
+          description: The account holder's preferred language.
+          enum:
+            - 'EN'
+            - 'FR'
+        altPhoneNumber:
+          type: string
+          description: The alternate phone number of the primary contact person of the account holder.
+        email:
+          type: string
+          description: The email address to which correspondance and reports should be sent.
+        tierName:
+          type: string
+          description: The tier name of the account.
+        state:
+          type: string
+          description: The account's active/suspended/deactivated status.
+          enum:
+            - ACTIVE
+            - DEACTIVATED
+            - SUSPENDED
+        activationDate:
+          type: string
+          format: date-time
+    AccountUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+          description: The title of the primary contact person of the account holder.
+        firstName:
+          type: string
+          description: The name of the primary contact person of the account holder.
+        initials:
+          type: string
+          description: The initials of the primary contact person of the account holder.
+        surname:
+          type: string
+          description: The surname of the primary contact person of the account holder.
+        language:
+          type: string
+          description: The account holder's preferred language.
+          enum:
+            - 'EN'
+            - 'FR'
+        altPhoneNumber:
+          type: string
+          description: The alternate phone number of the primary contact person of the account holder.
+        email:
+          type: string
+          description: The email address to which correspondance and reports should be sent.
+    AirtimeSale:
+      type: object
+      required:
+        - targetMSISDN
+      properties:
+        targetMSISDN:
+          type: string
+          description: The MSISDN of the subject of this airtime transfer transaction.
+        amount:
+          type: number
+          format: double
+          description: The currency value of Airtime to transfer.
+        latitude:
+          type: number
+          format: double
+          description: The latitudinal position of the agent at the time of the transaction, if known.
+        longitude:
+          type: number
+          format: double
+          description: The longitudinal position of the agent at the time of the transaction, if known.
+    Balance:
+      type: object
+      required:
+        - agentId
+        - balance
+        - bonusBalance
+        - onHoldBalance
+      properties:
+        agentId:
+          type: integer
+          format: int64
+          description: The ID of the agent
+        balance:
+          type: number
+          format: double
+          description: The balance of the account.
+        bonusBalance:
+          type: number
+          format: double
+          description: The bonus balance of the account.
+        onHoldBalance:
+          type: number
+          format: double
+          description: The on hold balance of the account.
+    Bundle:
+      type: object
+      required:
+        - bundleId
+        - name
+        - description
+        - type
+        - state
+        - price
+        - tradeDiscountPercentage
+      properties:
+        bundleId:
+          type: integer
+          description: The unique key of the Bundle entity.
+          format: int64
+        name:
+          type: string
+          description: The name of the bundle.
+        description:
+          type: string
+          description: The description of the bundle.
+        type: 
+          type: string
+          description: The type of bundle.
+        state:
+          type: string
+          enum:
+            - ACTIVE
+            - DEACTIVATED
+          description: The active/deactivated state of the bundle.
+        price:
+          type: number
+          format: double
+          description: The price of the bundle.
+        tradeDiscountPercentage:
+          type: number
+          format: double
+          description: The percentage discount given to account holders.
+    BundleSale:
+      type: object
+      required:
+        - targetMSISDN
+      properties:
+        targetMSISDN:
+          type: integer
+          format: int64
+          description: The MSISDN that is the target of this bundle sale transaction.
+        bundleID:
+          type: integer
+          format: int64
+          description: The unique identifier of the bundle that is the subject of this transaction.
+    Error:
+      type: object
+      required:
+        - errors
+        - status
+        - message
+        - violations
+        - code
+        - correlationId
+      properties:
+        error:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          description: Textual representation of the HTTP error code
+        message:
+          type: string
+          description: Message identifier with which to map to a user friendly error message.
+        violations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Violation'
+        code:
+          type: string
+          description: HTTP Response Code
+        correlationId:
+          type: string
+          description: A unique identifier assigned to the transaction by the Crediverse transaction server.
+    PasswordChangeRequest:
+      type: object
+      required:
+        - currentPassword
+        - newPassword
+        - repeatPassword
+      properties:
+        currentPassword:
+          type: string
+          description: The current password of the authenticated user.
+        newPassword:
+          type: string
+          format: .*[ !\"#$%&'()*+,-./:;<=>?@\\[\\\\\\]^_`{|}~]+.*
+          description: The new password of the authenticated user that wishes to change its password.
+        repeatPassword:
+          type: string
+          format: .*[ !\"#$%&'()*+,-./:;<=>?@\\[\\\\\\]^_`{|}~]+.*
+          description: The repeat password must match the new password.
+    PasswordChangeResponse:
+      type: object
+      required:
+        - returnCode
+      properties:
+        returnCode:
+          type: string
+          description: The return code for the password change operation.
+
+    PasswordRules:
+      type: object
+      required:
+        - minimumLength
+        - maximumLength
+        - specialCharacterList
+      properties:
+        minimumLength:
+          type: integer
+          format: int64
+          description: The minimum length of the password when changing passwords.
+        maximumLength:
+          type: integer
+          format: int64
+          description: The maximum length of the password when changing passwords.
+        specialCharacterList:
+          type: string
+          description: A string list of special characters that are required to be present in new passwords. The list is static and contains the following characters !"#$%&'()*+,-./:;<=>?@\[]^_`{|}~. Certain characters such as double-quote and backslash are escaped within the JSON response.
+    Transaction:
+      type: object
+      required:
+        - transactionNo
+        - amount
+        - bonus
+        - currency
+        - channel
+        - transactionStarted
+        - transactionEnded
+        - a_accountId
+        - b_accountId
+        - balanceBefore
+        - bonusBalanceBefore
+        - balanceAfter
+        - bonusBalanceAfter
+        - type
+        - status
+        - followUp
+        - rolledBack
+        - additionalInformation
+      properties:
+        transactionNo:
+          type: string
+          description: The unique identifier of the transaction.
+        amount:
+          type: number
+          format: double
+          description: The currency amount of the transaction.
+        bonus:
+          type: number
+          format: double
+          description: The amount of trade bonus of the transaction.
+        currency:
+          type: string
+        channel:
+          type: string
+          description: The channel through which the transaction is conducted.
+          enum:
+          - API
+          - BATCH
+          - SMARTAPP
+          - SMS
+          - USSD
+          - WEBUI
+        transactionStarted:
+          type: string
+          format: date-time
+          description: The timestamp at which the transaction was started.
+        transactionEnded:
+          type: string
+          format: date-time
+          description: The timestamp at which the transaction concluded.
+        a_msisdn:
+          type: integer
+          format: int64
+          description: The mobile number of the 'A' party of the transaction. The 'A' party is usually the initiator of the transaction.
+        b_msisdn:
+          type: integer
+          format: int64
+          description: The mobile number of the 'B' party of the transaction. The 'B' party is usually the recipient of the transaction.
+        balanceBefore:
+          type: number
+          description: The balanceBefore value is applicable to the context of the user's account.
+          format: double
+        bonusBalanceBefore:
+          type: number
+          description: The bonusBalanceBefore value is applicable to the context of the user's account.
+          format: double
+        balanceAfter:
+          type: number
+          description: The balanceAfter value is applicable to the context of the user's account.
+          format: double
+        bonusBalanceAfter:
+          type: number
+          description: The bonusBalanceAfter value is applicable to the context of the user's account.
+          format: double
+        bundleId:
+          type: integer
+          description: Optional, populated when a bundle sale applies to the transaction.
+          format: int64
+        type:
+          $ref: "#/components/schemas/TransactionType"
+        status:
+          $ref: "#/components/schemas/TransactionStatus"
+        followUp:
+          type: boolean
+          description: followUp indicates that the outcome of a provisioning operation on the Online Charging System (OCS) could not be determined (due to network request timeouts or other errors), hence the transaction is marked for follow-up.
+        rolledBack:
+          type: boolean
+          description: rolledBack indicates whether the transaction was reversed.
+        additionalInformation:
+          type: string
+          description: An explanation/reason for the rollback.
+    Transfer:
+      type: object
+      required:
+        - targetMSISDN
+      properties:
+        targetMSISDN:
+          type: string
+          description: The MSISDN of the subject of this credit transfer transaction.
+        amount:
+          type: number
+          format: double
+          description: The currency value of credit to transfer.
+    User:
+      type: object
+      required:
+        - agentId
+        - title
+        - firstName
+        - surname
+        - initials
+        - language
+        - email
+        - msisdn
+        - state
+      properties:
+        agentId:
+          type: string
+          description: The ID of the agent
+        title:
+          type: string
+          description: The title of the user.
+        firstName:
+          type: string
+          description: The firstname of the user.
+        surname:
+          type: string
+          description: The surname of the user.
+        initials:
+          type: string
+          description: The initials of the user.
+        language:
+          type: string
+          description: The user's preferred language.
+          enum:
+            - 'EN'
+            - 'FR'
+        email:
+          type: string
+          description: The user's email address.
+        msisdn:
+          type: string
+          description: The user's mobile number.
+        state:
+          type: string
+          description: The user's active/suspended/deactivated status.
+          enum:
+            - ACTIVE
+            - SUSPENDED
+            - DEACTIVATED
+    Debit:
+      type: object
+      required:
+        - clientTransactionId
+        - amount
+        - agentPin
+      properties:
+        clientTransactionId:
+          type: string
+          description: Used to distinguish duplicate transactions and provide traceability for the consumer leg of the transaction.
+        consumerMsisdn:
+          type: string
+          description: Consumer MSISDN.
+        itemDescription:
+          type: string
+          description: Item description as provided by the API user.
+        amount:
+          type: number
+          format: double
+          description: The transaction amount in Crediverse's currency
+        agentPin:
+          type: string
+          description: Agent PIN which is verified on Crediverse prior to performing the account debit.
+        expiryTimeInMillisecondsSinceUnixEpoch:
+          type: integer
+          format: int64
+          description: The time in milliseconds since Unix Epoch when this request will expire. If the request is processed after that time it will be marked as stale.
+        imsi:
+          type: string
+          description: The IMSI of the agent. If not provided a call to the HLR will be made to get it.
+        originChannel:
+          type: string
+          description: Origin channel code, e.g. USSD or SmartApp. Unless known value is used, only the first 2 characters are recorded in the transaction records.
+        grossSalesAmount:
+          type: number
+          format: double
+          description: The sales (retail) amount of the transaction. This is the amount what the agent is assumed to have received for the sale from the subscriber.
+        latitude:
+          type: number
+          format: double
+          description: The latitudinal position of the agent at the time of the transaction, if known.
+        longitude:
+          type: number
+          format: double
+          description: The longitudinal position of the agent at the time of the transaction, if known.
+    Refund:
+      type: object
+      required:
+        - clientTransactionId
+        - amount
+      properties:
+        clientTransactionId:
+          type: string
+          description: Used to distinguish duplicate transactions and provide traceability for the consumer leg of the transaction.
+        debitCrediverseTransactionId:
+          type: string
+          description: ID of the Crediverse debit transaction which you want to refund. At least one of debitCrediverseTransactionId and debitClientTransactionId has to be provided. If both are provided the debitCrediverseTransactionId is used.
+        debitClientTransactionId:
+          type: "string"
+          description: Client transaction ID from the debit transaction which you want to refund. At least one of debitCrediverseTransactionId and debitClientTransactionId has to be provided. If both are provided the debitCrediverseTransactionId is used.
+        consumerMsisdn:
+          type: string
+          description: Consumer MSISDN.
+        itemDescription:
+          type: string
+          description: Item description as provided by the API user.
+        amount:
+          type: number
+          format: double
+          description: The transaction amount in Crediverse's currency
+        expiryTimeInMillisecondsSinceUnixEpoch:
+          type: integer
+          format: int64
+          description: The time in milliseconds since Unix Epoch when this request will expire. If the request is processed after that time it will be marked as stale.
+        imsi:
+          type: string
+          description: The IMSI of the agent. If not provided a call to the HLR will be made to get it.
+        originChannel:
+          type: string
+          description: Origin channel code, e.g. USSD or SmartApp. Unless known value is used, only the first 2 characters are recorded in the transaction records.
+    UserUpdate:
+      type: object
+      required:
+        - title
+        - firstName
+        - surname
+        - initials
+        - language
+        - email
+        - mobileNumber
+      properties:
+        title:
+          type: string
+          description: The title of the user.
+        firstName:
+          type: string
+          description: The firstname of the user.
+        surname:
+          type: string
+          description: The surname of the user.
+        initials:
+          type: string
+          description: The initials of the user.
+        language:
+          type: string
+          description: The user's preferred language.
+          enum:
+            - 'EN'
+            - 'FR'
+        email:
+          type: string
+          description: The user's email address.
+        mobileNumber:
+          type: string
+          description: The user's mobile number.
+    TransactionNotificationCallback:
+      type: object
+      properties:
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+    Violation:
+      type: object
+      required:
+        - correlationId
+        - validations
+        - msgs
+      properties:
+        correlationId:
+          type: string
+          description: A unique identifier assigned to the transaction by the Crediverse transaction server.
+        field:
+          type: string
+          description: The name of the field which was rejected by the server.
+        validations:
+          type: array
+          items:
+            type: string
+          description: The name of the validation rule which failed.
+        msgs:
+          type: array
+          items:
+            type: string
+          description: A list of textual descriptions describing the rejection.
+  securitySchemes:
+    oauth2pass:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: 'http://localhost:9084/oauth/token'          
+          scopes: {}
+    apiKey:        
+      type: apiKey
+      in: header
+      name: client_id
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'

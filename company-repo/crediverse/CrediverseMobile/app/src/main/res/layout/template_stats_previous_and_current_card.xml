@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    app:cardUseCompatPadding="true">
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="8dp"
+        app:flexDirection="column">
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="4dp"
+            app:alignItems="center"
+            app:justifyContent="center">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/title_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/stats_choice_description"
+                android:elevation="0dp"
+                android:src="@drawable/common_full_open_on_phone"
+                android:theme="@style/Theme.AppCompat"
+                app:backgroundTint="@color/cs_primary"
+                app:backgroundTintMode="src_over"
+                app:fabCustomSize="38dp"
+                app:maxImageSize="20dp"
+                app:tint="@color/white"
+                tools:ignore="ImageContrastCheck"
+                tools:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:alignItems="center"
+                app:flexDirection="column"
+                app:justifyContent="center">
+
+                <TextView
+                    android:id="@+id/title_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="{Type of} Sales"
+                    android:textAlignment="center"
+                    android:textSize="22sp"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
+
+        </com.google.android.flexbox.FlexboxLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginHorizontal="12dp"
+                android:background="@color/black" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="2dp">
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:paddingHorizontal="8dp"
+                app:alignItems="center"
+                app:flexDirection="column"
+                app:justifyContent="center"
+                app:layout_flexGrow="1">
+
+                <TextView
+                    android:id="@+id/present_summary_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="4dp"
+                    android:text="{Present}"
+                    android:textAlignment="center"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/present_summary_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Present-Amount"
+                    android:textAlignment="center"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="21sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/present_extra_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="{Present-Extra-Info}"
+                    android:textAlignment="center"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="15sp"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/present_summary_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="{Present-Count}"
+                    android:textAlignment="center"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="15sp" />
+
+            </com.google.android.flexbox.FlexboxLayout>
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:paddingHorizontal="8dp"
+                app:alignItems="center"
+                app:flexDirection="column"
+                app:justifyContent="center"
+                app:layout_flexGrow="1">
+
+                <TextView
+                    android:id="@+id/past_summary_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="4dp"
+                    android:text="{Past}"
+                    android:textAlignment="center"
+                    android:textColor="@color/medium_gray"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/past_summary_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Past-Amount"
+                    android:textAlignment="center"
+                    android:textColor="@color/medium_gray"
+                    android:textSize="21sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/past_extra_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="{Present-Extra-Info}"
+                    android:textAlignment="center"
+                    android:textColor="@color/medium_gray"
+                    android:textSize="15sp"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/past_summary_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="{Past-Count}"
+                    android:textAlignment="center"
+                    android:textColor="@color/medium_gray"
+                    android:textSize="15sp" />
+
+            </com.google.android.flexbox.FlexboxLayout>
+
+        </LinearLayout>
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/profit_block"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"
+            android:background="@color/white"
+            app:alignItems="center"
+            app:flexDirection="column"
+            app:justifyContent="center">
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:alignItems="center"
+                app:flexDirection="column"
+                app:justifyContent="center">
+
+                <TextView
+                    android:id="@+id/profit_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="2dp"
+                    android:text="Profit (Fcfa)"
+                    android:textAlignment="center"
+                    android:textSize="15sp" />
+
+            </com.google.android.flexbox.FlexboxLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="2dp"
+                android:paddingBottom="4dp">
+
+                <com.google.android.flexbox.FlexboxLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:paddingHorizontal="8dp"
+                    app:alignItems="center"
+                    app:flexDirection="column"
+                    app:justifyContent="center"
+                    app:layout_flexGrow="1">
+
+                    <TextView
+                        android:id="@+id/present_profit_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="603,62"
+                        android:textSize="16sp" />
+
+                </com.google.android.flexbox.FlexboxLayout>
+
+                <com.google.android.flexbox.FlexboxLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:paddingHorizontal="8dp"
+                    app:alignItems="center"
+                    app:flexDirection="column"
+                    app:justifyContent="center"
+                    app:layout_flexGrow="1">
+
+                    <TextView
+                        android:id="@+id/past_profit_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="910,10"
+                        android:textColor="@color/medium_gray"
+                        android:textSize="16sp" />
+
+                </com.google.android.flexbox.FlexboxLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/unknown_profit_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="4dp"
+                android:text="(7 transactions have unknown profit)"
+                android:textAlignment="center"
+                android:textSize="14sp"
+                android:textStyle="italic" />
+
+        </com.google.android.flexbox.FlexboxLayout>
+
+    </com.google.android.flexbox.FlexboxLayout>
+</androidx.cardview.widget.CardView>

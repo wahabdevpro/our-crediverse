@@ -1,0 +1,314 @@
+= ...
+
+== olap-v9
+
+----
+old_version=8
+old_svn_revision=6358
+new_version=9
+new_svn_revision=6359
+
+echo 'SELECT * FROM ap_schema_data WHERE vkey="VERSION";' | ssh root@lab9-ecds-vm1 'mysql -u root -pussdgw ecdsap'
+ssh root@lab9-ecds-vm1 'mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw ecdsap --where="1=1 LIMIT 10"' > mysql-db-ecdsap-r${old_svn_revision}-v${old_version}.sql
+
+echo 'SELECT * FROM ap_schema_data WHERE vkey="VERSION";' | mysql -u root -pussdgw ecdsap
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw ecdsap --where="1=1 LIMIT 10" > mysql-db-ecdsap-r${new_svn_revision}-v${new_version}.sql
+
+## test upgrade
+cat <(echo "DROP DATABASE IF EXISTS ecdsap_tup; CREATE DATABASE IF NOT EXISTS ecdsap_tup; USE ecdsap_tup; SET FOREIGN_KEY_CHECKS=0;") mysql-db-ecdsap-r${old_svn_revision}-v${old_version}.sql | mysql -u root -pussdgw
+cat upgrade_ecds_olap_${old_version}_to_${new_version}.sql | mysql -u root -pussdgw ecdsap_tup
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw ecdsap_tup --where='1=1 LIMIT 10' > mysql-db-ecdsap-u${old_version}-v${new_version}.sql
+
+
+## test downgrade
+cat <(echo "DROP DATABASE IF EXISTS ecdsap_tup; CREATE DATABASE IF NOT EXISTS ecdsap_tup; USE ecdsap_tup; SET FOREIGN_KEY_CHECKS=0;") mysql-db-ecdsap-u${old_version}-v${new_version}.sql | mysql -u root -pussdgw
+cat downgrade_ecds_olap_${new_version}_to_${old_version}.sql | mysql -u root -pussdgw ecdsap_tup
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw ecdsap_tup --where='1=1 LIMIT 10' > mysql-db-ecdsap-d${new_version}-v${old_version}.sql
+
+vimdiff <( grep -v '^INSERT' mysql-db-ecdsap-r${old_svn_revision}-v${old_version}.sql ) <( grep -v '^INSERT' mysql-db-ecdsap-r${new_svn_revision}-v${new_version}.sql)
+vimdiff <( grep -v '^INSERT' mysql-db-ecdsap-r${old_svn_revision}-v${old_version}.sql ) <( grep -v '^INSERT' mysql-db-ecdsap-u${old_version}-v${new_version}.sql )
+vimdiff <( grep -v '^INSERT' mysql-db-ecdsap-u${old_version}-v${new_version}.sql ) <( grep -v '^INSERT' mysql-db-ecdsap-r${new_svn_revision}-v${new_version}.sql)
+vimdiff <( grep -v '^INSERT' mysql-db-ecdsap-d${new_version}-v${old_version}.sql ) <( grep -v '^INSERT' mysql-db-ecdsap-r${old_svn_revision}-v${old_version}.sql)
+----
+
+== olap-v8
+
+----
+old_version=7
+old_svn_revision=6346
+new_version=8
+new_svn_revision=6347
+
+echo 'SELECT * FROM ap_schema_data WHERE vkey="VERSION";' | ssh root@lab9-ecds-vm1 'mysql -u root -pussdgw ecdsap'
+ssh root@lab9-ecds-vm1 'mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw ecdsap --where="1=1 LIMIT 10"' > mysql-db-ecdsap-r${old_svn_revision}-v${old_version}.sql
+
+echo 'SELECT * FROM ap_schema_data WHERE vkey="VERSION";' | mysql -u root -pussdgw ecdsap
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw ecdsap --where="1=1 LIMIT 10" > mysql-db-ecdsap-r${new_svn_revision}-v${new_version}.sql
+
+## test upgrade
+cat <(echo "DROP DATABASE IF EXISTS ecdsap_tup; CREATE DATABASE IF NOT EXISTS ecdsap_tup; USE ecdsap_tup; SET FOREIGN_KEY_CHECKS=0;") mysql-db-ecdsap-r${old_svn_revision}-v${old_version}.sql | mysql -u root -pussdgw
+cat upgrade_ecds_olap_${old_version}_to_${new_version}.sql | mysql -u root -pussdgw ecdsap_tup
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw ecdsap_tup --where='1=1 LIMIT 10' > mysql-db-ecdsap-u${old_version}-v${new_version}.sql
+
+
+## test downgrade
+cat <(echo "DROP DATABASE IF EXISTS ecdsap_tup; CREATE DATABASE IF NOT EXISTS ecdsap_tup; USE ecdsap_tup; SET FOREIGN_KEY_CHECKS=0;") mysql-db-ecdsap-u${old_version}-v${new_version}.sql | mysql -u root -pussdgw
+cat downgrade_ecds_olap_${new_version}_to_${old_version}.sql | mysql -u root -pussdgw ecdsap_tup
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw ecdsap_tup --where='1=1 LIMIT 10' > mysql-db-ecdsap-d${new_version}-v${old_version}.sql
+
+vimdiff <( grep -v '^INSERT' mysql-db-ecdsap-r${old_svn_revision}-v${old_version}.sql ) <( grep -v '^INSERT' mysql-db-ecdsap-r${new_svn_revision}-v${new_version}.sql)
+vimdiff <( grep -v '^INSERT' mysql-db-ecdsap-r${old_svn_revision}-v${old_version}.sql ) <( grep -v '^INSERT' mysql-db-ecdsap-u${old_version}-v${new_version}.sql )
+vimdiff <( grep -v '^INSERT' mysql-db-ecdsap-u${old_version}-v${new_version}.sql ) <( grep -v '^INSERT' mysql-db-ecdsap-r${new_svn_revision}-v${new_version}.sql)
+vimdiff <( grep -v '^INSERT' mysql-db-ecdsap-d${new_version}-v${old_version}.sql ) <( grep -v '^INSERT' mysql-db-ecdsap-r${old_svn_revision}-v${old_version}.sql)
+----
+
+== other
+
+----
+old_version=55
+old_svn_revision=3786
+
+echo 'SELECT * FROM ec_state WHERE name="DB Version";' | ssh root@ecdsprts02.moov.ci 'mysql --host 192.250.231.100 --port 3306 -u root -pussdgw hxc'
+ssh root@ecdsprts02.moov.ci 'mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw hxc --where="1=1 LIMIT 1000"' > mysql-db-hxc-r${old_svn_revision}-v${old_version}.sql
+
+cat <(echo "DROP DATABASE hxc; CREATE DATABASE IF NOT EXISTS hxc; USE hxc; SET FOREIGN_KEY_CHECKS=0;") mysql-db-hxc-r${old_svn_revision}-v${old_version}.sql | mysql -u root -pussdgw
+cat upgrade_ecds_oltp_55_to_56.sql upgrade_ecds_oltp_56_to_57.sql upgrade_ecds_oltp_57_to_58.sql upgrade_ecds_oltp_58_to_59.sql upgrade_ecds_oltp_59_to_60.sql upgrade_ecds_oltp_60_to_61.sql | mysql -u root -pussdgw hxc
+
+
+ | mysql -u root -pussdgw hxc
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw hxc --where='1=1 LIMIT 10' > mysql-db-hxc-u${old_version}-v${new_version}.sql
+
+----
+
+
+== oltp-v61
+
+----
+old_version=60
+old_svn_revision=6177
+new_version=61
+new_svn_revision=6178
+
+echo 'SELECT * FROM ec_state WHERE name="DB Version";' | mysql -u root -pussdgw hxc
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw hxc --where='1=1 LIMIT 10' > mysql-db-hxc-r${old_svn_revision}-v${old_version}.sql
+
+echo 'SELECT * FROM ec_state WHERE name="DB Version";' | mysql -u root -pussdgw hxc
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw hxc --where='1=1 LIMIT 10' > mysql-db-hxc-r${new_svn_revision}-v${new_version}.sql
+
+cat <(echo "DROP DATABASE hxc; CREATE DATABASE IF NOT EXISTS hxc; USE hxc; SET FOREIGN_KEY_CHECKS=0;") mysql-db-hxc-r${old_svn_revision}-v${old_version}.sql | mysql -u root -pussdgw
+cat upgrade_ecds_oltp_${old_version}_to_${new_version}.sql | mysql -u root -pussdgw hxc
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw hxc --where='1=1 LIMIT 10' > mysql-db-hxc-u${old_version}-v${new_version}.sql
+
+
+cat <(echo "DROP DATABASE hxc; CREATE DATABASE IF NOT EXISTS hxc; USE hxc; SET FOREIGN_KEY_CHECKS=0;") mysql-db-hxc-r6052-v53.sql | mysql -u root -pussdgw
+cat upgrade_ecds_oltp_53_to_54.sql upgrade_ecds_oltp_54_to_55.sql upgrade_ecds_oltp_55_to_56.sql upgrade_ecds_oltp_56_to_57.sql upgrade_ecds_oltp_57_to_58.sql upgrade_ecds_oltp_58_to_59.sql upgrade_ecds_oltp_59_to_60.sql | mysql -u root -pussdgw
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw hxc --where='1=1 LIMIT 10' > mysql-db-hxc-u53-v60.sql
+
+cat <(echo "DROP DATABASE hxc; CREATE DATABASE IF NOT EXISTS hxc; USE hxc; SET FOREIGN_KEY_CHECKS=0;") mysql-db-hxc-u53-v60.sql | mysql -u root -pussdgw
+cat upgrade_ecds_oltp_60_to_61.sql | mysql -u root -pussdgw
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw hxc --where='1=1 LIMIT 10' > mysql-db-hxc-u60-v61.sql
+
+vimdiff <( grep -v '^INSERT' mysql-db-hxc-u53-v60.sql ) <( grep -v '^INSERT' mysql-db-hxc-r6178-v61.sql)
+
+vimdiff <( grep -v '^INSERT' mysql-db-hxc-r${old_svn_revision}-v${old_version}.sql ) <( grep -v '^INSERT' mysql-db-hxc-r${new_svn_revision}-v${new_version}.sql)
+vimdiff <( grep -v '^INSERT' mysql-db-hxc-r${old_svn_revision}-v${old_version}.sql ) <( grep -v '^INSERT' mysql-db-hxc-u${old_version}-v${new_version}.sql )
+vimdiff <( grep -v '^INSERT' mysql-db-hxc-u${old_version}-v${new_version}.sql ) <( grep -v '^INSERT' mysql-db-hxc-r${new_svn_revision}-v${new_version}.sql)
+----
+
+== olap-v5
+
+----
+old_version=4
+old_svn_revision=6149
+new_version=5
+new_svn_revision=6150
+
+echo 'SELECT * FROM ec_state WHERE name="DB Version";' | mysql -u root -pussdgw ecdsap
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw ecdsap --where='1=1 LIMIT 10' > mysql-db-ecdsap-r${old_svn_revision}-v${old_version}.sql
+
+echo 'SELECT * FROM ec_state WHERE name="DB Version";' | mysql -u root -pussdgw ecdsap
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw ecdsap --where='1=1 LIMIT 10' > mysql-db-ecdsap-r${new_svn_revision}-v${new_version}.sql
+
+cat <(echo "DROP DATABASE ecdsap; CREATE DATABASE IF NOT EXISTS ecdsap; USE ecdsap; SET FOREIGN_KEY_CHECKS=0;") mysql-db-ecdsap-r${old_svn_revision}-v${old_version}.sql | mysql -u root -pussdgw
+cat upgrade_ecds_oltp_${old_version}_to_${new_version}.sql | mysql -u root -pussdgw ecdsap
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw ecdsap --where='1=1 LIMIT 10' > mysql-db-ecdsap-u${old_version}-v${new_version}.sql
+
+vimdiff <( grep -v '^INSERT' mysql-db-ecdsap-r${old_svn_revision}-v${old_version}.sql ) <( grep -v '^INSERT' mysql-db-ecdsap-r${new_svn_revision}-v${new_version}.sql)
+vimdiff <( grep -v '^INSERT' mysql-db-ecdsap-r${old_svn_revision}-v${old_version}.sql ) <( grep -v '^INSERT' mysql-db-ecdsap-u${old_version}-v${new_version}.sql )
+vimdiff <( grep -v '^INSERT' mysql-db-ecdsap-u${old_version}-v${new_version}.sql ) <( grep -v '^INSERT' mysql-db-ecdsap-r${new_svn_revision}-v${new_version}.sql)
+----
+
+== oltp-v53
+
+----
+old_version=52
+old_svn_revision=6044
+new_version=53
+new_svn_revision=6052
+
+echo 'SELECT * FROM ec_state WHERE name="DB Version";' | mysql -u root -pussdgw hxc
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw hxc --where='1=1 LIMIT 10' > mysql-db-hxc-r${old_svn_revision}-v${old_version}.sql
+
+echo 'SELECT * FROM ec_state WHERE name="DB Version";' | mysql -u root -pussdgw hxc
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw hxc --where='1=1 LIMIT 10' > mysql-db-hxc-r${new_svn_revision}-v${new_version}.sql
+
+cat <(echo "DROP DATABASE hxc; CREATE DATABASE IF NOT EXISTS hxc; USE hxc; SET FOREIGN_KEY_CHECKS=0;") mysql-db-hxc-r${old_svn_revision}-v${old_version}.sql | mysql -u root -pussdgw
+cat upgrade_ecds_oltp_${old_version}_to_${new_version}.sql | mysql -u root -pussdgw hxc
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw hxc --where='1=1 LIMIT 10' > mysql-db-hxc-u${old_version}-v${new_version}.sql
+
+vimdiff <( grep -v '^INSERT' mysql-db-hxc-r${old_svn_revision}-v${old_version}.sql ) <( grep -v '^INSERT' mysql-db-hxc-r${new_svn_revision}-v${new_version}.sql)
+vimdiff <( grep -v '^INSERT' mysql-db-hxc-r${old_svn_revision}-v${old_version}.sql ) <( grep -v '^INSERT' mysql-db-hxc-u${old_version}-v${new_version}.sql )
+vimdiff <( grep -v '^INSERT' mysql-db-hxc-u${old_version}-v${new_version}.sql ) <( grep -v '^INSERT' mysql-db-hxc-r${new_svn_revision}-v${new_version}.sql)
+----
+
+== oltp-v52
+
+----
+old_version=51
+old_svn_revision=6043
+new_version=52
+new_svn_revision=6044
+
+echo 'SELECT * FROM ec_state WHERE name="DB Version";' | mysql -u root -pussdgw hxc
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw hxc --where='1=1 LIMIT 10' > mysql-db-hxc-r${old_svn_revision}-v${old_version}.sql
+
+echo 'SELECT * FROM ec_state WHERE name="DB Version";' | mysql -u root -pussdgw hxc
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw hxc --where='1=1 LIMIT 10' > mysql-db-hxc-r${new_svn_revision}-v${new_version}.sql
+
+cat <(echo "DROP DATABASE hxc; CREATE DATABASE IF NOT EXISTS hxc; USE hxc; SET FOREIGN_KEY_CHECKS=0;") mysql-db-hxc-r${old_svn_revision}-v${old_version}.sql | mysql -u root -pussdgw
+cat upgrade_ecds_oltp_${old_version}_to_${new_version}.sql | mysql -u root -pussdgw hxc
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw hxc --where='1=1 LIMIT 10' > mysql-db-hxc-u${old_version}-v${new_version}.sql
+
+vimdiff <( grep -v '^INSERT' mysql-db-hxc-r${old_svn_revision}-v${old_version}.sql ) <( grep -v '^INSERT' mysql-db-hxc-u${old_version}-v${new_version}.sql )
+vimdiff <( grep -v '^INSERT' mysql-db-hxc-r${old_svn_revision}-v${old_version}.sql ) <( grep -v '^INSERT' mysql-db-hxc-r${new_svn_revision}-v${new_version}.sql)
+vimdiff <( grep -v '^INSERT' mysql-db-hxc-u${old_version}-v${new_version}.sql ) <( grep -v '^INSERT' mysql-db-hxc-r${new_svn_revision}-v${new_version}.sql)
+----
+
+== oltp-v51
+
+----
+old_version=50
+old_svn_revision=6042
+new_version=51
+new_svn_revision=6043
+
+echo 'SELECT * FROM ec_state WHERE name="DB Version";' | mysql -u root -pussdgw hxc
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw hxc --where='1=1 LIMIT 10' > mysql-db-hxc-r${old_svn_revision}-v${old_version}.sql
+
+echo 'SELECT * FROM ec_state WHERE name="DB Version";' | mysql -u root -pussdgw hxc
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw hxc --where='1=1 LIMIT 10' > mysql-db-hxc-r${new_svn_revision}-v${new_version}.sql
+
+cat <(echo "DROP DATABASE hxc; CREATE DATABASE IF NOT EXISTS hxc; USE hxc; SET FOREIGN_KEY_CHECKS=0;") mysql-db-hxc-r${old_svn_revision}-v${old_version}.sql | mysql -u root -pussdgw
+cat upgrade_ecds_oltp_${old_version}_to_${new_version}.sql | mysql -u root -pussdgw hxc
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw hxc --where='1=1 LIMIT 10' > mysql-db-hxc-u${old_version}-v${new_version}.sql
+
+vimdiff <( grep -v '^INSERT' mysql-db-hxc-r${old_svn_revision}-v${old_version}.sql ) <( grep -v '^INSERT' mysql-db-hxc-u${old_version}-v${new_version}.sql )
+vimdiff <( grep -v '^INSERT' mysql-db-hxc-r${old_svn_revision}-v${old_version}.sql ) <( grep -v '^INSERT' mysql-db-hxc-r${new_svn_revision}-v${new_version}.sql)
+vimdiff <( grep -v '^INSERT' mysql-db-hxc-u${old_version}-v${new_version}.sql ) <( grep -v '^INSERT' mysql-db-hxc-r${new_svn_revision}-v${new_version}.sql)
+----
+
+== olap-v4
+
+----
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact --no-data -u root -pussdgw ecdsap > mysql-db-ecdsap-r5953-v4.sql
+----
+
+----
+cat <(echo "DROP DATABASE ecdsap; CREATE DATABASE IF NOT EXISTS ecdsap; USE ecdsap; SET FOREIGN_KEY_CHECKS=0;") mysql-db-ecdsap-r5759-v3.sql | mysql -u root -pussdgw
+cat upgrade_ecds_olap_3_to_4.sql | mysql -u root -pussdgw ecdsap
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw ecdsap > mysql-db-ecdsap-u3-v4.sql
+----
+
+----
+vimdiff <( cat mysql-db-ecdsap-r5759-v3.sql ) <( cat mysql-db-ecdsap-u3-v4.sql )
+vimdiff <( cat mysql-db-ecdsap-r5759-v3.sql ) <( cat mysql-db-ecdsap-r5953-v4.sql )
+vimdiff <( cat mysql-db-ecdsap-u3-v4.sql ) <( cat mysql-db-ecdsap-r5953-v4.sql)
+----
+
+== oltp-v35
+
+----
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw hxc > mysql-db-hxc-r5761-v35.sql
+----
+
+----
+cat <(echo "DROP DATABASE hxc; CREATE DATABASE IF NOT EXISTS hxc; USE hxc; SET FOREIGN_KEY_CHECKS=0;") mysql-db-hxc-r5760-v34.sql | mysql -u root -pussdgw
+cat upgrade_ecds_oltp_34_to_35.sql | mysql -u root -pussdgw hxc
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw hxc > mysql-db-hxc-u34-v35.sql
+----
+
+----
+vimdiff <( grep -v '^INSERT' mysql-db-hxc-r5760-v34.sql ) <( grep -v '^INSERT' mysql-db-hxc-u34-v35.sql )
+vimdiff <( grep -v '^INSERT' mysql-db-hxc-r5760-v34.sql ) <( grep -v '^INSERT' mysql-db-hxc-r5761-v35.sql)
+vimdiff <( grep -v '^INSERT' mysql-db-hxc-u34-v35.sql ) <( grep -v '^INSERT' mysql-db-hxc-r5761-v35.sql)
+----
+
+== oltp-v34
+
+----
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw hxc > mysql-db-hxc-r5759-v34p.sql
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw ecdsap > mysql-db-ecdsap-r5759-v3.sql
+
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw hxc > mysql-db-hxc-r5760-v34.sql
+----
+
+----
+cat <(echo "DROP DATABASE hxc; CREATE DATABASE IF NOT EXISTS hxc; USE hxc; SET FOREIGN_KEY_CHECKS=0;") mysql-db-hxc-r5636-v33.sql | mysql -u root -pussdgw
+cat upgrade_ecds_oltp_33_to_34.sql | mysql -u root -pussdgw hxc
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw hxc > mysql-db-hxc-u33-v34.sql
+## start C4U
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw hxc > mysql-db-hxc-u33-v34-started.sql
+----
+
+----
+ssh root@ecds-vm2 'mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw hxc' > mysql-db-hxc-u34x-v34.sql
+----
+
+----
+vimdiff <( grep -v '^INSERT' mysql-db-hxc-r5759-v34p.sql) <( grep -v '^INSERT' mysql-db-hxc-r5760-v34.sql)
+
+vimdiff <( grep -v '^INSERT' mysql-db-hxc-r5636-v33.sql) <( grep -v '^INSERT' mysql-db-hxc-r5760-v34.sql )
+vimdiff <( grep '^INSERT' mysql-db-hxc-r5636-v33.sql | sort) <( grep '^INSERT' mysql-db-hxc-r5760-v34.sql | sort)
+
+vimdiff <( grep -v '^INSERT' mysql-db-hxc-r5760-v34.sql) <( grep -v '^INSERT' mysql-db-hxc-u33-v34.sql)
+vimdiff <( grep -v '^INSERT' mysql-db-hxc-r5760-v34.sql) <( grep -v '^INSERT' mysql-db-hxc-u34x-v34.sql)
+
+vimdiff <( grep -v '^INSERT' mysql-db-hxc-r5760-v34.sql) <( grep -v '^INSERT' mysql-db-hxc-u33-v34-started.sql)
+vimdiff <( grep '^' mysql-db-hxc-r5760-v34.sql) <( grep '^' mysql-db-hxc-u33-v34-started.sql)
+----
+
+----
+mysqldump -u root -pussdgw --events --routines --triggers hxc > mysql-db-hxc-backup-`date +%Y%m%d%H%M%S`.sql
+mysqldump -u root -pussdgw --events --routines --triggers ecdsap > mysql-db-ecdsap-backup-`date +%Y%m%d%H%M%S`.sql
+----
+
+----
+eb_batch
+`total_value2` decimal(19,2) DEFAULT NULL,
+
+eb_stage
+`i5` int(11) DEFAULT NULL,
+`r1` double DEFAULT NULL,
+`r2` double DEFAULT NULL,
+
+ec_bundle
+ec_bundle_lang
+el_area
+el_area_area
+el_area_cell
+el_cell
+ep_promo
+
+ew_item
+`reason` varchar(150) DEFAULT NULL,
+----
+
+== ...
+
+----
+cat <(echo "DROP DATABASE hxc; CREATE DATABASE IF NOT EXISTS hxc; USE hxc; SET FOREIGN_KEY_CHECKS=0;") mysql-db-hxc-r5636-v33.sql | mysql -u root -pussdgw
+cat upgrade_ecds_oltp_33_to_34.sql | mysql -u root -pussdgw hxc
+
+
+mysqldump --skip-opt --complete-insert --create-options --events --routines --triggers --skip-comments --compact -u root -pussdgw hxc > mysql-db-hxc-r5636-v34.sql
+----

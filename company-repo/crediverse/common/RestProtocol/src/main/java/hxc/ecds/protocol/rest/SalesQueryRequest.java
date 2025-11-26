@@ -1,0 +1,57 @@
+package hxc.ecds.protocol.rest;
+
+import java.util.List;
+
+// REST End-Point: ~/transactions/sales_query
+public class SalesQueryRequest extends TransactionRequest
+{
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Fields
+	//
+	// /////////////////////////////////
+	protected Boolean suppressSms = false;
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Construction
+	//
+	// /////////////////////////////////
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Properties
+	//
+	// /////////////////////////////////
+	public Boolean getSuppressSms()
+	{
+		return suppressSms;
+	}
+
+	public SalesQueryRequest setSuppressSms(Boolean suppressSms)
+	{
+		this.suppressSms = suppressSms;
+		return this;
+	}
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Methods
+	//
+	// /////////////////////////////////
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public SalesQueryResponse createResponse()
+	{
+		return new SalesQueryResponse(this);
+	}
+
+	@Override
+	public List<Violation> validate()
+	{
+		return new Validator(super.validate()) //
+				.toList();
+	}
+
+}

@@ -1,0 +1,6 @@
+#!/bin/bash
+echo "Stopping the services..."
+/etc/init.d/supervisor stop 2> /dev/null
+/etc/init.d/custcare stop 2> /dev/null
+sleep 3
+echo "Done stopping services..."

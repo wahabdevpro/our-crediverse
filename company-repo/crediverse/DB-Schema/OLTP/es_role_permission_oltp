@@ -1,0 +1,10 @@
+*************************** 1. row ***************************
+       Table: es_role_permission
+Create Table: CREATE TABLE `es_role_permission` (
+  `role_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  KEY `FKroj89ohr62axxlibjf8bb0ryl` (`permission_id`),
+  KEY `FK105gkhl24ldxex9u1fag8rl64` (`role_id`),
+  CONSTRAINT `FK105gkhl24ldxex9u1fag8rl64` FOREIGN KEY (`role_id`) REFERENCES `es_role` (`id`),
+  CONSTRAINT `FKroj89ohr62axxlibjf8bb0ryl` FOREIGN KEY (`permission_id`) REFERENCES `es_permission` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

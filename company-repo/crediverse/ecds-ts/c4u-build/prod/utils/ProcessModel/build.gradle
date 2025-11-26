@@ -1,0 +1,23 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+dependencies {
+    implementation project(':CoreInterfaces')
+    implementation project(':SoapProtocol')
+    implementation project(':Notification')
+    implementation project(':StringUtilities')
+    implementation 'com.thoughtworks.xstream:xstream'
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'com.sun.xml.ws:jaxws-rt'
+    implementation 'com.sun.xml.ws:rt'
+    implementation 'javax.xml.bind:jaxb-api'
+    implementation 'com.sun.xml.bind:jaxb-core'
+    implementation 'com.sun.xml.bind:jaxb-impl'
+}

@@ -1,0 +1,89 @@
+android {
+    defaultConfig {
+        // ------------- Sandbox
+        //  Sandbox will not make any network connections,
+        //  it will respond to everything with internal DUMMY DATA
+        buildConfigField "boolean", "SANDBOX_ENABLED", "false"
+        buildConfigField "boolean", "SANDBOX_AUTO_LOGIN", "false"
+
+        // ------------- Login Page
+        // valid options are EN | FR --- this overrides whatever we receive from Crediverse
+        //                   anything else will revert to the default language
+        buildConfigField "String", "default_app_language", "\"FR\""
+        buildConfigField "String", "force_language", "\"NONE\""
+        // When using a custom logo that is transparent ...
+        // decide if want the primary or secondary colour to fill background of the logo
+        buildConfigField "boolean", "logo_has_primary_background", "false"
+        buildConfigField "boolean", "logo_has_secondary_background", "false"
+        buildConfigField "boolean", "request_location_permission_enabled", "true"
+
+        // ------------- Currency / Locale
+        buildConfigField "String", "currency_locale_code", "\"fr-CI\""
+        buildConfigField "String", "currency_pattern_without_currency", "\"#,##0\""
+        buildConfigField "String", "currency_pattern", "\"#,##0 \\u00A4\""
+        buildConfigField "String", "currency_symbol", "\"Fcfa\""
+        buildConfigField "String", "currency_decimal_separator", "\",\""
+        buildConfigField "String", "currency_group_separator", "\"\\u0020\""
+
+        // ------------- For Stats
+        buildConfigField "String", "start_of_week", "\"monday\""
+
+
+        // -------------Network Configurations
+        /*********************************************************/
+        // For Hostnames
+        //  Use 10.0.2.2 in the emulator /etc/hosts file if you want to communicate with the host machine
+        //  Requires making the Virtual Device "writable" and explicitly changing the /etc/hosts
+        //
+        // For PATHS...
+        //    path-is-relative-to assets/ directory OR
+        //    __leave it blank__
+        //
+        //      if left blank, then will assume the certificates are OFFICIALLY SIGNED
+        //      Path Example: tls/ca.root.certificate
+        /*********************************************************/
+        // MAS
+        buildConfigField "String", "mas_hostname", "\"demo.gcp.concurrent.systems\""
+        buildConfigField "int", "mas_port", "5000"
+        buildConfigField "String", "mas_ca_path", "\"\""
+        // SSAPI
+        buildConfigField "String", "ssapi_hostname", "\"demo.gcp.concurrent.systems\""
+        buildConfigField "int", "ssapi_port", "14701"
+        buildConfigField "String", "ssapi_ca_path", "\"\""
+
+        // ------------- Navigation Toggles
+        buildConfigField "boolean", "nav_bundle_page_enabled", "true"
+        buildConfigField "boolean", "nav_stats_page_enabled", "true"
+        buildConfigField "boolean", "nav_transfer_page_enabled", "true"
+        buildConfigField "boolean", "nav_execu_stats_page_enabled", "true"
+        buildConfigField "boolean", "nav_buy_with_mobile_money_enabled", "true"
+        buildConfigField "boolean", "nav_team_navigation_enabled", "true"
+        buildConfigField "boolean", "nav_mobile_money_deposit_enabled", "true"
+        buildConfigField "boolean", "nav_mobile_money_withdraw_enabled", "false"
+
+        // ------------- Teams
+        buildConfigField "boolean", "team_agents_location_view_enabled", "true"
+        buildConfigField "String", "team_member_locations", "\"AgentData/AgentLocationdump.csv\""
+        buildConfigField "boolean", "team_page_show_weekly_bar_graph", "true"
+        // ------------- Home Dashboard
+        buildConfigField "boolean", "show_total_and_trade_bonus", "true"
+        buildConfigField "int", "balance_update_threshold_seconds", "90"
+        buildConfigField "boolean", "home_page_show_weekly_bar_graph", "true"
+        buildConfigField "boolean", "home_page_show_today_sales_breakdown", "true"
+        // ------------- Agent Profile
+        buildConfigField "boolean", "my_location_enabled", "true"
+        buildConfigField "boolean", "change_pin_enabled", "true"
+        buildConfigField "boolean", "update_profile_enabled", "true"
+        buildConfigField "boolean", "allow_editing_profile_name_fields", "true"
+
+        // ------------- Analytics
+        buildConfigField "int", "analytics_event_flush_count", "150"
+
+        // ------------- UNUSED (Kept disabled for now)
+        buildConfigField "boolean", "sales_profit_enabled", "false"
+        buildConfigField "boolean", "credit_purchased_enabled", "false"
+
+        // ------------- Global
+        buildConfigField "String", "BUILD_NUMBER", "\"${System.getenv("BUILD_NUMBER") ?: ""}\""
+    }
+}

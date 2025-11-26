@@ -1,0 +1,45 @@
+<div class="modal fade" id="alarm-modal" tabindex="-1" role="dialog" aria-labelledby="alarmModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+      	<!-- Button to close the modal -->
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <!-- Title of the modal -->
+        <h4 class="modal-title" id="alarmModal">Alarm Information</h4>
+      </div>
+      <div class="modal-body">
+      	<form id="configModalForm" name="configModalForm">
+			<div id="alarm-modal-content">
+				<div class="row">
+				
+					<!-- Current image status of the alarm -->
+					<div class="col-lg-6 col-md-6 col-xs-6">
+						<div id="alarm-modal-img"></div>
+					</div>
+				
+					<!-- Information of the alarm -->
+					<div class="col-lg-6 col-md-6 col-xs-6">
+						<span class="alarm-modal-heading">Name&nbsp;&nbsp;</span><span id="alarm-modal-name"></span><br/>
+						<span class="alarm-modal-heading">Severity </span><span id="alarm-modal-severity"></span><br/>
+						<span class="alarm-modal-heading">State </span><span id="alarm-modal-state"></span><br/>
+						<span class="alarm-modal-heading">Last Updated </span><div id="alarm-modal-timestamp"></div>
+					</div>
+				</div>
+				
+				<!-- Description of the alarm status -->
+				<div class="row alarm-modal-description">
+					
+					<span class="alarm-modal-heading">Description </span><div id="alarm-modal-description"></div>
+					
+				</div>
+			</div>
+		
+			<!-- Ok button to dismiss the alarm -->
+		    <div class="modal-footer">
+		        <button id="okButton" type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+		    </div>
+      	</form>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

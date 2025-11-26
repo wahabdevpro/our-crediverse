@@ -1,0 +1,70 @@
+<div>
+	<div class="auditEntryLoadingStatus" id="" th:if="${#arrays.isEmpty(tamperedAuditEntries)}">
+		<p>No Data</p>
+	</div>
+	
+	<div th:if="${!#arrays.isEmpty(tamperedAuditEntries)}" class="row">
+		<br/>
+		<table id="tamperedAuditEntries_table" class="table infotable table-hover table-bordered table-striped" style="width: 100%; table-layout: fixed;">
+			<col width="120px" />
+			<col width="80px" />
+			<col width="120px" />
+			<col width="150px" />
+			<col width="180px" />
+			<col width="100px" />
+			<col width="100px" />
+			<col width="120px" />
+			<col width="120px" />
+			<col width="120px" />
+			<col width="120px" />			
+			<col width="80px" />
+			<!--
+			<col width="200px" />			
+			<col width="200px" />
+			-->		
+			<col width="180px" />	
+			<thead>
+				<tr>
+					<th>Tampered</th>
+					<th>ID</th>
+					<th>Company ID</th>
+					<th>Sequence No.</th>
+					<th>Timestamp</th>
+					<th>User ID</th>
+					<th>IP Address</th>
+					<th>MAC Address</th>
+					<th>Machine Name</th>
+					<th>Domain Name</th>
+					<th>Data Type</th>
+					<th>Action</th>
+					<!--
+					<th>Old Value</th>
+					<th>New Value</th>
+					-->
+					<th>Signature</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="auditEntry,iterStat : ${tamperedAuditEntries}">
+					<td th:text="${#strings.isEmpty(auditEntry.isTampered())? '' : auditEntry.isTampered() }">-</td>
+					<td th:text="${#strings.isEmpty(auditEntry.getId())? '' : auditEntry.getId() }">-</td>
+					<td th:text="${#strings.isEmpty(auditEntry.getCompanyId())? '' : auditEntry.getCompanyId() }">-</td>
+					<td th:text="${#strings.isEmpty(auditEntry.getSequenceNo())? '' : auditEntry.getSequenceNo() }">-</td>
+					<td th:text="${#strings.isEmpty(auditEntry.getTimestamp())? '' : auditEntry.getTimestamp() }">-</td>					
+					<td th:text="${#strings.isEmpty(auditEntry.getUserId())? '' : auditEntry.getUserId() }">-</td>					
+					<td th:text="${#strings.isEmpty(auditEntry.getIpAddress())? '' : auditEntry.getIpAddress() }">-</td>					
+					<td th:text="${#strings.isEmpty(auditEntry.getMacAddress())? '' : auditEntry.getMacAddress() }">-</td>					
+					<td th:text="${#strings.isEmpty(auditEntry.getMachineName())? '' : auditEntry.getMachineName() }">-</td>					
+					<td th:text="${#strings.isEmpty(auditEntry.getDomainName())? '' : auditEntry.getDomainName() }">-</td>					
+					<td th:text="${#strings.isEmpty(auditEntry.getDataType())? '' : auditEntry.getDataType() }">-</td>					
+					<td th:text="${#strings.isEmpty(auditEntry.getAction())? '' : auditEntry.getAction() }">-</td>	
+					<!-- 				
+					<td th:text="${#strings.isEmpty(auditEntry.getOldValue())? '' : auditEntry.getOldValue() }">-</td>					
+					<td th:text="${#strings.isEmpty(auditEntry.getNewValue())? '' : auditEntry.getNewValue() }">-</td>
+					-->					
+					<td th:text="${#strings.isEmpty(auditEntry.getSignature())? '' : auditEntry.getSignature() }">-</td>					
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

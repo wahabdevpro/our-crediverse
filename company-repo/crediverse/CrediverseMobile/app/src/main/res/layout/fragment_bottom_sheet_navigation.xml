@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/standard_bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/pure_white"
+        android:paddingBottom="16dp"
+        app:alignItems="center"
+        app:flexDirection="column"
+        app:justifyContent="center">
+
+        <LinearLayout
+            android:layout_width="50dp"
+            android:layout_height="3dp"
+            android:layout_gravity="top|center"
+            android:layout_margin="8dp"
+            android:background="@drawable/custom_toast_rounded"
+            android:backgroundTintMode="src_over" />
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:alignItems="center"
+            app:flexDirection="row"
+            app:justifyContent="center">
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:alignItems="center"
+                app:flexDirection="column"
+                app:justifyContent="center"
+                app:layout_minWidth="72dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:text="Stats"
+                    android:textColor="@color/cs_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/menu_root_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/fa_solid"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp"
+                    android:text="@string/fa_chart_column"
+                    android:textAlignment="center"
+                    android:textColor="@color/cs_primary"
+                    android:textSize="26sp" />
+
+            </com.google.android.flexbox.FlexboxLayout>
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="16dp"
+                app:alignItems="center"
+                app:flexWrap="wrap"
+                app:justifyContent="center"
+                app:layout_flexGrow="1">
+
+                <include
+                    android:id="@+id/card1"
+                    layout="@layout/template_bottom_sheet_navigation_item" />
+
+                <include
+                    android:id="@+id/card2"
+                    layout="@layout/template_bottom_sheet_navigation_item" />
+
+                <include
+                    android:id="@+id/card3"
+                    layout="@layout/template_bottom_sheet_navigation_item" />
+
+                <include
+                    android:id="@+id/card4"
+                    layout="@layout/template_bottom_sheet_navigation_item" />
+
+                <include
+                    android:id="@+id/card5"
+                    layout="@layout/template_bottom_sheet_navigation_item" />
+
+            </com.google.android.flexbox.FlexboxLayout>
+
+        </com.google.android.flexbox.FlexboxLayout>
+
+    </com.google.android.flexbox.FlexboxLayout>
+
+</LinearLayout>

@@ -1,0 +1,10 @@
+*************************** 1. row ***************************
+       Table: se_role
+Create Table: CREATE TABLE `se_role` (
+  `roleId` int(11) NOT NULL,
+  `name` varchar(60) NOT NULL,
+  `description` varchar(100) NOT NULL,
+  `builtIn` bit(1) NOT NULL,
+  `ts` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`roleId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1

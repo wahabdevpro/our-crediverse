@@ -1,0 +1,102 @@
+<div>
+	<script id="auditentrydetails">
+	    <div class="col-xs-12">
+			<div class="row">
+				<div class="col-lg-3 col-md-4 col-sm-6">
+					<div class="box box-primary">
+        		    	<div class="box-body box-profile">
+    		          		<h2 class="text-center"><strong>{{ this.dataType }}</strong></h2>
+    		          		<h4 class="text-center" style="margin:15px 0;">
+								{{#ifCond this.action "==" "C"}}
+									<span class="label label-success">{{i18n "enums.action.create"}}</span>
+								{{/ifCond}}
+								{{#ifCond this.action "==" "U"}}
+									<span class="label label-warning">{{i18n "enums.action.update"}}</span>
+								{{/ifCond}}
+								{{#ifCond this.action "==" "D"}}
+									<span class="label label-danger">{{i18n "enums.action.delete"}}</span>
+								{{/ifCond}}
+							</h4>
+    		          		<h4 class="text-muted text-center">{{i18n "auditEntry.id"}}{{ this.id }}</h4>
+							<hr/>
+							<div class="row">
+								<div class="col-xs-12" style="text-align:center;">
+									<label class="light-label">{{i18n "auditEntry.sequence"}}</label>		
+									<h5 style="margin-top:5px;"><strong>{{#if this.sequenceNo}}{{ this.sequenceNo }}{{else}}<span class="no-data">-</span>{{/if}}</strong></h5>
+								</div>	
+							</div>
+							<div class="row">
+								<div class="col-xs-12" style="text-align:center;">
+									<label class="light-label">{{i18n "auditEntry.operationTime"}}</label>		
+									<h5 style="margin-top:5px;"><strong>{{#if this.timestampString}}{{ this.timestampString }}{{else}}<span class="no-data">-</span>{{/if}}</strong></h5>
+								</div>	
+							</div>
+							<div class="row">
+								<div class="col-xs-12" style="text-align:center;">
+									<label class="light-label">{{i18n "auditEntry.userType"}}</label>		
+									<h5 style="margin-top:5px;"><strong>{{#if this.userType}}{{ this.userType }}{{else}}<span class="no-data">-</span>{{/if}}</strong></h5>
+								</div>	
+							</div>
+							<div class="row">
+								<div class="col-xs-12" style="text-align:center;">
+									<label class="light-label">{{i18n "auditEntry.userName"}}</label>		
+									<h5 style="margin-top:5px;"><strong>{{#if this.domainName}}{{ this.domainName }}{{else}}<span class="no-data">-</span>{{/if}}</strong></h5>
+								</div>	
+							</div>
+							<div class="row">
+								<div class="col-xs-12" style="text-align:center;">
+									<label class="light-label">{{i18n "auditEntry.ipAddress"}}</label>		
+									<h5 style="margin-top:5px;"><strong>{{#if this.ipAddress}}{{ this.ipAddress }}{{else}}<span class="no-data">-</span>{{/if}}</strong></h5>
+								</div>	
+							</div>
+							<div class="row">
+								<div class="col-xs-12" style="text-align:center;">
+									<label class="light-label">{{i18n "auditEntry.tamperedWith"}}</label>		
+									<h5 style="margin-top:5px;"><strong>{{#if this.tamperedWith }}{{i18n "enums.yesNo.yes"}}{{else}}{{i18n "enums.yesNo.no"}}{{/if}}</strong></h5>
+								</div>	
+							</div>
+            			</div>
+            			<!-- /.box-body -->
+       				</div>
+				</div>
+				<div class="col-lg-9 col-md-8 col-sm-6">
+					<div class="nav-tabs-custom">
+  						<ul class="nav nav-tabs">
+    						<li class="active"><a href="#profile" data-toggle="tab">Values</a></li>
+  						</ul>
+  						<div class="tab-content">
+						    <div class="active tab-pane info-panel" id="profile" style="margin:8px;">
+						    	<div class="row">
+						    		<div class="col-xs-6">
+						    			<div style="margin-left:10px;">
+							    			<label class="light-label">{{i18n "auditEntry.reason"}}</label>
+							    			<div>{{#if this.reason }}{{this.reason}}{{else}}<span class="no-data">-</span>{{/if}}</div>
+							    		</div>
+						    		</div>
+						    		<div class="col-xs-6">
+						    			<div style="margin-left:10px;">
+							    			<label class="light-label">{{i18n "auditEntry.detail"}}</label>
+							    			<div>{{#if this.reasonDetail }}{{this.reasonDetail}}{{else}}<span class="no-data">-</span>{{/if}}</div>
+							    		</div>
+						    		</div>
+						    	</div>
+								<div class="row view-fields">
+									<div class="col-xs-6">
+										<h4>{{i18n "auditEntry.beforeUpdate"}}</h4>
+										<div class="fields-before" style="margin-left:10px;">
+										</div>
+									</div>
+									<div class="col-xs-6">
+										<h4>{{i18n "auditEntry.afterUpdate"}}</h4>
+										<div class="fields-after" style="margin-left:10px;">
+										</div>
+									</div>
+								</div>
+    						</div>
+  						</div>
+					</div>				
+				</div>
+			</div>	
+	    </div>
+	</script>
+</div>

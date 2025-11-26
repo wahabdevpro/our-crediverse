@@ -1,0 +1,35 @@
+<div>
+	<div id="" th:if="${#arrays.isEmpty(servers)}">
+		<p>Currently No Servers Defined</p>
+	</div>
+	
+	<div th:if="${!#arrays.isEmpty(servers)}" class="row">
+		<table id="serverinfo_table" class="table infotable table-hover table-bordered table-striped" style="width: 100%; table-layout: fixed;">
+			<col width="50%" />
+			<col width="50%" />
+			<col width="150px" />
+			<thead>
+				<tr>
+					<th width="35%">Server</th>
+					<th width="35%">Peer</th>
+					<th width="35%">Transaction Prefix</th>					
+					<th width="150px;">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="server,iterStat : ${servers}">
+					<td th:text="${#strings.isEmpty(server.serverHost)? '' : ((#strings.length(server.serverHost) > 30)? (#strings.substring(server.serverHost,0, 30) + '...') : server.serverHost)}">-</td>
+					<td th:text="${#strings.isEmpty(server.peerHost)? '' : ((#strings.length(server.peerHost) > 30)? (#strings.substring(server.peerHost,0, 30) + '...') : server.peerHost)}">-</td>
+					<td th:text="${#strings.isEmpty(server.transactionNumberPrefix)? '' : ((#strings.length(server.transactionNumberPrefix) > 30)? (#strings.substring(server.transactionNumberPrefix,0, 30) + '...') : server.transactionNumberPrefix)}">-</td>
+					<td>
+						<a th:id="${'infoview_' + iterStat.index}"  th:onclick="'javascript:showServerInfo(\'view\',' + ${iterStat.index} + ');return false;'" href="#"><span class="glyphicon glyphicon-eye-open viewbutton" title="view"></span></a> 
+						<span>|</span>
+						<a th:id="${'infoedit_' + iterStat.index}" th:onclick="'javascript:showServerInfo(\'edit\',' + ${iterStat.index} + ');return false;'" href="#"><span class="glyphicon glyphicon-pencil editbutton" title="edit"></span></a> 
+						<span>|</span>
+						<a th:id="${'infodelete_' + iterStat.index}" th:onclick="'javascript:deleteServerInfo(' + ${iterStat.index} + ',\'' + ${server.serverHost} + '\',\''  + ${server.peerHost} + '\');return false;'" href="#"><span class="glyphicon glyphicon-trash deletebutton" title="delete"></span></a> 
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

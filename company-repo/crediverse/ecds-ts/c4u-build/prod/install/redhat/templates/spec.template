@@ -1,0 +1,103 @@
+%define 	_topdir			${BUILD_PATH}
+%define        	__spec_install_post 	%{nil}
+%define        	debug_package 		%{nil}
+%define        	__os_install_post 	%{_dbpath}/brp-compress
+
+BuildRoot:		${PATH}
+Summary: 		C4U Application
+License: Copyright 2017 Concurrent Systems
+Name: 			${APPLICATION_NAME}
+Version: 		${BARE_VERSION}
+Release: 		${REVISION}
+Source: 		${PACKAGE_NAME}-${BARE_VERSION}.tar.gz
+
+%description
+The C4U Application is developed by Concurrent Systems.
+
+%prep
+%setup -q
+
+%build
+# Empty, no step required
+
+%install
+
+# Clean the directory
+rm -rf $RPM_BUILD_ROOT
+
+# Make the dir struct
+mkdir -p $RPM_BUILD_ROOT${PATH}
+mkdir -p $RPM_BUILD_ROOT/etc/init.d/
+#mkdir -p $RPM_BUILD_ROOT/etc/rc3.d/
+mkdir -p $RPM_BUILD_ROOT/etc/sysconfig/
+mkdir -p $RPM_BUILD_ROOT/usr/lib/systemd/system/
+mkdir -p $RPM_BUILD_ROOT/var/opt/cs/c4u/share/sql
+
+# Copy all the files from source into path
+cp -a opt/* $RPM_BUILD_ROOT${PATH}
+
+[ -d "var/opt/cs/c4u/share/sql" ] && {
+	cp -a var/opt/cs/c4u/share/sql/* $RPM_BUILD_ROOT/var/opt/cs/c4u/share/sql/
+}
+
+cp -a etc/${NAME} $RPM_BUILD_ROOT/etc/init.d/
+#cp -a etc/S01${NAME} $RPM_BUILD_ROOT/etc/rc3.d/
+#cp -a etc/K01${NAME} $RPM_BUILD_ROOT/etc/rc3.d/
+cp -a etc/sysconfig/c4u-supervisor $RPM_BUILD_ROOT/etc/sysconfig/c4u-supervisor
+
+#cp -a etc/custcare $RPM_BUILD_ROOT/etc/init.d/
+#cp -a etc/S01custcare $RPM_BUILD_ROOT/etc/rc3.d/
+#cp -a etc/K01custcare $RPM_BUILD_ROOT/etc/rc3.d/
+
+cp -a usr/lib/systemd/system/c4u-hostprocess.service $RPM_BUILD_ROOT/usr/lib/systemd/system/c4u-hostprocess.service
+cp -a usr/lib/systemd/system/c4u-guiserver.service $RPM_BUILD_ROOT/usr/lib/systemd/system/c4u-guiserver.service
+cp -a usr/lib/systemd/system/c4u-supervisor.service $RPM_BUILD_ROOT/usr/lib/systemd/system/c4u-supervisor.service
+#cp -ar var/opt/cs/c4u/share/* $RPM_BUILD_ROOT/var/opt/cs/c4u/share/
+
+%clean
+
+# Clean the directory
+rm -rf $RPM_BUILD_ROOT
+
+%files
+
+%defattr(-,root,root,-)
+%config(noreplace) %{_sysconfdir}/init.d/${NAME}
+# %config(noreplace) %{_sysconfdir}/rc3.d/S01${NAME}
+# %config(noreplace) %{_sysconfdir}/rc3.d/K01${NAME}
+
+# %config(noreplace) %{_sysconfdir}/init.d/custcare
+# %config(noreplace) %{_sysconfdir}/rc3.d/S01custcare
+# %config(noreplace) %{_sysconfdir}/rc3.d/K01custcare
+
+%config(noreplace) %{_sysconfdir}/sysconfig/c4u-${NAME}
+%config(noreplace) /var/opt/cs/c4u/share/*
+
+%attr(0755,root,root) ${PATH}/*
+%attr(0755,root,root) %{_sysconfdir}/init.d/${NAME}
+%attr(0644,root,root) /usr/lib/systemd/system/c4u-hostprocess.service
+%attr(0644,root,root) /usr/lib/systemd/system/c4u-guiserver.service
+%attr(0644,root,root) /usr/lib/systemd/system/c4u-supervisor.service
+# %attr(0755,root,root) %{_sysconfdir}/rc3.d/S01${NAME}
+# %attr(0755,root,root) %{_sysconfdir}/rc3.d/K01${NAME}
+
+# %attr(0755,root,root) %{_sysconfdir}/init.d/custcare
+# %attr(0755,root,root) %{_sysconfdir}/rc3.d/S01custcare
+# %attr(0755,root,root) %{_sysconfdir}/rc3.d/K01custcare
+
+# Taken from
+# https://github.com/systemd/systemd/blob/v219/src/core/macros.systemd.in#L39L44
+%post
+if [ $1 -eq 1 ] ; then
+        # Initial installation
+        systemctl preset c4u-supervisor.service c4u-hostprocess.service c4u-guiserver.service >/dev/null 2>&1 || : 
+fi
+
+# Taken from
+# https://github.com/systemd/systemd/blob/v219/src/core/macros.systemd.in#L48L54
+%preun
+if [ $1 -eq 0 ] ; then
+        # Package removal, not upgrade
+        systemctl --no-reload disable c4u-supervisor.service c4u-hostprocess.service c4u-guiserver.service > /dev/null 2>&1 || :
+        systemctl stop c4u-supervisor.service c4u-hostprocess.service c4u-guiserver.service > /dev/null 2>&1 || :
+fi

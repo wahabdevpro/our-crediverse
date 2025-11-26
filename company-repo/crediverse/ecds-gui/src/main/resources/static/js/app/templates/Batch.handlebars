@@ -1,0 +1,64 @@
+<div>
+	<script id="batchhistorymaster">
+	    <div class="datatablesview">
+	        <div class="box">
+				<div id="dtButtonBarTemplate" style="display:none;">
+					{{#hasPerms "Batch_Download"}}
+						<button class="btn btn-primary exportBatchHistoryButton" role="button">{{i18n "global.exportBtn"}}</button>
+					{{/hasPerms}}
+	            </div>
+	            <div class="box-body">
+	            
+		            <div class="advancedSearchInput"  style="margin-bottom:15px;">
+					 	<button type="button" class="btn btn-primary batchHistorySearchExpandButton">{{i18n "global.advancedSearchBtn"}}</button>
+		        	</div>
+	            
+		            <div class="advancedSearchForm" style="display:none">
+					<form id="searchform" name="searchForm" class="form-horizontal">
+			        <div>
+			            <div>
+								<div class="row">
+									<div class="col-sm-6">
+										{{>modalInput name="id" label="batch.searchId" hint="batch.searchIdHint" className="novalidate"}}
+										{{>modalInput name="filename" toggle="tooltip" title='batch.searchFilenameSearchHint' label="batch.filename" hint="batch.filenameHint" className="novalidate"}}
+										
+										<div class="row" style="margin-bottom:15px;">
+												<label for="date-from" class="col-xs-4 col-sm-4 control-label">{{i18n "batch.searchTimestamp"}}</label>
+												<div class="col-xs-4 col-sm-4">
+													<input id="date-from" type="text" name="dateFrom" class="form-control novalidate" placeholder="YYYY-MM-DD" data-date-format="yyyy-mm-dd"  />
+												</div>
+												<div class="col-xs-4 col-sm-4">
+													<input id="date-to" type="text" name="dateTo" class="form-control novalidate" placeholder="YYYY-MM-DD" data-date-format="yyyy-mm-dd" />
+												</div>
+										</div>	
+										
+										{{>modalSelectTDS name="type" className="novalidate" label="batch.searchType"  data=":batch.BatchTableEntryAll,user:batch.BatchTableEntryUser,cell:batch.BatchTableEntryCell,area:batch.BatchTableEntryArea,tier:batch.BatchTableEntryTier,sc:batch.BatchTableEntrySc,account:batch.BatchTableEntryAccount,group:batch.BatchTableEntryGroup,rule:batch.BatchTableEntryRule,prom:batch.BatchTableEntryPromotion,adjust:batch.BatchTableEntryAdjust,dept:batch.BatchTableEntryDepartment" hint="transactions.transactionType" }}
+										
+									</div>
+								</div>
+			            </div>
+						<div class="" style="border-top:1px solid #eaeaea; padding-top:10px; margin-bottom:20px;">
+			  			  	<div class="form-group">
+					        	<div class="right">
+		           			 		<button type="submit" class="btn btn-primary batchHistorySearchButton"><i class="fa fa-search"></i> {{i18n "global.searchBtn"}}</button>
+					           		<button type="button" class="btn btn-default batchHistorySearchResetButton">{{i18n "global.clearBtn"}}</button>
+					           		<button type="button" class="btn btn-default batchHistorySearchCancelButton">{{i18n "global.hideBtn"}}</button>
+									&nbsp;&nbsp;&nbsp;
+									<div class="pull-right">
+										<div id="error_general_message" class="alert alert-danger" style="padding:6px 15px; margin-right:20px; display:none;"></div>
+									</div>
+								</div>
+					    	</div>
+						</div>
+			        </div>
+					</form>	
+			    </div>
+			    <div class="advancedSearchResults">
+				    <table class="batchhistorytable tableview table table-bordered table-hover table-striped" data-sshash-base='batchHistory'>
+		            </table>
+		        </div>
+	            </div>
+	        </div>
+	    </div>
+	</script>	
+</div>

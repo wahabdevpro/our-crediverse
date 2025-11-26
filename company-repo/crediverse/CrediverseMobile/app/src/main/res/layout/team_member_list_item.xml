@@ -1,0 +1,99 @@
+<!-- item_menu.xml -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardElevation="0dp"
+    app:rippleColor="@color/cs_primary">
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:flexDirection="column">
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="16dp"
+            app:alignItems="center"
+            app:justifyContent="center">
+
+            <TextView
+                android:id="@+id/team_member_icon"
+                android:layout_width="36dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/fa_solid"
+                android:paddingVertical="4dp"
+                android:text="@string/fa_arrow_right"
+                android:textAlignment="center"
+                android:textColor="@color/dark_gray"
+                android:textSize="24sp"
+                android:visibility="gone"
+                app:layout_minWidth="24dp" />
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:alignItems="center"
+                app:justifyContent="space_between"
+                app:layout_flexGrow="1">
+
+                <com.google.android.flexbox.FlexboxLayout
+                    android:layout_width="wrap_content"
+                    app:flexDirection="column"
+                    app:justifyContent="center"
+                    app:alignItems="flex_start"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/team_member_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="16dp"
+                        android:text="{Item Description}"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="16sp"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/team_member_msisdn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="16dp"
+                        android:text="{MSISDN}"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="12sp"
+                        tools:ignore="HardcodedText" />
+
+                </com.google.android.flexbox.FlexboxLayout>
+
+                <TextView
+                    android:id="@+id/team_member_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:text="{Item Amount}"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
+
+            </com.google.android.flexbox.FlexboxLayout>
+
+        </com.google.android.flexbox.FlexboxLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginHorizontal="16dp"
+            android:background="@color/gray" />
+
+    </com.google.android.flexbox.FlexboxLayout>
+
+</com.google.android.material.card.MaterialCardView>

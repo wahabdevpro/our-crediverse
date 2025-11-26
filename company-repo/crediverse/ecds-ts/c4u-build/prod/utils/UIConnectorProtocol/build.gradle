@@ -1,0 +1,16 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+dependencies {
+    implementation project(':CoreInterfaces')
+    implementation project(':ProcessModel')
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'com.sun.mail:jakarta.mail:2.0.1'
+}

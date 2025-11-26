@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<link rel="shortcut icon" href="../../docs-assets/ico/favicon.png" />
+
+<title>C4U Customer Care</title>
+
+<link rel="shortcut icon" href="/img/favicon.png" /> 
+
+<!-- Bootstrap core CSS -->
+<link type="text/css" href="/css/bootstrap.min.css" rel="stylesheet" />
+<!-- Bootstrap theme -->
+<link type="text/css" href="/css/bootstrap-theme.min.css" rel="stylesheet" />
+
+<link type="text/css" rel="stylesheet" href="../css/font-awesome.css" />
+
+<!-- Custom styles for this template -->
+<link type="text/css" href="/css/theme.css" rel="stylesheet" />
+
+<!-- For message editing -->
+<link rel="stylesheet" type="text/css" href="css/jquery.atwho.css"/>
+
+<!-- For Bootstrap dialog -->
+<link rel="stylesheet" type="text/css" href="css/bootstrap-dialog.css"/>
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+	<script src="/js/html5shiv.js"></script>
+<![endif]-->
+
+<link href="/css/pagecss/home.css" rel="stylesheet" />
+<script type="text/javascript" th:src="@{/cc/help.js}"></script>
+
+</head>
+
+<body>
+	<style>
+		.navbarclass {
+			padding-top: 10px;
+			display: none;
+		}
+		.outer-banner {
+			height: 50px;
+    		white-space: nowrap;
+    		padding-right: 5px;
+		}
+		.banner-helper {
+			position:relative;
+		    display: inline-block;
+		    height: 100%;
+		    vertical-align: middle;
+		}
+		.banner-img {
+		    margin:auto;
+		}
+	</style>
+
+	<!-- Fixed navbar -->
+
+	<div class="container">
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand logo-brand" style="padding: 1px;" href="#">
+						<div class="outer-banner">
+							<span class='banner-helper'></span>
+							<img class="banner-img" src="/img/banner.png" />
+						</div>
+					</a>	
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					  <span class="icon-bar"></span>
+					  <span class="icon-bar"></span>
+					  <span class="icon-bar"></span>
+					</button>
+				</div>
+				<div class="navbar-collapse collapse" style="padding-left:auto;">
+					<ul class="nav navbar-nav">
+						<li id="custcare" class="link">
+							<a th:onclick="'javascript:navigateTo(\'custcare\');return false;'" href="#">
+								<span class="glyphicon glyphicon-phone glyph-space-right"></span>
+								<span th:text="#{home.cusomercare}">Cust Care</span>
+							</a>
+						</li>
+					</ul>
+					<div class="navbar-header navbar-right" style="padding-left:auto;">
+						<p class="navbar-text">
+							<a id="logout" href="/logout" class="navbar-link" th:href="@{/logout}">
+								<span class="glyphicon glyphicon-cog glyph-space-right"></span>
+								<span th:text="#{home.logout}">Logout</span>
+							</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</nav>
+	</div>
+		
+<!--container -->
+<div id="main_content" class="container content-bordered" >
+</div>
+
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
+	
+	<!--[if lt IE 9]>
+		<script type="text/javascript" src="/js/jquery.placeholder.js"></script>
+	<![endif]-->
+	
+	<script type="text/javascript" src="/js/bootstrap.min.js"></script>	
+	<script src="/js/respond.min.js"></script>
+	<script type="text/javascript" src="/js/uiindex.js"></script>
+	<script type="text/javascript" src="/js/bootstrap-dialog.min.js"></script>
+	
+	<link type="text/css" href="/css/bootstrap-select.min.css" rel="stylesheet" />
+	<script src="/js/bootstrap-select.min.js"></script>
+
+	
+	<script th:inline="javascript">
+		// <![CDATA[        
+		var content = /*[[${main_content}]]*/;
+	    // ]]>
+		navigateTo('custcare');
+	</script>
+</body>
+</html>
+

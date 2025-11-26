@@ -1,0 +1,23 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.connectors.snmp.SnmpConnector")
+   }
+}
+dependencies {
+    implementation project(':CoreInterfaces')
+    implementation project(':Configuration')
+    implementation project(':Instrumentation')
+    implementation 'org.snmp4j:snmp4j'
+    implementation 'org.snmp4j:snmp4j-agent'
+    implementation 'org.slf4j:slf4j-api'
+}

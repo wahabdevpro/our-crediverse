@@ -1,0 +1,37 @@
+listeningPort: 10010
+testCase(name: "transfer_success") 
+{
+	tran1
+	{ 
+		expect (
+			fromFile: "A_GetBalanceAndDate.xml"
+			ignore: "originNodeType", "subscriberNumber","originTransactionID", "originTimeStamp", "subscriberNumberNAI")
+		respond(
+			fromFile: "A_GetBalanceAndDate_response.xml"
+			override: "originTransactionID" with "originTransactionID");
+		expect (
+			fromFile: "A_UpdateBalanceAndDate.xml"
+			ignore: "originNodeType", "subscriberNumber","originTransactionID", "originTimeStamp", "subscriberNumberNAI")
+		respond(
+			fromFile: "A_UpdateBalanceAndDate_response.xml"
+			override: "originTransactionID" with "originTransactionID");
+		expect (
+			fromFile: "B_UpdateBalanceAndDate.xml"
+			ignore: "originNodeType", "subscriberNumber","originTransactionID", "originTimeStamp", "subscriberNumberNAI")
+		respond(
+			fromFile: "B_UpdateBalanceAndDate_response.xml"
+			override: "originTransactionID" with "originTransactionID");
+		expect (
+			fromFile: "A_UpdateBalanceAndDate_network_fail.xml"
+			ignore: "originNodeType", "subscriberNumber","originTransactionID", "originTimeStamp", "subscriberNumberNAI")
+		respond(
+			fromFile: "A_UpdateBalanceAndDate_network_fail_response.xml"
+			override: "originTransactionID" with "originTransactionID");
+		expect (
+			fromFile: "A_GetBalanceAndDate.xml"
+			ignore: "originNodeType", "subscriberNumber","originTransactionID", "originTimeStamp", "subscriberNumberNAI")
+		respond(
+			fromFile: "A_GetBalanceAndDate_response.xml"
+			override: "originTransactionID" with "originTransactionID");
+         }
+}

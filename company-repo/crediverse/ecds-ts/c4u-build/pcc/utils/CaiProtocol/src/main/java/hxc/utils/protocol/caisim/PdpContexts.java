@@ -1,0 +1,50 @@
+package hxc.utils.protocol.caisim;
+
+/**
+ * Represents a list of PDP Contexts in the HLR.
+ * 
+ * @author petar
+ *
+ */
+public class PdpContexts
+{
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Properties
+	//
+	// /////////////////////////////////
+	
+	private PdpContext[] pdps = new PdpContext[0];
+	
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Constructor
+	//
+	// /////////////////////////////////
+	
+	public PdpContexts()
+	{
+		
+	}
+	
+	public PdpContexts(PdpContext[] pdps)
+	{
+		this.pdps = pdps;
+	}
+	
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Accessor Method
+	//
+	// /////////////////////////////////
+	
+	public PdpContext[] getPdpContext()
+	{
+		return pdps;
+	}
+
+	public void setPdpContext(PdpContext[] pdps)
+	{
+		this.pdps = pdps;
+	}
+}

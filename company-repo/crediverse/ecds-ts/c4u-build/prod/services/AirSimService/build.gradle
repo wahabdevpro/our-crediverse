@@ -1,0 +1,39 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.services.airsim.AirSimService")
+   }
+}
+dependencies {
+    implementation project(':CoreInterfaces')
+    implementation project(':Configuration')
+    implementation project(':AirProtocol')
+    implementation project(':Calendar')
+    implementation project(':Reflection')
+    implementation project(':NumberPlanService')
+    implementation project(':SdpProtocol')
+    implementation project(':HmxProtocol')
+    implementation project(':HsxProtocol')
+    implementation project(':Instrumentation')
+    implementation project(':Threads')
+    implementation project(':XmlRpc')
+    implementation 'com.google.code.gson:gson'
+    implementation 'org.glassfish.grizzly:grizzly-framework'
+    implementation 'org.glassfish.grizzly:grizzly-http'
+    implementation 'org.glassfish.grizzly:grizzly-http-server'
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'com.sun.xml.ws:jaxws-rt'
+    implementation 'com.sun.xml.ws:rt'
+    implementation 'javax.xml.bind:jaxb-api'
+    implementation 'com.sun.xml.bind:jaxb-core'
+    implementation 'com.sun.xml.bind:jaxb-impl'
+}

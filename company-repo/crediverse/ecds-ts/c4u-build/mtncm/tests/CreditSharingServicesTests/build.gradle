@@ -1,0 +1,37 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+dependencies {
+    implementation project(':CoreInterfaces')
+    implementation project(':CreditSharingService')
+    implementation project(':AirSimService')
+    implementation project(':LoggerService')
+    implementation project(':ServiceBus')
+    implementation project(':AirConnector')
+    implementation project(':DataWarehouseConnector')
+    implementation project(':NumberPlanService')
+    implementation project(':SmppConnector')
+    implementation project(':SoapConnector')
+    implementation project(':TransactionService')
+    implementation project(':CtrlConnector')
+    implementation project(':LifecycleConnector')
+    implementation project(':MySqlConnector')
+    implementation project(':SecurityService')
+    implementation project(':SoapProtocol')
+    implementation project(':Configuration')
+    implementation project(':ProcessModel')
+    implementation project(':HsxConnector')
+    implementation project(':HuxConnector')
+    implementation project(':UIConnector')
+    implementation project(':UIConnectorProtocol')
+    implementation project(':ReportingService')
+    implementation project(':UnitTestUtils')
+    implementation 'junit:junit'
+}

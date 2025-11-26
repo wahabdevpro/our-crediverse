@@ -1,0 +1,33 @@
+<div th:if="${connection == 'fail'}">
+	<span th:text="${'Could not connect to server ' + serverconnection} ">Could Not connect to server </span>
+</div>
+
+<div th:if="${connection == 'pass'}">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="col-xs-12 col-sm-6 col-md-8 section-heading">Service Components</div>
+		</div>
+	</div>
+	<div class="row">
+		<div th:each="component : ${fitness.services}">
+			<div th:class="${'alert ' + ((component.fit)? 'alert-success' : 'alert-danger') + ' component-fitness'}">
+				<span th:text="${component.name}"></span>
+				<span style="float:right;" th:text="${(component.fit)? 'FIT' : 'UN-FIT'}"></span>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-12">
+			<div class="col-xs-12 col-sm-6 col-md-8 section-heading">Connector Components</div>
+		</div>
+	</div>
+	<div class="row">
+		<div th:each="component : ${fitness.components}">
+			<div th:class="${'alert ' + ((component.fit)? 'alert-success' : 'alert-danger') + ' component-fitness'}">
+				<span th:text="${component.name}"></span>
+				<span style="float:right;" th:text="${(component.fit)? 'FIT' : 'UN-FIT'}"></span>
+			</div>
+		</div>
+	</div>	
+</div>

@@ -1,0 +1,30 @@
+name: Build Crediverse and RUN Tests on PR (created)
+on:
+  pull_request:
+    branches:
+      - main
+    types: [opened, reopened, synchronize]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+jobs:
+  PrintInfo:
+    name: Print info
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print GitHub event action
+        run: |
+          echo "${{ github.event.action }}"
+          echo "${{ github.event_name }}"
+  Build_Crediverse_PR: # build and run test on PR creation or sync
+    uses: Concurrent-Systems/Crediverse/.github/workflows/build-crediverse-base.yml@main
+  RUN_ROBOT_TESTS_PR:
+    needs: Build_Crediverse_PR
+    uses: Concurrent-Systems/Crediverse/.github/workflows/robot-test-base.yml@main
+    with:
+      DOCKER_TAG: ${{ needs.Build_Crediverse_PR.outputs.version }}
+    secrets:
+      db_pass: ${{ secrets.DB_PASS }}

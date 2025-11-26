@@ -1,0 +1,13 @@
+@CHARSET "UTF-8";
+
+.product::after {
+	content: "Credit4U";
+	color: #F77100;
+	text-align: center;
+}
+
+.product:after {
+	content: "Credit4U";
+	color: #F77100;
+	text-align: center;
+}

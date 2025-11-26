@@ -1,0 +1,9 @@
+#Configuration
+
+basedir=../../../
+
+#Unit Tests
+
+testdir=ecds/services/CreditDistributionService/tests/CreditDistributionServiceTests
+
+#End

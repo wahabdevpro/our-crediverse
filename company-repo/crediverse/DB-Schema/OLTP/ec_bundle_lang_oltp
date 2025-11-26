@@ -1,0 +1,14 @@
+*************************** 1. row ***************************
+       Table: ec_bundle_lang
+Create Table: CREATE TABLE `ec_bundle_lang` (
+  `language` varchar(2) NOT NULL,
+  `bundle_id` int(11) NOT NULL,
+  `description` varchar(100) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `type` varchar(30) NOT NULL,
+  `version` int(11) NOT NULL,
+  `sms_keyword` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`language`,`bundle_id`),
+  KEY `FK_Bundle_Lang` (`bundle_id`),
+  CONSTRAINT `FK_Bundle_Lang` FOREIGN KEY (`bundle_id`) REFERENCES `ec_bundle` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

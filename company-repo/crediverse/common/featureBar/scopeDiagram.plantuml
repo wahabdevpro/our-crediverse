@@ -1,0 +1,36 @@
+@startuml
+title: FeatureBar scope
+
+skinparam component {
+  backgroundColor<<Changes_Required>> Yellow 
+  backgroundColor<<New_Component>> LightGreen
+}
+
+component Crediverse {
+component "ecds-ts" <<Changes_Required>>
+component "ecds-gui" <<Changes_Required>>
+
+component FeatureBarSDK <<New_Component>> {
+component JavaClient <<New_Component>>
+component Helpers <<New_Component>>
+interface webhook  
+}
+}
+
+webhook - JavaClient
+
+component FeatureBarService <<New_Compontent>> 
+
+interface grpc 
+
+grpc - FeatureBarService
+
+JavaClient ..> grpc : register webhook and get feature settings
+
+FeatureBarService ..> webhook : notifies of feature settings change
+
+component SupportClient <<New_Component>>
+
+SupportClient ..> grpc: sets features active and inactive
+
+@enduml

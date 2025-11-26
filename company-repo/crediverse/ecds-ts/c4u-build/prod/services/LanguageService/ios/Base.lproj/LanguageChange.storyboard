@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="zGe-yi-Zei">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Language Change Service-->
+        <scene sceneID="rYR-Q6-hlD">
+            <objects>
+                <viewController id="zGe-yi-Zei" customClass="LanguageChangeViewController" customModule="HxC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2UR-YO-GDQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="E8K-LZ-TwK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2yA-0W-8hP">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select the language to migrate to:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RFc-gy-sKJ">
+                                <rect key="frame" x="147" y="256" width="307" height="49"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="49" id="M3N-VW-BY4">
+                                        <variation key="heightClass=compact" constant="40"/>
+                                    </constraint>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vhg-LI-JGD">
+                                <rect key="frame" x="236" y="313" width="218" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="218" id="8EN-sk-Rah"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="zGe-yi-Zei" id="qeC-pR-Vqp"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Language:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ndY-qH-YYP">
+                                <rect key="frame" x="147" y="316" width="81" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="81" id="2aF-sI-K6O"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This service allows you to change the language globally for all of the available services" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jm5-qE-2EQ">
+                                <rect key="frame" x="44" y="72" width="513" height="176"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="176" id="bAk-Ex-nb3">
+                                        <variation key="heightClass=compact" constant="96"/>
+                                    </constraint>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <pickerView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NsO-sf-UZf">
+                                <rect key="frame" x="0.0" y="365" width="600" height="216"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="zGe-yi-Zei" id="lzI-8O-MAN"/>
+                                    <outlet property="delegate" destination="zGe-yi-Zei" id="rVu-aA-iaU"/>
+                                </connections>
+                            </pickerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="NsO-sf-UZf" secondAttribute="trailing" id="86m-ZY-xgS"/>
+                            <constraint firstItem="NsO-sf-UZf" firstAttribute="top" secondItem="ndY-qH-YYP" secondAttribute="bottom" constant="28" id="8kA-Uq-vBU">
+                                <variation key="heightClass=compact" constant="-2"/>
+                            </constraint>
+                            <constraint firstItem="RFc-gy-sKJ" firstAttribute="top" secondItem="Jm5-qE-2EQ" secondAttribute="bottom" constant="8" symbolic="YES" id="8r6-tT-0uI">
+                                <variation key="heightClass=compact" constant="8"/>
+                            </constraint>
+                            <constraint firstItem="RFc-gy-sKJ" firstAttribute="leading" secondItem="Jm5-qE-2EQ" secondAttribute="leading" id="D6O-bI-67g"/>
+                            <constraint firstItem="NsO-sf-UZf" firstAttribute="centerX" secondItem="RFc-gy-sKJ" secondAttribute="centerX" id="FgO-91-iQY">
+                                <variation key="heightClass=compact" constant="-14"/>
+                            </constraint>
+                            <constraint firstItem="vhg-LI-JGD" firstAttribute="leading" secondItem="ndY-qH-YYP" secondAttribute="trailing" constant="8" symbolic="YES" id="IH1-cq-avJ"/>
+                            <constraint firstItem="RFc-gy-sKJ" firstAttribute="centerX" secondItem="Jm5-qE-2EQ" secondAttribute="centerX" id="LL1-n4-Upg">
+                                <variation key="heightClass=compact" constant="13.5"/>
+                            </constraint>
+                            <constraint firstItem="vhg-LI-JGD" firstAttribute="top" secondItem="RFc-gy-sKJ" secondAttribute="bottom" constant="8" symbolic="YES" id="PQI-Cp-RaS"/>
+                            <constraint firstItem="NsO-sf-UZf" firstAttribute="leading" secondItem="2yA-0W-8hP" secondAttribute="leading" id="Qzh-rO-PGy"/>
+                            <constraint firstItem="ndY-qH-YYP" firstAttribute="baseline" secondItem="vhg-LI-JGD" secondAttribute="baseline" id="TyA-RJ-dP3"/>
+                            <constraint firstItem="E8K-LZ-TwK" firstAttribute="top" secondItem="NsO-sf-UZf" secondAttribute="bottom" constant="19" id="YfO-UQ-bFc">
+                                <variation key="heightClass=compact" constant="0.0"/>
+                            </constraint>
+                            <constraint firstItem="Jm5-qE-2EQ" firstAttribute="leading" secondItem="2yA-0W-8hP" secondAttribute="leadingMargin" constant="28" id="dW2-aw-NE3"/>
+                            <constraint firstItem="vhg-LI-JGD" firstAttribute="trailing" secondItem="RFc-gy-sKJ" secondAttribute="trailing" id="gp8-zz-Qfn">
+                                <variation key="heightClass=compact" constant="-130"/>
+                            </constraint>
+                            <constraint firstItem="Jm5-qE-2EQ" firstAttribute="top" secondItem="2UR-YO-GDQ" secondAttribute="bottom" constant="8" symbolic="YES" id="jvf-CC-N92">
+                                <variation key="heightClass=compact" constant="0.0"/>
+                            </constraint>
+                            <constraint firstAttribute="trailing" secondItem="NsO-sf-UZf" secondAttribute="trailing" id="qu6-bc-Wqq"/>
+                            <constraint firstItem="NsO-sf-UZf" firstAttribute="leading" secondItem="2yA-0W-8hP" secondAttribute="leading" id="sVK-wL-5Jp"/>
+                            <constraint firstItem="RFc-gy-sKJ" firstAttribute="leading" secondItem="ndY-qH-YYP" secondAttribute="leading" id="t5e-Pc-Qpz">
+                                <variation key="heightClass=compact" constant="-103"/>
+                            </constraint>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="D6O-bI-67g"/>
+                                <exclude reference="86m-ZY-xgS"/>
+                                <exclude reference="Qzh-rO-PGy"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact">
+                            <mask key="constraints">
+                                <exclude reference="dW2-aw-NE3"/>
+                                <include reference="D6O-bI-67g"/>
+                                <include reference="86m-ZY-xgS"/>
+                                <include reference="Qzh-rO-PGy"/>
+                                <exclude reference="qu6-bc-Wqq"/>
+                                <exclude reference="sVK-wL-5Jp"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" title="Language Change Service" prompt="Welcome to" id="8gc-gj-dQH">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="3Xy-H3-7pi">
+                            <connections>
+                                <action selector="save:" destination="zGe-yi-Zei" id="ug7-ZN-zib"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="languageLabel" destination="ndY-qH-YYP" id="O5T-d6-zuX"/>
+                        <outlet property="languageTextField" destination="vhg-LI-JGD" id="zMI-t6-JJE"/>
+                        <outlet property="languagesPicker" destination="NsO-sf-UZf" id="3Iw-nA-yNY"/>
+                        <outlet property="saveButton" destination="3Xy-H3-7pi" id="cjY-Rx-v5q"/>
+                        <outlet property="selectLanguageLabel" destination="RFc-gy-sKJ" id="2wK-lw-r5n"/>
+                        <outlet property="serviceDescriptionLabel" destination="Jm5-qE-2EQ" id="uWr-Kw-sAZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Uhz-zz-rAq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="557" y="537"/>
+        </scene>
+    </scenes>
+</document>

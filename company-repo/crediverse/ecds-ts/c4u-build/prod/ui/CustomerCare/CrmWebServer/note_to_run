@@ -1,0 +1,3 @@
+1. run from the root of the 'core' i.e. this project
+2. will need to compile the relavant plugin
+3. java -cp ./lib/*:./webapp/WEB-INF/classes hxc.userinterfaces.gui.jetty.JettyMain --plugins=/home/jceatwell/Projects/c4u/prod/ui/wui/plugins/CustomerCareUI

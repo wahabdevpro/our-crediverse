@@ -1,0 +1,74 @@
+<div>
+	
+	<script id="managegroups">
+		<div class="datatablesview col-xs-12">
+			<div class="row">
+			<div class="coop col-xs-12">
+			</div>
+			</div>
+			<div class="box">
+				<div class="box-header">
+					<div class="pull-right">
+						{{#hasPerms "Batch_Download"}}
+							<button class="btn btn-primary exportGroupsButton" role="button">{{i18n "global.exportBtn"}}</button>
+						{{/hasPerms}}
+						{{#hasPerms "Batch_Upload"}}
+							<a href="#batch" class="btn btn-primary routerlink" role="button">{{i18n "global.importBtn"}}</a>
+						{{/hasPerms}}
+						{{#hasPerms "Group_Add"}}
+							<button class='btn btn-primary createGroupButton'>{{i18n "groups.addGroupBtn"}}</button>
+						{{/hasPerms}}
+					</div>
+				</div>
+				<div class="box-body">
+					<table class="tableview  table table-bordered table-hover table-striped">
+					</table>
+				</div>
+			</div>
+		</div>
+	</script>
+	
+	<script id="singlegroupview">
+		<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		    <h4 class="modal-title">{{{dialogTitle}}}</h4>
+		</div>
+		<div class="modal-body">
+			<div class="groupdetails">
+				<form name="addRule" class="form-horizontal">
+					{{>modalInput name="name" label="global.name" hint="groups.groupNameHint" value=this.name}}
+					{{>modalInput name="description" label="global.description" hint="groups.groupDescriptionHint" value=this.description}}
+
+					{{#if editMode}}
+						{{>modalInput name="tierName" label="global.tier" hint="groups.groupTierHint" value=this.tierName disabled=true}}
+					{{else}}
+					<div class="form-group">
+						<label class="col-xs-4 control-label">{{i18n "global.tier"}}</label>
+						<div class="col-xs-8">
+							<select id="tierID" name="tierID" class="form-control">
+								{{#each tierList}}
+							    	<option value="{{id}}">{{name}}</option>
+							  	{{/each}}
+							</select>
+						</div>
+					</div>
+					{{/if}}
+					
+					
+					{{>modalInputNumber name="maxTransactionAmount" label="global.maxTransactionAmount" hint="global.maxTransactionAmountHint" value=this.maxTransactionAmount}}
+					{{>modalInputNumber name="maxDailyCount" label="global.maxDailyCount" hint="global.maxDailyCountHint" value=this.maxDailyCount}}
+					{{>modalInputNumber name="maxDailyAmount" label="global.maxDailyAmount" hint="global.maxDailyAmountHint" value=this.maxDailyAmount}}
+					{{>modalInputNumber name="maxMonthlyCount" label="global.maxMonthlyCount" hint="global.maxMonthlyCount" value=this.maxMonthlyCount}}
+					{{>modalInputNumber name="maxMonthlyAmount" label="global.maxMonthlyAmount" hint="global.maxMonthlyAmountHint" value=this.maxMonthlyAmount}}
+					
+					{{>modalSelect name="state" label="global.state" data="A:enums.state.active,D:enums.state.deactivated" value=this.state}}
+				</form>
+			</div>
+		</div>
+		<div class="modal-footer">
+	       	<button type="button" class="btn btn-primary groupSaveButton">{{i18n "global.saveBtn"}}</button>
+	       	<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+		</div>
+	</script>
+	
+</div>

@@ -1,0 +1,513 @@
+<div>
+	<script id="balanceSummary" type="partial">
+		<div class="box box-primary">
+	    	<div class="box-body box-profile">
+			    <h2 class="text-center">
+					<strong>
+						{{#if this.agentUser}}
+							{{ this.agentUser.title }} 
+							{{ this.agentUser.firstName }} 
+							{{ this.agentUser.surname }}
+						{{else}}
+							{{ this.agent.title }} 
+							{{ this.agent.firstName }} 
+							{{ this.agent.surname }}
+						{{/if}}
+					</strong>
+				</h2>
+				<h4 class="text-muted text-center">{{i18n "profile.viewUniqueID"}}
+					{{#if this.agentUser}} 
+						{{ this.agentUser.id }}
+					{{else}}
+						{{ this.agent.id }}
+					{{/if}}
+				</h4>
+				<h4 class="text-muted text-center">{{i18n "profile.viewAccountNumber"}} {{ this.accountNumber }}</h4>
+				<hr/>
+
+				<div class="row">
+					<div class="col-xs-12" style="text-align:center;">
+						<label class="light-label">{{i18n "profile.viewAccountTotalBalance"}}</label>		
+						<h2 style="margin-top:10px;"><strong>{{ this.formatted_totalBalance }}</strong></h2>
+					</div>	
+					<div class="col-xs-12" style="text-align:center;">
+						<label class="light-label">{{i18n "profile.viewAccountBalance"}}</label>		
+						<h2 style="margin-top:10px;"><strong>{{ this.formatted_balance }}</strong></h2>
+					</div>	
+					<div class="col-xs-12" style="text-align:center;">
+						<label class="light-label">{{i18n "profile.viewAccountTradeBonus"}}</label>		
+						<h2 style="margin-top:10px;"><strong>{{ this.formatted_bonusBalance }}</strong></h2>
+					</div>	
+					<div class="col-xs-12" style="text-align:center;">
+						<label class="light-label">{{i18n "profile.viewAccountOnHoldBalance"}}</label>		
+						<h2 style="margin-top:10px;"><strong>{{ this.formatted_onHoldBalance }}</strong></h2>
+					</div>	
+				</div>
+				{{>buttonBarContent}}
+			</div>
+		</div>
+	</script>
+	
+	<script id="myProfileContent" type="partial">
+		<div class="row view-fields">
+			<div class="col-lg-4 col-md-6">
+			
+				<h4>{{i18n "profile.viewPersonalDetails"}}</h4>
+				<div style="margin-left:10px;">
+					{{>dbDetail label="profile.viewTitleLabel" content=this.agentUser.title}}
+					{{>dbDetail label="profile.viewFirstNameLabel" content=this.agentUser.firstName}}
+					{{>dbDetail label="profile.viewSurnameLabel" content=this.agentUser.surname}}
+					{{>dbDetail label="profile.viewInitialsLabel" content=this.agentUser.initials}}
+					{{>dbDetail label="profile.viewDepartmentLabel" content=this.agentUser.department}}
+					
+					<div class="view-field">
+						<label>{{i18n "profile.viewAuthenticationMethodLabel"}}</label>
+						<div>
+						{{#ifCond this.agentUser.authenticationMethod "==" "A"}}{{ i18n "enums.authenticationMethod.password" }}{{/ifCond}}
+						{{#ifCond this.agentUser.authenticationMethod "==" "P"}}{{ i18n "enums.authenticationMethod.pin" }}{{/ifCond}}
+						{{#ifCond this.agentUser.authenticationMethod "==" "X"}}{{ i18n "enums.authenticationMethod.external" }}{{/ifCond}}
+						{{#ifCond this.agentUser.authenticationMethod "==" ""}}<span class="no-data">{{i18n "notSet"}}</span>{{/ifCond}}
+						</div>
+					</div>		
+					{{#ifCond this.authenticationMethod "!=" "P"}}
+						<div class="view-field">
+							<label>{{i18n (concat "enums.usernameType." this.agentUser.authenticationMethod)  }}</label>
+							<div>{{#if this.agentUser.domainAccountName}}{{ this.agentUser.domainAccountName }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+						</div>
+					{{/ifCond}}
+
+					{{#if this.language}}
+						{{>dbDetail label="profile.viewLanguageLabel" content=(i18n (concat "enums.langType." this.agentUser.language)) }}
+					{{else}}
+						{{>dbDetail label="profile.viewLanguageLabel" content=(i18n "notSet") }}
+					{{/if}}
+					
+					{{>dbDetail label="profile.viewEmailLabel" content=this.agentUser.email}}
+					{{>dbDetail label="profile.viewMobileNumberLabel" content=this.agentUser.mobileNumber}}
+
+					{{>dbDetail label="profile.viewAltNumberLabel" content=this.agentUser.altPhoneNumber}}
+					{{>dbDetail label="profile.viewRoleLabel" content=this.agentUserRoleName}}
+				</div>
+			
+			</div>
+		</div>
+	</script>
+	
+	<script id="profileContent" type="partial">
+		<div class="row view-fields">
+			<div class="col-lg-4 col-md-6">
+				<h4>
+					{{i18n "profile.viewPersonalDetails"}}
+					{{#hasPerms "Agent_Update"}}
+						<a class="editProfileAction action-button pull-right" data-menu-offset="{{offset}}" data-menu-id="{{id}}" href="#edit-button-{{id}}" role="button">
+							<span>
+								<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+							</span>
+						</a>
+					{{/hasPerms}}
+				</h4>
+				<div style="margin-left:10px;">
+					{{>dbDetail label="profile.viewTitleLabel" content=this.title}}
+					{{>dbDetail label="profile.viewFirstNameLabel" content=this.firstName}}
+					{{>dbDetail label="profile.viewSurnameLabel" content=this.surname}}
+					{{>dbDetail label="profile.viewInitialsLabel" content=this.initials}}
+					
+					<div class="view-field">
+						<label>{{i18n "profile.viewAuthenticationMethodLabel"}}</label>
+						<div>
+						{{#ifCond this.authenticationMethod "==" "A"}}{{ i18n "enums.authenticationMethod.password" }}{{/ifCond}}
+						{{#ifCond this.authenticationMethod "==" "P"}}{{ i18n "enums.authenticationMethod.pin" }}{{/ifCond}}
+						{{#ifCond this.authenticationMethod "==" "X"}}{{ i18n "enums.authenticationMethod.external" }}{{/ifCond}}
+						{{#ifCond this.authenticationMethod "==" ""}}<span class="no-data">{{i18n "notSet"}}</span>{{/ifCond}}
+						</div>
+					</div>
+					
+					{{#ifCond this.authenticationMethod "!=" "P"}}
+						<div class="view-field">
+							<label>{{i18n (concat "enums.usernameType." this.authenticationMethod)  }}</label>
+							<div>{{#if this.domainAccountName}}{{ this.domainAccountName }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+						</div>
+					{{/ifCond}}
+
+					{{#if this.language}}
+						{{>dbDetail label="profile.viewLanguageLabel" content=(i18n (concat "enums.langType." this.language)) }}
+					{{else}}
+						{{>dbDetail label="profile.viewLanguageLabel" }}
+					{{/if}}
+					
+					{{>dbDetail label="profile.viewGenderLabel" content=this.genderName}}
+					{{>dbDetail name="dateOfBirth" label="profile.viewDOBLabel" date=this.dateOfBirth}}
+					{{>dbDetail label="profile.viewEmailLabel" content=this.email}}
+					{{>dbDetail label="profile.viewMobileNumberLabel" content=this.mobileNumber}}
+					{{>dbDetail label="profile.viewAltNumberLabel" content=this.altPhoneNumber}}
+					{{>dbDetail label="profile.viewRoleLabel" content=this.roleName}}
+				</div>
+			
+			</div>
+		
+			<div class="col-lg-4 col-md-6">
+		
+				<h4>{{i18n "profile.viewSegmentationHeading"}}</h4>
+				<div style="margin-left:10px;">
+					{{>dbDetail label="profile.viewTierTypeLabel" content=this.tierType}}
+					{{>dbDetail label="profile.viewTierNameLabel" content=this.tierName}}
+					{{>dbDetail label="profile.viewGroupNameLabel" content=this.groupName}}
+					{{>dbDetail label="profile.viewServiceClassLabel" content=this.serviceClassName}}
+					{{>dbDetail label="profile.viewAreaLabel" content=this.areaName}}
+				</div>
+		
+				<h4>{{i18n "profile.viewIdentificationHeading"}}</h4>
+				<div style="margin-left:10px;">
+					{{>dbDetail label="profile.viewImeiLabel" content=this.imei}}
+					{{>dbDetail label="profile.viewImsiLabel" content=this.imsi}}
+				</div>
+				
+			</div>
+	
+			<div class="col-lg-4 col-md-6">
+					
+				<h4>{{i18n "profile.viewOtherHeading"}}</h4>
+				<div style="margin-left:10px;">
+					{{>dbDetail label="profile.viewOwnerAgentName" content=this.ownerName}}
+					{{>dbDetail label="profile.viewUpstreamAgentName" content=this.supplierName}}
+					
+					{{>dbDetail name="activationDate" label="profile.viewActivationDate" date=this.activationDate}}					
+					{{>dbDetail name="deactivationDate" label="profile.viewdeactivationDate" date=this.deactivationDate}}
+					{{>dbDetail name="expirationDate" label="profile.viewExpiryDate" date=this.expirationDate}}
+					{{>dbDetail label="profile.viewChannelLabel" content=this.channelUssd}}
+					
+					<div class="view-field">
+						<label>{{i18n "profile.viewChannelLabel"}}</label>
+						<div>
+							<label class="label label-{{#if this.channelUssd}}success{{else}}default{{/if}}">{{i18n "profile.viewChannelUssdLabel"}}</label>
+							<label class="label label-{{#if this.channelSms}}success{{else}}default{{/if}}">{{i18n "profile.viewChannelSmsLabel"}}</label>
+							<label class="label label-{{#if this.channelApi}}success{{else}}default{{/if}}">{{i18n "profile.viewChannelApiLabel"}}</label>
+							<label class="label label-{{#if this.channelWui}}success{{else}}default{{/if}}">{{i18n "profile.viewChannelWuiLabel"}}</label>
+							<label class="label label-{{#if this.channelApp}}success{{else}}default{{/if}}">{{i18n "agentAccounts.viewChannelAppLabel"}}</label>
+						</div>
+					</div>
+					
+					<div class="view-field">
+						<label>{{i18n "agentAccounts.confirmUssdPrefix"}}</label>
+						<div>
+							<label class="label label-{{#if this.confirmUssd}}success{{else}}default{{/if}}">{{i18n "agentAccounts.confirmUssdLabel"}}</label>
+						</div>
+					</div>
+					<div class="view-field">
+						<div>
+							<label class="label label-{{#if this.sendBundleCommissionReport}}success{{else}}default{{/if}}">{{i18n "agentAccounts.sendBundleCommissionReportLabel"}}</label>
+						</div>
+					</div>
+					{{>dbDetail label="profile.viewWarningThresholdLabel" content=this.warningThreshold}}
+					
+					<div class="view-field">
+						<label>{{i18n "profile.viewStatusLabel"}}</label>
+						<div>
+							{{#ifCond this.state "==" "A"}}<label class="label label-success">{{ this.currentState }}</label>{{/ifCond}}
+							{{#ifCond this.state "==" "S"}}<label class="label label-warning">{{ this.currentState }}</label>{{/ifCond}}
+							{{#ifCond this.state "==" "D"}}<label class="label label-danger">{{ this.currentState }}</label>{{/ifCond}}
+							{{#ifCond this.state "==" "P"}}<label class="label label-default">{{ this.currentState }}</label>{{/ifCond}}
+						</div>
+					</div>
+				</div>
+				
+			</div>	
+		</div>	
+	</script>
+	
+	<script id="amlLimitConent" type="partial">
+		<div class="row view-fields">
+			<div class="col-md-4 col-sm-6">
+				<h4>{{i18n "profile.viewAmlLimitHeading"}}</h4>
+		
+				<div style="margin-left:10px;">
+					{{>dbDetail label="profile.viewMaxDailyCountLabel" content=this.maxTransactionAmount numeric=true}}
+					{{>dbDetail label="profile.viewMaxDailyAmountLabel" content=this.maxDailyCount numeric=true}}
+					{{>dbDetail label="profile.viewMaxTransAmountLabel" content=this.maxDailyAmount numeric=true}}
+					{{>dbDetail label="profile.viewMaxMonthlyCountLabel" content=this.maxMonthlyCount numeric=true}}
+					{{>dbDetail label="profile.viewMaxMonthlyAmountLabel" content=this.maxMonthlyAmount numeric=true}}
+				</div>
+			</div>
+		</div>
+	</script>
+	
+	<script id="summaryContent" type="partial">
+		<div class="row view-fields">
+			<div class="col-lg-6 col-md-6">
+				
+				<h4>{{i18n "dashboard.deposits"}}</h4>
+				<div style="margin-left:10px;">
+					{{>dbDetail label="dashboard.count" content=this.depositsCount numeric=true}}
+					{{>dbDetail label="dashboard.amount" content=this.depositsAmount numeric=true}}
+				</div>
+		
+			</div>
+
+			<div class="col-lg-6 col-md-6">
+
+				<h4>{{i18n "dashboard.transfers"}}</h4>
+				<div style="margin-left:10px;">
+					{{>dbDetail label="dashboard.count" content=this.transferCount numeric=true}}
+					{{>dbDetail label="dashboard.amount" content=this.transferAmount numeric=true}}
+				</div>
+
+			</div>
+	<!--
+			<div class="col-lg-6 col-md-6">
+			
+				<h4>{{i18n "dashboard.sales"}}</h4>
+				<div style="margin-left:10px;">
+					{{>dbDetail label="dashboard.count" content=this.salesCount numeric=true}}
+					{{>dbDetail label="dashboard.amount" content=this.salesAmount numeric=true}}
+				</div>
+				
+				<h4>{{i18n "dashboard.selfTopups"}}</h4>
+				<div style="margin-left:10px;">
+					{{>dbDetail label="dashboard.count" content=this.selfTopupsCount numeric=true}}
+					{{>dbDetail label="dashboard.amount" content=this.selfTopupsAmount numeric=true}}
+				</div>
+			</div>
+	-->
+		</div>
+	</script>
+	
+	<script id="TdrsAContent" type="partial">
+		<table class="tdrstablea tableview table table-bordered table-hover table-striped">
+		</table>
+	</script>
+	
+	<script id="TdrsBContent" type="partial">
+		<table class="tdrstableb tableview table table-bordered table-hover table-striped">
+		</table>
+	</script>
+	
+	<script id="TdrsXContent" type="partial">
+		<div>
+            <div class="advancedSearchForm">
+				<form id="searchform" name="searchForm" class="form-horizontal">
+		        <div>
+		            <div>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="row form-group" style="margin-bottom:15px;">
+										<label for="msisdn-a" class="col-xs-4 control-label pad-right-min">{{i18n "transactions.relation"}}</label>
+										<div class="col-xs-8 pad-right-min pad-left-min">
+											<select id="relation" name="relation" class="form-control novalidate">
+												<option value="own">{{i18n "enums.transactionRelation.own"}}</option>
+												<option value="ownA">{{i18n "enums.transactionRelation.ownA"}}</option>
+												<option value="ownB">{{i18n "enums.transactionRelation.ownB"}}</option>
+												<option value="ownerA">{{i18n "enums.transactionRelation.ownerA"}}</option>
+												<option value="ownerB">{{i18n "enums.transactionRelation.ownerB"}}</option>
+												<option value="all">{{i18n "enums.transactionRelation.all"}}</option>
+											</select>
+										</div>
+									</div>	
+	
+									{{>modalInput name="number" className="novalidate" label="transactions.tranactionNumber" hint="transactions.tranactionNumber" divClassName="pad-left-min" labelClassName="pad-right-min"}}
+									
+									{{>modalSelectTDS name="type" className="novalidate" divClassName="pad-left-min" labelClassName="pad-right-min" label="transactions.transactionType" data=":enums.transactionType.ALL,RP:enums.transactionType.REPLENISH,TX:enums.transactionType.TRANSFER,SL:enums.transactionType.SELL,ND:enums.transactionType.NON_AIRTIME_DEBIT,NR:enums.transactionType.NON_AIRTIME_REFUND,PR:enums.transactionType.REGISTER_PIN,CP:enums.transactionType.CHANGE_PIN,BE:enums.transactionType.BALANCE_ENQUIRY,ST:enums.transactionType.SELF_TOPUP,TS:enums.transactionType.TRANSACTION_STATUS_ENQUIRY,LT:enums.transactionType.LAST_TRANSACTION_ENQUIRY,AJ:enums.transactionType.ADJUST,SQ:enums.transactionType.SALES_QUERY,DQ:enums.transactionType.DEPOSITS_QUERY,FR:enums.transactionType.REVERSE,PA:enums.transactionType.REVERSE_PARTIALLY,RW:enums.transactionType.PROMOTION_REWARD,AD:enums.transactionType.ADJUDICATE" hint="transactions.transactionType" }}
+								</div>
+								<div class="col-sm-6">
+									<div class="row" style="margin-bottom:15px;">
+											<label for="date-from" class="col-xs-4 col-sm-4 control-label pad-right-min">{{i18n "transactions.transactionDateFrom"}}</label>
+											<div class="col-xs-8 col-sm-8 pad-right-min pad-left-min">
+												<div class="row">
+													<div class="col-xs-7" style="padding-right:1px">
+														<input id="date-from" type="text" name="dateFrom" class="form-control novalidate" placeholder="YYYY-MM-DD" data-date-format="yyyy-mm-dd"  />
+													</div>
+													<div class="col-xs-5" style="padding-left:1px;">
+														<div class="input-group clockpicker time-from-picker" data-placement="left" data-align="top" data-autoclose="true">
+													    	<input id="time-from" name="timeFrom" type="text" class="form-control novalidate" placeholder="00:00" value="">
+														</div>
+													</div>
+												</div>
+											</div>
+									</div>	
+									<div class="row" style="margin-bottom:15px;">
+											<label for="date-from" class="col-xs-4 col-sm-4 control-label pad-right-min">{{i18n "transactions.transactionDateTo"}}</label>
+											<div class="col-xs-8 col-sm-8 pad-right-min pad-left-min">
+												<div class="row">
+													<div class="col-xs-7" style="padding-right:1px;">
+														<input id="date-to" type="text" name="dateTo" class="form-control novalidate" placeholder="YYYY-MM-DD" data-date-format="yyyy-mm-dd" />
+													</div>
+													<div class="col-xs-5" style="padding-left:1px;">
+														<div class="input-group clockpicker time-to-picker" data-placement="left" data-align="top" data-autoclose="true">
+													    	<input id="time-to" name="timeTo" type="text" class="form-control novalidate" placeholder="23:59" value="">
+														</div>
+													</div>
+												</div>
+											</div>
+									</div>	
+								</div>
+							</div>
+		            </div>
+					<div class="" style="border-top:1px solid #eaeaea; padding-top:10px; margin-bottom:20px;">
+		  			  	<div class="form-group">
+		  			  		<!--<div class="col-sm-8">
+							</div-->
+							<div class="clearfix">
+								<div class="col-xs-4 col-sm-5 col-md-8">
+									<div class="pull-left" style="margin-right:30px;">
+										<input id="withquery" name="withquery" class="custom-checkbox-fa" value="false" type="checkbox">
+										<label for="withquery" title="{{i18n "global.includeQueryTransactionsHint"}}" data-toggle="tooltip" class="">{{i18n "global.includeQueryTransactions"}} <i class="fa fa-info-circle"></i></label>									
+				  			  		</div>
+				  			  		<div class="pull-left">
+										<input id="withcount" name="withcount" class="custom-checkbox-fa" value="false" type="checkbox">
+										<label for="withcount" title="{{i18n "global.retrieveRecordCountHint"}}" data-toggle="tooltip" class="">{{i18n "global.retrieveRecordCount"}} <i class="fa fa-info-circle"></i></label>								
+				  			  		</div>
+								</div>
+											  			  		
+					        	<div class="col-xs-8 col-sm-7 col-md-4 right">
+		           			 		<button type="submit" class="btn btn-primary tdrSearchButton"><i class="fa fa-search"></i> {{i18n "global.searchBtn"}}</button>
+									<button type="button" class="btn btn-primary exportTdrsButton" role="button">{{i18n "global.exportBtn"}}</button>
+					           		<button type="button" class="btn btn-default tdrSearchResetButton">{{i18n "global.clearBtn"}}</button>
+									<!--&nbsp;&nbsp;&nbsp;-->
+									<div class="pull-right right">
+										<div id="error_general_message" class="alert alert-danger" style="padding:6px 15px; margin-right:20px; display:none;"></div>
+									</div>
+								</div>
+							</div>
+				    	</div>
+					</div>
+		        </div>
+				</form>	
+		    </div>
+			<table class="tdrstablex tableview table table-bordered table-hover table-striped">
+			</table>
+		</div>
+	</script>
+	
+	
+	
+	<script id="summarySpinner" type="partial">
+
+		<div class="row view-fields" style="height: 300px">
+
+			<div class="col-md-12" style="top:100px">
+				{{>bigSpinner}}
+			</div>
+	
+		</div>
+
+	</script>	
+	
+	<script id="buttonBarContent" type="partial">
+		<div class="box box-default">
+	    	<div class="box-body box-profile">
+				<div class="center-block text-center">
+					{{#hasPerms "Transaction_Transfer"}}
+						<button class="btn btn-primary btn-spaced transferbtn">{{i18n "profile.viewTransferButton"}}</button>
+					{{/hasPerms}}
+<!--
+					<button class="btn btn-default selftopupbtn">Self-Topup</button>
+-->
+					{{#hasPerms "Transaction_ChangePin"}}
+						<!--Check if agentUser or Agent, then check their authenticationMethod to display the correct button-->
+						{{#if this.agentUser}}
+							{{#ifCond this.agentUser.authenticationMethod "==" "A"}}
+								<button class="btn btn-primary btn-spaced changepasswordbtn">{{i18n "profile.viewChangePasswordButton"}}</button>
+							{{else}}
+								<button class="btn btn-primary btn-spaced pinchangebtn">{{i18n "profile.viewPinChangeButton"}}</button>
+							{{/ifCond}}
+						{{else}}
+							{{#ifCond this.authenticationMethod "==" "A"}}
+								<button class="btn btn-primary btn-spaced changepasswordbtn">{{i18n "profile.viewChangePasswordButton"}}</button>
+							{{else}}
+								<button class="btn btn-primary btn-spaced pinchangebtn">{{i18n "profile.viewPinChangeButton"}}</button>
+							{{/ifCond}}
+						{{/if}}
+					{{/hasPerms}}
+				</div>
+			</div>
+		</div>
+	</script>
+	
+	<script id="accountdetails">
+	    <div class="col-xs-12">
+			<div id="profiledetails" class="row">
+			
+				{{#hasPerms "Transaction_QueryBalance"}}
+					<div class="col-lg-4 col-md-5 balanceSummaryContent">
+						{{>balanceSummary}}
+					</div>
+				{{/hasPerms}}
+				
+				<div class="col-lg-8 col-md-7">
+				
+					<div class="row">
+						<div class="nav-tabs-custom">
+						
+							<!-- Tabs List -->
+							<ul class="nav nav-tabs">
+								<li class="active"><a href="#profile" data-tab="" data-toggle="tab">{{i18n "profile.profileTab"}}</a></li>
+								
+								{{#if this.agentUser}}
+									<li><a href="#myprofile" data-tab="" data-toggle="tab">{{i18n "profile.myProfileTab"}}</a></li>
+								{{/if}}
+								
+								<li><a href="#amllimits" data-tab="" data-toggle="tab">{{i18n "profile.amlLimitsTab"}}</a></li>
+								{{#if 0}}
+								<li><a href="#transactionsA" data-tab="A" class="transactionsATab" data-toggle="tab">{{i18n "profile.transactionsATab"}}</a></li>
+								<li><a href="#transactionsB" data-tab="B" class="transactionsBTab" data-toggle="tab">{{i18n "profile.transactionsBTab"}}</a></li>
+								{{/if}}
+								<li><a href="#transactionsX" data-tab="X" class="transactionsXTab" data-toggle="tab">{{i18n "profile.transactionsXTab"}}</a></li>
+								{{#hasPerms "Transaction_QueryDeposit" "Transaction_QuerySales"}}
+									<li><a href="#salessummary" class="salessummary" data-tab="" data-toggle="tab">{{i18n "profile.summaryTab"}}</a></li>
+								{{/hasPerms}}
+							</ul>
+						
+							<div class="tab-content">
+							
+								<!-- Profile Tab -->
+							    <div class="active tab-pane info-panel" id="profile" style="margin:8px;">
+									{{>profileContent}}
+		   						</div>
+		   						
+		   						{{#if this.agentUser}}
+		   							<div class="tab-pane info-panel" id="myprofile" style="margin:8px;">
+		   								{{>myProfileContent}}
+	   								</div>
+		   						{{/if}}
+								
+		   						<!-- AML Tab -->
+							    <div class="tab-pane info-panel" id="amllimits" style="margin:8px;">
+									{{>amlLimitConent}}
+								</div>
+								
+								{{#if 0}}
+								<!-- Transactions (A) -->
+							    <div class="tab-pane info-panel" id="transactionsA" style="margin:8px;">
+							    	{{>summarySpinner}}
+		            				<!--<table class="tdrstablea tableview table table-bordered table-hover table-striped">
+		            				</table>-->
+								</div>
+							
+								<!-- Transactions (B) -->
+						    	<div class="tab-pane info-panel" id="transactionsB" style="margin:8px;">
+						    		{{>summarySpinner}}
+		            				<!--<table class="tdrstableb tableview table table-bordered table-hover table-striped">
+		            				</table>-->
+								</div>
+								{{/if}}
+
+								<!-- Transactions -->
+						    	<div class="tab-pane info-panel" id="transactionsX" style="margin:8px;">
+						    		{{>summarySpinner}}
+								</div>
+
+								<!-- Sales summary -->
+							    <div class="tab-pane info-panel salessummaryTabContent" id="salessummary" style="margin:8px;">
+							    	{{>summarySpinner}}
+								</div>
+
+							</div>
+						</div>
+					</div>
+				
+				</div>
+				
+			</div>	
+	    </div>
+	</script>
+		
+</div>

@@ -1,0 +1,312 @@
+<div>
+
+	<!-- Transactions -->
+	
+	<script id="transactionsConfig">
+		<div class="box">
+
+			{{>configMainHeading heading="config.transHeading" btnclass="showTransactionsConfigDialog" btntext="global.editBtn" permission="Transaction_ConfigTransaction"}}
+	
+			<!-- Nav tabs -->
+			<div class="nav-tabs-custom">
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active">
+						<a href="#transactionGeneral" aria-controls="transactionGeneral" role="tab" data-toggle="tab">{{i18n "config.generalTransactionTab"}}</a>
+					</li>
+			    	<li role="presentation">
+			    		<a href="#transactionMessages" aria-controls="transactionMessages" role="tab" data-toggle="tab">{{i18n "config.messageTransactionTab"}}</a>
+			    	</li>
+				</ul>
+			
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane active" id="transactionGeneral">
+						<form class="form-horizontal">
+		        			<div class="box-body">
+		        				<h5 class="configDialogSectionHeading">{{i18n "config.generalSettings"}}</h5>
+								{{>configLabel name="imsiChangeLockoutHours" label="config.imsiChangeLockoutTime" value=this.imsiChangeLockoutHours forceDisplay=true}}
+								{{>configLabel name="imeiRefreshInterval" label="config.imeiRefreshInterval" value=this.imeiRefreshInterval forceDisplay=true}}
+								{{#if this.channelRequestTimeoutSeconds}}
+									{{>configLabel name="channelRequestTimeoutSeconds" label="config.channelRequestTimeoutSeconds" value=this.channelRequestTimeoutSeconds forceDisplay=true}}
+								{{else}}
+									{{>configLabel name="channelRequestTimeoutSeconds" label="config.applyChannelRequestTimeout" value=(i18n "enums.yesNo.no") forceDisplay=true}}
+								{{/if}}
+								{{>configLabel name="maxUssdLength" label="config.maxUssdLength" value=this.maxUssdLength forceDisplay=true}}
+								<hr/>
+								
+								<h5 class="configDialogSectionHeading">{{i18n "config.tdrParameters"}}</h5>
+								{{>configLabel name="tdrRotationIntervalSeconds" label="config.tdrRotationIntervalSeconds" value=this.tdrRotationIntervalSeconds forceDisplay=true}}
+								{{>configLabel name="tdrMaxFileLengthBytes" label="config.tdrMaxFileLengthBytes" value=this.tdrMaxFileLengthBytes forceDisplay=true}}
+								{{>configLabel name="zipTdrAfterDays" label="config.zipTdrAfterDays" value=this.zipTdrAfterDays forceDisplay=true}}
+								{{>configLabel name="deleteZipAfterDays" label="config.deleteZipAfterDays" value=this.deleteZipAfterDays forceDisplay=true}}
+								{{>configLabel name="tdrDirectory" label="config.tdrDirectory" value=this.tdrDirectory forceDisplay=true}}
+								{{>configLabel name="tdrFilenameFormat" label="config.tdrFilenameFormat" value=this.tdrFilenameFormat forceDisplay=true}}								
+								{{>configLabel name="zipFilenameFormat" label="config.zipFilenameFormat" value=this.zipFilenameFormat forceDisplay=true}}	
+								<div class="form-group {{#if class}}class{{/if}} {{#if required}}required{{/if}}">
+									<label for="input" class="col-sm-2 control-label">{{i18n "config.tdrStructureVersion"}}</label>
+									<div class="col-sm-10">
+										<p class="form-control-static" id="download-text">
+											
+										</p>
+										<p class="form-control-static config-text">
+											<a href="#" class="download-tdr-structure">
+											{{i18n "config.tdrDownloadLabel"}}
+											{{#if suffix}}
+												{{suffix}}
+											{{/if}}
+											</a>
+										</p>
+									</div>
+								</div>
+								<hr/>
+
+				  				<h5 class="configDialogSectionHeading">{{i18n "config.oltpParameters"}}</h5>
+								{{>configLabel name="oltpTransactionRetentionDays" label="config.oltpTransactionRetentionDays" value=this.oltpTransactionRetentionDays forceDisplay=true}}
+								{{>configLabel name="oltpTransactionCleanupTimeOfDayString" label="config.oltpTransactionCleanupTimeOfDayString" value=this.oltpTransactionCleanupTimeOfDayString forceDisplay=true}}
+								<hr/>
+
+				  				<h5 class="configDialogSectionHeading">{{i18n "config.olapParameters"}}</h5>
+								{{>configLabel name="olapTransactionRetentionDays" label="config.olapTransactionRetentionDays" value=this.olapTransactionRetentionDays forceDisplay=true}}
+								{{>configLabel name="olapTransactionCleanupTimeOfDayString" label="config.olapTransactionCleanupTimeOfDayString" value=this.olapTransactionCleanupTimeOfDayString forceDisplay=true}}
+								{{>configLabel name="olapSyncTimeOfDayString" label="config.olapSyncTimeOfDayString" value=this.olapSyncTimeOfDayString forceDisplay=true}}
+								<hr/>
+							</div>
+						</form>
+					</div>
+			    	
+					<div role="tabpanel" class="tab-pane" id="transactionMessages">
+			            <form class="form-horizontal">
+				        	<div class="box-body">
+				        		{{>configNotificationLabel heading="config.errorMessages.ACC_NOT_FOUND" notification=this.errorMessages.ACC_NOT_FOUND.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.INVALID_PIN" notification=this.errorMessages.INVALID_PIN.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.CO_AUTHORIZE" notification=this.errorMessages.CO_AUTHORIZE.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.NOT_SELF" notification=this.errorMessages.NOT_SELF.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.SUCCESS" notification=this.errorMessages.SUCCESS.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.FORBIDDEN" notification=this.errorMessages.FORBIDDEN.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.NO_TRANSFER_RULE" notification=this.errorMessages.NO_TRANSFER_RULE.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.INTRATIER_TRANSFER" notification=this.errorMessages.INTRATIER_TRANSFER.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.NO_LOCATION" notification=this.errorMessages.NO_LOCATION.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.WRONG_LOCATION" notification=this.errorMessages.WRONG_LOCATION.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.INVALID_CHANNEL" notification=this.errorMessages.INVALID_CHANNEL.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.MONTH_AMOUNT_LIMIT" notification=this.errorMessages.MONTH_AMOUNT_LIMIT.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.INVALID_AMOUNT" notification=this.errorMessages.INVALID_AMOUNT.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.DAY_AMOUNT_LIMIT" notification=this.errorMessages.DAY_AMOUNT_LIMIT.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.DAY_COUNT_LIMIT" notification=this.errorMessages.DAY_COUNT_LIMIT.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.TECHNICAL_PROBLEM" notification=this.errorMessages.TECHNICAL_PROBLEM.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.INSUFFICIENT_FUNDS" notification=this.errorMessages.INSUFFICIENT_FUNDS.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.INSUFFICIENT_PROVISN" notification=this.errorMessages.INSUFFICIENT_PROVISN.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.INVALID_AGENT" notification=this.errorMessages.INVALID_AGENT.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.NOT_REGISTERED" notification=this.errorMessages.NOT_REGISTERED.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.IMSI_LOCKOUT" notification=this.errorMessages.IMSI_LOCKOUT.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.MONTH_COUNT_LIMIT" notification=this.errorMessages.MONTH_COUNT_LIMIT.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.INVALID_STATE" notification=this.errorMessages.INVALID_STATE.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.TX_NOT_FOUND" notification=this.errorMessages.TX_NOT_FOUND.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.ALREADY_REGISTERED" notification=this.errorMessages.ALREADY_REGISTERED.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.PIN_LOCKOUT" notification=this.errorMessages.PIN_LOCKOUT.texts}}								
+								{{>configNotificationLabel heading="config.errorMessages.MAX_AMOUNT_LIMIT" notification=this.errorMessages.MAX_AMOUNT_LIMIT.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.INVALID_TRAN_TYPE" notification=this.errorMessages.INVALID_TRAN_TYPE.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.ALREADY_REVERSED" notification=this.errorMessages.ALREADY_REVERSED.texts}}
+								
+								{{>configNotificationLabel heading="config.errorMessages.NOT_ELIGIBLE" notification=this.errorMessages.NOT_ELIGIBLE.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.INVALID_BUNDLE" notification=this.errorMessages.INVALID_BUNDLE.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.SESSION_EXPIRED" notification=this.errorMessages.SESSION_EXPIRED.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.TIMED_OUT" notification=this.errorMessages.TIMED_OUT.texts}}
+								{{>configNotificationLabel heading="config.errorMessages.INVALID_RECIPIENT" notification=this.errorMessages.INVALID_RECIPIENT.texts}}
+								
+								{{>configNotificationLabel heading="config.errorMessages.INVALID_VALUE" notification=this.errorMessages.INVALID_VALUE.texts}}
+			  					{{>configNotificationLabel heading="config.errorMessages.TOO_SMALL" notification=this.errorMessages.TOO_SMALL.texts}}
+			  					{{>configNotificationLabel heading="config.errorMessages.TOO_LARGE" notification=this.errorMessages.TOO_LARGE.texts}}
+			  					{{>configNotificationLabel heading="config.errorMessages.TOO_LONG" notification=this.errorMessages.TOO_LONG.texts}}
+			  					{{>configNotificationLabel heading="config.errorMessages.TOO_SHORT" notification=this.errorMessages.TOO_SHORT.texts}}
+			  					
+								{{>configNotificationLabel heading="config.errorMessages.OTHER_ERROR" notification=this.errorMessages.OTHER_ERROR.texts}}
+			  					{{>configNotificationLabel heading="config.errorMessages.REFILL_BARRED" notification=this.errorMessages.REFILL_BARRED.texts}}
+			  					{{>configNotificationLabel heading="config.errorMessages.TEMPORARY_BLOCKED" notification=this.errorMessages.TEMPORARY_BLOCKED.texts}}
+			  					{{>configNotificationLabel heading="config.errorMessages.REFILL_NOT_ACCEPTED" notification=this.errorMessages.REFILL_NOT_ACCEPTED.texts}}
+			  					{{>configNotificationLabel heading="config.errorMessages.REFILL_DENIED" notification=this.errorMessages.REFILL_DENIED.texts}}
+			  					{{>configNotificationLabel heading="config.errorMessages.NO_IMSI" notification=this.errorMessages.NO_IMSI.texts}}
+			  					
+			  					{{>configNotificationLabel name="INVALID_PASSWORD" heading="config.errorMessages.INVALID_PASSWORD" errorMessage=this.errorMessages.INVALID_PASSWORD}}
+			  					{{>configNotificationLabel name="PASSWORD_LOCKOUT" heading="config.errorMessages.PASSWORD_LOCKOUT" errorMessage=this.errorMessages.PASSWORD_LOCKOUT}}
+			  					{{>configNotificationLabel heading="config.errorMessages.CONFIRM_PIN_DIFF" notification=this.errorMessages.CONFIRM_PIN_DIFF.texts}}
+							</div>
+						</form>			    	
+					</div>
+				</div>
+			</div>
+
+			
+		</div>
+	</script>
+	
+	<script id="transactionsConfigModal">
+		{{>configModalHeader heading="config.transHeading"}}
+		<div class="modal-body">
+			<div class="ruledetails">
+			
+				<form name="adjustmentConfigForm" class="form-horizontal transactionsConfigForm">
+					{{>configAddVariableNote}}
+	
+					<div class="nav-tabs-custom">
+						<ul class="nav nav-tabs" role="tablist">
+							<li role="presentation" class="active">
+								<a href="#transactionGeneralModal" aria-controls="transactionGeneralModal" role="tab" data-toggle="tab">{{i18n "config.generalTransactionTab"}}</a>
+							</li>
+							<li role="presentation">
+								<a href="#transactionMessagesModal" aria-controls="transactionMessagesModal" role="tab" data-toggle="tab">{{i18n "config.messageTransactionTab"}}</a>
+							</li>
+						</ul>
+					
+						<!-- Tab panes -->
+						<div class="tab-content">
+							<div role="tabpanel" class="tab-pane active" id="transactionGeneralModal">
+								<h5 class="configDialogSectionHeading">{{i18n "config.generalSettings"}}</h5>
+				  				{{>configLongLabelInput name="imsiChangeLockoutHours" label="config.imsiChangeLockoutTime" hint="config.imsiChangeLockoutTime" value=this.imsiChangeLockoutHours}}
+				  				{{>configLongLabelInput name="imeiRefreshInterval" label="config.imeiRefreshInterval" hint="config.imeiRefreshInterval" value=this.imeiRefreshInterval}}				  				
+				  				{{>configLongLabelInput name="channelRequestTimeoutSeconds" label="config.channelRequestTimeoutSeconds" hint="config.channelRequestTimeoutSeconds" value=this.channelRequestTimeoutSeconds}}
+				  				{{>configLongLabelInput name="maxUssdLength" label="config.maxUssdLength" hint="config.maxUssdLength" value=this.maxUssdLength}}
+				  				
+				  				<h5 class="configDialogSectionHeading">{{i18n "config.tdrParameters"}}</h5>
+				  				{{>configLongLabelInput name="tdrRotationIntervalSeconds" label="config.tdrRotationIntervalSeconds" hint="config.tdrRotationIntervalSeconds" value=this.tdrRotationIntervalSeconds}}
+				  				{{>configLongLabelInput name="tdrMaxFileLengthBytes" label="config.tdrMaxFileLengthBytes" hint="config.tdrMaxFileLengthBytes" value=this.tdrMaxFileLengthBytes}}
+				  				{{>configLongLabelInput name="zipTdrAfterDays" label="config.zipTdrAfterDays" hint="config.zipTdrAfterDays" value=this.zipTdrAfterDays}}
+				  				{{>configLongLabelInput name="deleteZipAfterDays" label="config.deleteZipAfterDays" hint="config.deleteZipAfterDays" value=this.deleteZipAfterDays}}
+				  				
+				  				
+				  				{{>configLongLabelTextInput name="tdrDirectory" label="config.tdrDirectory" value=this.tdrDirectory style="width:100%;height:60px;"}}
+				  				{{>configLongLabelTextInput name="tdrFilenameFormat" label="config.tdrFilenameFormat" value=this.tdrFilenameFormat style="width:100%;height:60px;"}}
+				  				{{>configLongLabelTextInput name="zipFilenameFormat" label="config.zipFilenameFormat" value=this.zipFilenameFormat style="width:100%;height:60px;"}}
+								{{!-- TDR Structure Configurations Start --}}
+								<div class="row form-group dialog-spacing" style="margin-bottom:0;">
+									<label class="col-sm-5 control-label">{{i18n "config.tdrStructureVersion"}}</label>
+									<div class="col-sm-7">
+										{{#each availableStructureVersions}}
+											<div class="pull-left" style="margin-right:20px;">
+												<input id="{{index}}" name="tdrStructureVersion" value="{{value}}" 
+												class="rdoStructureVersions custom-radio-fa addWarning" 
+												type="radio" {{#ifCond checked "==" "true"}}checked="checked"{{/ifCond}}/>
+												<label for="{{index}}">{{optionLabel}} <a href="#" class="tdr-download-btn" tdrDownloadVersion={{value}}> {{i18n "config.tdrDownloadBtn"}}</a></label>
+											</div>
+										{{/each}}
+									</div>
+
+									<div id="errorMessage" class="hide-element">
+										<div class="row form-group">
+											<div class="col-sm-1"></div>
+											<div class="col-sm-11">
+												<div class="config-tip-panel config-tip-error">
+													<p id="confirmationError"> </p>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div id="warningBox" class="hide-element">
+										<div class="row form-group" id="tdrColumnsWarning">
+											<div class="col-sm-1"></div>
+											<div class="col-sm-11">
+												<div class="config-tip-panel config-tip-primary">
+													<p id="warningDescription">
+														<strong>{{i18n "config.tdrColumnInfoText"}}</strong>
+													</p>
+														<ul id="tdrColumnsInfo">
+														</ul>
+														<p></p>
+												</div>
+											</div>
+										</div>
+
+										<div class="row form-group">
+											<div class="col-sm-1"> </div>
+											<div class="col-sm-11">
+												<div class="config-tip-panel config-tip-note">
+													<p>
+														<strong>{{i18n "config.tdrAlertText"}}</strong>
+													</p>
+													<p style="padding-left: 10px;">
+														{{i18n "config.tdrConfigNote"}}
+													</p>
+													<input type="checkbox" id="structureChangeConfirmation" style="margin-left: 10px;"> 
+													<span id="confirmText">{{i18n "config.tdrConfirmText"}}</span>
+													<p></p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{{!-- TDR Structure Configurations End --}}
+							
+				  				<h5 class="configDialogSectionHeading">{{i18n "config.oltpParameters"}}</h5>
+				  				{{>configLongLabelInput name="oltpTransactionRetentionDays" label="config.oltpTransactionRetentionDays" hint="config.oltpTransactionRetentionDays" value=this.oltpTransactionRetentionDays}}
+				  				{{>configLongLabelInput name="oltpTransactionCleanupTimeOfDayString" label="config.oltpTransactionCleanupTimeOfDayString" hint="config.oltpTransactionCleanupTimeOfDayString" value=this.oltpTransactionCleanupTimeOfDayString}}
+				  				<h5 class="configDialogSectionHeading">{{i18n "config.olapParameters"}}</h5>
+				  				{{>configLongLabelInput name="olapTransactionRetentionDays" label="config.olapTransactionRetentionDays" hint="config.olapTransactionRetentionDays" value=this.olapTransactionRetentionDays}}
+				  				{{>configLongLabelInput name="olapTransactionCleanupTimeOfDayString" label="config.olapTransactionCleanupTimeOfDayString" hint="config.olapTransactionCleanupTimeOfDayString" value=this.olapTransactionCleanupTimeOfDayString}}
+				  				{{>configLongLabelInput name="olapSyncTimeOfDayString" label="config.olapSyncTimeOfDayString" hint="config.olapSyncTimeOfDayString" value=this.olapSyncTimeOfDayString}}
+				  			</div>
+							
+							<div role="tabpanel" class="tab-pane" id="transactionMessagesModal">
+								{{>configErrorInput name="ACC_NOT_FOUND" heading="config.errorMessages.ACC_NOT_FOUND" errorMessage=this.errorMessages.ACC_NOT_FOUND}}
+			  					{{>configErrorInput name="INVALID_PIN" heading="config.errorMessages.INVALID_PIN" errorMessage=this.errorMessages.INVALID_PIN}}
+			  					{{>configErrorInput name="CO_AUTHORIZE" heading="config.errorMessages.CO_AUTHORIZE" errorMessage=this.errorMessages.CO_AUTHORIZE}}
+			  					{{>configErrorInput name="NOT_SELF" heading="config.errorMessages.NOT_SELF" errorMessage=this.errorMessages.NOT_SELF}}
+			  					{{>configErrorInput name="SUCCESS" heading="config.errorMessages.SUCCESS" errorMessage=this.errorMessages.SUCCESS}}
+			  					{{>configErrorInput name="FORBIDDEN" heading="config.errorMessages.FORBIDDEN" errorMessage=this.errorMessages.FORBIDDEN}}		  					
+			  					{{>configErrorInput name="NO_TRANSFER_RULE" heading="config.errorMessages.NO_TRANSFER_RULE" errorMessage=this.errorMessages.NO_TRANSFER_RULE}}
+			  					{{>configErrorInput name="INTRATIER_TRANSFER" heading="config.errorMessages.INTRATIER_TRANSFER" errorMessage=this.errorMessages.INTRATIER_TRANSFER}}
+			  					{{>configErrorInput name="NO_LOCATION" heading="config.errorMessages.NO_LOCATION" errorMessage=this.errorMessages.NO_LOCATION}}
+			  					{{>configErrorInput name="WRONG_LOCATION" heading="config.errorMessages.WRONG_LOCATION" errorMessage=this.errorMessages.WRONG_LOCATION}}
+			  					{{>configErrorInput name="INVALID_CHANNEL" heading="config.errorMessages.INVALID_CHANNEL" errorMessage=this.errorMessages.INVALID_CHANNEL}}
+			  					{{>configErrorInput name="MONTH_AMOUNT_LIMIT" heading="config.errorMessages.MONTH_AMOUNT_LIMIT" errorMessage=this.errorMessages.MONTH_AMOUNT_LIMIT}}
+			  					{{>configErrorInput name="INVALID_AMOUNT" heading="config.errorMessages.INVALID_AMOUNT" errorMessage=this.errorMessages.INVALID_AMOUNT}}
+			  					{{>configErrorInput name="DAY_AMOUNT_LIMIT" heading="config.errorMessages.DAY_AMOUNT_LIMIT" errorMessage=this.errorMessages.DAY_AMOUNT_LIMIT}}
+			  					{{>configErrorInput name="DAY_COUNT_LIMIT" heading="config.errorMessages.DAY_COUNT_LIMIT" errorMessage=this.errorMessages.DAY_COUNT_LIMIT}}
+			  					{{>configErrorInput name="TECHNICAL_PROBLEM" heading="TECHNICAL_PROBLEM" errorMessage=this.errorMessages.TECHNICAL_PROBLEM}}
+			  					{{>configErrorInput name="INSUFFICIENT_FUNDS" heading="config.errorMessages.INSUFFICIENT_FUNDS" errorMessage=this.errorMessages.INSUFFICIENT_FUNDS}}
+			  					{{>configErrorInput name="INSUFFICIENT_PROVISN" heading="config.errorMessages.INSUFFICIENT_PROVISN" errorMessage=this.errorMessages.INSUFFICIENT_PROVISN}}
+			  					{{>configErrorInput name="INVALID_AGENT" heading="config.errorMessages.INVALID_AGENT" errorMessage=this.errorMessages.INVALID_AGENT}}
+			  					{{>configErrorInput name="NOT_REGISTERED" heading="config.errorMessages.NOT_REGISTERED" errorMessage=this.errorMessages.NOT_REGISTERED}}
+			  					{{>configErrorInput name="IMSI_LOCKOUT" heading="config.errorMessages.IMSI_LOCKOUT" errorMessage=this.errorMessages.IMSI_LOCKOUT}}
+			  					{{>configErrorInput name="MONTH_COUNT_LIMIT" heading="config.errorMessages.MONTH_COUNT_LIMIT" errorMessage=this.errorMessages.MONTH_COUNT_LIMIT}}
+			  					{{>configErrorInput name="INVALID_STATE" heading="config.errorMessages.INVALID_STATE" errorMessage=this.errorMessages.INVALID_STATE}}
+			  					{{>configErrorInput name="TX_NOT_FOUND" heading="config.errorMessages.TX_NOT_FOUND" errorMessage=this.errorMessages.TX_NOT_FOUND}}
+			  					{{>configErrorInput name="ALREADY_REGISTERED" heading="config.errorMessages.ALREADY_REGISTERED" errorMessage=this.errorMessages.ALREADY_REGISTERED}}
+			  					{{>configErrorInput name="PIN_LOCKOUT" heading="config.errorMessages.PIN_LOCKOUT" errorMessage=this.errorMessages.PIN_LOCKOUT}}
+			  					{{>configErrorInput name="MAX_AMOUNT_LIMIT" heading="config.errorMessages.MAX_AMOUNT_LIMIT" errorMessage=this.errorMessages.MAX_AMOUNT_LIMIT}}
+			  					{{>configErrorInput name="INVALID_TRAN_TYPE" heading="config.errorMessages.INVALID_TRAN_TYPE" errorMessage=this.errorMessages.INVALID_TRAN_TYPE}}
+			  					{{>configErrorInput name="ALREADY_REVERSED" heading="config.errorMessages.ALREADY_REVERSED" errorMessage=this.errorMessages.ALREADY_REVERSED}}
+
+			  					{{>configErrorInput name="NOT_ELIGIBLE" heading="config.errorMessages.NOT_ELIGIBLE" errorMessage=this.errorMessages.NOT_ELIGIBLE}}
+			  					{{>configErrorInput name="INVALID_BUNDLE" heading="config.errorMessages.INVALID_BUNDLE" errorMessage=this.errorMessages.INVALID_BUNDLE}}
+			  					{{>configErrorInput name="SESSION_EXPIRED" heading="config.errorMessages.SESSION_EXPIRED" errorMessage=this.errorMessages.SESSION_EXPIRED}}
+			  					{{>configErrorInput name="TIMED_OUT" heading="config.errorMessages.TIMED_OUT" errorMessage=this.errorMessages.TIMED_OUT}}
+			  					{{>configErrorInput name="INVALID_RECIPIENT" heading="config.errorMessages.INVALID_RECIPIENT" errorMessage=this.errorMessages.INVALID_RECIPIENT}}
+			  					
+			  					{{>configErrorInput name="INVALID_VALUE" heading="config.errorMessages.INVALID_VALUE" errorMessage=this.errorMessages.INVALID_VALUE}}
+			  					{{>configErrorInput name="TOO_SMALL" heading="config.errorMessages.TOO_SMALL" errorMessage=this.errorMessages.TOO_SMALL}}
+			  					{{>configErrorInput name="TOO_LARGE" heading="config.errorMessages.TOO_LARGE" errorMessage=this.errorMessages.TOO_LARGE}}
+			  					{{>configErrorInput name="TOO_LONG" heading="config.errorMessages.TOO_LONG" errorMessage=this.errorMessages.TOO_LONG}}
+			  					{{>configErrorInput name="TOO_SHORT" heading="config.errorMessages.TOO_SHORT" errorMessage=this.errorMessages.TOO_SHORT}}
+			  					
+			  					{{>configErrorInput name="OTHER_ERROR" heading="config.errorMessages.OTHER_ERROR" errorMessage=this.errorMessages.OTHER_ERROR}}
+			  					{{>configErrorInput name="REFILL_BARRED" heading="config.errorMessages.REFILL_BARRED" errorMessage=this.errorMessages.REFILL_BARRED}}
+			  					{{>configErrorInput name="TEMPORARY_BLOCKED" heading="config.errorMessages.TEMPORARY_BLOCKED" errorMessage=this.errorMessages.TEMPORARY_BLOCKED}}
+			  					{{>configErrorInput name="REFILL_NOT_ACCEPTED" heading="config.errorMessages.REFILL_NOT_ACCEPTED" errorMessage=this.errorMessages.REFILL_NOT_ACCEPTED}}
+			  					{{>configErrorInput name="REFILL_DENIED" heading="config.errorMessages.REFILL_DENIED" errorMessage=this.errorMessages.REFILL_DENIED}}
+			  					{{>configErrorInput name="NO_IMSI" heading="config.errorMessages.NO_IMSI" errorMessage=this.errorMessages.NO_IMSI}}
+			  					
+			  					{{>configErrorInput name="INVALID_PASSWORD" heading="config.errorMessages.INVALID_PASSWORD" errorMessage=this.errorMessages.INVALID_PASSWORD}}
+			  					{{>configErrorInput name="PASSWORD_LOCKOUT" heading="config.errorMessages.PASSWORD_LOCKOUT" errorMessage=this.errorMessages.PASSWORD_LOCKOUT}}
+			  					{{>configErrorInput name="CONFIRM_PIN_DIFF" heading="config.errorMessages.CONFIRM_PIN_DIFF" errorMessage=this.errorMessages.CONFIRM_PIN_DIFF}}
+							<div>
+						</div>
+						
+					</div>
+				
+				</form>		
+			</div>
+		</div>
+		{{>configModalFooter }}
+	</script>
+
+</div>

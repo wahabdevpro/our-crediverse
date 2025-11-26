@@ -1,0 +1,2 @@
+#This stops the supervisor service
+/etc/init.d/${APP_NAME} stop

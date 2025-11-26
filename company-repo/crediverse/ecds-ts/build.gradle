@@ -1,0 +1,280 @@
+plugins {
+  id 'java'
+  id 'java-library'
+  id 'maven-publish'
+  id 'io.spring.dependency-management' version "1.0.11.RELEASE"
+  id "eclipse"
+  id 'com.github.johnrengelman.shadow' version '7.1.0'
+}
+
+version = System.getenv("CI_COMMIT_TAG") ?: System.getenv("CS_COMMIT_TAG") ?: new Date().format("ddMMyyyyHHmmss")
+project.ext.buildId = System.getenv("CS_BUILD_ID") ?: 'rc_'+new Date().format("ddMMyyyyHHmmss")
+project.ext.commitSha = System.getenv("CI_COMMIT_SHA") ?: 'sha_'+new Date().format("ddMMyyyyHHmmss")
+println "CI_GITHUB_TAG: " + System.getenv("CI_GITHUB_TAG")
+println "CI_DOCKER_TAG: " + System.getenv("CI_DOCKER_TAG")
+println "CI_BRANCH_NAME: " + System.getenv("CI_BRANCH_NAME")
+println "CI_BUILD_NUMBER: " + System.getenv("CI_BUILD_NUMBER")
+println "CI_BUILD_DATETIME: " + System.getenv("CI_BUILD_DATETIME")
+println "CI_COMMIT_REF: " + System.getenv("CI_COMMIT_REF")
+
+project.ext.githubTag = System.getenv("CI_GITHUB_TAG") ?: System.getenv("CI_GITHUB_TAG") ?: 'dev_' + new Date().format("ddMMyyyyHHmmss")
+project.ext.dockerTag = System.getenv("CI_DOCKER_TAG") ?: System.getenv("CI_DOCKER_TAG") ?: 'local_' + new Date().format("ddMMyyyyHHmmss")
+project.ext.branchName = System.getenv("CI_BRANCH_NAME") ?: System.getenv("CI_BRANCH_NAME") ?: 'localbranch_' + new Date().format("ddMMyyyyHHmmss")
+project.ext.buildNumber = System.getenv("CI_BUILD_NUMBER") ?: System.getenv("CI_BUILD_NUMBER") ?: 'buildNumber_'+new Date().format("ddMMyyyyHHmmss")
+project.ext.buildDateTime = System.getenv("CI_BUILD_DATETIME") ?: System.getenv("CI_BUILD_DATETIME") ?:'buildDateTime_'+new Date().format("ddMMyyyyHHmmss")
+project.ext.commitRef = System.getenv("CI_COMMIT_REF") ?: System.getenv("CI_COMMIT_REF") ?: 'sha_'+new Date().format("ddMMyyyyHHmmss")
+
+project.ext.set("project.buildId", project.buildId)
+project.ext.set("project.version", version)
+project.ext.set("project.commitSha", project.commitSha)
+
+project.ext.set("githubTag", project.githubTag)
+project.ext.set("dockerTag", project.dockerTag)
+project.ext.set("branchName", project.branchName)
+project.ext.set("buildNumber", project.buildNumber)
+project.ext.set("buildDateTime", project.buildDateTime)
+project.ext.set("commitRef", project.commitRef)
+
+task generateVersionInfo {
+    doLast {
+
+        File outputDir = new File('c4u-build/prod/core/ServiceBus/src/main/java/hxc/servicebus/')
+        //outputDir.mkdirs()
+        File versionInfo = new File(outputDir, 'VersionInfo.java')
+        versionInfo.text = """
+            package hxc.servicebus;
+            public final class VersionInfo {
+                public static final String GITHUB_TAG = "${githubTag}";
+                public static final String DOCKER_TAG = "${dockerTag}";
+                public static final String BRANCH_NAME = "${branchName}";
+                public static final String BUILD_NUMBER = "${buildNumber}";
+                public static final String BUILD_DATE_TIME = "${buildDateTime}";
+                public static final String BUILD_COMMIT_REF = "${commitRef}";
+
+            }
+        """.stripIndent()
+    }
+}
+
+// Used in Eclipse access rules
+import org.gradle.plugins.ide.eclipse.model.AccessRule
+// https://github.com/ajoberstar/reckon using stage scheme
+
+
+
+
+//apply from: 'testing.gradle'
+
+// see https://github.com/ajoberstar/reckon
+//reckon {
+  //scopeFromProp()
+  //stageFromProp('milestone', 'rc', 'final')
+  // alternative to stageFromProp if snapshot versioning is required
+  // snapshotFromProp()
+//}
+
+subprojects {
+  //version = rootProject.version
+  logger.info(name)
+  
+  apply plugin: 'io.spring.dependency-management'
+  apply plugin: 'maven-publish'
+  apply plugin: 'java-library'
+  apply plugin: 'java'
+
+  sourceSets {
+    main {
+      resources {
+          srcDirs 'src/main/resources', 'resources', 'share/resources', 'etc'
+      }
+    }
+  }
+}
+
+allprojects {
+/*
+  gradle.buildFinished {// Left as an exaxmple
+    project.buildDir.deleteDir()
+}
+*/
+
+  compileJava.options.encoding = "UTF-8"
+  compileTestJava.options.encoding = "UTF-8"
+
+  apply plugin: 'eclipse'
+  sourceCompatibility = 1.11
+  targetCompatibility = 1.11
+
+  eclipse {
+    // Remove access restriction warnings in Eclipse
+    // NB. VSCode uses Eclipse JDT, so this works for VSCode too
+    classpath {
+      file {
+        whenMerged {
+          def jre = entries.find { it.path.contains 'org.eclipse.jdt.launching.JRE_CONTAINER' }
+          jre.accessRules.add(new AccessRule('accessible', 'com/**'))
+          jre.accessRules.add(new AccessRule('accessible', 'sun/**'))
+        }
+      }
+    }
+  }
+
+  processResources {
+	duplicatesStrategy = 'include'
+    from ('src/main/java') {
+      include '**/*.xml'
+    }
+  }
+
+  repositories {
+    maven {
+      url "https://maven.pkg.github.com/Concurrent-Systems/Crediverse"
+      name "GitHubPackages"
+      credentials() {
+        //name = 'Deploy-Token'
+       // username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+	//password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+        username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
+        password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+      }
+
+      metadataSources {
+        artifact()
+      }
+    }
+    mavenCentral()
+  }
+
+  dependencyManagement {
+    imports {
+      mavenBom "ga.csys.tooling:ecds-bom:1.1.20.BETA"
+    }
+  }
+  
+  task copyEverythingToRelease(type: Copy) {
+    duplicatesStrategy = 'exclude'
+    from jar
+    from configurations.runtimeClasspath
+    //into "${rootDir}/build/release"
+    into "${rootDir}/build/resources/main/libs"
+  }
+
+  project.tasks.build.finalizedBy project.tasks.copyEverythingToRelease
+}
+/*apply({
+  // EcdsEncrypt is broken for some reason, will investigate
+	[':ecdsencrypt'].each({
+	println "Hi from "+it
+	project(it) {
+     	project.version = rootProject.version
+      	println(project.name+'  => '+version)
+     	publishing {
+        publications {
+          library(MavenPublication) {
+            from components.java
+          }
+        }
+            
+        repositories {
+          maven {
+            url=uri("https://maven.pkg.github.com/Concurrent-Systems/Crediverse")
+		name="GitHubPackages"
+		credentials() {
+			//name = 'Deploy-Token'
+			//username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+			//password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+      		    	username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
+			password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+      		}
+
+          }
+        }
+      }
+    }
+})
+})*/
+
+jar {
+   manifest {
+       //attributes 'Class-Path': '/libs/a.jar'
+       attributes 'Main-Class': 'hxc.test.EcdsTestHost'
+       
+       // We really should use this, but need to better understand how it works first.
+       //attributes 'Main-Class': 'hxc.test.HostObject'
+   }
+}
+
+evaluationDependsOnChildren()
+
+apply from: 'prepare_docker_image.gradle'
+
+task generateProperties() {
+  doFirst {
+        println("Generating ecds-ts.properties")
+        def dir = new File(project.buildDir, 'resources/main')
+        dir.mkdirs()
+        ant.propertyfile(
+            file: new File(dir, 'ecds-ts.properties')) {
+            entry( key: "major.version", value: project.property("version"))
+            entry( key: "build.number", value: project.property("project.buildId"))
+            entry( key: "commit.sha", value: project.property("project.commitSha"))
+            
+        }
+    }
+}
+
+/* Example Async task, not used yet */
+/*
+class RunAsyncTask extends DefaultTask {
+  @TaskAction
+  def startAsync() {
+    ExecutorService es = Executors.newSingleThreadExecutor()
+    es.submit({
+      project.javaexec {
+        classpath = project.sourceSets.main.runtimeClasspath
+        workingDir = './c4u-build/prod/core/TestHost'
+        main = "Main"
+      }
+    } as Callable)
+  }
+}
+task helloAsync(type: RunAsyncTask, dependsOn: compileJava) {
+  doLast {
+    println LocalDateTime.now().toString() + 'sleeping'
+    sleep(2 * 1000)
+  }
+}
+*/
+
+task runTestHost(type:JavaExec) {
+    def Project pg = project(':EcdsTestHost')
+    println("Executing "+pg.name)
+    main = 'hxc.test.EcdsTestHost'
+    classpath = pg.sourceSets.main.runtimeClasspath
+    workingDir = './c4u-build/prod/core/EcdsTestHost'
+}
+
+task runC4uGui(type:JavaExec) {
+    def Project pg = project(':GuiServer')
+    println("Executing "+pg.name)
+    main = 'hxc.userinterfaces.gui.jetty.JettyMain'
+    classpath = pg.sourceSets.main.runtimeClasspath
+    workingDir = './c4u-build/prod/ui/GuiServer'
+}
+
+shadowJar {
+  configurations = [project.configurations.compileClasspath]
+}
+
+def projectDependencies = rootProject.getSubprojects().findAll { subproject -> subproject.name != project.name }.collect { subproject -> "${subproject.getPath()}:build" }
+
+project.tasks.build.dependsOn(projectDependencies)
+project.tasks.build.dependsOn(project.tasks.generateVersionInfo)
+project.tasks.clean.dependsOn(projectDependencies)
+// below line is added to avoid error on first time clean before the build
+project.tasks.clean.dependsOn(project.tasks.generateVersionInfo)
+
+project.tasks.prepareDockerImage.dependsOn project.tasks.build
+project.tasks.publish.dependsOn project.tasks.prepareDockerImage
+project.tasks.prepareDockerImage.dependsOn project.tasks.generateProperties
+//project.tasks.prepareDockerImage.dependsOn(project.tasks.generateVersionInfo)

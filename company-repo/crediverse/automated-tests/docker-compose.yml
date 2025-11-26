@@ -1,0 +1,20 @@
+version: '3.3'
+services:
+  test:
+     network_mode: host
+     container_name: Robot_Framework
+     image: waleedabbasi12/robot_framework_tests:1.1
+     shm_size: "1G"
+     volumes:
+            - "${REPO_HOST_PATH}/automated-tests/test-suites:/suites"
+            - "${REPO_HOST_PATH}/automated-tests/keywords:/keywords"
+            - "${REPO_HOST_PATH}/automated-tests/scripts:/scripts"
+            - "${REPO_HOST_PATH}/automated-tests/reports:/reports"
+            #- "/srv/crediverse-github-runner/crediverse-ts/runner/Crediverse/Crediverse/automated-tests/test-suites:/suites"
+            #- "/srv/crediverse-github-runner/crediverse-ts/runner/Crediverse/Crediverse/automated-tests/keywords:/keywords"
+            #- "/srv/crediverse-github-runner/crediverse-ts/runner/Crediverse/Crediverse/automated-tests/scripts:/scripts"
+            #- "/srv/crediverse-github-runner/crediverse-ts/runner/Crediverse/Crediverse/automated-tests/reports:/reports"
+networks:
+  default:
+    external: 
+      name: host

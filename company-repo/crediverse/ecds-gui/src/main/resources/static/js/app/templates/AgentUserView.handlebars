@@ -1,0 +1,151 @@
+<div>
+	<script id="agentuserdetails">
+	    <div class="col-xs-12">
+			<div class="row">
+				<div class="col-lg-3 col-md-4 col-sm-6">
+					<div class="box box-primary">
+        		    	<div class="box-body box-profile">
+              				<!-- <img class="profile-user-img img-responsive img-circle" src="//placehold.it/300x300" alt="User profile picture"> -->
+    		          		<h2 class="profile-username text-center">{{ this.title }} {{ this.firstName }} {{ this.surname }}</h2>
+    		          		<p class="text-muted text-center">{{ this.domainAccountName }}</p>
+            			</div>
+       				</div>
+				</div>
+				<div class="col-lg-9 col-md-8 col-sm-6">
+					<div class="nav-tabs-custom">
+  						<ul class="nav nav-tabs">
+    						<li class="active"><a href="#profile" data-toggle="tab">Profile</a></li>
+  						</ul>
+  						<div class="tab-content">
+						    <div class="active tab-pane" id="profile" style="margin:8px;">
+						    	<div class="row">
+						    		{{#ifCond this.authenticationMethod "==" "A"}}
+						    			{{#hasPerms "Agent_ResetPin"}}
+											<button type="button" class="btn btn-xs btn-primary pinResetButton">{{i18n "changePasswordDialog.resetPassword"}}</button>
+										{{/hasPerms}}
+						    		{{else}}
+						    			{{#hasPerms "Agent_ResetPin"}}
+											<button type="button" class="btn btn-xs btn-primary pinResetButton">{{i18n "userman.pinResetButton"}}</button>
+										{{/hasPerms}}
+						    		{{/ifCond}}
+									{{#hasPerms "Agent_Update"}}
+										<button type="button" class="btn btn-xs btn-primary editUserButton">{{i18n "userman.editUserButton"}}</button>
+									{{/hasPerms}}
+									{{#hasPerms "Agent_Delete"}}
+										<button type="button" class="btn btn-xs btn-danger deleteUserButton">{{i18n "userman.deleteUserButton"}}</button>
+									{{/hasPerms}}
+								</div>
+						    
+						    
+						    
+								<div class="row view-fields">
+									<div class="col-md-4 col-sm-6">
+										<div class="view-field">
+											<label>{{i18n "userman.uniqueID"}}</label>
+											<div>{{ this.id }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.accountNumber"}}</label>
+											<div>{{ this.accountNumber }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.title"}}</label>
+											<div>{{#if this.title}}{{ this.title }}{{else}}<span class="no-data">(not available)</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.firstName"}}</label>
+											<div>{{#if this.firstName}}{{ this.firstName }}{{else}}<span class="no-data">(not available)</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.surname"}}</label>
+											<div>{{ this.surname }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.initials"}}</label>
+											<div>{{#if this.initials}}{{ this.initials }}{{else}}<span class="no-data">(not available)</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.authenticationMethod"}}</label>											
+											<div>
+											{{#ifCond this.authenticationMethod "==" "A"}}{{ i18n "enums.authenticationMethod.password" }}{{/ifCond}}
+											{{#ifCond this.authenticationMethod "==" "P"}}{{ i18n "enums.authenticationMethod.pin" }}{{/ifCond}}
+											{{#ifCond this.authenticationMethod "==" "X"}}{{ i18n "enums.authenticationMethod.external" }}{{/ifCond}}
+											</div>
+										</div>
+										
+										{{#ifCond this.authenticationMethod "!=" "P"}}
+											<div class="view-field">
+												<label>{{i18n (concat "enums.usernameType." this.authenticationMethod)  }}</label>
+												<div>{{#if this.domainAccountName}}{{ this.domainAccountName }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+											</div>
+										{{/ifCond}}
+										
+										<div class="view-field">
+											<label>{{i18n "userman.language"}}</label>
+											{{#if this.language}}
+												<div>{{ i18n (concat "enums.langType." (toLowerCase this.language)) }}</div>
+											{{else}}
+												<div class="no-data">{{ i18n "notSet" }}</div>
+											{{/if}}
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-6">
+										<div class="view-field">
+											<label>{{i18n "userman.mobileNumber"}}</label>
+											<div>{{#if this.mobileNumber}}{{ this.mobileNumber }}{{else}}<span class="no-data">(not available)</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.email"}}</label>
+											<div>{{#if this.email}}{{ this.email }}{{else}}<span class="no-data">(not available)</span>{{/if}}</div>
+										</div>										
+										<div class="view-field">
+											<label>{{i18n "userman.department"}}</label>
+											<div>{{#if this.department}}{{ this.department }}{{else}}<span class="no-data">(not available)</span>{{/if}}</div>
+										</div>										
+										<div class="view-field">
+											<label>{{i18n "userman.accountState"}}</label>
+											<div>{{ this.stateDescription }}</div>
+										</div>	
+										<div class="view-field">
+											<label>{{i18n "userman.role"}}</label>
+											<div>{{ this.role.name }}</div>
+										</div>	
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.viewChannelLabel"}}</label>
+											<div>
+												<label class="label label-{{#if this.channelUssd}}success{{else}}default{{/if}}">{{i18n "agentAccounts.viewChannelUssdLabel"}}</label>
+												<label class="label label-{{#if this.channelSms}}success{{else}}default{{/if}}">{{i18n "agentAccounts.viewChannelSmsLabel"}}</label>
+												<label class="label label-{{#if this.channelApi}}success{{else}}default{{/if}}">{{i18n "agentAccounts.viewChannelApiLabel"}}</label>
+												<label class="label label-{{#if this.channelWui}}success{{else}}default{{/if}}">{{i18n "agentAccounts.viewChannelWuiLabel"}}</label>
+												<label class="label label-{{#if this.channelApp}}success{{else}}default{{/if}}">{{i18n "agentAccounts.viewChannelAppLabel"}}</label>
+											</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "agentAccounts.confirmUssdPrefix"}}</label>
+											<div>
+												<label class="label label-{{#if this.confirmUssd}}success{{else}}default{{/if}}">{{i18n "agentAccounts.confirmUssdLabel"}}</label>
+											</div>
+										</div>
+										<div class="view-field">
+											<div>
+												<label class="label label-{{#if this.sendBundleCommissionReport}}success{{else}}default{{/if}}">{{i18n "agentAccounts.sendBundleCommissionReportLabel"}}</label>
+											</div>
+										</div>
+										{{#if this.channelType}}
+										<div class="view-field">
+											<label>{{i18n "userman.channelType"}}</label>
+											<div>{{ this.channelTypeName }}</div>
+										</div>
+										{{/if}}
+									</div>
+								</div>
+    						</div>
+						    <div class="tab-pane" id="transactions">
+   							</div>
+  						</div>
+					</div>				
+				</div>
+			</div>	
+	    </div>
+	</script>	
+</div>

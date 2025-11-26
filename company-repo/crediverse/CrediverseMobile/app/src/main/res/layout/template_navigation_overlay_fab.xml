@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:alignItems="center"
+        app:flexDirection="column"
+        app:justifyContent="center"
+        tools:background="@color/dark_faded_background">
+        <!--
+            NOTE: tools:background is only this color for visibility
+        -->
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/cs_primary"
+            android:src="@drawable/ic_baseline_account_balance_wallet_24"
+            android:theme="@style/Theme.AppCompat"
+            app:fabCustomSize="58dp"
+            app:maxImageSize="28dp"
+            app:tint="@color/white" />
+
+        <!--
+
+        IMPORTANT - -
+         Text color must be LIGHT (white? or similar)
+         This is placed on a DARK (generally faded) background
+
+        -->
+        <TextView
+            android:id="@+id/label"
+            android:layout_width="72dp"
+            android:layout_height="38dp"
+            android:gravity="center|top"
+            android:paddingTop="3dp"
+            android:text="some-text on-two lines"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            tools:ignore="HardcodedText" />
+
+    </com.google.android.flexbox.FlexboxLayout>
+
+</layout>

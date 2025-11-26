@@ -1,0 +1,92 @@
+supplier
+ $$4u
+1
+1
+Uri = http://192.168.1.2455:10010/Air
+ConnectTimeout = 10000
+DefaultOriginHostName = c4u-zone.concurrent.co.za
+DefaultOriginNodeType = EXT
+DefaultOriginOperatorID = HXC
+DefaultSubscriberNumberNAI = 1
+OnNetNumbers = 82XXXXXXX,72XXXXXXX
+Password = hxcuser
+PostPaidServiceClasses = 0005,0006
+PrePaidServiceClasses = 0001,0002
+ReadTimeout = 30000
+Uri = http://192.168.1.245:10010/Air
+UserAgent = hxcuser/4.2/1.0
+UserName = hxcuser
+..
+2
+CompulsoryHealthCheckInterval = 3000000
+ConnectTimeout = 50000
+ConsecutiveTPSLimit = 0
+HealthCheckInterval = 60000
+ReadTimeout = 5000
+ServerPort = 14200
+MaxQueueLength = 1000
+RotatedNameFormat = %1$s%2$s.log
+RotationIntervalSeconds = 7200
+TimeFormat = yyyyMMdd'T'HHmmss.SSS
+Rotate
+..
+6
+DatabaseName = hxc
+Password = ussdgw
+Server = 192.168.0.182
+User = root
+..
+7
+MaxAccumulatedTokens = 500
+MaxSchedulerPoolSize = 10
+MaxTPS = 10
+MaxThreadPoolSize = 10
+ThreadQueueCapacity = 5
+1
+CurrencyCode = PKR
+CurrencyDecimalDigits = 22
+DefaultLanguageId = 1
+Language1 = eng
+Language1Alphabet = latn
+Language2 = eng
+Language2Alphabet = latn
+Language3 = eng
+Language3Alphabet = latn
+Language4 = eng
+Language4Alphabet = latn
+..
+..
+8
+Community = public
+NmcAddress1 = 127.0.0.1/16200
+NmcAddress2 = 
+NmcAddress3 = 
+NmcAddress4 = 
+Retries = 5
+Timeout = 10000
+..
+9
+HttpSOAPPort = 14100
+VasEndpointURL = http://localhost:14100/HxC
+..
+10
+CdrDirectory = /var/opt/cs/c4u/cdr
+InterimFileName = cdr.tmp
+RotatedNameFormat = %1$s%2$s.cdr
+RotationIntervalSeconds = 72000
+TimeFormat = yyyyMMdd'T'HHmmss
+..
+11
+ServerPort = 10101
+SessionTimeoutMilliseconds = 12600000
+fitness
+resilience
+roles
+servers
+edit role DatabaseServer
+AttachCommand="sh /var/opt/cs/c4u/installations/attach_v"
+exit
+roles
+exit
+logout
+here

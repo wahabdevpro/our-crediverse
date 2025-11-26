@@ -1,0 +1,10 @@
+*************************** 1. row ***************************
+       Table: el_area_cell
+Create Table: CREATE TABLE `el_area_cell` (
+  `area_id` int(11) NOT NULL,
+  `cell_id` int(11) NOT NULL,
+  KEY `FKf5rfuxdkcly9fs0txcfi1njdi` (`cell_id`),
+  KEY `FK2djs0n5sotjaeyn0x3ax5vqr8` (`area_id`),
+  CONSTRAINT `FK2djs0n5sotjaeyn0x3ax5vqr8` FOREIGN KEY (`area_id`) REFERENCES `el_area` (`id`),
+  CONSTRAINT `FKf5rfuxdkcly9fs0txcfi1njdi` FOREIGN KEY (`cell_id`) REFERENCES `el_cell` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

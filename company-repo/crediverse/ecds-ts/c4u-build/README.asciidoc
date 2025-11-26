@@ -1,0 +1,300 @@
+= c4u/c4u-build/README
+:doctype: article
+:numbered:
+:toc: left
+:toclevels: 4
+:sectnumlevels: 5
+
+== Gradle Usage
+
+----
+./gradlew build
+./gradlew asciidoctor - TODO
+./gradlew ecdsTsRpm - Build RPM, but locally only
+./gradlew ecdsTsDeb - Build DEB, but locally only
+./gradlew uploadEcdsTsRpm - Build ECDS RPM and upload to warehouse
+
+./gradlew wrapper --gradle-version 4.2.1
+----
+
+== Running
+
+Create `/opt` and `/var/opt` directories:
+
+----
+sudo mkdir -p /opt/cs/c4u /var/opt/cs/c4u
+sudo chmod ugo+rwx /opt/cs/c4u /var/opt/cs/c4u
+
+rm /opt/cs/c4u/1.0
+ln -s "${c4u_svn_dir}/prod/install/tmp" /opt/cs/c4u/1.0
+
+mkdir -p /var/opt/cs/c4u/{cdr,log,backup,certificates}
+----
+
+Build TAR & extract tar to `/opt/cs/c4u/`:
+
+----
+{ ./gradlew clean classicApiDistTar -x test -x check && { \rm -r /opt/cs/c4u/1.0; bsdtar -xf build/distributions/classicApi-*.tar --strip-components 1 -C /opt/cs/c4u c4u/1.0/; } && spd-say "DONE"; } || spd-say "FAILED";
+----
+
+Run Service:
+
+----
+"${rat_java[@]:-java}" -d64 -server -cp /opt/cs/c4u/1.0/hostprocess/lib/*:/opt/cs/c4u/1.0/lib/* hxc.test.HostObject
+"${rat_java[@]:-java}" -d64 -server -cp /opt/cs/c4u/1.0/guiserver/lib/:/opt/cs/c4u/1.0/guiserver/lib/*:/opt/cs/c4u/1.0/lib/* hxc.userinterfaces.gui.jetty.JettyMain
+----
+
+Kill Service:
+
+----
+## kill based on terminal jobs (run in same terminal as it was launched in)
+jobs -p | xargs --no-run-if-empty -t kill ## kill jobs
+
+## kill based on class names (can run in any terminal)
+jps -l | gawk '( $2 == "hxc.test.HostObject" || $2 == "hxc.userinterfaces.gui.jetty.JettyMain" ){ print $1 }' | xargs --no-run-if-empty -t kill ## kill jobs
+----
+
+== TRASH
+
+== Making releases
+
+Check: https://warehouse.concurrent.systems/releases/ecds-ts/staging/ for the latest release to make (i.e. if there is already an beta-3, make an beta-4, etc)
+
+TODO when we move to gitlab
+
+== Running
+
+Create `/opt` and `/var/opt` directories:
+
+----
+sudo mkdir -p /opt/cs/c4u /var/opt/cs/c4u
+sudo chmod ugo+rwx /opt/cs/c4u /var/opt/cs/c4u
+
+rm /opt/cs/c4u/1.0
+ln -s "${c4u_svn_dir}/prod/install/tmp" /opt/cs/c4u/1.0
+
+mkdir -p /var/opt/cs/c4u/{cdr,log,backup,certificates}
+----
+
+Build RPM & extract rpm to `/opt/cs/c4u/`:
+
+----
+{ ./gradlew clean ecdsTsRpm -x test && { \rm -r /opt/cs/c4u/1.0; bsdtar -xf build/distributions/ecds-ts-1.1-666.x86_64.rpm --strip-components 4 -C /opt/cs/c4u/ ./opt/cs/c4u/; } && spd-say "DONE"; } || spd-say "FAILED";
+----
+
+Get license:
+
+----
+scp root@lab9-ecds-vm1:/opt/cs/c4u/1.0/hostprocess/plugins/registration.lic /opt/cs/c4u/1.0/hostprocess/plugins/registration.lic
+----
+
+Run Service:
+
+----
+"${rat_java[@]:-java}" -d64 -server -cp /opt/cs/c4u/1.0/hostprocess/lib/*:/opt/cs/c4u/1.0/lib/* hxc.test.HostObject & \
+"${rat_java[@]:-java}" -d64 -server -cp /opt/cs/c4u/1.0/guiserver/lib/:/opt/cs/c4u/1.0/hostprocess/lib/*:/opt/cs/c4u/1.0/guiserver/lib/* hxc.userinterfaces.gui.jetty.JettyMain &
+----
+
+Kill Service:
+
+----
+## kill based on terminal jobs (run in same terminal as it was launched in)
+jobs -p | xargs --no-run-if-empty -t kill ## kill jobs
+
+## kill based on class names (can run in any terminal)
+jps -l | gawk '( $2 == "hxc.test.HostObject" || $2 == "hxc.userinterfaces.gui.jetty.JettyMain" ){ print $1 }' | xargs --no-run-if-empty -t kill ## kill jobs
+----
+
+Wroking with logs:
+
+----
+tail -F /var/opt/cs/c4u/log/log.tmp
+
+find /var/opt/cs/c4u/log/ -type f -printf '%M %n %u %g % 12s %TY-%Tm-%TdT%TH:%TM:%TS |%p\n' | sort -k6 | sed "s/^[^|]\+|//g"  | tail -10
+find /var/opt/cs/c4u/log/ -type f -printf '%M %n %u %g % 12s %TY-%Tm-%TdT%TH:%TM:%TS |%p\n' | sort -k6 | tail -10
+find /var/opt/cs/c4u/log/ \( -name '*.log' -o -name 'log.tmp' \) -type f -printf '%M %n %u %g % 12s %TY-%Tm-%TdT%TH:%TM:%TS |%p\n' | sort -k6 | sed "s/^[^|]\+|//g"  | tail -1 | xargs cat | view -
+
+find /var/opt/cs/c4u/log/ \( -name '*.log' -o -name 'log.tmp' \) -type f -printf '%M %n %u %g % 12s %TY-%Tm-%TdT%TH:%TM:%TS |%p\n' | sort -k6 | sed "s/^[^|]\+|//g"  | tail -10
+----
+
+Getting stack traces:
+
+----
+jps -l | gawk '( $2 == "hxc.test.HostObject" ){ print $1 }' | xargs jstack | view -
+----
+
+== Running "unit" tests
+
+WARNING: This will wipe out your database and runtime dir
+
+----
+## clean out C4U dir
+\rm -rv /opt/cs/c4u/1.0
+
+## all tests
+./gradlew tests
+## test from specific "suite"
+./gradlew runCreditDistributionServiceTests
+## test from specific class
+./gradlew runCreditDistributionServiceTests -Pga.csys.c4u.testsuite.all.args="/dev/stderr hxc.services.ecds.AgentTests"
+----
+
+== Recommended git aliases
+
+In order to make the git commands easier to remember, run the following commands:
+
+----
+git config --global alias.scheckout '!f(){ git checkout "$@" && git submodule update --init --recursive; }; f'
+git config --global alias.sclone '!f(){ git clone --recursive "$@"; }; f'
+git config --global alias.spull '!f(){ git pull "$@" && git submodule update --init --recursive; }; f'
+----
+
+== Gradle configuration
+
+This is required for gradle to work properly with the warehouse.
+
+. Create a directory .gradle in your home directory
+. inside the .gradle directory, create a gradle.properties file
+. Add the following entries to the gradle.properties file:
++
+--
+.`~/.gradle/gradle.properties`
+----
+ga.csys.warehouse.http.username=<myusername>
+ga.csys.warehouse.http.password=<mypassword>
+
+## this is optional and only needed if your username differs from your ssh username
+ga.csys.warehouse.ssh.username=<myusername>
+----
+--
+. Replace <myusername> with your warehouse username and <mypassword> with your warehouse password.
+
+== Eclipse Usage
+
+. Checkout from git with git sclone git@git.concurrent.systems:c4u/c4u-build.git
+. Use the File=>Import command in eclipse to import the project as a gradle project.
+. In eclipse, navigate to Window => Preferences
+. In the preferences dialog, navigate to Java=>Compiler=>Errors/Warnings
+. Under Deprecated and restricted API, change Forbidden reference (access rules) from Error to Warning
+. Select Apply and Close
+. Select all projects and the select Project=>Clean to cause the projects to be rebuilt.
++
+--
+
+----
+
+
+## NB tagging work is still to be completed
+## create tag (will create next of same type unless it is unqualified then it will make alpha)
+./gradlew clean releaseNext 
+
+./gradlew clean releaseNextAlpha
+./gradlew clean releaseNextBeta
+./gradlew clean releaseNextRc
+./gradlew clean releaseNextUnqualified
+----
+--
+
+== Other
+
+=== Deploying protocol jar
+
+----
+./gradlew -b ecds/utils/RestProtocol/build.gradle --info clean uploadArchives
+----
+
+=== Other commands/procedures
+
+Dump database from  remote machine and install locally:
+
+----
+remote_database_host=172.17.4.251;
+{
+ssh root@${remote_database_host} 'mysqldump -u root -pussdgw --skip-lock-tables --quick --events --routines --triggers hxc | gzip -c' | gunzip -c | sed '1iDROP DATABASE IF EXISTS hxc; CREATE DATABASE IF NOT EXISTS hxc; USE hxc;' | mysql -u root -pussdgw
+ssh root@${remote_database_host} 'mysqldump -u root -pussdgw --skip-lock-tables --quick --events --routines --triggers ecdsap | gzip -c' | gunzip -c | sed '1iDROP DATABASE IF EXISTS ecdsap; CREATE DATABASE IF NOT EXISTS ecdsap; USE ecdsap;' | mysql -u root -pussdgw
+}
+----
+
+Dump first 1000 rows from remote machine:
+
+----
+remote_database_host=172.17.4.251;
+limit=1000
+{
+ssh root@${remote_database_host} 'mysqldump -u root -pussdgw --skip-lock-tables --quick --events --routines --triggers hxc --where="1=1 LIMIT 1000" | gzip -c' | gunzip -c | sed '1iDROP DATABASE IF EXISTS hxc; CREATE DATABASE IF NOT EXISTS hxc; USE hxc;' | mysql -u root -pussdgw
+ssh root@${remote_database_host} 'mysqldump -u root -pussdgw --skip-lock-tables --quick --events --routines --triggers ecdsap --where="1=1 LIMIT 1000" | gzip -c' | gunzip -c | sed '1iDROP DATABASE IF EXISTS ecdsap; CREATE DATABASE IF NOT EXISTS ecdsap; USE ecdsap;' | mysql -u root -pussdgw
+}
+----
+
+Backup database for later restoration:
+
+----
+{
+date=$(date +%Y%m%d%H%M%S)
+mysqldump -u root -pussdgw --skip-lock-tables --events --routines --triggers hxc > /var/tmp/db-dump-hxc-${date}.sql
+ln -frsv /var/tmp/db-dump-hxc-${date}.sql /var/tmp/db-dump-hxc-latest.sql
+mysqldump -u root -pussdgw --skip-lock-tables --events --routines --triggers ecdsap > /var/tmp/db-dump-ecdsap-${date}.sql
+ln -frsv /var/tmp/db-dump-ecdsap-${date}.sql /var/tmp/db-dump-ecdsap-latest.sql
+}
+
+{
+cat /var/tmp/db-dump-hxc-latest.sql | sed '1iDROP DATABASE IF EXISTS hxc; CREATE DATABASE IF NOT EXISTS hxc; USE hxc;' | mysql -u root -pussdgw
+cat /var/tmp/db-dump-ecdsap-latest.sql | sed '1iDROP DATABASE IF EXISTS ecdsap; CREATE DATABASE IF NOT EXISTS ecdsap; USE ecdsap;' | mysql -u root -pussdgw
+}
+----
+
+Starting airsim:
+
+----
+## get airsim state file from remote server
+mkdir -p /tmp/C4U/ && scp root@172.17.4.251:/tmp/C4U/air_sim_state.json /tmp/C4U/
+
+## start airsim
+echo '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:prot="http://protocol.airsim.services.hxc/"><soapenv:Header/><soapenv:Body><prot:start/></soapenv:Body></soapenv:Envelope>' | xmllint --format - | curl -H "Content-Type: text/xml" --trace-ascii /dev/stderr  --data @/dev/stdin 'http://localhost:10012/Air'
+----
+
+Send request:
+
+----
+index=0; while true; do
+: ${index:=0}
+#: ${url:=http://localhost:14000/ecds/ussd/}
+: ${url:=http://localhost:14400/ecds/ussd/}
+index=$(( index + 1 ))
+sid=$(printf "%s%05d" "$(date +%m%d%H%M%S)" "${RANDOM}")
+msisdn=0823333333
+imsi=${msisdn}
+
+echo index="${index}"
+
+echo -n '<?xml version="1.0" encoding="utf-8"?><methodCall><methodName>handleUSSDRequest</methodName><params><param><value><struct><member><name>TransactionId</name><value><string>'${sid}'0</string></value></member><member><name>TransactionTime</name><value><dateTime.iso8601>'$(date +%Y%m%dT%H:%M:%S)'</dateTime.iso8601></value></member><member><name>MSISDN</name><value><string>'${msisdn}'</string></value></member><member><name>USSDServiceCode</name><value><string>710</string></value></member><member><name>USSDRequestString</name><value><string>*2*325423558361*2000*01980#</string></value></member><member><name>response</name><value><string>false</string></value></member><member><name>Sequence</name><value><i4>1</i4></value></member><member><name>SessionId</name><value><string>'${sid}'</string></value></member></struct></value></param></params></methodCall>' | xmllint --format - | tee /dev/stderr | curl -vvv --header 'Content-Type: text/xml' --data-binary @/dev/stdin http://localhost:14400/ecds/ussd/ 
+
+echo index="${index}"
+
+echo -n '<?xml version="1.0" encoding="utf-8"?><methodCall><methodName>handleUSSDRequest</methodName><params><param><value><struct><member><name>TransactionId</name><value><string>'${sid}'1</string></value></member><member><name>TransactionTime</name><value><dateTime.iso8601>'$(date +%Y%m%dT%H:%M:%S)'</dateTime.iso8601></value></member><member><name>MSISDN</name><value><string>'${msisdn}'</string></value></member><member><name>USSDServiceCode</name><value><string>710</string></value></member><member><name>USSDRequestString</name><value><string>1</string></value></member><member><name>response</name><value><string>true</string></value></member><member><name>Sequence</name><value><i4>2</i4></value></member><member><name>SessionId</name><value><string>'${sid}'</string></value></member></struct></value></param></params></methodCall>' | xmllint --format - | tee /dev/stderr | curl -vvv --header 'Content-Type: text/xml' --data-binary @/dev/stdin http://localhost:14400/ecds/ussd/
+
+echo index="${index}"
+
+done
+----
+
+== meta
+
+----
+find . -name '*.gradle' -type f -print0 | xargs -0 sed -n 's/id "ga.csys.tooling.apply-defaults-plugin" version "\([^"]\+\)"/id "ga.csys.tooling.apply-defaults-plugin" version "0.19"/gp'
+find . -name '*.gradle' -type f -print0 | xargs -0 sed -i 's/id "ga.csys.tooling.apply-defaults-plugin" version "\([^"]\+\)"/id "ga.csys.tooling.apply-defaults-plugin" version "0.19"/g'
+
+## manually edit generateGradle.py
+----
+
+----
+buildscript {
+    dependencies {
+        classpath "ga.csys.tooling:apply-defaults-plugin:0.19"
+    }
+}
+
+apply plugin: "ga.csys.tooling.apply-defaults-plugin"
+----
+
+// ......

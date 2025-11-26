@@ -1,0 +1,51 @@
+package hxc.services.ecds.util;
+
+import hxc.services.ecds.model.TransferRule;
+
+public class LastMismatch
+{
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Fields
+	//
+	// /////////////////////////////////
+	private String rule;
+	private String test;
+	private int level = 0;
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Properties
+	//
+	// /////////////////////////////////
+	public String getRule()
+	{
+		return rule;
+	}
+
+	public String getTest()
+	{
+		return test;
+	}
+
+	public int getLevel()
+	{
+		return level;
+	}
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Methods
+	//
+	// /////////////////////////////////
+	public void fail(int level, TransferRule rule, String test)
+	{
+		if (level > this.level)
+		{
+			this.level = level;
+			this.rule = rule.getName();
+			this.test = test;
+		}
+
+	}
+}

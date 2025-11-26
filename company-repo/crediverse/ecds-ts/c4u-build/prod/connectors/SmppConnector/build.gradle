@@ -1,0 +1,27 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.connectors.smpp.SmppConnector")
+   }
+}
+dependencies {
+    implementation project(':CoreInterfaces')
+    implementation project(':Configuration')
+    implementation project(':Notification')
+    implementation project(':Instrumentation')
+    implementation project(':Threads')
+    implementation 'io.netty:netty:3.9.0.Final'
+    implementation 'com.cloudhopper:ch-commons-charset'
+    implementation 'com.cloudhopper:ch-commons-util'
+    implementation 'com.fizzed:ch-smpp'
+    implementation 'org.slf4j:slf4j-api'
+}

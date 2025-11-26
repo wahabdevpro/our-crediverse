@@ -1,0 +1,36 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.services.credittransfer.CreditTransfer")
+   }
+}
+dependencies {
+    implementation project(':AirConnector')
+    implementation project(':Configuration')
+    implementation project(':CoreInterfaces')
+    implementation project(':SoapProtocol')
+    implementation project(':TransactionService')
+    implementation project(':AirSimService')
+    implementation project(':Notification')
+    implementation project(':AirProtocol')
+    implementation project(':Calendar')
+    implementation project(':PinService')
+    implementation project(':HuxConnector')
+    implementation project(':ProcessModel')
+    implementation project(':Instrumentation')
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'com.sun.xml.ws:jaxws-rt'
+    implementation 'com.sun.xml.ws:rt'
+    implementation 'javax.xml.bind:jaxb-api'
+    implementation 'com.sun.xml.bind:jaxb-core'
+    implementation 'com.sun.xml.bind:jaxb-impl'
+}

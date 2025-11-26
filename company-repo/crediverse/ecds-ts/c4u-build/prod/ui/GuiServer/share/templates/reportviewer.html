@@ -1,0 +1,37 @@
+<link type="text/css" href="/css/pagecss/reportViewer.css" rel="stylesheet" />
+
+<script src="/js/moment.min.js"></script>
+
+<script src="/js/bootstrap-datetimepicker.js"></script>
+
+<link type="text/css" href="/css/bootstrap-datetimepicker.css" rel="stylesheet" />
+<link type="text/css" href="/css/bootstrap-select.min.css" rel="stylesheet" />
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+  	<span class="sectionheading">Available Reports</span>
+  </div>
+  <div class="panel-body">
+  	<div id="availableReports">
+  		<img src="/img/load.gif" /> loading...
+  	</div>
+  </div>
+</div>
+
+<div id="retrievedPanel" class="panel panel-default hide">
+  <div class="panel-heading">
+  	<span class="sectionheading">Retrieved Entries</span>
+  	<span id="entriesCount"></span>
+  </div>
+  <div id="retrievedContent" class="panel-body">
+	
+  </div>
+</div>
+
+
+<!--  General Modal -->
+<div th:include="common :: generalModal" th:with="heading=${'Report Parameters'}" />
+
+<script type="text/javascript" src="/js/jquery.fileDownload.js"></script>
+<script type="text/javascript" src="/js/pagejs/mancommon.js"></script>
+<script type="text/javascript" src="/js/pagejs/reporting.js"></script>

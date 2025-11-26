@@ -1,0 +1,5 @@
+go and add an afr message to the gui for the service you are testing
+make it afrtest
+
+
+This test case doesnt' work yet but I will fix it when we have a real service

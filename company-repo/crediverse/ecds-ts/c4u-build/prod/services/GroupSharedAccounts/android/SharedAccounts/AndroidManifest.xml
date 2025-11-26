@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.concurrent.creditsharing"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="22" />
+
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".NeitherActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".CreditSharingActivity"
+            android:label="@string/title_activity_credit_sharing" >
+        </activity>
+        <activity
+            android:name=".SubscribeActivity"
+            android:label="@string/title_activity_subscribe" >
+        </activity>
+        <activity
+            android:name=".SubscribedActivity"
+            android:label="@string/title_activity_subscribed" >
+        </activity>
+        <activity
+            android:name=".BeneficiariesActivity"
+            android:label="@string/title_activity_beneficiaries" >
+        </activity>
+        <activity
+            android:name=".AddBeneficiaryActivity"
+            android:label="@string/title_activity_add_beneficiary" >
+        </activity>
+        <activity
+            android:name=".BeneficiaryActivity"
+            android:label="@string/title_activity_beneficiary" >
+        </activity>
+        <activity
+            android:name=".AddBenefitActivity"
+            android:label="@string/title_activity_add_benefit" >
+        </activity>
+        <activity
+            android:name=".AdjustBenefitActivity"
+            android:label="@string/title_activity_adjust_benefit" >
+        </activity>
+        <activity
+            android:name=".BalancesActivity"
+            android:label="@string/title_activity_balances" >
+        </activity>
+        <activity
+            android:name=".IsBeneficiaryActivity"
+            android:label="@string/title_activity_is_beneficiary" >
+        </activity>
+        <activity
+            android:name=".BeneficiaryBalancesActivity"
+            android:label="@string/title_activity_beneficiary_balances" >
+        </activity>
+        <activity
+            android:name=".TellMeMoreActivity"
+            android:label="@string/title_activity_tell_me_more" >
+        </activity>
+    </application>
+
+</manifest>

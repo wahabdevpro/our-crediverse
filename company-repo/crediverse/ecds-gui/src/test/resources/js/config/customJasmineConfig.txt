@@ -1,0 +1,61 @@
+baseUrl: '/src/main/resources/static/js/app',
+  
+paths: {
+	// Core libraries
+	"jquery": "../lib/jquery-1.11.3",
+	"backbone":"../lib/backbone/backbone",
+	"bootcards":"../lib/bootcards",
+	"underscore":"../lib/underscore",
+	"marionette":"../lib/backbone/backbone.marionette",
+	"handlebars":"../lib/handlebars-v4.0.5",
+	"bootstrap":"../lib/bootstrap/bootstrap",
+	"i18n":"../lib/plugins/i18n",
+	"backbone.syphon": "../lib/backbone/backbone.syphon",
+	"backbone.validation":"../lib/backbone/backbone-validation-amd",
+	"marionette.handlebars": "../lib/plugins/marionette.handlebars",
+	"text":"../lib/plugins/text",
+
+	// Login Libraries
+	"rsa": "../lib/rsa",
+	"loginControl": "../login/login-control",
+	
+	// Tests libraries
+	"jasmine" : "../lib/test/jasmine",
+	"jasmine-jquery" : "../lib/test/jasmine-jquery",
+	"mock-ajax" : "../lib/test/mock-ajax"
+},
+
+shim: {
+	"jquery-cookie": ["jquery"],
+	"login-control": ["rsa", "loginControl"],
+	"rsa": ["jquery"],
+    "mock-ajax":{
+        "exports":"MockAjax"
+    },
+    "jasmine-jquery": ["jasmine","jquery"],
+	"bootstrap":["jquery"],
+	"backbone":{
+	 "deps":["underscore"],
+	 "exports":"Backbone"
+	},
+	"handlebars":{
+	 "exports":"Handlebars"
+	},
+	"marionette":{
+	 "deps":["underscore", "backbone", "jquery", "backbone.syphon","backbone.validation"],
+	 "exports":"Marionette"
+	},
+	"marionette.handlebars": {
+		"deps":["marionette", "handlebars"]
+	},
+	"bootcards":{
+		"deps":["bootstrap", "jquery"],
+	 "exports":"Bootcards",
+	 	init: function() {
+	 		return {
+	 			Bootcards:Bootcards,
+	     		bootcards:bootcards
+	 		}
+	 	}
+	}
+}

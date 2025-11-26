@@ -1,0 +1,146 @@
+Enter in username: Logged in as: supplier
+Welcome to Credit4U Services
+Your session id is 2014040811402162
+
+Copyright (c) 2014, Concurrent and/or its affiliates. All rights reserved.
+
+Type in "help" or "?" for any help.
+
+hxc> Command or path not found. Please use ls or help for more information.
+
+hxc> 
+Credit Sharing Service
+1 Subscribe
+2 Exit
+
+
+Select Subscription Type:
+1 Daily
+2 Weekly
+3 Monthly
+4 Back
+
+
+Subscribed successfully
+Type 1 to continue...
+
+
+Credit Sharing Service
+1 View Beneficiaries
+2 Add Beneficiary
+3 Remove Beneficiary
+4 Change Benefits
+5 Unsubscribe
+6 Exit
+
+
+Add Beneficiary
+Enter Beneficiary's Number or 1 to go back
+
+
+Successfully added 923085000112
+Type 1 to continue...
+
+
+Credit Sharing Service
+1 View Beneficiaries
+2 Add Beneficiary
+3 Remove Beneficiary
+4 Change Benefits
+5 Unsubscribe
+6 Exit
+
+
+Your current beneficiaries:
+923085000112
+Type 1 to Continue
+
+
+Credit Sharing Service
+1 View Beneficiaries
+2 Add Beneficiary
+3 Remove Beneficiary
+4 Change Benefits
+5 Unsubscribe
+6 Exit
+
+
+Your current beneficiaries:
+923085000112
+Type 1 to Continue
+
+
+Credit Sharing Service
+1 View Beneficiaries
+2 Add Beneficiary
+3 Remove Beneficiary
+4 Change Benefits
+5 Unsubscribe
+6 Exit
+
+
+Select Beneficiary to change:
+1 923085000112
+2 to Continue
+
+
+Quotas for 923085000112
+No Quotas
+1 Add Quota
+2 Back
+
+
+Select Service Type
+1 For VOICE
+2 For DATA
+3 For SMS
+4 Back
+
+
+VOICE quota for 923085000112
+Enter new amount in CFR
+1 Back
+
+
+Successfully Changed VOICE quota for 923085000112
+Type 1 to continue...
+
+
+Credit Sharing Service
+1 View Beneficiaries
+2 Add Beneficiary
+3 Remove Beneficiary
+4 Change Benefits
+5 Unsubscribe
+6 Exit
+
+
+Beneficiary to remove:
+1 923085000112
+2 Back
+
+
+Successfully removed 923085000112
+Type 1 to continue...
+
+
+Credit Sharing Service
+1 View Beneficiaries
+2 Add Beneficiary
+3 Remove Beneficiary
+4 Change Benefits
+5 Unsubscribe
+6 Exit
+
+
+Do you realy want to Unsubscribe?
+1 No
+2 Yes
+
+
+Unsubscribed Successfully
+Type 1 to continue...
+
+Thank you for using the Credit Sharing Service
+
+hxc> Exiting...

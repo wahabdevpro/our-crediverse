@@ -1,0 +1,9 @@
+*************************** 1. row ***************************
+       Table: ct_server
+Create Table: CREATE TABLE `ct_server` (
+  `serverHost` varchar(64) NOT NULL,
+  `peerHost` varchar(64) DEFAULT NULL,
+  `transactionNumberPrefix` varchar(50) DEFAULT NULL,
+  `ts` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`serverHost`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

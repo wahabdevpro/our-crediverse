@@ -1,0 +1,10 @@
+*************************** 1. row ***************************
+       Table: CF_Config
+Create Table: CREATE TABLE `CF_Config` (
+  `SerialVersionUID` bigint(20) NOT NULL,
+  `name` varchar(80) NOT NULL,
+  `sequence` int(11) NOT NULL,
+  `value` varbinary(512) DEFAULT NULL,
+  `ts` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`SerialVersionUID`,`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

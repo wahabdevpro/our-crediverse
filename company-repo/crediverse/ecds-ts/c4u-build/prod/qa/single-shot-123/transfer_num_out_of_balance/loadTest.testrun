@@ -1,0 +1,19 @@
+listeningPort: 10010
+testCase(name: "transfer_invalid_amount") 
+{
+	tran1
+	{ 
+		expect (
+			fromFile: "A_GetBalanceAndDate.xml"
+			ignore: "originNodeType", "subscriberNumber","originTransactionID", "originTimeStamp", "subscriberNumberNAI","originHostName")
+		respond(
+			fromFile: "A_GetBalanceAndDate_response.xml"
+			override: "originTransactionID" with "originTransactionID");
+		expect (
+			fromFile: "A_GetBalanceAndDate.xml"
+			ignore: "originNodeType", "subscriberNumber","originTransactionID", "originTimeStamp", "subscriberNumberNAI","originHostName")
+		respond(
+			fromFile: "A_GetBalanceAndDate_response.xml"
+			override: "originTransactionID" with "originTransactionID");
+         }
+}

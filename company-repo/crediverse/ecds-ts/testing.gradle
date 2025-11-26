@@ -1,0 +1,64 @@
+task runCreditDistributionServiceTests(type:JavaExec) {
+    def Project pg = project(':CreditDistributionServiceTests')
+    println("Executing Test "+pg.name)
+    main = 'hxc.testsuite.RunAllTests'
+    classpath = pg.sourceSets.main.runtimeClasspath
+	if ( findProperty("ga.csys.c4u.testsuite.all.args") != null ) args( findProperty("ga.csys.c4u.testsuite.all.args").split(" ") )
+	logger.lifecycle("${it} Executing Test ${pg.name} with main ${it.main} and args ${it.args}")
+	doLast { logger.lifecycle("${it} Test ${pg.name} with main ${it.main} and args ${it.args} completed") }
+}
+
+task runAirSimTests(type:JavaExec) {
+    def Project pg = project(':AirSimTests')
+    println("Executing Test "+pg.name)
+    main = 'hxc.testsuite.RunAllTests'
+    classpath = pg.sourceSets.main.runtimeClasspath
+	if ( findProperty("ga.csys.c4u.testsuite.all.args") != null ) args( findProperty("ga.csys.c4u.testsuite.all.args").split(" ") )
+	logger.lifecycle("${it} Executing Test ${pg.name} with main ${it.main} and args ${it.args}")
+	doLast { logger.lifecycle("${it} Test ${pg.name} with main ${it.main} and args ${it.args} completed") }
+}
+
+task runCLITests(type:JavaExec) {
+    def Project pg = project(':CLITests')
+    println("Executing Test "+pg.name)
+    main = 'hxc.testsuite.RunAllTests'
+    classpath = pg.sourceSets.main.runtimeClasspath
+	if ( findProperty("ga.csys.c4u.testsuite.all.args") != null ) args( findProperty("ga.csys.c4u.testsuite.all.args").split(" ") )
+	logger.lifecycle("${it} Executing Test ${pg.name} with main ${it.main} and args ${it.args}")
+	doLast { logger.lifecycle("${it} Test ${pg.name} with main ${it.main} and args ${it.args} completed") }
+}
+
+task runUIConnectorTests(type:JavaExec) {
+    def Project pg = project(':UIConnectorTests')
+    println("Executing Test "+pg.name)
+    main = 'hxc.testsuite.RunAllTests'
+    classpath = pg.sourceSets.main.runtimeClasspath
+	if ( findProperty("ga.csys.c4u.testsuite.all.args") != null ) args( findProperty("ga.csys.c4u.testsuite.all.args").split(" ") )
+	logger.lifecycle("${it} Executing Test ${pg.name} with main ${it.main} and args ${it.args}")
+	doLast { logger.lifecycle("${it} Test ${pg.name} with main ${it.main} and args ${it.args} completed") }
+}
+
+task runUnitTests(type:JavaExec) {
+    def Project pg = project(':UnitTests')
+    println("Executing Test "+pg.name)
+    main = 'hxc.testsuite.RunAllTests'
+    classpath = pg.sourceSets.main.runtimeClasspath
+	if ( findProperty("ga.csys.c4u.testsuite.all.args") != null ) args( findProperty("ga.csys.c4u.testsuite.all.args").split(" ") )
+	logger.lifecycle("${it} Executing Test ${pg.name} with main ${it.main} and args ${it.args}")
+	doLast { logger.lifecycle("${it} Test ${pg.name} with main ${it.main} and args ${it.args} completed") }
+}
+
+task runIntegrationTests() {
+	dependsOn( [ runCreditDistributionServiceTests, runAirSimTests, runCLITests, runUIConnectorTests, runUnitTests ] )
+}
+
+//project.tasks.runUIConnectorTests.dependsOn(runCreditDistributionServiceTests, runAirSimTests, runCLITests, runUIConnectorTests, runUnitTests)
+project.tasks.runUIConnectorTests.mustRunAfter(runUnitTests)
+project.tasks.runCLITests.mustRunAfter(runUIConnectorTests)
+project.tasks.runAirSimTests.mustRunAfter(runCLITests)
+project.tasks.runCreditDistributionServiceTests.mustRunAfter(runAirSimTests)
+project.tasks.runIntegrationTests.mustRunAfter(runCreditDistributionServiceTests)
+
+//project.tasks.test.dependsOn project.tasks.runIntegrationTests
+//project.tasks.runIntegrationTests.dependsOn project.tasks.build
+//project.tasks.build.dependsOn project.tasks.test

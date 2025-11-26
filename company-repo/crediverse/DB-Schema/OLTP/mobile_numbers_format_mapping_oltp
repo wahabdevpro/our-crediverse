@@ -1,0 +1,8 @@
+*************************** 1. row ***************************
+       Table: mobile_numbers_format_mapping
+Create Table: CREATE TABLE `mobile_numbers_format_mapping` (
+  `new_prefix` varchar(2) NOT NULL,
+  `old_code` varchar(2) NOT NULL,
+  PRIMARY KEY (`old_code`),
+  UNIQUE KEY `old_code_UNIQUE` (`old_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

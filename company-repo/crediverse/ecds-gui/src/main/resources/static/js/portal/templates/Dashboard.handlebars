@@ -1,0 +1,109 @@
+<div>
+
+	<script id="dashboardContent">
+	    <div class="col-xs-12">
+			<div class="row">
+			
+				<div class="col-lg-4 col-md-5">
+					<div class="box box-primary">
+	    		    	<div class="box-body box-profile">
+	    		    	
+			          		<h2 class="text-center"><strong>
+								{{ this.title }} 
+								
+								{{ this.firstName }}
+								
+								{{ this.surname }}</strong></h2>								
+							<h4 class="text-muted text-center">
+			          			{{i18n "profile.viewUniqueID"}} {{ this.id }}
+		          			</h4>
+			          		<h4 class="text-muted text-center">
+			          			{{i18n "profile.viewAccountNumber"}} {{ this.accountNumber }}
+		          			</h4>
+		          			
+							<hr/>
+							
+							<div class="row">
+								<div class="col-xs-12" style="text-align:center;">
+									<label class="light-label">{{i18n "profile.viewAccountTotalBalance"}}</label>		
+									<h2 style="margin-top:10px;"><strong>{{ this.formatted_totalBalance }}</strong></h2>
+								</div>
+								<div class="col-xs-12" style="text-align:center;">
+									<label class="light-label">{{i18n "profile.viewAccountBalance"}}</label>		
+									<h2 style="margin-top:10px;"><strong>{{ this.formatted_balance }}</strong></h2>
+								</div>
+								<div class="col-xs-12" style="text-align:center;">
+									<label class="light-label">{{i18n "profile.viewAccountTradeBonus"}}</label>		
+									<h2 style="margin-top:10px;"><strong>{{ this.formatted_bonusBalance }}</strong></h2>
+								</div>
+							</div>
+							
+							<hr/>
+							
+	        			</div>
+	        			
+	        			<!-- /.box-body -->
+	   				</div>
+				</div>
+	    
+				<div class="col-lg-8 col-md-7">
+					<div class="box box-primary">
+					    <div class="box-body box-profile info-panel" id="profile" style="margin:8px;">
+							<div class="row view-fields">
+
+								<!-- Column -->
+								<div class="col-lg-6 col-md-6">
+									<h4>{{i18n "dashboard.deposits"}}</h4>
+
+									<div style="margin-left:10px;">
+										
+										{{>dbDetail label="dashboard.count" content=this.depositsCount}}
+										
+										{{>dbDetail label="dashboard.amount" content=this.depositsAmount}}
+										
+									</div>
+									
+									<h4>{{i18n "dashboard.transfers"}}</h4>
+
+									<div style="margin-left:10px;">
+									
+										{{>dbDetail label="dashboard.count" content=this.transferCount}}
+									
+										{{>dbDetail label="dashboard.amount" content=this.transferAmount}}
+
+									</div>
+								</div>
+								
+								<!-- Column -->
+								<div class="col-lg-6 col-md-6">
+									<h4>{{i18n "dashboard.sales"}}</h4>
+
+									<div style="margin-left:10px;">
+										
+										{{>dbDetail label="dashboard.count" content=this.depositsCount}}
+										
+										{{>dbDetail label="dashboard.amount" content=this.depositsAmount}}
+										
+									</div>
+									
+									<h4>{{i18n "dashboard.selfTopups"}}</h4>
+
+									<div style="margin-left:10px;">
+									
+										{{>dbDetail label="dashboard.count" content=this.transferCount}}
+									
+										{{>dbDetail label="dashboard.amount" content=this.transferAmount}}
+
+									</div>
+								</div>
+							
+							</div> <!-- row view-fields -->
+   						</div> <!-- info-panel -->
+					</div>
+				</div>
+				
+			</div>
+	    </div>
+	</script>
+
+</div>

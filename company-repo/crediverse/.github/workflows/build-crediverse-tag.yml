@@ -1,0 +1,210 @@
+# name: Build Crediverse Tagged Release
+
+# # Controls when the workflow will run
+# on:
+#   # Triggers the workflow on push or pull request events for main or release branches
+#   push:
+#     # branches:
+#     #   - tagRelease
+#     tags:
+#       - '*'
+#   #pull_request:
+#   #  branches:
+#   #    - main
+
+#   # Allows you to run this workflow manually from the Actions tab
+#   workflow_dispatch:
+# env:
+#   TS_IMAGE_NAME: ecds-ts
+#   API_IMAGE_NAME: ecds-api
+#   GUI_IMAGE_NAME: ecds-gui
+#   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+# jobs:
+#   process-build-variables:
+#    runs-on: ubuntu-latest
+#     permissions: 'write-all'
+#     steps:
+#       - name: 'Job Start Time'
+#         run: |
+#           CS_START_TIME=$(date +"%Y-%m-%dT%H:%M:%S")
+#           echo "Start Time => $CS_START_TIME"
+#           echo "RELEASE_DATE=$(date +%Y-%m-%d)" >> $GITHUB_ENV
+
+#       - name: Generate Changelog file
+#         run: |-
+#           echo "Crediverse-${{github.ref_name}} " > ${{ github.workspace }}-CHANGELOG.md
+#           echo "Release Date | ${{env.RELEASE_DATE}}" >> ${{ github.workspace }}-CHANGELOG.md
+#           echo "Build Number | ${{ github.run_number }}" >> ${{ github.workspace }}-CHANGELOG.md
+#           echo "## DOCKER IMAGES" >> ${{ github.workspace }}-CHANGELOG.md
+#   build-and-publish-featurebar:
+#     needs: process-build-variables
+#     runs-on: ubuntu-latest
+#     permissions:
+#       contents: 'read'
+#       id-token: 'write'
+#       packages: 'write'
+#     steps:
+#       - name: 'Feature Bar Start Time'
+#         run: |
+#           CS_FEATURE_BAR_START_TIME=$(date +"%Y-%m-%dT%H:%M:%S")
+#           echo "Feature Bar Build Starts at => $CS_FEATURE_BAR_START_TIME"
+#       - uses: 'actions/checkout@v3'
+#       - name: Login to ghcr
+#         run: |-
+#           echo ${{ github.repository }}
+#           echo ${{ github.run_id }}
+#           echo ${{ github.run_number }}
+#           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+#       - name: Configure Version Information
+#         id: version-info
+#         run: |-
+#           IMAGE_ID=ghcr.io/${{ github.repository }}/feature-bar
+#           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+#           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+#           #[ "$VERSION" == "main" ] && VERSION=build-${{github.run_number}}
+#           #VERSION=$VERSION-build-${{github.run_number}}
+#           if [[ "${{ github.ref }}" == "refs/tags/"* ]]
+#           then
+#           VERSION=$(echo $VERSION | sed -e 's/^v//') # Removes the `v` from the start of a version tag
+#           echo TAG_VERSION=$VERSION
+#           echo "TAG_VERSION=$VERSION" >> $GITHUB_ENV
+#           fi
+#           echo IMAGE_ID=$IMAGE_ID
+#           echo VERSION=$VERSION
+#           echo GCR_PROJECT_ID=$GCR_PROJECT_ID
+#           # Share variables between steps (which each run in a separate process)
+#           echo "IMAGE_ID=$IMAGE_ID" >> $GITHUB_ENV
+#           echo "VERSION=$VERSION" >> $GITHUB_ENV
+#       - name: Build Image
+#         run: |-
+#           IMAGE_NAME=feature-bar
+#           echo "Building $IMAGE_NAME"
+#           cd common/featureBar/server/featureBarImage
+
+#           docker build -t ${{ env.IMAGE_ID }}:${{ env.VERSION }} .
+#           docker tag ${{ env.IMAGE_ID }}:${{ env.VERSION }} ${{ env.IMAGE_ID }}:latest
+#           docker push ${{ env.IMAGE_ID }}:${{ env.VERSION }}
+#           docker push ${{ env.IMAGE_ID }}:latest
+#            if [[ "${{ github.ref }}" == "refs/tags/"* ]]
+#           then
+#           docker tag ${{ env.IMAGE_ID }}:${{ env.VERSION }} ${{ env.IMAGE_ID }}:${{ env.TAG_VERSION }}
+#           docker push ${{ env.IMAGE_ID }}:${{ env.TAG_VERSION }}
+#           echo "- [${{env.IMAGE_ID}}:${{env.TAG_VERSION}}](https://${{env.IMAGE_ID}}:${{env.TAG_VERSION}})" >> ${{ github.workspace }}-CHANGELOG.md
+#           fi
+
+#   build-crediverse:
+#     needs: process-build-variables
+#     strategy:
+#       matrix:
+#         #IMAGE_NAME: [$API_IMAGE_NAME]
+#         IMAGE_NAME: [$TS_IMAGE_NAME, $API_IMAGE_NAME, $GUI_IMAGE_NAME]
+#     # The type of runner that the job will run on
+#     runs-on: ubuntu-latest
+
+
+#     permissions:
+#       contents: 'read'
+#       id-token: 'write'
+#       packages: 'write'
+
+#     steps:
+#       - name: 'Job Start Time'
+#         run: |
+#           CS_START_TIME=$(date +"%Y-%m-%dT%H:%M:%S")
+#           echo "Start Time => $CS_START_TIME"
+#       - uses: 'actions/checkout@v3'
+#       - name: Set up JDK 11 for x64
+#         uses: actions/setup-java@v3
+#         with:
+#           java-version: '11'
+#           distribution: 'adopt'
+#           architecture: x64
+#       #- name: Validate Gradle wrapper
+#       #  # See https://github.com/gradle/wrapper-validation-action
+#       #  uses: gradle/wrapper-validation-action@v1.0.4
+#       #- name: Run the Gradle package task
+#       #  # See https://github.com/gradle/gradle-build-action
+#       #  uses: gradle/gradle-build-action@v2
+#       #  with:
+#       #    gradle-version: wrapper
+#       #    arguments: build -x test -x check
+#       - name: Print java version
+#         run: |-
+#           which java
+#           java --version
+#       - name: Login to ghcr
+#         run: |-
+#           echo ${{ github.repository }}
+#           echo ${{ github.run_id }}
+#           echo ${{ github.run_number }}
+#           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+#           #echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+#       - name: Configure Version Information
+#         id: version-info
+#         run: |-
+#           IMAGE_ID=ghcr.io/${{ github.repository }}/${{ matrix.IMAGE_NAME }}
+#           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+#           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+#           if [[ "${{ github.ref }}" == "refs/tags/"* ]]
+#           then
+#           VERSION=$(echo $VERSION | sed -e 's/^v//') # Removes the `v` from the start of a version tag
+#           echo TAG_VERSION=$VERSION
+#           echo "TAG_VERSION=$VERSION" >> $GITHUB_ENV
+#           fi
+#           # [ "$VERSION" == "main" ] && VERSION=build-${{github.run_number}}
+#           VERSION=$VERSION-build-${{github.run_number}}
+#           #VERSION=build-${{github.run_number}}
+#           echo IMAGE_ID=$IMAGE_ID
+#           echo VERSION=$VERSION
+#           echo GCR_PROJECT_ID=$GCR_PROJECT_ID
+#           # Share variables between steps (which each run in a separate process)
+#           echo "IMAGE_ID=$IMAGE_ID" >> $GITHUB_ENV
+#           echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+#       - name: Build Image
+#         run: |-
+#           IMAGE_NAME=${{ matrix.IMAGE_NAME }}
+#           echo "Building $IMAGE_NAME"
+#           cd ./$IMAGE_NAME
+#           ./gradlew --info --stacktrace clean
+#           ./gradlew --info --stacktrace publish
+#           docker build -t ${{ env.IMAGE_ID }}:${{ env.VERSION }} .
+#           docker tag ${{ env.IMAGE_ID }}:${{ env.VERSION }} ${{ env.IMAGE_ID }}:latest
+#           if [[ "${{ github.ref }}" == "refs/tags/"* ]]
+#           then
+#           docker tag ${{ env.IMAGE_ID }}:${{ env.VERSION }} ${{ env.IMAGE_ID }}:${{ env.TAG_VERSION }}
+#           docker push ${{ env.IMAGE_ID }}:${{ env.TAG_VERSION }}
+#           echo "- [${{env.IMAGE_ID}}:${{env.TAG_VERSION}}](https://${{env.IMAGE_ID}}:${{env.TAG_VERSION}})" >> ${{ github.workspace }}-CHANGELOG.md
+#           fi
+#           docker push ${{ env.IMAGE_ID }}:${{ env.VERSION }}
+#           docker push ${{ env.IMAGE_ID }}:latest
+#   create-release-page:
+#     runs-on:  ubuntu-latest
+
+#     permissions: 'write-all'
+#     needs:
+#       [process-build-variables, build-and-publish-featurebar, build-crediverse]
+#     if: |
+#       always() && !contains(needs.*.result, 'cancelled') && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'skipped')
+
+#     steps:
+#       - name: Get Current date
+#         id: date
+#         run: |-
+#           echo "NOW=$(date +%Y-%m-%d)" >> $GITHUB_ENV
+#       - name: Create Release
+#         id: create_release
+#         uses: ncipollo/release-action@v1
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+#         with:
+#           tag: ${{ github.ref_name }}
+#           name: Crediverse-${{ github.ref_name }}
+#           draft: false
+#           replacesArtifacts: true
+#           removeArtifacts: false
+#           allowUpdates: true
+#           bodyFile: ${{ github.workspace }}-CHANGELOG.md
+#           discussionCategory: 'General'
+#           #generateReleaseNotes: true
+#           #prerelease: true

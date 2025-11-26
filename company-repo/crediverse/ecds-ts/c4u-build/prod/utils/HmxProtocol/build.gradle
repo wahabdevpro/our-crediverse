@@ -1,0 +1,14 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+dependencies {
+    implementation project(':HsxProtocol')
+    implementation project(':XmlRpc')
+}

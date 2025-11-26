@@ -1,0 +1,13 @@
+listeningPort: 10010
+testCase(name: "transfer_success"  key:"originTransactionID" ) 
+{
+	tran1
+	{ 
+		expect (
+			fromFile: "A_GetBalanceAndDate.xml"
+			ignore: "originNodeType", "originTransactionID", "originTimeStamp","originHostName","subscriberNumber")
+		respond(
+			fromFile: "A_GetBalanceAndDate_response.xml"
+			override: "originTransactionID" with "originTransactionID");
+	}
+}

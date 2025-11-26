@@ -1,0 +1,19 @@
+*************************** 1. row ***************************
+       Table: et_sclass
+Create Table: CREATE TABLE `et_sclass` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `description` varchar(80) NOT NULL,
+  `lm_time` datetime NOT NULL,
+  `lm_userid` int(11) NOT NULL,
+  `max_daily_amount` decimal(20,4) DEFAULT NULL,
+  `max_daily_count` int(11) DEFAULT NULL,
+  `max_monthly_amount` decimal(20,4) DEFAULT NULL,
+  `max_monthly_count` int(11) DEFAULT NULL,
+  `max_amount` decimal(20,4) DEFAULT NULL,
+  `name` varchar(50) NOT NULL,
+  `state` varchar(1) NOT NULL,
+  `version` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `et_sclass_name` (`company_id`,`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

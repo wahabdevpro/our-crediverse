@@ -1,0 +1,54 @@
+syntax = "proto3";
+package credivault_api;
+
+service CrediVault {
+	rpc Transfer (TransferRequest) returns (TransferReceipt);
+	rpc TransferWallet (TransferWalletRequest) returns (TransferWalletReceipt);
+	rpc CoinWallet (CoinWalletRequest) returns (CoinWalletReceipt);
+    rpc GetBalance(GetBalanceRequest) returns (GetBalanceResponse);
+}
+
+message GetBalanceRequest {
+    string wallet = 1;
+
+}
+
+message GetBalanceResponse {
+    uint64 balance = 1;
+}
+
+message TransferRequest {
+	string from_wallet = 1;
+	string to_wallet = 2;
+	uint64 amount = 3;
+	uint32 at_time = 4;
+	string ownership_key = 5;
+	string signature = 6;
+}
+
+message CoinWalletRequest { 
+  uint64 amount_of_coin_to_create = 1;
+    string wallet_type = 2;
+    string ownership_key = 3;
+    string signature = 4;
+    uint64 at_time = 5;
+}
+
+message TransferWalletRequest {
+    string wallet_id = 1;
+    string to_owner = 2;
+    string ownership_key = 3;
+    string signature = 4;
+    uint32 at_time = 5; 
+}
+
+message TransferReceipt {
+	string receipt = 1;
+}
+message TransferWalletReceipt {
+	string receipt  = 1;
+}
+message CoinWalletReceipt {
+	string receipt  = 1;
+}
+

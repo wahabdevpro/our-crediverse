@@ -1,0 +1,9 @@
+*************************** 1. row ***************************
+       Table: SubscriptionReportData
+Create Table: CREATE TABLE `SubscriptionReportData` (
+  `serviceID` varchar(50) DEFAULT NULL,
+  `variantID` varchar(50) DEFAULT NULL,
+  `serviceClass` int(11) NOT NULL,
+  `subscriptions` bigint(20) NOT NULL,
+  `ts` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1

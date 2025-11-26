@@ -1,0 +1,104 @@
+#!/bin/bash
+set -e
+
+#APPS_DIR=${APPS_DIR}
+APP_NAME=${APP_NAME}
+#APP_DIR=$APPS_DIR/$APP_NAME
+
+#JAVA_EXE="/export/home/cs/jdk7/jdk1.7.0_45/bin/java"
+#JAVA_OPTS="-cp ${JAVA_CLASSPATH}"
+#JAVA_MAINCLASS_JAR="${JAVA_MAINCLASS_JAR}"
+
+#LOGFILE="/var/log/$APP_NAME.log"
+PIDFILE="${INSTALL_PATH}/bin/$APP_NAME.pid"
+PID=0
+
+#TEST_FILE=$APP_DIR/test
+#touch $APP_DIR/test
+
+function print_data {
+	echo "[`date`] " $1  >>  $TEST_FILE
+}
+
+if [ -f $PID_FILE ]
+then    
+        PID=$(cat $pidfile)
+fi
+
+
+case "$1" in
+	start)
+		print_data "Start Called"
+		if [ -s $PIDFILE ] && kill -0 $(cat $PIDFILE) >/dev/null 2>&1; then
+	    		print_datao "Process apparently already running."
+			exit 0
+	    	fi
+		
+		cd ${INSTALL_PATH}
+
+		print_data "Starting java process..."
+		#$JAVA_EXE $JAVA_OPTS $JAVA_MAINCLASS_JAR >dev/null 2>&1 &
+		${INSTALL_PATH}/bin/$APP_NAME &
+		sleep 1
+
+		if [ $? -ne 0 ];
+        	then
+                	print_data "Process could not be started."
+	    		echo "start failed? $?"
+			rm -f $PIDFILE 
+        	else
+			print_data "$!"
+			NEW_PID=$!
+			print_data "Process started. Saving PID: $!"
+			echo $! > $PIDFILE
+			echo "."
+
+		fi
+		;;
+
+	stop)
+		print_data "Stop Called"
+	        if [ -s $PIDFILE ] && kill -0 $(cat $PIDFILE) >/dev/null 2>&1; then
+        		echo -n "Stopping rsync daemon: rsync"
+         		/usr/bin/kill -TERM `/usr/bin/cat $PIDFILE`
+	 		rm -f $PIDFILE 
+         		echo "."
+
+        	fi
+		;;
+
+	reload|force-reload)
+		print_data "reload/force-reload called"
+		;;
+
+	restart)
+		print_data "Restart Called"
+            	echo -n "Restarting rsync daemon: "
+	    	if [ -s $PIDFILE ] && kill -0 $(cat $PIDFILE) >/dev/null 2>&1; then
+                	/usr/bin/kill -TERM `/usr/bin/cat $PIDFILE`
+	    		rm -f $PIDFILE
+                	echo -n "."
+	    	fi
+
+		#$JAVA_HOME/bin/java i$JAVA_OPTS $MAIN_CLASS >$LOG_FILE 2>&1
+		${INSTALL_PATH}/bin/$APP_NAME &
+
+                if [ $? -ne 0 ];
+                then
+                        print_data "Process could not be started."
+                        echo "start failed? $?"
+                        rm -f $PIDFILE
+                else
+                        echo "."
+                fi
+		;;
+
+	status)
+		print_data "Status Called"
+		;;
+	*)
+        	echo "Usage: $0 {start | restart | stop}"
+    		;;
+esac
+
+exit 0

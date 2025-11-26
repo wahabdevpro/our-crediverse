@@ -1,0 +1,2 @@
+#This starts the supervisor service at boot up
+/etc/init.d/${APP_NAME} start

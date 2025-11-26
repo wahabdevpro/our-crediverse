@@ -1,0 +1,182 @@
+@CHARSET "UTF-8";
+
+.processbox {
+	border-radius: 5px;
+	box-shadow: 0 0 5px #CCCCCC;
+	max-width: 100%;
+	min-height: 250px;
+	overflow: auto;
+	padding: 10px;
+}
+
+.processbox_left {
+	max-height: 500px;
+	font: 12px Verdana, sans-serif;
+	overflow: auto;
+}
+
+.user_heading {
+	margin-left: 20px;
+	padding-left: 15px;
+	font-size: 22px;
+	font-weight: bold;
+}
+
+/** Message Editing **/
+.form-goup-update {
+	margin: auto 0px !important;
+}
+
+.langLabel {
+	margin: 5px auto 0px 22px;
+}
+
+.mytypeahead {
+	border: 1px solid gray;
+	width: 90%;
+	margin: 2px auto;
+	height: 25px;
+	white-space: nowrap !important;
+	overflow: hidden !important;
+	font-height: 20px;;
+}
+
+.sectionLabel {
+	border-bottom: 1px solid gray;
+	margin: 5px auto 2px;
+	font-weight: bold;
+}
+
+.variable-formatting {
+	color: blueviolet;
+}
+
+.atwho-view {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: none;
+	margin-top: 18px;
+	background: #fff;
+	border: 1px solid #DDD;
+	border-radius: 3px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, .1);
+	min-width: 120px;
+	z-index: 10
+}
+
+.atwho-view .cur {
+	background: #36F;
+	color: #fff
+}
+
+.atwho-view .cur small {
+	color: #fff
+}
+
+.atwho-view strong {
+	color: #36F
+}
+
+.atwho-view .cur strong {
+	color: #fff;
+	font: bold
+}
+
+.atwho-view ul {
+	list-style: none;
+	padding: 0;
+	margin: auto
+}
+
+.atwho-view ul li {
+	display: block;
+	padding: 5px 10px;
+	border-bottom: 1px solid #DDD;
+	cursor: pointer
+}
+
+.atwho-view small {
+	font-size: smaller;
+	color: #777;
+	font-weight: 400
+}
+
+[contenteditable="true"].single-line {
+	white-space: nowrap !important;
+	overflow: hidden !important;
+}
+
+[contenteditable="true"].single-line br {
+	display: none !important;
+}
+
+[contenteditable="true"].single-line * {
+	display: inline !important;
+	white-space: nowrap !important;
+}
+
+.permissions-panel-heading {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	font-size: 14px;
+}
+
+.permissions-panel-title {
+	font-size: 14px;
+	!
+	important
+}
+
+.message-text-heading-indent {
+	margin-left: 10px;
+}
+
+.message-text-indent {
+	margin-left: 10px;
+	margin-right: 20px;
+}
+
+.tabcontent {
+	margin-top: 15px;
+}
+
+.modalconent {
+	min-height: 300px;
+}
+
+.modalrowcontent {
+	margin-top: 10px;
+}
+
+.modalcheckbox {
+	margin-top: 0px !important;
+}
+
+.modaltexts {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.btn-acc {
+    position:absolute;
+    right:2px;
+    top:2px;
+}
+
+.accordion-heading {
+    position:relative !important;
+}
+
+.returncodeControl {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	padding-right: -50px;
+	margin: 5px 5px 10px 5px;
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    
+}

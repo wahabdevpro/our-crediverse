@@ -1,0 +1,195 @@
+package $package^;
+
+$connector_start^
+import java.io.IOException;
+
+$connector_stop^
+$vas_service_start^
+import com.concurrent.hxc.IServiceContext;
+import com.concurrent.hxc.Number;
+import com.concurrent.hxc.VasService;
+import com.concurrent.hxc.VasServiceInfo;
+
+$vas_service_stop^
+import hxc.configuration.IConfiguration;
+import hxc.configuration.ValidationException;
+$connector_start^
+import hxc.connectors.IConnection;
+import hxc.connectors.IConnector;
+$connector_stop^
+import hxc.servicebus.IServiceBus;
+$service_start^
+import hxc.services.IService;
+$service_stop^
+$config_start^
+import hxc.services.notification.INotifications;
+import hxc.services.security.Perm;
+import hxc.services.security.Perms;
+import hxc.utils.configuration.ConfigurationBase;
+$config_stop^
+import hxc.utils.instrumentation.IMetric;
+
+$connector_start^
+public class $name^Connector implements IConnector
+$connector_stop^
+$service_start^
+public class $name^Service $extends^ implements IService
+$service_stop^
+{
+
+	private IServiceBus esb;
+	
+	$connector_start^
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// IConnector Implementation
+	//
+	// /////////////////////////////////
+	$connector_stop^
+	$service_start^
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// IService Implementation
+	//
+	// /////////////////////////////////
+	$service_stop^
+	@Override
+	public void initialise(IServiceBus esb)
+	{
+		this.esb = esb;
+	}
+
+	@Override
+	public boolean start(String[] args)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void stop()
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public IConfiguration getConfiguration()
+	{
+		return $getConfiguration^;
+	}
+
+	@Override
+	public void setConfiguration(IConfiguration config) throws ValidationException
+	{
+		$setConfiguration^
+	}
+
+	@Override
+	public boolean canAssume(String serverRole)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isFit()
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public IMetric[] getMetrics()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	$connector_start^
+	@Override
+	public IConnection getConnection(String optionalConnectionString) throws IOException
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+	$connector_stop^
+	
+	$config_start^
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Configuration
+	//
+	// /////////////////////////////////
+	$perms^
+	class $name^Configuration extends ConfigurationBase
+	{
+
+		// TODO Add Properties here
+		
+		@Override
+		public String getPath()
+		{
+			return "$path^";
+		}
+
+		@Override
+		public INotifications getNotifications()
+		{
+			return null;
+		}
+
+		@Override
+		public long getSerialVersionUID()
+		{
+			return $serial^;
+		}
+
+		@Override
+		public String getName()
+		{
+			return "$name^ $type^";
+		}
+
+		@Override
+		public void validate() throws ValidationException
+		{
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	private $name^Configuration config = new $name^Configuration();
+	$config_stop^
+	
+	$vas_service_start^
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// VAS Service Implementation
+	//
+	// /////////////////////////////////
+
+	@Override
+	public String getServiceID()
+	{
+		// TODO Auto-generated method stub
+		return "";
+	}
+
+	@Override
+	public String getServiceName()
+	{
+		// TODO Auto-generated method stub
+		return "";
+	}
+	
+	@Override
+	public VasServiceInfo[] getServiceInfo(IServiceContext context,
+			Number subscriberNumber, String variantID, Integer languageID,
+			boolean activeOnly) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	$vas_service_stop^
+}

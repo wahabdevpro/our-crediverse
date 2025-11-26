@@ -1,0 +1,101 @@
+<link type="text/css" href="/css/BootSideMenu.css" rel="stylesheet"/>
+
+<div clas="row">
+	<div class="col-xs-8 col-sm-8 col-md-8 bam_heading">BUSINESS ACTIVITY MONITOR</div>
+	<div class="col-xs-4 col-md-4">
+		<button id="addbamwidget" class="btn btn-success btn-xs" title="add monitor" data-toggle="modal" style="float:right;" type="button">
+			<span class="glyphicon glyphicon-plus"></span>
+		</button>
+	</div>
+</div>
+
+<div id="content" class="hide">
+	<div class="demo-container">
+		<div id="placeholder" class="demo-placeholder "></div>
+	</div>
+</div>
+
+<div class="row hide" id="loadingBam">
+	<div class="col-md-12">
+		<img src="/img/load.gif" style="margin-right:20px;"/>Loading BAM metrics configuration...
+	</div>
+</div>
+
+<div clas="row">
+	<div class="col-md-12">
+		<div id="content" class="gridster">
+			<ul>
+				
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-2 col-md-2 col-xs-2">
+		<div id="demo">
+  <div class="list-group">
+    <a href="#" class="list-group-item active">Item 1</a>
+    <a href="#" class="list-group-item">Item 2</a>
+    <a href="#" class="list-group-item">Item 3</a>
+    <a href="#" class="list-group-item">Item 4</a>
+    <a href="#" class="list-group-item">Item 5</a>
+    ...
+  </div>
+</div>
+	</div>
+</div>
+
+ <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+ 
+<!--  gridster.js -->
+<link type="text/css" href="/css/pagecss/bam.css" rel="stylesheet" />
+
+<link type="text/css" href="/css/jquery.gridster.min.css" rel="stylesheet" />
+<script type="text/javascript" src="/js/jquery.gridster.with-extras.min.js"></script>
+<script type="text/javascript" src="/js/BootSideMenu.js"></script>
+
+<!-- BAM libraries -->
+<script type="text/javascript" src="/js/bam/flot-control.js"></script>
+<script type="text/javascript" src="/js/bam/graph-control-struct.js"></script>
+<script type="text/javascript" src="/js/bam/bam-control.js"></script>
+<script type="text/javascript" src="/js/bam/gridster-controller.js"></script>
+<script type="text/javascript" src="/js/bam/bam.js"></script>
+
+<!-- Flot Graph -->
+<link type="text/css" href="/css/flot/flot.css" rel="stylesheet" />
+<script type="text/javascript" src="/js/flot/jquery.flot.min.js"></script>
+
+<!-- RGraph  -->
+<script src="/js/rgraph/RGraph.common.core.js"></script>
+<script src="/js/rgraph/RGraph.common.dynamic.js"></script>   <!-- Just needed for dynamic features (eg tooltips) -->
+
+
+<script src="/js/rgraph/RGraph.common.annotate.js"></script>  <!-- Just needed for annotating -->
+<script src="/js/rgraph/RGraph.common.context.js"></script>   <!-- Just needed for context menus -->
+<script src="/js/rgraph/RGraph.common.effects.js"></script>   <!-- Just needed for visual effects -->
+<script src="/js/rgraph/RGraph.common.key.js"></script>       <!-- Just needed for keys -->
+<script src="/js/rgraph/RGraph.common.resizing.js"></script>  <!-- Just needed for resizing -->
+<script src="/js/rgraph/RGraph.common.tooltips.js"></script>  <!-- Just needed for tooltips -->
+<script src="/js/rgraph/RGraph.common.zoom.js"></script>      <!-- Just needed for zoom -->
+<script src="/js/rgraph/RGraph.bar.js"></script>              <!-- Just needed for Bar charts -->
+<script src="/js/rgraph/RGraph.bipolar.js"></script>          <!-- Just needed for Bi-polar charts -->
+<script src="/js/rgraph/RGraph.cornergauge.js"></script>      <!-- Just needed for CornerGauge charts -->
+<script src="/js/rgraph/RGraph.fuel.js"></script>             <!-- Just needed for Fuel charts -->
+<script src="/js/rgraph/RGraph.funnel.js"></script>           <!-- Just needed for Funnel charts -->
+<script src="/js/rgraph/RGraph.gantt.js"></script>            <!-- Just needed for Gantt charts -->
+<script src="/js/rgraph/RGraph.gauge.js"></script>            <!-- Just needed for Gauge charts -->
+<script src="/js/rgraph/RGraph.hbar.js"></script>             <!-- Just needed for Horizontal Bar charts -->
+<script src="/js/rgraph/RGraph.hprogress.js"></script>        <!-- Just needed for Horizontal Progress bars -->
+<script src="/js/rgraph/RGraph.led.js"></script>              <!-- Just needed for LED charts -->
+<script src="/js/rgraph/RGraph.line.js"></script>             <!-- Just needed for Line charts -->
+<script src="/js/rgraph/RGraph.meter.js"></script>            <!-- Just needed for Meter charts -->
+<script src="/js/rgraph/RGraph.odo.js"></script>              <!-- Just needed for Odometers -->
+<script src="/js/rgraph/RGraph.pie.js"></script>              <!-- Just needed for Pie AND Donut charts -->
+<script src="/js/rgraph/RGraph.radar.js"></script>            <!-- Just needed for Radar charts -->
+<script src="/js/rgraph/RGraph.rose.js"></script>             <!-- Just needed for Rose charts -->
+<script src="/js/rgraph/RGraph.rscatter.js"></script>         <!-- Just needed for Rscatter charts -->
+<script src="/js/rgraph/RGraph.scatter.js"></script>          <!-- Just needed for Scatter charts -->
+<script src="/js/rgraph/RGraph.thermometer.js"></script>      <!-- Just needed for Thermometer charts -->
+<script src="/js/rgraph/RGraph.vprogress.js"></script>        <!-- Just needed for Vertical Progress bars -->
+<script src="/js/rgraph/RGraph.waterfall.js"></script>        <!-- Just needed for Waterfall charts  -->

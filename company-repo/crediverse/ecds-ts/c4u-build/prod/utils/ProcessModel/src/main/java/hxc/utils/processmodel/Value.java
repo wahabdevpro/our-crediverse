@@ -1,0 +1,57 @@
+package hxc.utils.processmodel;
+
+public class Value<T> extends IValueT<T>
+{
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Fields
+	//
+	// /////////////////////////////////
+	private T value;
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Properties
+	//
+	// /////////////////////////////////
+	@Override
+	public T getValue(IProcessState state)
+	{
+		return value;
+	}
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Construction
+	//
+	// /////////////////////////////////
+	public Value(T value)
+	{
+		this.value = value;
+	}
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Methods
+	//
+	// /////////////////////////////////
+
+	public static Object[] toArrayX(IProcessState state, IValue[] args)
+	{
+		if (args == null || args.length == 0)
+			return new Object[0];
+		Object[] result = new Object[args.length];
+		for (int index = 0; index < args.length; index++)
+		{
+			result[index] = args[index] == null ? null : args[index].getValue(state);
+		}
+
+		return result;
+	}
+
+	@Override
+	public String toString()
+	{
+		return value.toString();
+	}
+}

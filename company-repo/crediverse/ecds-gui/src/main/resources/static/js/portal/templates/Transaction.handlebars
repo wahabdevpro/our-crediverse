@@ -1,0 +1,898 @@
+<div>
+	<script id="transactiondetails">
+	    <div id="transactiondetails" class="col-xs-12">
+			<div class="row">
+				<div class="col-lg-3 col-md-4 col-sm-6">
+					<div class="box box-primary">
+        		    	<div class="box-body box-profile">
+    		          		<h2 class="text-center"><strong>{{ i18nEnum "transactionType" this.transactionTypeName }}</strong></h2>
+    		          		<h4 class="text-muted text-center">{{i18n "transactions.transactionNo"}} {{ this.number }}</h4>
+							<hr/>
+							{{#if this.amount}}
+							<div class="row">
+								<div class="col-sm-6" style="text-align:center;">
+									<label class="light-label">{{i18n "transactions.amount"}}</label>		
+									<h2 style="margin-top:10px;"><strong>{{#if this.amount}}{{ i18nNum this.amount }}{{else}}<span class="no-data">-</span>{{/if}}</strong></h2>
+								</div>	
+								<div class="col-sm-6" style="text-align:center;">
+									<label class="light-label">{{i18n "transactions.bonusAmount"}}</label>		
+									<h2 style="margin-top:10px;"><strong>{{#if this.bonusAmount}}{{ i18nNum this.bonusAmount }}{{else}}<span class="no-data">-</span>{{/if}}</strong></h2>
+								</div>	
+							</div>
+							{{/if}}
+            			</div>
+            			<!-- /.box-body -->
+       				</div>
+       				
+       				{{#if this.reversals}}
+	   					{{#each this.reversals}}
+	   						
+	   						{{#ifCond returnCode "!=" "SUCCESS"}}
+			   					<div class="box box-danger reversalOverview" style="color: red;">
+			   				{{else}}
+				   				<div class="box box-primary reversalOverview">
+			   				{{/ifCond}}
+			   				
+			    		    	<div class="box-body box-profile">
+					          		<h2 class="text-center"><strong>
+					          		{{#ifCond returnCode "!=" "SUCCESS"}}
+					          			<span class='failed-tag'>{{i18n "transactions.failed"}}</span>
+					          		{{/ifCond}}
+					          		{{ i18nEnum "transactionType" transactionTypeName }}</strong></h2>
+					          		<h4 class="text-muted text-center">{{i18n "transactions.transactionNo"}} {{ number }}</h4>
+									<hr/>
+									<div class="row">
+										<div class="col-sm-6" style="text-align:center;">
+											<label class="light-label">{{i18n "transactions.amount"}}</label>		
+											<h2 style="margin-top:10px;">
+												{{#if amount}}<strong>{{ i18nNum amount }}</strong>{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}
+											</h2>
+										</div>
+										<div class="col-sm-6" style="text-align:center;">
+											<label class="light-label">{{i18n "transactions.bonusAmount"}}</label>		
+											<h2 style="margin-top:10px;">
+												{{#if bonusAmount}}<strong>{{ i18nNum bonusAmount }}</strong>{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}
+											</h2>
+										</div>
+									</div>
+			        			</div>
+			        			<!-- /.box-body -->
+			   				</div>
+			   			{{/each}}
+	   				{{/if}}
+    				
+
+       				{{#if this.adjudication}}
+   						{{#ifCond this.adjudication.returnCode "!=" "SUCCESS"}}
+		   					<div class="box box-danger adjudicationOverview" style="color: red;">
+		   				{{else}}
+		   					<div class="box box-primary adjudicationOverview">
+		   				{{/ifCond}}
+	    		    		<div class="box-body box-profile">
+				          		<h2 class="text-center"><strong>
+				          		{{#ifCond this.adjudication.returnCode "!=" "SUCCESS"}}
+				          			<span class='failed-tag'>{{i18n "transactions.failed"}}</span>
+				          		{{/ifCond}}
+				          		{{ i18nEnum "transactionType" this.adjudication.transactionTypeName }}</strong></h2>
+				          		<h4 class="text-muted text-center">{{i18n "transactions.transactionNo"}} {{ this.adjudication.number }}</h4>
+								{{#if this.adjudication.amount}}
+								<hr/>
+								<div class="row">
+									<div class="col-sm-12" style="text-align:center;">
+										<label class="light-label">{{i18n "transactions.amount"}}</label>		
+										<h2 style="margin-top:10px;"><strong>{{ i18nNum this.adjudication.amount }}</strong></h2>
+									</div>	
+								</div>
+				          		{{/if}}
+	        				</div>
+	        				<!-- /.box-body -->
+	   					</div>
+	   				{{/if}}
+				</div>
+				<div class="col-lg-9 col-md-8 col-sm-6">
+					<div class="nav-tabs-custom">
+  						<ul class="nav nav-tabs">
+    						<li class="active"><a href="#transaction" data-toggle="tab">Transaction</a></li>
+    						{{#if this.reversals}}
+	    	   					{{#each this.reversals}}
+	    	   						{{#ifCond returnCode "!=" "SUCCESS"}}
+	    	   							<li class="reversalFailedTab" style="color: red;"><a href="#reversal{{id}}" style="color: red;" data-toggle="tab">Reversal # {{number}}</a></li>
+					   				{{else}}
+					   					<li class="reversalTab"><a href="#reversal{{id}}" data-toggle="tab">Reversal # {{number}}</a></li>
+					   				{{/ifCond}}
+	    	   					{{/each}}
+    	   		   			{{/if}}
+    						{{#if this.adjudication}}
+	    	   					{{#ifCond this.adjudication.returnCode "!=" "SUCCESS"}}
+	    	   						<li class="adjudicationFailedTab" style="color: red;"><a href="#adjudication{{this.adjudication.id}}" style="color: red;" data-toggle="tab">Adjudication # {{this.adjudication.number}}</a></li>
+					   			{{else}}
+					   				<li class="adjudicationTab"><a href="#adjudication{{this.adjudication.id}}" data-toggle="tab">Adjudication # {{this.adjudication.number}}</a></li>
+					   			{{/ifCond}}
+    	   		   			{{/if}}
+  						</ul>
+  						<div class="tab-content">
+						    <div class="active tab-pane info-panel" id="transaction" style="margin:8px;">
+								<div class="row view-fields">
+									<div class="col-md-4 col-sm-6">
+										<h4>{{i18n "transactions.general"}}</h4>
+
+										<div style="margin-left:10px;">
+
+										<div class="view-field">
+											<label>{{i18n "transactions.hostName"}}</label>
+											<div>{{ this.hostname }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.startTime"}}</label>
+											<div>{{ this.startTimeString }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.endTime"}}</label>
+											<div>{{ this.endTimeString }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.channel"}}</label>
+											<div>{{ this.channelName }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.callerID"}}</label>
+											<div>{{#if this.callerID}}{{ this.callerID }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.inboundTransactionID"}}</label>
+											<div>{{#if this.inboundTransactionID}}{{ this.inboundTransactionID }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.inboundSessionID"}}</label>
+											<div>{{#if this.inboundSessionID}}{{ this.inboundSessionID }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.requesterMSISDN"}}</label>
+											<div>{{#if this.requesterMSISDN}}{{ this.requesterMSISDN }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.requesterType"}}</label>
+											<div>
+												{{#if this.requesterType}}
+												{{#ifCond this.requesterType "==" "W"}}{{i18n "transactions.requesterTypeWebUser"}}{{/ifCond}}
+												{{#ifCond this.requesterType "==" "A"}}{{i18n "transactions.requesterTypeAgent"}}{{/ifCond}}
+												{{#ifCond this.requesterType "==" "U"}}{{i18n "transactions.requesterTypeAgentUser"}}{{/ifCond}}
+												{{else}}
+													<span class="no-data">{{ i18n "global.notAvailable" }}</span>
+												{{/if}}
+											</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.requestMode"}}</label>
+											<div>{{ this.requestMode }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.transferRuleName"}}</label>
+											<div>{{#if this.transferRuleName}}{{ this.transferRuleName }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.itemDescription"}}</label>
+											<div>{{#if this.itemDescription}}{{ this.itemDescription }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.promotionName"}}</label>
+											<div>{{#if this.promotionName}}{{ this.promotionName }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.tradeBonusProvisionAmount"}}</label>
+											<div>{{#if this.tradeBonusProvision}}{{ i18nNum this.tradeBonusProvision }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.buyerTradeBonusPercentage"}}</label>
+											<div>{{#if this.buyerTradeBonusPercentageString}}{{ this.buyerTradeBonusPercentageString }} %{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.returnCode"}}</label>
+											<div>{{ this.returnCode }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.lastExternalResultCode"}}</label>
+											<div>{{#if this.lastExternalResultCode}}{{ this.lastExternalResultCode }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.rolledBack"}}</label>
+											<div>{{ this.rolledBack }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.followUp"}}</label>
+											<div>{{ this.followUp }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.additionalInformation"}}</label>
+											<div>{{#if this.additionalInformation}}{{ this.additionalInformation }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-6">
+										<h4>{{ i18n "global.outbound" }}</h4>
+
+										<div style="margin-left:10px;">
+
+										{{#if this.a_MSISDN}}
+
+										<div class="view-field">
+											<label>{{i18n "transactions.agent"}}</label>
+											<div><a class="routerlink" href="#account/{{ this.a_AgentID }}">{{ this.apartyName }}</a></div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.ownerName"}}</label>
+											<div>{{#if this.aownerName}}<a class="routerlink" href="#account/{{ this.a_OwnerID }}">{{ this.aownerName }}</a>{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.msisdn"}}</label>
+											<div>{{ this.a_MSISDN }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.tierName"}}</label>
+											<div>{{#if this.atierName}}{{ this.atierName }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.serviceClassName"}}</label>
+											<div>{{#if this.a_ServiceClassName}}{{ this.a_ServiceClassName }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.groupName"}}</label>
+											<div>{{#if this.agroupName}}{{ this.agroupName }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.areaID"}}</label>
+											<div>{{#if this.aareaName}}{{ this.aareaName }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.imsi"}}</label>
+											<div>{{#if this.a_IMSI}}{{ this.a_IMSI }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.imei"}}</label>
+											<div>{{#if this.a_IMEI}}{{ this.a_IMEI }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.cellID"}}</label>
+											<div>{{#if this.a_CellID}}{{ this.a_CellID }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.cgi"}}</label>
+											<div>{{#if this.acgi}}{{ this.acgi }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.cellGroupCode"}}</label>
+											<div>{{#if this.acellGroupCode}}{{ this.acellGroupCode }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.balanceBefore"}}</label>
+											<div>{{ i18nNum this.a_BalanceBefore }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.balanceAfter"}}</label>
+											<div>{{ i18nNum this.a_BalanceAfter }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.tradeBonusProvisionBefore"}}</label>
+											<div>{{ i18nNum this.a_BonusBalanceBefore }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.tradeBonusProvisionAfter"}}</label>
+											<div>{{ i18nNum this.a_BonusBalanceAfter }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.onHoldBalanceBefore"}}</label>
+											<div>{{ i18nNum this.a_OnHoldBalanceBefore }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.onHoldBalanceAfter"}}</label>
+											<div>{{ i18nNum this.a_OnHoldBalanceAfter }}</div>
+										</div>
+
+										{{else}}
+
+											<span class="no-data">{{i18n "transactions.doesntInvolveASide"}}</span>
+
+										{{/if}}
+
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-6">
+										<h4>{{ i18n "global.inbound" }}</h4>
+
+										<div style="margin-left:10px;">
+
+										{{#if this.b_MSISDN}}
+
+										<div class="view-field">
+											<label>{{i18n "transactions.agent"}}</label>
+											<div><a class="routerlink" href="#account/{{ this.b_AgentID }}">{{ this.bpartyName }}</a>
+											</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.ownerName"}}</label>
+											<div>{{#if this.bownerName}}<a class="routerlink" href="#account/{{ this.b_OwnerID }}">{{ this.bownerName }}</a>{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.msisdn"}}</label>
+											<div>{{ this.b_MSISDN }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.tierName"}}</label>
+											<div>{{#if this.btierName}}{{ this.btierName }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.serviceClassName"}}</label>
+											<div>{{#if this.b_ServiceClassName}}{{ this.b_ServiceClassName }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.groupName"}}</label>
+											<div>{{#if this.bgroupName}}{{ this.bgroupName }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.areaID"}}</label>
+											<div>{{#if this.bareaName}}{{ this.bareaName }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.imsi"}}</label>
+											<div>{{#if this.b_IMSI}}{{ this.b_IMSI }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.imei"}}</label>
+											<div>{{#if this.b_IMEI}}{{ this.b_IMEI }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.cellID"}}</label>
+											<div>{{#if this.b_CellID}}{{ this.b_CellID }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.cgi"}}</label>
+											<div>{{#if this.bcgi}}{{ this.bcgi }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.cellGroupCode"}}</label>
+											<div>{{#if this.bcellGroupCode}}{{ this.bcellGroupCode }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.balanceBefore"}}</label>											
+											<div>{{#if this.b_BalanceBefore}}{{ i18nNum this.b_BalanceBefore }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.balanceAfter"}}</label>											
+											<div>{{#if this.b_BalanceAfter}}{{ i18nNum this.b_BalanceAfter }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.tradeBonusProvisionBefore"}}</label>											
+											<div>{{#if this.b_BonusBalanceBefore}}{{ i18nNum this.b_BonusBalanceBefore }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.tradeBonusProvisionAfter"}}</label>											
+											<div>{{#if this.b_BonusBalanceAfter}}{{ i18nNum this.b_BonusBalanceAfter }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.onHoldBalanceBefore"}}</label>
+											<div>{{#if this.b_OnHoldBalanceBefore}}{{ i18nNum this.b_OnHoldBalanceBefore }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.onHoldBalanceAfter"}}</label>
+											<div>{{#if this.b_OnHoldBalanceAfter}}{{ i18nNum this.b_OnHoldBalanceAfter }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.transferBonusAmount"}}</label>
+											<div>{{#if this.b_TransferBonusAmount}}{{ i18nNum this.b_TransferBonusAmount }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.transferBonusProfile"}}</label>
+											<div>{{#if this.b_TransferBonusProfile}}{{ this.b_TransferBonusProfile }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										
+										{{else}}
+
+											<span class="no-data">{{i18n "transactions.doesntInvolveBSide"}}</span>
+
+										{{/if}}
+
+										</div>
+									</div>	
+								</div>
+    						</div>
+    						{{#if this.reversals}}
+    	   						{{#each this.reversals}}
+	    	   						{{#ifCond returnCode "==" "REFILL_FAILED"}}
+	    	   							<div class="tab-pane info-danger" id="reversal{{id}}" style="color: red;margin:8px;">
+					   				{{else}}
+					   					<div class="tab-pane info-panel" id="reversal{{id}}" style="margin:8px;">
+					   				{{/ifCond}}
+    	   						
+		    						
+			    						<div class="row view-fields">
+											<div class="col-md-4 col-sm-6">
+												<h4>{{i18n "transactions.general"}}</h4>
+				
+												<div style="margin-left:10px;">
+				
+												<div class="view-field">
+													<label>{{i18n "transactions.hostName"}}</label>
+													<div>{{ hostname }}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.startTime"}}</label>
+													<div>{{ startTimeString }}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.endTime"}}</label>
+													<div>{{ endTimeString }}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.channel"}}</label>
+													<div>{{ channelName }}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.callerID"}}</label>
+													<div>{{#if callerID}}{{ callerID }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.inboundTransactionID"}}</label>
+													<div>{{#if inboundTransactionID}}{{ inboundTransactionID }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.inboundSessionID"}}</label>
+													<div>{{#if inboundSessionID}}{{ inboundSessionID }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.requestMode"}}</label>
+													<div>{{ requestMode }}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.transferRuleID"}}</label>
+													<div>{{#if transferRuleID}}{{ transferRuleID }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.tradeBonusProvisionAmount"}}</label>
+													<div>{{#if tradeBonusPercentageString}}{{ tradeBonusPercentageString }} %{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.buyerTradeBonusPercentage"}}</label>
+													<div>{{#if buyerTradeBonusPercentage}}{{ buyerTradeBonusPercentage }} %{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.returnCode"}}</label>
+													<div>{{ returnCode }}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.lastExternalResultCode"}}</label>
+													<div>{{#if lastExternalResultCode}}{{ lastExternalResultCode }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.rolledBack"}}</label>
+													<div>{{ rolledBack }}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.followUp"}}</label>
+													<div>{{ followUp }}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.additionalInformation"}}</label>
+													<div>{{#if additionalInformation}}{{ additionalInformation }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+				
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-6">
+												<h4>A-Party</h4>
+				
+												<div style="margin-left:10px;">
+				
+												{{#if a_MSISDN}}
+				
+												<div class="view-field">
+													<label>{{i18n "transactions.agent"}}</label>
+													<div>
+														{{#hasPerms "Agent_View"}}
+															<a class="routerlink" href="#account/{{ this.a_AgentID }}">{{ apartyName }}</a>
+														{{else}}
+															{{ apartyName }}
+														{{/hasPerms}}
+													</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.msisdn"}}</label>
+													<div>{{ a_MSISDN }}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.tierName"}}</label>
+													<div>{{#if atierName}}{{ atierName }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.serviceClassID"}}</label>
+													<div>{{#if a_ServiceClassID}}{{ a_ServiceClassID }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.groupName"}}</label>
+													<div>{{#if agroupName}}{{ agroupName }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.areaID"}}</label>
+													<div>{{#if aareaName}}{{ aareaName }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.imsi"}}</label>
+													<div>{{#if a_IMSI}}{{ a_IMSI }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.imei"}}</label>
+													<div>{{#if a_IMEI}}{{ a_IMEI }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.cellID"}}</label>
+													<div>{{#if a_CellID}}{{ a_CellID }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.balanceBefore"}}</label>
+													<div>{{ i18nNum a_BalanceBefore }}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.balanceAfter"}}</label>
+													<div>{{ i18nNum a_BalanceAfter }}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.tradeBonusProvisionBefore"}}</label>
+													<div>{{ i18nNum a_BonusBalanceBefore }}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.tradeBonusProvisionAfter"}}</label>
+													<div>{{ i18nNum a_BonusBalanceAfter }}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.onHoldBalanceBefore"}}</label>
+													<div>{{ i18nNum a_OnHoldBalanceBefore }}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.onHoldBalanceAfter"}}</label>
+													<div>{{ i18nNum a_OnHoldBalanceAfter }}</div>
+												</div>
+				
+												{{else}}
+				
+													<span class="no-data">{{i18n "transactions.doesntInvolveASide"}}</span>
+				
+												{{/if}}
+				
+												</div>
+											</div>
+											<div class="col-md-4 col-sm-6">
+												<h4>B-Party</h4>
+												<div style="margin-left:10px;">
+												
+												{{#ifCond this.btierName "==" "Subscriber"}}
+												<div class="view-field">
+													<label>{{i18n btierName}}</label>											
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.msisdn"}}</label>
+													<div>{{ b_MSISDN }}</div>
+												</div>										
+												<div class="view-field">
+													<label>{{i18n "transactions.imsi"}}</label>
+													<div>{{#if b_IMSI}}{{ b_IMSI }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.imei"}}</label>
+													<div>{{#if b_IMEI}}{{ b_IMEI }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>										
+												<div class="view-field">
+													<label>{{i18n "transactions.balanceBefore"}}</label>
+													<div>{{#if b_BalanceBefore}}{{ i18nNum b_BalanceBefore }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>										
+												<div class="view-field">
+													<label>{{i18n "transactions.balanceAfter"}}</label>
+													<div>{{#if b_BalanceAfter}}{{ i18nNum b_BalanceAfter }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>											
+												</div>
+												{{else}}<!--ifCond Subscriber else Agent-->
+												<div class="view-field">
+													<label>{{i18n "transactions.agent"}}</label>
+													<div>
+														{{#hasPerms "Agent_View"}}															
+															<a class="routerlink" href="#account/{{ this.b_AgentID }}">{{ bpartyName }}</a>
+														{{else}}
+															{{ bpartyName }}
+														{{/hasPerms}}
+													</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.msisdn"}}</label>
+													<div>{{ b_MSISDN }}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.tierName"}}</label>
+													<div>{{#if btierName}}{{ btierName }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.serviceClassID"}}</label>
+													<div>{{#if b_ServiceClassID}}{{ b_ServiceClassID }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.groupName"}}</label>
+													<div>{{#if bgroupName}}{{ bgroupName }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.areaID"}}</label>
+													<div>{{#if bareaName}}{{ bareaName }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.imsi"}}</label>
+													<div>{{#if b_IMSI}}{{ b_IMSI }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.imei"}}</label>
+													<div>{{#if b_IMEI}}{{ b_IMEI }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.cellID"}}</label>
+													<div>{{#if b_CellID}}{{ b_CellID }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.balanceBefore"}}</label>											
+													<div>{{#if b_BalanceBefore}}{{ i18nNum b_BalanceBefore }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.balanceAfter"}}</label>											
+													<div>{{#if b_BalanceAfter}}{{ i18nNum b_BalanceAfter }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.tradeBonusProvisionBefore"}}</label>											
+													<div>{{#if b_BonusBalanceBefore}}{{ i18nNum b_BonusBalanceBefore }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.tradeBonusProvisionAfter"}}</label>											
+													<div>{{#if b_BonusBalanceAfter}}{{ i18nNum b_BonusBalanceAfter }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.onHoldBalanceBefore"}}</label>
+													<div>{{#if b_OnHoldBalanceBefore}}{{ i18nNum b_OnHoldBalanceBefore }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.onHoldBalanceAfter"}}</label>
+													<div>{{#if b_OnHoldBalanceAfter}}{{ i18nNum b_OnHoldBalanceAfter }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												{{/ifCond}} <!--ifCond Subscriber-->
+				
+												</div>
+											</div>	
+										</div>
+		   							</div>
+	  							{{/each}}
+	  			   			{{/if}}
+    						
+    						
+    						
+    						<div class="tab-pane info-panel" id="adjudication{{this.adjudication.id}}" style="margin:8px;">
+	    						<div class="row view-fields">
+									<div class="col-md-4 col-sm-6">
+										<h4>{{i18n "transactions.general"}}</h4>
+		
+										<div style="margin-left:10px;">
+		
+										<div class="view-field">
+											<label>{{i18n "transactions.hostName"}}</label>
+											<div>{{ this.adjudication.hostname }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.startTime"}}</label>
+											<div>{{ this.adjudication.startTimeString }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.endTime"}}</label>
+											<div>{{ this.adjudication.endTimeString }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.channel"}}</label>
+											<div>{{ this.adjudication.channelName }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.callerID"}}</label>
+											<div>{{#if this.adjudication.callerID}}{{ this.adjudication.callerID }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.inboundTransactionID"}}</label>
+											<div>{{#if this.adjudication.inboundTransactionID}}{{ this.adjudication.inboundTransactionID }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.inboundSessionID"}}</label>
+											<div>{{#if this.adjudication.inboundSessionID}}{{ this.adjudication.inboundSessionID }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.requestMode"}}</label>
+											<div>{{ this.adjudication.requestMode }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.transferRuleID"}}</label>
+											<div>{{#if this.adjudication.transferRuleID}}{{ this.adjudication.transferRuleID }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.buyerTradeBonusProvisionAmount"}}</label>
+											<div>{{#if this.adjudication.buyerTradeBonusProvision}}{{ this.adjudication.buyerTradeBonusProvision }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+											<div class="view-field">
+											<label>{{i18n "transactions.buyerTradeBonusPercentage"}}</label>
+											<div>{{#if this.adjudication.buyerTradeBonusPercentage}}{{ this.adjudication.buyerTradeBonusPercentage }} %{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.returnCode"}}</label>
+											<div>{{ this.adjudication.returnCode }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.lastExternalResultCode"}}</label>
+											<div>{{#if this.adjudication.lastExternalResultCode}}{{ this.adjudication.lastExternalResultCode }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.rolledBack"}}</label>
+											<div>{{ this.adjudication.rolledBack }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.followUp"}}</label>
+											<div>{{ this.adjudication.followUp }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.additionalInformation"}}</label>
+											<div>{{#if this.adjudication.additionalInformation}}{{ this.adjudication.additionalInformation }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+		
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-6">
+										<h4>{{ i18n "global.outbound" }}</h4>
+		
+										<div style="margin-left:10px;">
+		
+										{{#if this.adjudication.a_MSISDN}}
+		
+										<div class="view-field">
+											<label>{{i18n "transactions.agent"}}</label>
+											<div><a class="routerlink" href="#account/{{ this.a_AgentID }}">{{ this.adjudication.apartyName }}</a></div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.msisdn"}}</label>
+											<div>{{ this.adjudication.a_MSISDN }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.tierName"}}</label>
+											<div>{{#if this.adjudication.atierName}}{{ this.adjudication.atierName }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.serviceClassID"}}</label>
+											<div>{{#if this.adjudication.a_ServiceClassID}}{{ this.adjudication.a_ServiceClassID }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.groupName"}}</label>
+											<div>{{#if this.adjudication.agroupName}}{{ this.adjudication.agroupName }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.areaID"}}</label>
+											<div>{{#if this.adjudication.aareaName}}{{ this.adjudication.aareaName }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.imsi"}}</label>
+											<div>{{#if this.adjudication.a_IMSI}}{{ this.adjudication.a_IMSI }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.imei"}}</label>
+											<div>{{#if this.adjudication.a_IMEI}}{{ this.adjudication.a_IMEI }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.cellID"}}</label>
+											<div>{{#if this.adjudication.a_CellID}}{{ this.adjudication.a_CellID }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.balanceBefore"}}</label>
+													<div>{{ i18nNum this.adjudication.a_BalanceBefore }}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.balanceAfter"}}</label>
+													<div>{{ i18nNum this.adjudication.a_BalanceAfter }}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.tradeBonusProvisionBefore"}}</label>
+													<div>{{ i18nNum this.adjudication.a_BonusBalanceBefore }}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.tradeBonusProvisionAfter"}}</label>
+													<div>{{ i18nNum this.adjudication.a_BonusBalanceAfter }}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.onHoldBalanceBefore"}}</label>
+													<div>{{ i18nNum this.adjudication.a_OnHoldBalanceBefore }}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.onHoldBalanceAfter"}}</label>
+													<div>{{ i18nNum this.adjudication.a_OnHoldBalanceAfter }}</div>
+												</div>
+
+		
+										{{else}}
+		
+											<span class="no-data">{{i18n "transactions.doesntInvolveASide"}}</span>
+		
+										{{/if}}
+		
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-6">
+										<h4>{{ i18n "global.inbound" }}</h4>
+		
+										<div style="margin-left:10px;">
+		
+										<div class="view-field">
+											<label>{{i18n "transactions.agent"}}</label>
+											<div><a class="routerlink" href="#account/{{ this.b_AgentID }}">{{ this.adjudication.bpartyName }}</a>
+											</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.msisdn"}}</label>
+											<div>{{ this.adjudication.b_MSISDN }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.tierName"}}</label>
+											<div>{{#if this.adjudication.btierName}}{{ this.adjudication.btierName }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.serviceClassID"}}</label>
+											<div>{{#if this.adjudication.b_ServiceClassID}}{{ this.adjudication.b_ServiceClassID }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.groupName"}}</label>
+											<div>{{#if this.adjudication.bgroupName}}{{ this.adjudication.bgroupName }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.areaID"}}</label>
+											<div>{{#if this.adjudication.bareaName}}{{ this.adjudication.bareaName }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.imsi"}}</label>
+											<div>{{#if this.adjudication.b_IMSI}}{{ this.adjudication.b_IMSI }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.imei"}}</label>
+											<div>{{#if this.adjudication.b_IMEI}}{{ this.adjudication.b_IMEI }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "transactions.cellID"}}</label>
+											<div>{{#if this.adjudication.b_CellID}}{{ this.adjudication.b_CellID }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+										</div>
+		
+												<div class="view-field">
+													<label>{{i18n "transactions.balanceBefore"}}</label>											
+													<div>{{#if this.adjudication.b_BalanceBefore}}{{ i18nNum this.adjudication.b_BalanceBefore }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.balanceAfter"}}</label>											
+													<div>{{#if this.adjudication.b_BalanceAfter}}{{ i18nNum this.adjudication.b_BalanceAfter }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.tradeBonusProvisionBefore"}}</label>											
+													<div>{{#if this.adjudication.b_BonusBalanceBefore}}{{ i18nNum this.adjudication.b_BonusBalanceBefore }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.tradeBonusProvisionAfter"}}</label>											
+													<div>{{#if this.adjudication.b_BonusBalanceAfter}}{{ i18nNum this.adjudication.b_BonusBalanceAfter }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.onHoldBalanceBefore"}}</label>
+													<div>{{#if this.adjudication.b_OnHoldBalanceBefore}}{{ i18nNum this.adjudication.b_OnHoldBalanceBefore }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>
+												<div class="view-field">
+													<label>{{i18n "transactions.onHoldBalanceAfter"}}</label>
+													<div>{{#if this.adjudication.b_OnHoldBalanceAfter}}{{ i18nNum this.adjudication.b_OnHoldBalanceAfter }}{{else}}<span class="no-data">{{ i18n "global.notAvailable" }}</span>{{/if}}</div>
+												</div>												
+		
+										</div>
+									</div>	
+								</div>
+   							</div>
+  						</div>
+					</div>				
+				</div>
+			</div>	
+	    </div>
+	</script>	
+</div>

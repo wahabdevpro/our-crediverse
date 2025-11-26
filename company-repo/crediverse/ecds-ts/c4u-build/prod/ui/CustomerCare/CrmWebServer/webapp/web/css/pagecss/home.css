@@ -1,0 +1,78 @@
+body {
+	background-image: url(/img/corner-logo.jpg);
+	background-repeat: no-repeat;
+	background-position: right bottom;
+	background-attachment: fixed;
+}
+
+.con-color {
+	color: #F77100;
+}
+
+.topbar {
+	height: 54px;
+}
+
+#doing_stuff {
+	padding-left: 24px;
+	padding-right: 24px;
+}
+
+.logo-brand {
+	padding-top: 12px;
+	padding-right: 0px;
+	margin-right: 10p;
+}
+
+.caret-space {
+	margin-left: 5px;
+}
+
+.glyph-space-right {
+	margin-right: 5px
+}
+
+.glyph-space-left {
+	margin-left: 5px
+}
+
+.content-bordered {
+    background-color: #FFFFFF;
+    border-color: #DDDDDD;
+    border-radius: 4px 4px 0 0;
+    border-width: 1px;
+    box-shadow: none;
+    border-style: solid;
+    margin-top: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+	/** Table style **/
+.infotable {
+  border-collapse: separate;
+  border-spacing: 0 5px;
+}
+
+.infotable thead th {
+  background-color: #006DCC;
+  color: white;
+}
+
+.infotable tbody td {
+  background-color: #EEEEEE;
+}
+
+.infotable tr td:first-child,
+.infotable tr th:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.infotable tr td:last-child,
+.infotable tr th:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.content-center{text-align:center;}

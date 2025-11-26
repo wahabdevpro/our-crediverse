@@ -1,0 +1,26 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.connectors.air.AirConnector")
+   }
+}
+dependencies {
+    implementation project(':CoreInterfaces')
+    implementation project(':XmlRpc')
+    implementation project(':HttpServer')
+    implementation project(':Configuration')
+    implementation project(':AirProtocol')
+    implementation project(':Calendar')
+    implementation project(':Instrumentation')
+    implementation 'com.google.code.gson:gson'
+    implementation 'org.slf4j:slf4j-api'
+}

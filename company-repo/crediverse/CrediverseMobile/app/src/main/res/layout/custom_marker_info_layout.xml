@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="@color/solid_white">
+
+    <TextView
+        android:id="@+id/agent_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:paddingBottom="4dp"
+        android:text="@string/agent_name" />
+
+    <TextView
+        android:id="@+id/agent_msisdn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:paddingBottom="4dp"
+        android:text="@string/agent_msisdn" />
+
+    <TextView
+        android:id="@+id/agent_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:paddingBottom="4dp"
+        android:text="@string/agent_balance" />
+
+    <TextView
+        android:id="@+id/agent_location_updated_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:paddingBottom="4dp"
+        android:text="@string/agent_location_last_updated" />
+
+</LinearLayout>

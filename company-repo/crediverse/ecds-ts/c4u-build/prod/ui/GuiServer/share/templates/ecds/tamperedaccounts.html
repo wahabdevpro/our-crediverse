@@ -1,0 +1,61 @@
+<div>
+	<div id="" th:if="${#arrays.isEmpty(tamperedAccounts)}">
+		<p>No Account records have been tampered with.</p>
+	</div>
+	
+	<div th:if="${!#arrays.isEmpty(tamperedAccounts)}" class="row">
+		<br/>
+		<table id="tamperedAccounts_table" class="table infotable table-hover table-bordered table-striped" style="width: 100%; table-layout: fixed;">
+			<col width="80px" />
+			<col width="80px" />
+			<col width="100px" />
+			<col width="100px" />
+			<col width="150px" />
+			<col width="150px" />
+			<col width="100px" />
+			<col width="100px" />
+			<col width="100px" />
+			<col width="100px" />
+			<thead>
+				<tr>
+					<th>Agent ID</th>
+					<th>Agent MSISDN</th>
+					<th>Balance</th>
+					<th>Bonus Balance</th>
+					<th>Signature</th>
+					<th>Day</th>
+					<th>Day Count</th>
+					<th>Day Total</th>
+					<th>Month Count</th>
+					<th>Month Total</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="account,iterStat : ${tamperedAccounts}">
+					<td th:text="${#strings.isEmpty(account.getAgentId())? '' : account.getAgentId() }">-</td>
+					<td th:text="${#strings.isEmpty(account.getAgentMsisdn())? '' : account.getAgentMsisdn() }">-</td>
+					<td th:text="${#strings.isEmpty(account.getBalance())? '' : account.getBalance() }">-</td>
+					<td th:text="${#strings.isEmpty(account.getBonusBalance())? '' : account.getBonusBalance() }">-</td>
+					<td th:text="${#strings.isEmpty(account.getSignature())? '' : account.getSignature() }">-</td>
+					<td th:text="${#strings.isEmpty(account.getDay())? '' : account.getDay() }">-</td>
+					<td th:text="${#strings.isEmpty(account.getDayCount())? '' : account.getDayCount() }">-</td>
+					<td th:text="${#strings.isEmpty(account.getDayTotal())? '' : account.getDayTotal() }">-</td>
+					<td th:text="${#strings.isEmpty(account.getMonthCount())? '' : account.getMonthCount() }">-</td>
+					<td th:text="${#strings.isEmpty(account.getMonthTotal())? '' : account.getMonthTotal() }">-</td>
+<!-- 
+getAgentId();
+getAgentMsisdn();
+getBalance();
+getBonusBalance(); 
+getSignature();
+getDay();
+getDayCount();
+getDayTotal();
+getMonthCount();
+getMonthTotal();
+	-->
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

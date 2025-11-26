@@ -1,0 +1,44 @@
+package hxc.utils.protocol.vsip;
+
+public class GetGenerateVoucherDistributionReportTaskInfoTaskData
+{
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Fields
+	//
+	// /////////////////////////////////
+	private String batchId;
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Properties
+	//
+	// /////////////////////////////////
+
+	// The batchId parameter indicates what batch a voucher belongs to. The
+	// batchId is assigned when vouchers are generated.
+	//
+	// Optional
+
+	public String getBatchId()
+	{
+		return batchId;
+	}
+
+	public void setBatchId(String batchId)
+	{
+		this.batchId = batchId;
+	}
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Validation
+	//
+	// /////////////////////////////////
+
+	public boolean validate(IValidationContext context)
+	{
+		return Protocol.validateBatchId(context, false, batchId);
+	}
+
+}

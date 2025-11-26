@@ -1,0 +1,97 @@
+<div>
+
+	<script id="analytics">
+		<div id="badPermissions" class="hidden">
+			<br />
+			<br />
+			<br />
+			<h3 class="text-center">{{i18n "analytics.permissionError" }}</h3>
+		</div>
+		<div id="correctPermissions" class="hidden">
+			<div id="analyticsDisabled" class="row hidden">
+				<div class="col-sm-10 col-sm-offset-1">
+					<div class="alert alert-warning text-center">
+						<strong>{{i18n "analytics.analyticsConfigurationState.warning" }}</strong> {{i18n "analytics.analyticsConfigurationState.important" }}
+						<i>{{i18n "navbar.config" }} => {{i18n "navbar.analyticsConfig" }}</i>
+						<br />{{i18n "analytics.analyticsConfigurationState.info" }}
+					</div>
+				</div>
+			</div>
+			<div id="analyticsRecentlyDisabled" class="row hidden">
+				<div class="col-xs-10 col-xs-offset-1">
+					<div class="alert alert-info text-center"><strong>{{i18n "analytics.analyticsRecentlyDisabled.note" }}</strong> {{i18n "analytics.analyticsRecentlyDisabled.important" }}<br />{{i18n "analytics.analyticsRecentlyDisabled.info" }}</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<h3 class="text-center">{{i18n "analytics.periodOptionsTitle" }}:</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-2">
+					<div class="row">
+						<!--div class="col-sm-3"><button id="selectByYear" data-btn-parent="periodButtons" class="btn btn-danger disabled" style="width:100%;">{{i18n "analytics.btnSelectByYear" }}</button></div-->
+						<div id="periodButtons" class="col-md-8">
+							<div class="btn-group btn-group-justified">
+								<div class="btn-group">
+									<button id="selectByMonth" class="btn btn-default" data-btn-parent="periodButtons">{{i18n "analytics.btnSelectByMonth" }}</button>
+								</div>
+								<div class="btn-group">
+									<button id="selectByWeek" class="btn btn-default active" data-btn-parent="periodButtons">{{i18n "analytics.btnSelectByWeek" }}</button>
+								</div>
+							</div>					
+						</div>
+						<div class="col-md-4">
+							<button id="selectRefresh" class="btn btn-default" style="width:100%;">{{i18n "analytics.btnSelectRefresh" }}</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<br /><br />
+			</div>
+			<div class="row">
+				<div id="formColumn" class="col-lg-4 col-lg-push-8">
+					<div class="row">
+						<h3 class="text-center">{{i18n "analytics.selectionTitle" }}:</h3>
+					</div>
+					<div id="analyticsButtons" class="row">
+						<div class="btn-group-vertical col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-lg-12 col-lg-pull-2 ">
+							<button id="uniqueAgents" type="button" data-btn-parent="analyticsButtons" class="btn btn-default">{{ i18n "analytics.graphTitle.uniqueAgentsCount" }}</button>
+							<br />
+							<button id="salesCount" type="button" data-btn-parent="analyticsButtons" class="btn btn-default">{{ i18n "analytics.graphTitle.salesCount" }}</button>
+							<button id="transfersCount" type="button" data-btn-parent="analyticsButtons" class="btn btn-default">{{ i18n "analytics.graphTitle.transfersCount" }}</button>
+							<!--button id="tdrErrorsWeek" type="button" data-btn-parent="analyticsButtons" class="btn btn-default">TDR errors for the week</button-->
+							<br />
+							<button id="salesValue" type="button" data-btn-parent="analyticsButtons" class="btn btn-default">{{ i18n "analytics.graphTitle.salesValue" }}</button>
+							<button id="transfersValue" type="button" data-btn-parent="analyticsButtons" class="btn btn-default">{{ i18n "analytics.graphTitle.transfersValue" }}</button>
+							<button id="replenishesValue" type="button" data-btn-parent="analyticsButtons" class="btn btn-default">{{ i18n "analytics.graphTitle.replenishesValue" }}</button>
+							<!--button id="tdrErrorsWeek" type="button" data-btn-parent="analyticsButtons" class="btn btn-default">TDR errors for the week</button-->
+						</div>
+						<div class="col-xs-12">
+							<br /><br />
+						</div>
+					</div>
+				</div>
+				<div id="graphColumn" class="col-lg-8 col-lg-pull-4">
+					<div id="graphContainer">
+						<div id="canvasProgress">
+							<div class="progress">
+	  							<div	class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"
+	  									aria-valuenow="1" aria-valuemin="0" aria-valuemax="1" style="width:100%">
+									<h4>{{i18n "analytics.progressBarText" }}...</h4>
+	  							</div>
+							</div>
+						</div>
+						<div id="canvasContainer">
+							<canvas id="graphCanvas" width="400" height="300"></canvas>
+						</div>
+						<div id="dataBlock">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+
+</div>

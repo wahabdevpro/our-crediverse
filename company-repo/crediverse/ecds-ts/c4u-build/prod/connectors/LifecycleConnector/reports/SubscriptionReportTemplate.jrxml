@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 5.6.1.final using JasperReports Library version 5.6.1  -->
+<!-- 2014-11-11T07:41:16 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SubscriptionReportTemplate" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="6110dd71-bec5-4f73-b9d2-890ad4d6b19a">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="HxC Database"/>
+	<parameter name="name" class="java.lang.String"/>
+	<parameter name="dateFormat" class="java.lang.String">
+		<defaultValueExpression><![CDATA["dd-MMM-yyyy"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[]]>
+	</queryString>
+	<field name="serviceID" class="java.lang.String">
+		<fieldDescription><![CDATA[serviceID]]></fieldDescription>
+	</field>
+	<field name="variantID" class="java.lang.String">
+		<fieldDescription><![CDATA[variantID]]></fieldDescription>
+	</field>
+	<field name="serviceClass" class="java.lang.Integer">
+		<fieldDescription><![CDATA[serviceClass]]></fieldDescription>
+	</field>
+	<field name="subscriptions" class="java.lang.Long">
+		<fieldDescription><![CDATA[subscriptions]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<variable name="totalSubscriptionsPerVariant" class="java.lang.Integer" resetType="Group" resetGroup="Group2" calculation="Sum">
+		<variableExpression><![CDATA[$F{subscriptions}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="totalSubscriptionsPerService" class="java.lang.Integer" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{subscriptions}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="totalSubscriptions" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{subscriptions}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<group name="Group1" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{serviceID}]]></groupExpression>
+		<groupHeader>
+			<band height="33">
+				<property name="local_mesure_unitheight" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="100" height="32" forecolor="#666666" backcolor="#E6E6E6" uuid="b2700f3a-7c35-45e5-b04b-1b1f317d48f2"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					</textElement>
+					<text><![CDATA[Service ID:]]></text>
+				</staticText>
+				<textField isBlankWhenNull="false">
+					<reportElement mode="Opaque" x="100" y="0" width="455" height="32" forecolor="#000000" backcolor="#E6E6E6" uuid="44c42b6c-d95a-4e29-9078-001ac9559945"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph leftIndent="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{serviceID}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="32" width="555" height="1" forecolor="#666666" uuid="03d1e0f4-6660-42b5-803c-06f69fe0393a">
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="33">
+				<property name="local_mesure_unitheight" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="555" height="32" backcolor="#F2F2F2" uuid="5b7d6039-9351-42dc-8ff6-0c370afe4c29"/>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="0" y="0" width="110" height="32" forecolor="#666666" backcolor="#E6E6E6" uuid="e7525e8e-fe0c-4de7-9c3d-c1d1760431f0"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					</textElement>
+					<text><![CDATA[Service Total:]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="32" width="555" height="1" forecolor="#666666" uuid="e21c690a-1a8b-4b19-8c1a-73a9295f23d9">
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+				</line>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="430" y="0" width="125" height="32" uuid="705dc925-f09e-41a4-9550-c1ff911b5dc7"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalSubscriptionsPerService}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Group2" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{variantID}]]></groupExpression>
+		<groupHeader>
+			<band height="33">
+				<property name="local_mesure_unitheight" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<textField isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="150" y="0" width="405" height="32" forecolor="#000000" backcolor="#FFFFFF" uuid="defba3b8-861b-4da2-9a74-f1205e433396"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="16" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph leftIndent="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{variantID}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Transparent" x="0" y="0" width="150" height="32" forecolor="#666666" backcolor="#FFFFFF" uuid="fbe6c88f-e6ce-470a-ad4c-1386764392ed"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					</textElement>
+					<text><![CDATA[Variant ID:]]></text>
+				</staticText>
+				<line>
+					<reportElement x="70" y="32" width="485" height="1" forecolor="#666666" uuid="79b618ba-4969-4aba-a243-8e9ad8e035b1">
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="21">
+				<property name="local_mesure_unitheight" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<staticText>
+					<reportElement mode="Opaque" x="70" y="0" width="485" height="20" backcolor="#FAFAFA" uuid="b8ac28e1-5276-4f07-9a3f-eaf50c455ae1"/>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="0" y="0" width="150" height="20" forecolor="#666666" backcolor="#FFFFFF" uuid="b7247a03-394b-4630-be49-92f7d15b5150"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					</textElement>
+					<text><![CDATA[Sub-Total:]]></text>
+				</staticText>
+				<line>
+					<reportElement x="70" y="20" width="485" height="1" forecolor="#666666" uuid="3cf6d6e3-1686-44b2-b9cd-8c4ad21acfab">
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+				</line>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="430" y="0" width="125" height="20" uuid="c50d2f79-799c-4489-82cd-104f02dfff3d"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalSubscriptionsPerVariant}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#000000" uuid="7703d2b0-cd7e-43d2-b744-fb87fd9f2de4"/>
+				<textField>
+					<reportElement mode="Transparent" x="18" y="25" width="553" height="43" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="a30359b1-239f-4776-9148-86a0724d6159"/>
+					<box padding="0" topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="29" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{name}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="0" y="20" width="555" height="1" forecolor="#666666" uuid="43075dac-272c-4f07-a7ba-5dc41f64363d"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="277" y="0" width="153" height="20" forecolor="#000000" backcolor="#E6E6E6" uuid="3a04b614-59cc-4bb1-8558-76ebce2ebbf4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Service Class]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="430" y="0" width="124" height="20" forecolor="#000000" backcolor="#E6E6E6" uuid="356c7ce9-3499-4fa5-a1d2-198f3cf9d665"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Subscribers]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="277" height="20" backcolor="#E6E6E6" uuid="4256a32a-8c75-49cb-b706-a6bed8a9f650"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="150" y="20" width="405" height="1" uuid="d42aafbe-2443-46e4-b754-796d26b3ff44">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="277" y="0" width="153" height="20" uuid="7cde276e-c715-470c-9271-2b21cde9b78b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{serviceClass}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="430" y="0" width="125" height="20" uuid="faaf63e4-f68f-4889-88c5-8f730867a6f6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{subscriptions}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="26">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="26" forecolor="rgba(0, 0, 0, 0.0)" backcolor="#000000" uuid="78beb84e-ba16-4290-bc00-848aa0a82f60"/>
+			</rectangle>
+			<textField>
+				<reportElement mode="Transparent" x="0" y="0" width="530" height="26" forecolor="#FFFFFF" backcolor="#E6E6E6" uuid="5681cda5-b635-465f-9a3f-4b01991a798f">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Transparent" x="530" y="0" width="25" height="26" forecolor="#FFFFFF" backcolor="#E6E6E6" uuid="db417883-a777-4e58-8fdb-b86417a76b7c">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="83" y="7" width="237" height="13" forecolor="#FFFFFF" uuid="48e54daf-067f-4a42-b674-ee52fdb38e9a"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat($P{dateFormat}).format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="10" y="7" width="70" height="13" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="6ad329d7-a54f-4c08-80b4-18e8fdcf60ac"/>
+				<box padding="0" topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<text><![CDATA[Generated on]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="61">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="32" forecolor="rgba(0, 0, 0, 0.0)" backcolor="#000000" uuid="c7a67b64-5277-4ae8-8bac-907c7f0fd099"/>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="0" width="110" height="32" forecolor="#F0F0F0" backcolor="#E6E6E6" uuid="758e47e4-b0c2-4f03-b05f-613cf13b9fe8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Grand Total: ]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="480" y="0" width="75" height="32" forecolor="#FFFFFF" uuid="6ba38f98-00cf-4a84-8558-f7134167b8c3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalSubscriptions}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="35" width="555" height="26" forecolor="rgba(0, 0, 0, 0.0)" backcolor="#000000" uuid="ba8f0d50-4fd6-4ba2-a64a-b2183a8f8043"/>
+			</rectangle>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="83" y="42" width="237" height="13" forecolor="#FFFFFF" uuid="dd4cfbfb-fd50-4e7e-a129-1738a21b582a"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat($P{dateFormat}).format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="10" y="42" width="70" height="13" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="11efa476-2426-452e-851d-e38cc524e81a"/>
+				<box padding="0" topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<text><![CDATA[Generated on]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="0" y="35" width="530" height="26" forecolor="#FFFFFF" backcolor="#E6E6E6" uuid="2b2b5860-1cc4-4a5a-85be-e787d6878e23">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Transparent" x="530" y="35" width="25" height="26" forecolor="#FFFFFF" backcolor="#E6E6E6" uuid="91f77b3b-d58c-4d1f-87c1-15527944f359">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band/>
+	</summary>
+	<noData>
+		<band height="130">
+			<staticText>
+				<reportElement x="0" y="100" width="555" height="30" uuid="b7395358-a42a-4eb2-a4b0-7b2cfb85db5c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[No subscriptions recorded.]]></text>
+			</staticText>
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="0" width="595" height="92" backcolor="#000000" uuid="abe5757f-7071-4fd0-acb6-5921954d6fac"/>
+				<textField>
+					<reportElement mode="Transparent" x="18" y="25" width="553" height="43" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="5888c693-050e-4195-86a5-637097f6c8e6"/>
+					<box padding="0" topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="29" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{name}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</noData>
+</jasperReport>

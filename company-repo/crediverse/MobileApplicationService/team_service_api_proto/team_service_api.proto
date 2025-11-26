@@ -1,0 +1,79 @@
+// version of protocol buffer used
+syntax = "proto3";
+
+// package name for the buffer will be used later
+package team_service_api;
+
+option java_package = "systems.concurrent.team_service_api";
+option java_outer_classname = "TeamServiceApi";
+import "google/protobuf/wrappers.proto";
+
+// service which can be executed
+service TeamServiceApi{
+    rpc getTeamAgentIds(TeamLead) returns (AgentIds) ;
+    rpc getTeamMembers(TeamLead) returns (TeamMembers) ;
+    rpc getMembership(Member) returns (TeamMembership) ;
+    rpc setTeamMemberSalesTarget(MemberSetSalesTargetRequest) returns (Ok) ;
+    rpc addTeamMember(MembershipRequest) returns (Ok) ;
+    rpc deleteTeam(TeamLead) returns (Ok);
+    rpc remove_member(MembershipRequest) returns (Ok);
+    rpc isTeamLead(TeamLead) returns (IsTeamLead);
+}
+
+message Ok{}
+
+message IsTeamLead {
+    bool isTeamLead = 1;
+}
+
+message MembershipRequest {
+     Member member = 1;
+     TeamLead teamLead = 2;
+}
+
+message TeamLead{
+    uint64 agentId = 1;
+}
+
+enum Period {
+    DAY = 0;
+    WEEK = 1;
+    MONTH = 2;
+}
+
+message Member{
+    uint64 agentId = 1;
+}
+
+message MemberSetSalesTargetRequest {
+    Member member = 1;
+    TeamLead teamLead = 2;
+    Period period = 3;
+    optional string targetAmount = 4;    // leave out to clear the target
+}
+
+message SalesTargets {
+    optional string dailyAmount = 1;
+    optional string weeklyAmount = 2;
+    optional string monthlyAmount = 3;
+}
+
+message TeamMembership {
+    Member member = 1;
+    TeamLead teamLead = 2;
+    optional SalesTargets salesTargets = 3;
+}
+
+message TeamMember {
+    uint64 agentId = 1;
+    optional SalesTargets salesTargets = 2;
+}
+
+message TeamMembers {
+    repeated TeamMember members = 1;
+}
+
+message AgentIds{
+    repeated uint64 agentIds = 1;
+}
+

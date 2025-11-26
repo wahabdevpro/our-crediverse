@@ -1,0 +1,118 @@
+{
+  "version" : 0,
+  "ussdMenuCommand" : "*116#",
+  "menus" : [ {"id" : 2,
+    "buttons" : [{
+      "type" : "P",
+      "text" : {
+        "texts" : {
+          "en" : "[n]) Register PIN"
+        }
+      },
+      "commandID" : 1,
+      "nextMenuID" : 3,
+      "disabled" : false
+    }],
+    "name" : "Menu1.1"
+  },
+  {
+    "id" : 3,
+    "buttons" : [ {
+      "type" : "C",
+      "text" : {
+        "texts" : {
+          "en" : "Enter your Temporary PIN"
+        }
+      },
+      "captureField" : "{TemporaryPIN}",
+      "commandID" : 1,
+      "nextMenuID" : 4,
+      "disabled" : false
+    }, {
+      "type" : "N",
+      "text" : {
+        "texts" : {
+          "en" : "or [*] to go back"
+        }
+      },
+      "nextMenuID" : 2,
+      "disabled" : false
+    } ],
+    "name" : "Menu1.1.1"
+  }, {
+    "id" : 4,
+    "buttons" : [ {
+      "type" : "C",
+      "text" : {
+        "texts" : {
+          "en" : "Enter your New PIN"
+        }
+      },
+      "captureField" : "{NewPIN}",
+      "commandID" : 1,
+      "nextMenuID" : 5,
+      "disabled" : false
+    }, {
+      "type" : "N",
+      "text" : {
+        "texts" : {
+          "en" : "or [*] to go back"
+        }
+      },
+      "nextMenuID" : 2,
+      "disabled" : false
+    } ],
+    "name" : "Menu1.1.1.1"
+  },
+  {
+    "id" : 5,
+    "buttons" : [ {
+      "type" : "T",
+      "text" : {
+        "texts" : {
+          "en" : "Confirm?"
+        }
+      },
+      "disabled" : false
+    }, {
+      "type" : "N",
+      "text" : {
+        "texts" : {
+          "en" : "[n] Yes"
+        }
+      },
+      "nextMenuID" : 6,
+      "disabled" : false
+    }, {
+      "type" : "N",
+      "text" : {
+        "texts" : {
+          "en" : "[n] No"
+        }
+      },
+      "nextMenuID" : 2,
+      "disabled" : false
+    } ],
+    "name" : "Menu1.1.1.1.1"
+  },
+  {
+    "id" : 6,
+    "buttons" : [ {
+      "type" : "E",
+      "commandID" : 1,
+      "disabled" : false
+    }, {
+      "type" : "N",
+      "text" : {
+        "texts" : {
+          "en" : "Type [n] to continue..."
+        }
+      },
+      "nextMenuID" : 2,
+      "disabled" : false
+    } ],
+    "name" : "Menu1.1.1.1.1.1"
+  }
+    
+ ]
+}

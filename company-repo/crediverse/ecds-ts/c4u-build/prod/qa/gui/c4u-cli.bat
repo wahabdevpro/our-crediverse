@@ -1,0 +1,1 @@
+cd /opt/cs/c4u/0.1/hxc/bin; ./hxc -f < /install/cli.cli > /install/cli.log

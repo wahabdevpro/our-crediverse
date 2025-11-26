@@ -1,0 +1,25 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.test.HostObject")
+   }
+}
+dependencies {
+    implementation project(':CoreInterfaces')
+    implementation project(':CtrlConnector')
+    implementation project(':LoggerService')
+    implementation project(':ServiceBus')
+    implementation project(':TransactionService')
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'com.fizzed:ch-smpp'
+//    implementation 'org.jboss.netty:netty:3.2.7.Final'
+}

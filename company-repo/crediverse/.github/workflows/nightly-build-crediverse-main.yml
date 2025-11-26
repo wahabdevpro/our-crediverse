@@ -1,0 +1,44 @@
+name: Nightly Build Crediverse main
+
+# Controls when the workflow will run
+on:
+  # push:
+  #  branches:
+  #   - main
+  schedule:
+    - cron: '00 00 * * *'
+  workflow_dispatch:
+      inputs:
+        environment:
+          description: 'Manual Deployment...'
+          required: true
+          default: 'manual-deployment'
+          type: choice
+          options:
+            - 'manual-deployment'
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+env:
+  branchName: 'main'
+jobs:
+  set-variables:
+    runs-on: ubuntu-latest
+    outputs:
+      currentBranch: ${{ steps.set-value.outputs.currentBranch }}
+      DB_PASS: ${{ steps.set-value.outputs.DB_PASS }}
+    steps:
+      - name: Output branch Details
+        id: set-value
+        run: |
+          echo "currentBranch=${{ env.branchName }}" >>$GITHUB_OUTPUT
+  Crediverse_Nightly_main:
+    needs: set-variables
+    uses: Concurrent-Systems/Crediverse/.github/workflows/nightly-build-crediverse-base.yml@main
+    with:
+      DOCKER_TAGNAME: nightly_build_${{github.run_id}}
+      GITHUB_TAGNAME: nightly_build
+      BRANCH_NAME: ${{needs.set-variables.outputs.currentBranch}}
+    secrets:
+      DB_PASS: ${{ secrets.DB_PASS }}

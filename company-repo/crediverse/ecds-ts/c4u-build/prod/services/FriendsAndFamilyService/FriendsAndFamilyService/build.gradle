@@ -1,0 +1,28 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.services.faf.FriendsAndFamilyService")
+   }
+}
+dependencies {
+    implementation project(':Configuration')
+    implementation project(':CoreInterfaces')
+    implementation project(':Notification')
+    implementation project(':SoapProtocol')
+    implementation project(':HuxConnector')
+    implementation project(':HuxProtocol')
+    implementation project(':TransactionService')
+    implementation project(':AirConnector')
+    implementation project(':AirProtocol')
+    implementation project(':ZTEConnector')
+    implementation project(':ZTEProtocol')
+}

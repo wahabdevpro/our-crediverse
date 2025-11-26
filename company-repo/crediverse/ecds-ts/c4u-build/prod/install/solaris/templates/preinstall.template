@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+
+id -u c4u &> /dev/null || useradd c4u

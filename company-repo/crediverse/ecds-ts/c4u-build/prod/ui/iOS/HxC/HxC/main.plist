@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>main</key>
+	<string>Main Property List</string>
+	<key>app_name</key>
+	<string>HxC Application</string>
+	<key>eng</key>
+	<dict>
+		<key>services</key>
+		<string>Services</string>
+		<key>my_services</key>
+		<string>My Services</string>
+		<key>available_services</key>
+		<string>Available Services</string>
+		<key>service_unavailable</key>
+		<string>Service Unavailable</string>
+		<key>service_unavailable_message</key>
+		<string>Service is Currently Unavailable via the Application.</string>
+		<key>service_unavailable_contact</key>
+		<string>Please contact Customer Care.</string>
+		<key>service_unavailable_call</key>
+		<string>Call Customer Care</string>
+		<key>no_services</key>
+		<string>No Available Services</string>
+	</dict>
+	<key>fre</key>
+	<dict>
+		<key>services</key>
+		<string>Services</string>
+		<key>my_services</key>
+		<string>Mes Services</string>
+		<key>available_services</key>
+		<string>Services Disponibles</string>
+		<key>service_unavailable</key>
+		<string>Service Indisponible</string>
+		<key>service_unavailable_message</key>
+		<string>Le service est actuellement indisponible via l&apos;Application.</string>
+		<key>service_unavailable_contact</key>
+		<string>S&apos;il vous plaît communiquer avec le Service à la clientèle.</string>
+		<key>service_unavailable_call</key>
+		<string>Appelez notre Service Clientèle</string>
+		<key>no_services</key>
+		<string>Aucune Services disponibles</string>
+	</dict>
+</dict>
+</plist>

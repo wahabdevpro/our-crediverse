@@ -1,0 +1,129 @@
+<div>
+
+	<!-- Self Top-up -->
+	<script id="selfTopUpsConfig">
+		<div id="selfTopUpsConfig" class="box">
+		
+			<!-- Nav tabs -->
+			<div class="nav-tabs-custom">
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active">
+						<a href="#selfTopUpGeneral" aria-controls="selfTopUpGeneral" role="tab" data-toggle="tab">{{i18n "transfer.generalTransferTab"}}</a>
+					</li>
+			    	<li role="presentation">
+			    		<a href="#selfTopUpUssdMenu" aria-controls="selfTopUpUssdMenu" role="tab" data-toggle="tab">{{i18n "transfer.ussdMenuTransferTab"}}</a>
+			    	</li>
+			    	<li role="presentation">
+			    		<a href="#selfTopUpDeduplicationUssdMenu" aria-controls="selfTopUpDeduplicationUssdMenu" role="tab" data-toggle="tab">{{i18n "transfer.ussdDeduplicationMenuTransferTab"}}</a>
+			    	</li>
+				</ul>
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane active" id="selfTopUpGeneral">
+	
+						{{>configMainHeading heading="config.selftopupHeading" btnclass="showSelfTopUpsConfigDialog" btntext="global.editBtn" permission="Transaction_ConfigSelfTopup"}}
+						
+			            <form class="form-horizontal">
+				        	<div class="box-body">
+				        	
+				        		{{>configSectionHeading heading="config.nonDeterministicErrorCodes"}}
+			        		
+			        			{{>configLabel label="config.ErrorCodes" forceDisplay=true value=this.nonDeterministicErrorCodes}}
+			
+								<hr/>
+								{{>configSectionHeading heading="config.generalSettings"}}
+								{{>configLabel label="config.ussdCommand" value=this.ussdCommand.texts.en forceDisplay=true }}
+								<!--
+								{{>configLabel name="charge" label="Charge" hint="Charge" value=this.charge forceDisplay=true}}
+								-->
+								{{>configLabelBoolean name="forceLocationOfAgent" label="config.forceLocationOfAgent" value=this.forceLocationOfAgent trueValue="config.always" falseValue="config.whenRequired" }}
+								<hr/>
+								{{>configSectionHeading heading="config.deduplicationSettings"}}
+								{{>configLabelBoolean name="enableDeduplication" label="config.enableDeduplication" value=this.enableDeDuplication trueValue="config.yes" falseValue="config.no"}}
+								{{>configLabel label="config.maxDuplicateCheckMinutes" value=this.maxDuplicateCheckMinutes forceDisplay=true }}
+								<hr/>
+								{{>configSectionHeading heading="config.refillSettings"}}
+								{{>configLabel name="refillProfileID" label="config.refillProfileID" hint="config.refillProfileID" value=this.refillProfileID }}
+								{{>configLabelBoolean name="autoActivateAccounts" label="config.autoActivateAccounts" value=this.autoActivateAccounts trueValue="config.yes" falseValue="config.no"}}
+								{{>configLabel label="config.externalData1" value=this.refillExternalData1.texts.en forceDisplay=true }}
+								{{>configLabel label="config.externalData2" value=this.refillExternalData2.texts.en forceDisplay=true }}
+								{{>configLabel label="config.externalData3" value=this.refillExternalData3.texts.en forceDisplay=true }}
+								{{>configLabel label="config.externalData4" value=this.refillExternalData4.texts.en forceDisplay=true }}
+								<hr/>
+								{{>configNotificationLabel heading="config.smsCommand" notification=this.smsCommand.texts}}
+								{{>configNotificationLabel heading="config.senderNotification" notification=this.senderNotification.texts}}				
+								{{>configNotificationLabel heading="config.senderUnknownNotification" notification=this.senderUnknownNotification.texts}}
+				        	</div>
+						</form>
+				
+					</div>
+				
+					<div role="tabpanel" class="tab-pane" id="selfTopUpUssdMenu">
+					<p>Loading ...</p>
+					</div>
+					
+					<div role="tabpanel" class="tab-pane" id="selfTopUpDeduplicationUssdMenu">
+					<p>Loading ...</p>
+					</div>
+				
+				</div>
+			</div>
+			
+		</div>
+	</script>
+	
+	<script id="selfTopUpsConfigModal">
+		{{>configModalHeader heading="config.selftopupHeading"}}
+		<div class="modal-body">
+			<div class="ruledetails">
+				<form name="adjustmentConfigForm" class="form-horizontal selfTopUpsConfigForm">
+					{{>configAddVariableNote}}
+					
+					<h5 class="configDialogSectionHeading">{{i18n "config.nonDeterministicErrorCodes"}}</h5>
+					
+					{{>configInput class="tagboxsetting" name="nonDeterministicErrorCodes" label="config.ErrorCodes" hint="" value=this.nonDeterministicErrorCodes}}
+					
+					<h5 class="configDialogSectionHeading">{{i18n "config.generalSettings"}}</h5>
+					{{>configEnglishInput name="ussdCommand" heading="config.ussdCommand" notification=this.ussdCommand}}
+					
+					<!--
+	  				{{>configInput name="charge" label="Charge" hint="Charge" value=this.charge}}
+					-->
+	  				<div class="row form-group dialog-spacing" style="margin-bottom:0;">
+	        			<label for="roleType" class="col-sm-3 control-label">{{i18n "config.forceLocationOfAgent"}}</label>
+	              		<div class="col-sm-9">
+							<div style="margin-top:6px;">
+					 			<input id="retrieve-location-yes" name="forceLocationOfAgent" value="true" class="retrieve-location-dumps custom-radio-fa" type="radio" {{#ifCond this.forceLocationOfAgent "!=" "0"}}checked="checked"{{/ifCond}}/>
+								<label for="retrieve-location-yes">{{i18n "config.always"}}</label>
+							</div>
+							<div>
+					 			<input id="retrieve-location-no" name="forceLocationOfAgent" value="false" class="retrieve-location-dumps custom-radio-fa" type="radio" {{#ifCond this.forceLocationOfAgent "==" "0"}}checked="checked"{{/ifCond}}/>
+								<label for="retrieve-location-no">{{i18n "config.whenRequired"}}</label>
+							</div>
+						</div>	
+					</div>
+					<hr/>
+					<h5 class="configDialogSectionHeading">{{i18n "config.deduplicationSettings"}}</h5>
+					{{>booleanRadioInput name="enableDeDuplication" label="config.enableDeduplication" trueLabel="config.yes" falseLabel="config.no" value=this.enableDeDuplication}}
+					{{>configInput name="maxDuplicateCheckMinutes" label="config.maxDuplicateCheckMinutes" hint="maxDuplicateCheckMinutes" value=this.maxDuplicateCheckMinutes}}
+					<hr/>
+					<h5 class="configDialogSectionHeading">{{i18n "config.refillSettings"}}</h5>
+					{{>configInput name="refillProfileID" label="config.refillProfileID" hint="config.refillProfileID" value=this.refillProfileID}}
+					{{>booleanRadioInput name="autoActivateAccounts" label="config.autoActivateAccounts" trueLabel="config.yes" falseLabel="config.no" value=this.autoActivateAccounts}}
+					{{>configEnglishInput name="refillExternalData1" heading="config.externalData1" notification=this.refillExternalData1}}
+					{{>configEnglishInput name="refillExternalData2" heading="config.externalData2" notification=this.refillExternalData2}}
+					{{>configEnglishInput name="refillExternalData3" heading="config.externalData3" notification=this.refillExternalData3}}
+					{{>configEnglishInput name="refillExternalData4" heading="config.externalData4" notification=this.refillExternalData4}}
+					<hr/>
+					{{>configNotificationInput name="smsCommand" heading="config.smsCommand" notification=this.smsCommand}}
+					{{>configNotificationInput name="senderNotification" heading="config.senderNotification" notification=this.senderNotification}}
+					{{>configNotificationInput name="senderUnknownNotification" heading="config.senderUnknownNotification" notification=this.senderUnknownNotification}}
+					
+				</form>
+			</div>
+		</div>
+		{{>configModalFooter }}
+	</script>
+
+
+</div>

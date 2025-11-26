@@ -1,0 +1,51 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.testsuite.RunAllTests")
+   }
+}
+dependencies {
+    implementation project(':UIConnector')
+    implementation project(':CoreInterfaces')
+    implementation project(':LoggerService')
+    implementation project(':Reflection')
+    implementation project(':SecurityService')
+    implementation project(':ServiceBus')
+    implementation project(':XmlRpc')
+    implementation project(':MySqlConnector')
+    implementation project(':HuxConnector')
+    implementation project(':AirConnector')
+    implementation project(':HsxConnector')
+    implementation project(':TransactionService')
+    implementation project(':SoapConnector')
+    implementation project(':CtrlConnector')
+    implementation project(':Configuration')
+    implementation project(':UIConnectorProtocol')
+    implementation project(':SoapProtocol')
+    implementation project(':GuiServer')
+    implementation project(':FileConnector')
+    implementation project(':Calendar')
+    implementation project(':ProcessModel')
+    implementation project(':AdvancedCreditTransfer')
+    implementation project(':LifecycleConnector')
+    implementation project(':NumberPlanService')
+    implementation project(':PinService')
+    implementation project(':ReportingService')
+    implementation project(':UnitTestUtils')
+    implementation 'junit:junit'
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'com.sun.xml.ws:jaxws-rt'
+    implementation 'com.sun.xml.ws:rt'
+    implementation 'javax.xml.bind:jaxb-api'
+    implementation 'com.sun.xml.bind:jaxb-core'
+    implementation 'com.sun.xml.bind:jaxb-impl'
+}

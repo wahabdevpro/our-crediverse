@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  lang="en">
+<head>
+
+<META http-equiv="REFRESH" th:content="${sessionTimeout}" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<meta name="_context_path_header" th:content="${contextPath}"/>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>HxC Configuration and Control Interface</title>
+
+<link rel="icon" type="image/png" th:href="@{/img/cs-favicon.png}" />
+
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	    csLoginLanguage = /*[[${pageLocale}]]*/
+		csContextPath = /*[[${contextPath}]]*/;
+	/*]]>*/
+</script>
+
+
+
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/font-awesome.min.css}" />
+<link rel="stylesheet" th:href="@{/css/ionicons.min.css}"/>
+<link rel="stylesheet" th:href="@{/css/AdminLTE.css}"/>
+
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/signin2.css}" />
+
+
+
+</head>
+<body class="hold-transition login-page">
+	<div layout:fragment="baselayoutcontent">
+		<div layout:fragment="maincontent">
+		
+		</div>
+	</div>
+</body>
+</html>

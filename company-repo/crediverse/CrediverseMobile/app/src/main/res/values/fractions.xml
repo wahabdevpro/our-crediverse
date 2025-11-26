@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- account info item width percentages -->
+    <fraction name="account_info_item_left_bias">0.35</fraction>
+    <fraction name="account_info_item_right_bias">0.65</fraction>
+    <!-- history item width percentages -->
+    <fraction name="left_bias_45">0.45</fraction>
+    <fraction name="right_bias_55">0.55</fraction>
+</resources>

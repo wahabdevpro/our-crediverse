@@ -1,0 +1,257 @@
+<div>
+
+	<!-- Agents Configuration -->
+	<script id="agentConfig">
+		<div class="box">
+			{{>configMainHeading heading="config.agentsHeading" btnclass="showAgentDialog" btntext="global.editBtn" permission="Agent_Configure"}}
+			
+			<div class="nav-tabs-custom">
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active">
+						<a href="#agentGeneralConfig" aria-controls="agentGeneralConfig" role="tab" data-toggle="tab">{{i18n "config.generalConfigTab"}}</a>
+					</li>
+					<li role="presentation">
+						<a href="#agentAuthConfig" aria-controls="agentAuthConfig" role="tab" data-toggle="tab">{{i18n "config.authConfigTab"}}</a>
+					</li>					
+				</ul>
+			
+			
+				<!-- Tab panes -->
+				<div class="tab-content">				
+					<!-- General Tab -->
+					<div role="tabpanel" class="tab-pane active" id="agentGeneralConfig">
+			            <form class="form-horizontal">
+			            
+				        	<div class="box-body">
+			
+				        	{{>configSectionHeading heading="config.generalSettings"}}
+				        	{{>configLabelBoolean name="failStrictAreaUponFailureToLocate" label="config.failStrictAreaUponFailureToLocate" value=this.failStrictAreaUponFailureToLocate trueValue="config.strictAreaUponFailureToLocateReject" falseValue="config.strictAreaUponFailureToLocateIgnore" }}
+				        	{{>configLabel label="config.locationCachingExpiry" forceDisplay=true value=this.locationCachingExpiryMinutes}}
+				        	
+							<hr/>				
+							{{>configSectionHeading heading="config.dailyAccountDumpScheduleHeading"}}
+
+							{{#ifCond this.scheduledAccountDumpEnabled "==" true}}
+								{{>configLabel label=(concat "Is " (i18n "config.enabled")) forceDisplay=true value=(i18n "enums.yesNo.yes") }}
+							{{else}}
+								{{>configLabel label=(concat "Is " (i18n "config.enabled")) forceDisplay=true value=(i18n "enums.yesNo.no") }}
+							{{/ifCond}}
+							{{#ifCond this.scheduledAccountDumpEnabled "==" true}}
+								{{>configLabel label="config.scheduledAccountDumpStartTimeOfDay" forceDisplay=true value=this.scheduledAccountDumpStartTimeOfDayString}}
+								
+								<div style="display:none">
+									<!--
+										NOTE: Even though it's not visible, We want to leave it here
+											  so that we can forcefully disable it in the JS
+									-->
+									{{#ifCond this.activityScale "==" "disabled"}}
+										{{>configLabelWithSuffix label="reports.activityTitle" forceDisplay=true value=" " suffix="reports.activity.disabled" lblClass="text-muted"}}
+									{{/ifCond}}
+									{{#ifCond this.activityScale "==" "days"}}
+										{{>configLabelWithSuffix label="reports.activityTitle" forceDisplay=true value=this.activityScaleValue suffix="reports.activity.days"}}
+									{{/ifCond}}
+									{{#ifCond this.activityScale "==" "weeks"}}
+										{{>configLabelWithSuffix label="reports.activityTitle" forceDisplay=true value=this.activityScaleValue suffix="reports.activity.weeks"}}
+									{{/ifCond}}
+									{{#ifCond this.activityScale "==" "months"}}
+										{{>configLabelWithSuffix label="reports.activityTitle" forceDisplay=true value=this.activityScaleValue suffix="reports.activity.months"}}
+									{{/ifCond}}
+									{{#ifCond this.activityScale "==" "years"}}
+										{{>configLabelWithSuffix label="reports.activityTitle" forceDisplay=true value=this.activityScaleValue suffix="reports.activity.years"}}
+									{{/ifCond}}
+								</div>
+								
+								{{#ifCond this.includedeleted "==" "0"}}
+									{{>configLabel label="config.dailyAccountStartDeleteLabel" forceDisplay=true value=(i18n "enums.yesNo.no") }}
+								{{else}}
+									{{>configLabel label="config.dailyAccountStartDeleteLabel" forceDisplay=true value=(i18n "enums.yesNo.yes") }}
+								{{/ifCond}}
+								
+								
+								{{#ifCond this.scheduledAccountDumpIntervalMinutes "==" "0"}}
+									{{>configLabel label="config.sceduledAccountDumpInt" forceDisplay=true value=(i18n "config.scheduledAccountDumpIntNoRepeat")}}
+								{{else}}
+									{{>configLabel label="config.sceduledAccountDumpInt" forceDisplay=true value=this.scheduledAccountDumpIntervalMinutes}}
+								{{/ifCond}}
+								{{>configLabel label="config.sceduledAccountDumpDir" forceDisplay=true value=this.scheduledAccountDumpDirectory}}
+							{{/ifCond}}
+							
+							<hr/>				
+							
+							{{>configNotificationLabel heading="config.depletionNotification" notification=this.depletionNotification.texts}}
+							{{>configNotificationLabel heading="config.reActivatedNotification" notification=this.reActivatedNotification.texts }}
+							{{>configNotificationLabel heading="config.deActivatedNotification" notification=this.deActivatedNotification.texts }}
+							{{>configNotificationLabel heading="config.suspendedNotification" notification=this.suspendedNotification.texts }}
+							
+							{{>configNotificationLabel heading="config.stateNameActive" notification=this.stateNameActive.texts}}
+							{{>configNotificationLabel heading="config.stateNameSuspended" notification=this.stateNameSuspended.texts }}
+							{{>configNotificationLabel heading="config.stateNameDeactivated" notification=this.stateNameDeactivated.texts }}
+							{{>configNotificationLabel heading="config.stateNamePermanent" notification=this.stateNamePermanent.texts }}
+				        	</div>
+						</form>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="agentAuthConfig">
+			            <form class="form-horizontal">
+			            <div class="box-body">
+			            	{{>configSectionHeading heading="config.pinSettings"}}
+							{{>configLabel label="config.minPinLength" value=this.minPinLength forceDisplay=true}}
+							{{>configLabel label="config.maxPinLength" forceDisplay=true value=this.maxPinLength}}
+							{{>configLabel label="config.minPasswordLength" value=this.minPasswordLength forceDisplay=true}}
+							{{>configLabel label="config.maxPasswordLength" forceDisplay=true value=this.maxPasswordLength}}
+							{{>configLabel label="config.maxPinRetriesBeforeLockout" forceDisplay=true value=this.maxPinRetriesBeforeLockout}}
+							
+							{{>configLabel label="config.defaultPin" forceDisplay=true value=this.defaultPin}}
+							{{>configLabel label="config.otpExpiry" forceDisplay=true value=this.otpExpiry}}
+							
+							<hr/>
+							
+							{{>configNotificationLabel heading="config.newPinNotification" notification=this.newPinNotification.texts }}
+							{{>configNotificationLabel heading="config.defaultPinNotification" notification=this.defaultPinNotification.texts }}
+							
+							
+							{{>configLabel label="config.fromEmailAddress" value=this.fromEmailAddress forceDisplay=true }}
+							<hr/>		
+							{{>configNotificationLabel heading="config.passwordChangeEmailSubject" notification=this.passwordChangeEmailSubject.texts }}
+							{{>configNotificationLabel heading="config.passwordChangeEmailBody" notification=this.passwordChangeEmailBody.texts }}
+							{{>configNotificationLabel heading="config.passwordResetEmailSubject" notification=this.passwordResetEmailSubject.texts }}
+							{{>configNotificationLabel heading="config.passwordResetEmailBody" notification=this.passwordResetEmailBody.texts }}
+			            </div>
+			            </form>
+					</div>
+				</div>	
+			</div>
+		</div>
+	</script>
+		
+	<script id="agentConfigModal">
+		{{>configModalHeader heading="config.agentsHeading"}}
+		<div class="modal-body">
+			<div class="ruledetails">
+				<div class="nav-tabs-custom">
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active">
+							<a href="#agentGeneralConfig" aria-controls="agentGeneralConfig" role="tab" data-toggle="tab">{{i18n "config.generalConfigTab"}}</a>
+						</li>
+						<li role="presentation">
+							<a href="#agentAuthConfig" aria-controls="agentAuthConfig" role="tab" data-toggle="tab">{{i18n "config.authConfigTab"}}</a>
+						</li>					
+					</ul>
+					<!-- Tab panes -->
+					<div class="tab-content">				
+						<!-- General Tab -->
+						<div role="tabpanel" class="tab-pane active" id="agentGeneralConfig">
+			
+							<form name="adjustmentConfigForm" class="form-horizontal agentConfigForm">
+								{{>configAddVariableNote}}
+													
+								
+								{{>configSectionHeading heading="config.generalSettings"}}				
+								
+								{{>booleanRadioInput name="failStrictAreaUponFailureToLocate" label="config.failStrictAreaUponFailureToLocate" trueLabel="config.strictAreaUponFailureToLocateReject" falseLabel="config.strictAreaUponFailureToLocateIgnore" value=this.failStrictAreaUponFailureToLocate}}
+								{{>configInput name="locationCachingExpiryMinutes" label="config.locationCachingExpiry" hint="config.locationCachingExpiry" value=this.locationCachingExpiryMinutes}}
+								
+								<h5 class="configDialogSectionHeading">{{i18n "config.dailyAccountDumpScheduleHeading"}}</h5>
+
+								<div class="row form-group dialog-spacing" style="margin-bottom:0;">
+									<label for="dumpEnabled" class="col-sm-3 control-label">Is {{i18n "config.enabled"}}</label>
+									<div class="col-sm-9">
+										<div style="margin-top:6px;">
+											<input id="dump-enabled-yes" name="scheduledAccountDumpEnabled" value="true" class="dump-enabled custom-radio-fa" type="radio" {{#ifCond this.scheduledAccountDumpEnabled "==" true}}checked="checked"{{/ifCond}}/>
+											<label for="dump-enabled-yes">{{i18n "enums.yesNo.yes"}}</label>
+										</div>
+										<div>
+											<input id="dump-enabled-no" name="scheduledAccountDumpEnabled" value="false" class="dump-enabled custom-radio-fa" type="radio" {{#ifCond this.scheduledAccountDumpEnabled "!=" true}}checked="checked"{{/ifCond}}/>
+											<label for="dump-enabled-no">{{i18n "enums.yesNo.no"}}</label>
+										</div>
+									</div>	
+								</div>
+									
+								
+								<div id="scheduledAccountDumpEnabled" style="display:{{#if this.scheduledAccountDumpEnabled}}block{{else}}none{{/if}}">
+									{{>configInput name="scheduledAccountDumpStartTimeOfDayString" label="config.dailyAccountStartTimeLabel" hint="config.dailyAccountStartTimeLabel" value=this.scheduledAccountDumpStartTimeOfDayString}}
+				
+									<div style="display:none">
+										<!--
+											NOTE: Even though it's not visible, We want to leave it here
+												  so that we can forcefully disable it in the JS
+										-->
+										{{>configSelectWithInput textvalue=this.activityScaleValue name="activityScale" label="reports.activityTitle" data="disabled:reports.activity.disabled,days:reports.activity.days,weeks:reports.activity.weeks,months:reports.activity.months,years:reports.activity.years" value=this.activityScale }}
+									</div>
+									
+									<div class="row form-group dialog-spacing" style="margin-bottom:0;">
+										<label for="roleType" class="col-sm-3 control-label">{{i18n "config.dailyAccountStartDeleteLabel"}}</label>
+										<div class="col-sm-9">
+											<div style="margin-top:6px;">
+												<input id="includedeleted-yes" name="includedeleted" value="true" class="include-deactivated-suspended custom-radio-fa" type="radio" {{#ifCond this.includedeleted "!=" "0"}}checked="checked"{{/ifCond}}/>
+												<label for="includedeleted-yes">{{i18n "enums.yesNo.yes"}}</label>
+											</div>
+											<div>
+												<input id="includedeleted-no" name="includedeleted" value="false" class="include-deactivated-suspended custom-radio-fa" type="radio" {{#ifCond this.includedeleted "==" "0"}}checked="checked"{{/ifCond}}/>
+												<label for="includedeleted-no">{{i18n "enums.yesNo.no"}}</label>
+											</div>
+										</div>
+									</div>
+									
+									<div class="row form-group dialog-spacing" style="margin-bottom:0;">
+										<label for="roleType" class="col-sm-3 control-label">{{i18n "config.dailyAccountStartRepeatLabel"}}</label>
+										<div class="col-sm-9">
+											<div style="margin-top:6px;">
+												<input id="repeat-yes" name="repeat" value="Y" class="repeat-dumps custom-radio-fa" type="radio" {{#ifCond this.scheduledAccountDumpIntervalMinutes "!=" "0"}}checked="checked"{{/ifCond}}/>
+												<label for="repeat-yes">{{i18n "enums.yesNo.yes"}}</label>
+											</div>
+											<div>
+												<input id="repeat-no" name="repeat" value="N" class="repeat-dumps custom-radio-fa" type="radio" {{#ifCond this.scheduledAccountDumpIntervalMinutes "==" "0"}}checked="checked"{{/ifCond}}/>
+												<label for="repeat-no">{{i18n "enums.yesNo.no"}}</label>
+											</div>
+										</div>
+									</div>
+									
+									<div id="repeatScheduledAccountDumpInterval">
+										{{>configInput name="scheduledAccountDumpIntervalMinutes" label="config.sceduledAccountDumpInt" hint="config.sceduledAccountDumpInt" value=this.scheduledAccountDumpIntervalMinutes}}
+									</div>
+									{{>configInput name="scheduledAccountDumpDirectory" label="config.sceduledAccountDumpDir" hint="config.sceduledAccountDumpDir" value=this.scheduledAccountDumpDirectory}}
+								</div>
+			
+								<hr/>
+								{{>configNotificationInput name="depletionNotification" heading="config.depletionNotification" notification=this.depletionNotification}}
+								{{>configNotificationInput name="reActivatedNotification" heading="config.reActivatedNotification" notification=this.reActivatedNotification}}	
+								{{>configNotificationInput name="deActivatedNotification" heading="config.deActivatedNotification" notification=this.deActivatedNotification}}	
+								{{>configNotificationInput name="suspendedNotification" heading="config.suspendedNotification" notification=this.suspendedNotification}}
+			
+								{{>configNotificationInput name="stateNameActive" heading="config.stateNameActive" notification=this.stateNameActive}}
+								{{>configNotificationInput name="stateNameSuspended" heading="config.stateNameSuspended" notification=this.stateNameSuspended}}	
+								{{>configNotificationInput name="stateNameDeactivated" heading="config.stateNameDeactivated" notification=this.stateNameDeactivated}}	
+								{{>configNotificationInput name="stateNamePermanent" heading="config.stateNamePermanent" notification=this.stateNamePermanent}}
+							</form>
+						</div>
+						<div role="tabpanel" class="tab-pane" id="agentAuthConfig">
+							<form name="adjustmentConfigForm" class="form-horizontal agentConfigForm">
+								{{>configAddVariableNote}}
+								<h5 class="configDialogSectionHeading">{{i18n "config.pinSettings"}}</h5>
+				      			{{>configInput name="minPinLength" label="config.minPinLength" hint="config.minPinLength" value=this.minPinLength}}
+								{{>configInput name="maxPinLength" label="config.maxPinLength" hint="config.maxPinLength" value=this.maxPinLength}}
+								{{>configInput name="fromEmailAddress" label="config.fromEmailAddress" hint="config.fromEmailAddress" value=this.fromEmailAddress}}
+								{{>configInput name="minPasswordLength" label="config.minPasswordLength" hint="config.minPasswordLength" value=this.minPasswordLength}}
+								{{>configInput name="maxPasswordLength" label="config.maxPasswordLength" hint="config.maxPasswordLength" value=this.maxPasswordLength}}
+								{{>configInput name="maxPinRetriesBeforeLockout" label="config.maxPinRetriesBeforeLockout" value=this.maxPinRetriesBeforeLockout}}
+								{{>configInput name="defaultPin" label="config.defaultPin" hint="config.defaultPin" value=this.defaultPin}}
+								{{>configInput name="otpExpiry" label="config.otpExpiry" hint="config.otpExpiry" value=this.otpExpiry}}
+								<hr/>
+								{{>configNotificationInput name="newPinNotification" heading="config.newPinNotification" notification=this.newPinNotification}}
+								{{>configNotificationInput name="defaultPinNotification" heading="config.defaultPinNotification" notification=this.defaultPinNotification}}
+								{{>configNotificationInput name="passwordChangeEmailSubject" heading="config.passwordChangeEmailSubject" notification=this.passwordChangeEmailSubject}}
+								{{>configNotificationInput name="passwordChangeEmailBody" heading="config.passwordChangeEmailBody" notification=this.passwordChangeEmailBody}}
+								{{>configNotificationInput name="passwordResetEmailSubject" heading="config.passwordResetEmailSubject" notification=this.passwordResetEmailSubject}}
+								{{>configNotificationInput name="passwordResetEmailBody" heading="config.passwordResetEmailBody" notification=this.passwordResetEmailBody}}
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{{>configModalFooter }}
+	</script>
+
+</div>

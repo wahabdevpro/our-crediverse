@@ -1,0 +1,10 @@
+*************************** 1. row ***************************
+       Table: er_report_schedule_webuser
+Create Table: CREATE TABLE `er_report_schedule_webuser` (
+  `report_schedule_id` int(11) NOT NULL,
+  `webuser_id` int(11) NOT NULL,
+  KEY `FKc6vop0e63kme5scs7s8matq2y` (`webuser_id`),
+  KEY `FKfdowoe55laix6uoehv88f7j56` (`report_schedule_id`),
+  CONSTRAINT `FKc6vop0e63kme5scs7s8matq2y` FOREIGN KEY (`webuser_id`) REFERENCES `es_webuser` (`id`),
+  CONSTRAINT `FKfdowoe55laix6uoehv88f7j56` FOREIGN KEY (`report_schedule_id`) REFERENCES `er_report_schedule` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

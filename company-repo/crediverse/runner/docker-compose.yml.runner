@@ -1,0 +1,23 @@
+version: '2.3'
+services:
+  crediverse-github-runner:
+    image: myoung34/github-runner:latest
+    container_name: crediverse-github-runner
+    restart: always
+    environment:
+      REPO_URL: https://github.com/Concurrent-Systems/Crediverse
+      RUNNER_NAME: crediverse-github-runner
+      #RUNNER_TOKEN: <Runner_token>
+      ACCESS_TOKEN: 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
+      RUNNER_WORKDIR: /tmp/runner
+      RUNNER_SCOPE: 'repo'
+      LABELS: linux,x64,gpu
+    security_opt:
+      # needed on SELinux systems to allow docker container to manage other docker containers
+      - label:disable
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - '/srv/crediverse-github-runner/crediverse-ts/runner:/tmp/runner'
+      - '/srv/crediverse-github-runner/crediverse-ts/gradle.properties:/root/.gradle/gradle.properties'
+      # The above is needed to add the gitlab CI deploy token for the Maven repo
+

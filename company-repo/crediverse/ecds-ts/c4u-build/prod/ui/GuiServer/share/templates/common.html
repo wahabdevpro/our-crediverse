@@ -1,0 +1,93 @@
+<!-- Delete Modal -->
+<div th:fragment="deleteModal" >
+	<div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="toRemoveLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+					<h4 class="modal-title" id="toRemoveLabel">Confirm Removal</h4>
+				</div>
+				<div class="modal-body">
+					<div id="toRemoveMessage">
+						Are you sure you wish to remove xyz
+					</div>
+					<div id="delErrorMessage" class="alert alert-danger hide">
+						Something went wrong!
+					</div>
+					<div class="modal-footer">
+						<img id="delwaiting" src="/img/cell_wait.gif" class="waiting hide" />
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							Cancel
+						</button>
+						<button id="modalDelete" type="button" class="btn btn-danger" onclick="validateAndDelete()">
+							Delete
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--
+Parameters:
+title: Dialog Title
+-->
+<div th:fragment="generalModal" >
+	<div class="modal fade" id="generalModal" tabindex="-1" role="dialog" aria-labelledby="generalModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+					<h4 class="modal-title" id="generalModalLabel" th:text="${(heading != null)? heading : 'heading'}" >Some Heading</h4>
+				</div>
+				<div class="modal-body">
+					<form id="generalModalForm" name="generalModalForm">
+						
+						<div id="generalModalContent" class="modalcommoncontent">
+
+						</div>					
+
+						<div class="modal-footer">
+							<img id="waiting" src="/img/cell_wait.gif" class="waiting hide" />
+							<button id="cancelButton" type="button" class="btn btn-default" data-dismiss="modal" >
+								Cancel
+							</button>
+							<button id="actionButton" type="button" class="btn btn-primary" >
+								OK
+							</button>
+						</div>
+					</form>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+</div>
+
+
+<!-- Update Buttons AND notificaiton Bar 
+std: If used in standard config
+-->
+<div th:fragment="updateAndNotify" >
+	<div id="update_buttons_config" class="row">
+		<div class="col-sm-3"></div>
+		<div class="col-sm-6" th:if="${canSaveUpdatedFields}">
+			<button th:if="${std != null}" id="submit_config" type="button" class="btn btn-primary"  th:onclick="'javascript:validateAndSave(' + ${(forms==null)? '\'config\'' : ('\''+forms+'\'')} + ', \''+ ${service_uid} +'\', \''+ ${service_version} +'\');return false;'" disabled="disabled" >Update Details</button>
+			
+			<button th:if="${std == null}" id="submit_config" type="button" class="btn btn-primary" th:onclick="'javascript:updateValidateAndSave(\'config,configReturnCode\', \''+ ${service_uid} +'\', \''+ ${service_version} +'\');return false;'" disabled="disabled">Update Details</button>
+			
+			<button id="reload_config" type="button" class="btn" th:onclick="'javascript:loadConfigurationContent(\''+ ${service_uid} +'\', \''+ ${service_name} +'\', \'reload\');return false;'">Cancel Changes</button>
+		</div>
+	</div>
+	
+	<div id="busy_updating_config" class="row hide" th:include="UpdateBar" />
+	<div class="row" style="min-height: 37px;">
+		<div id="update_msg_config" class="col-sm-10 update_notification">
+		</div>
+	</div>
+</div>
+

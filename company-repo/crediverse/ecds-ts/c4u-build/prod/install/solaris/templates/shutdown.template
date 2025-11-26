@@ -1,0 +1,2 @@
+#This stops the ${NAME} service
+/etc/init.d/${NAME} stop

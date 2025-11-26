@@ -1,0 +1,91 @@
+name: Build Mobile Application Service
+
+# Use this workflow for MANUAL runs (disable automatic workflow)
+# on: workflow_dispatch
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches:
+      - main
+    paths:
+      - 'MobileApplicationService/**'
+      - '.github/workflows/**'
+    tags:
+      - 'MobileApplicationService/**'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Manual Deployment...'
+        required: true
+        default: 'manual-deployment'
+        type: choice
+        options:
+          - 'manual-deployment'
+concurrency:
+  group: ${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install packages for MAS build
+        run: sudo apt update -y && sudo apt -y install openssl libssl-dev pkg-config runit wget
+      - uses: actions/checkout@v2
+      - name: Install cargo latest nightly
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: 1.83.0
+          override: true
+          components: rustfmt, clippy
+
+      # `cargo check` command here will use installed `nightly`
+      # as it is set as an "override" for current directory
+
+      - name: 'Mobile Application Service build Start Time'
+        run: |
+          CS_MAS_START_TIME=$(date +"%Y-%m-%dT%H:%M:%S")
+          echo "Mobile Application Server Build Starts at => $CS_MAS_START_TIME"
+      - uses: 'actions/checkout@v3'
+      - name: Login to ghcr for publishing MAS image
+        run: |-
+          echo ${{ github.repository }}
+          echo ${{ github.run_id }}
+          echo ${{ github.run_number }}
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+      - name: Configure MAS Version Information
+        id: version-info
+        run: |-
+          IMAGE_ID=ghcr.io/${{ github.repository }}/MobileApplicationService
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          #[ "$VERSION" == "main" ] && VERSION=build-${{github.run_number}}
+          VERSION=$VERSION-build-${{github.run_number}}
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+          echo GCR_PROJECT_ID=$GCR_PROJECT_ID
+          # Share variables between steps (which each run in a separate process)
+          echo "IMAGE_ID=$IMAGE_ID" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+      - name: Build MAS Image
+        run: |-
+          IMAGE_NAME=mobile_application_service
+          echo "Building $IMAGE_NAME"
+          cd ${{github.workspace}}/MobileApplicationService
+          export CI_BUILD_DATETIME=$(date +"%Y-%m-%dT%H:%M:%S")
+          export CI_BUILD_NUMBER=${{github.run_id}}
+          export CI_COMMIT_REF=${{github.sha}}
+          export CI_GITHUB_TAG="PR_MERGED_BUILD,NO_GITHUB_TAG"
+          export CI_BRANCH_NAME=${{ github.ref }}
+          export CI_DOCKER_TAG=${{env.VERSION}}
+          echo $CI_BUILD_DATETIME
+          echo $CI_BUILD_NUMBER
+          echo $CI_COMMIT_REF
+          echo $CI_GITHUB_TAG
+          echo $CI_BRANCH_NAME
+          echo $CI_DOCKER_TAG        
+          docker build --build-arg CI_BUILD_DATETIME=$CI_BUILD_DATETIME  --build-arg CI_BUILD_NUMBER=$CI_BUILD_NUMBER --build-arg CI_COMMIT_REF=$CI_COMMIT_REF --build-arg CI_GITHUB_TAG=$CI_GITHUB_TAG --build-arg CI_BRANCH_NAME=$CI_BRANCH_NAME --build-arg CI_DOCKER_TAG=$CI_DOCKER_TAG -f ${{github.workspace}}/MobileApplicationService/dockerfile.prod -t ${{ env.IMAGE_ID }}:${{ env.VERSION }} .
+          docker tag ${{ env.IMAGE_ID }}:${{ env.VERSION }} ${{ env.IMAGE_ID }}:latest
+          docker push ${{ env.IMAGE_ID }}:${{ env.VERSION }}
+          docker push ${{ env.IMAGE_ID }}:latest

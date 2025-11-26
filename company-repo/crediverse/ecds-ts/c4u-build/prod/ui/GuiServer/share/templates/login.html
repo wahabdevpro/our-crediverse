@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" ></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" ></meta>
+    <meta name="description" content="m4u login"></meta>
+    <meta name="author" content="me"></meta>
+
+    <title>Credit4U login</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../resources/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+
+    <!-- Custom styles for this template -->
+    <link href="..resources/css/signin.css" rel="stylesheet" th:href="@{/css/signin.css}"/>
+    <link href="..resources/css/branding.css" rel="stylesheet" th:href="@{/css/branding.css}"/>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <script type="text/javascript" src="/js/jquery-1.11.2.min.js"></script>
+    
+	<link rel="shortcut icon" href="/img/favicon.png" /> 
+    
+    <!--[if lt IE 9]>
+      <script src="/js/html5shiv.js" th:href="@{/js/html5shiv.js}"></script>
+      <script src="/js/respond.min.js" th:href="@{/js/respond.min.js}"></script>
+      <script type="text/javascript" src="/js/jquery.placeholder.js"></script>
+    <![endif]-->
+    
+    <script type="text/javascript" src="/js/signin.js"></script>
+       
+	<style>
+		body {
+		    background-image: url(/img/corner-logo.jpg);
+		    background-repeat: no-repeat;
+		    background-position: right bottom;
+		    background-attachment:fixed;
+		}
+	</style>
+
+  </head>
+
+  <body>
+
+    <div class="container">
+		
+		<form class="form-signin well" action="/login" method="post" autocomplete='off'>
+			<legend class="center">
+				<center>
+					<h1 class="form-signin-main-heading product"></h1>
+					<h3>Administrator Services</h3>
+				</center>
+			</legend>
+			<p style="text-align: center; font-weight:bold; font-size: small;">Revision <span th:text="${VERSION}">0.0.0</span></p>
+			<p class="form-signin-heading"><b>Please sign in</b></p>
+			<input type="text" class="form-control" name="user" placeholder="Username" required="true" autofocus="true" value=""/>
+			<input type="password" class="form-control" name="pass" placeholder="Password" required="true" value=""/>
+			<div class="alert alert-danger" style="padding-top:5px; padding-bottom:5px;" th:classappend="${!loginfailed}? 'hide'"><center>The user or password is incorrect</center></div>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+		</form>
+  
+    </div>
+	
+  </body>
+
+</html>

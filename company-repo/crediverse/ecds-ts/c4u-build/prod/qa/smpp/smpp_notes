@@ -1,0 +1,21 @@
+to bind to signalling gateway
+log onto ssh cs@192.168.0.142
+ensure that the sms c is running 
+$ cs-init -i za/cs/smsgw/test status
+==== Status of za/cs/smsgw/test
+process smsgw_sgw is running (PID 11387)
+
+ensure that /var/cs/installations/countries/za/plmns/cs/products/smsgw/instances/test/etc/smsgw.conf
+# The SMPP system type
+#################service_0_smpp_system_type=typeA
+#################service_1_smpp_system_type=typeA
+
+restart the smsgw
+
+
+log onto the gui
+edit the SMPPsmsc 1 config
+check the logs
+
+
+Signalling gateway can only support Transmitter binding

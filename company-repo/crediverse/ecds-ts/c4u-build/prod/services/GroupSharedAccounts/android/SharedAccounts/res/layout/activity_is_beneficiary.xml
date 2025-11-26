@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.concurrent.creditsharing.IsBeneficiaryActivity" >
+
+    <TextView
+        android:id="@+id/tellMeMoreTextView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="80"
+        android:gravity="center"
+        android:text="You are a beneficiary. This service allows a sponsor to share credit with you."
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/sponsorButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onViewSponsor"
+        android:text="View Sponsor" />
+
+    <Button
+        android:id="@+id/balancesButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onViewBalances"
+        android:text="View Balances" />
+
+    <Button
+        android:id="@+id/optOutButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onOptOut"
+        android:text="Opt Out" />
+
+    <TextView
+        android:id="@+id/tellMeMoreTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addBenefitButton"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:onClick="onTellMeMore"
+        android:text="@string/link_tell_me_more"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#2570E0" />
+
+</LinearLayout>

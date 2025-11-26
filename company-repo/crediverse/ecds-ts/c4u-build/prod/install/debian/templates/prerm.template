@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+
+#if [ ! "${APP_NAME}" = "cli" ]; then
+#       sudo rm /etc/init.d/${APP_NAME}
+#        update-rc.d -f ${APP_NAME} remove
+#        sudo rm -r /opt/cs/components/app/${APP_NAME}/libexec /opt/cs/components/app/${APP_NAME}/run
+#fi
+
+sudo service supervisor stop

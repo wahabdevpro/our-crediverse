@@ -1,0 +1,44 @@
+<div th:each="field : ${complexFields}">
+	<div class="form-group">
+		<div class="row">
+			<label for="something" class="col-sm-4 control-label" th:text="${utils.splitCamelCaseString(field.fieldName)}">label</label>
+		
+			<!--  Enums Type -->
+			<div th:if="${! #arrays.isEmpty(field.possibleValues)}" class="col-sm-3">
+				<select class="selectpicker" th:id="${'CMPL3X_' + fieldName + '_' + field.fieldName}"  th:name="${'CMPL3X_' + fieldName + '_' + field.fieldName}"  onchange="dataUpdated();">
+					<option th:each="option : ${field.possibleValues}" th:value="${option}" th:text="${utils.makePretty(option)}" th:selected="${option == utils.stringValue(field.value)}">
+					</option>	
+				</select>
+			</div>
+			
+			<!--  Boolean -->
+			<div th:if="${#strings.endsWith(field.valueType, 'Boolean')}" class="col-sm-3">
+				<input type="checkbox"
+					th:disabled="${field.readOnly}" th:id="${field.fieldName}"
+					th:name="${'CMPL3X_' + fieldName + '_' + field.fieldName}" th:checked="${field.value}" 
+					th:onchange="'javascript:dataUpdated();'"
+					/>
+			</div>
+			
+			<!-- Integer -->
+			<div th:if="${#strings.endsWith(field.valueType, 'Integer') || #strings.endsWith(field.valueType, 'Long')}" class="col-sm-3">
+				<input class="numericfields form-control" id="directoryName" type="text"
+					th:readonly="${field.readOnly}" th:id="${field.fieldName}"
+					th:name="${'CMPL3X_' + fieldName + '_' + field.fieldName}" th:value="${field.value}"
+					th:onchange="'javascript:dataUpdated();'"
+					/>
+			</div>
+			
+			<!-- String -->
+			<div th:if="${#strings.endsWith(field.valueType, 'String')}" class="col-sm-3">
+				<input class="form-control" id="directoryName" type="text"
+					th:readonly="${field.readOnly}" th:id="${field.fieldName}"
+					th:name="${'CMPL3X_' + fieldName + '_' + field.fieldName}" th:value="${field.value}"
+					th:onchange="'javascript:dataUpdated();'"
+					/>
+			</div>
+		</div>
+	</div>
+
+</div>
+<hr/>

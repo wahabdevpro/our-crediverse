@@ -1,0 +1,40 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.userinterfaces.gui.jetty.JettyMain")
+   }
+}
+dependencies {
+    implementation project(':CoreInterfaces')
+    implementation project(':UIConnectorProtocol')
+    implementation project(':ProcessModel')
+    implementation project(':Reflection')
+    implementation project(':Calendar')
+    implementation project(':SoapProtocol')
+    implementation project(':SmtpConnector')
+    implementation 'org.javassist:javassist'
+    implementation 'org.eclipse.jetty.aggregate:jetty-all'
+    implementation 'ognl:ognl'
+    implementation 'javax.servlet:javax.servlet-api'
+    implementation 'org.thymeleaf:thymeleaf'
+    implementation 'com.google.code.gson:gson'
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'com.sun.mail:jakarta.mail:2.0.1'
+    implementation 'com.google.guava:guava:23.4-jre'
+    implementation 'ch.qos.logback:logback-classic'
+    implementation 'ch.qos.logback:logback-core'
+    implementation 'com.sun.xml.ws:jaxws-rt'
+    implementation 'com.sun.xml.ws:rt'
+    implementation 'javax.xml.bind:jaxb-api'
+    implementation 'com.sun.xml.bind:jaxb-core'
+    implementation 'com.sun.xml.bind:jaxb-impl'
+}

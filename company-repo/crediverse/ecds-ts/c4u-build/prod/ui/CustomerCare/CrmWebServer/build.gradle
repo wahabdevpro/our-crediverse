@@ -1,0 +1,41 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.userinterfaces.gui.jetty.JettyMain")
+   }
+}
+dependencies {
+    implementation 'org.ow2.asm:asm'
+    implementation 'org.ow2.asm:asm-commons'
+    implementation 'org.ow2.asm:asm-tree'
+    implementation 'com.google.code.gson:gson'
+    implementation 'org.javassist:javassist'
+    implementation 'javax.annotation:javax.annotation-api'
+    implementation 'javax.servlet:javax.servlet-api'
+    implementation 'org.eclipse.jetty:jetty-annotations'
+    implementation 'org.eclipse.jetty:jetty-http'
+    implementation 'org.eclipse.jetty:jetty-io'
+    implementation 'org.eclipse.jetty:jetty-jndi'
+    implementation 'org.eclipse.jetty:jetty-plus'
+    implementation 'org.eclipse.jetty:jetty-security'
+    implementation 'org.eclipse.jetty:jetty-server'
+    implementation 'org.eclipse.jetty:jetty-servlet'
+    implementation 'org.eclipse.jetty:jetty-util'
+    implementation 'org.eclipse.jetty:jetty-webapp'
+    implementation 'org.eclipse.jetty:jetty-xml'
+    implementation 'ch.qos.logback:logback-classic'
+    implementation 'ch.qos.logback:logback-core'
+    implementation 'ognl:ognl'
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'org.thymeleaf:thymeleaf'
+    implementation 'javax:javaee-api'
+}

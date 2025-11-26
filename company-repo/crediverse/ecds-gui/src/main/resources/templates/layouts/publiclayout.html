@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  lang="en">
+<head>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<meta name="_context_path_header" th:content="${contextPath}"/>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>HxC Configuration and Control Interface</title>
+
+<link rel="icon" type="image/png" th:href="@{/img/cs-favicon.png}" />
+
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	csContextPath = /*[[${contextPath}]]*/;
+	csUserLanguage = /*[[${userLanguage}]]*/;
+	/*]]>*/
+</script>
+
+<base href="#" th:href="${contextPath}" target="_blank"/>
+
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap/bootstrap.min.css}" />
+<!-- <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap/bootstrap-theme.min.css}" /> -->
+
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/font-awesome.min.css}" />
+
+<!-- <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/datatables/jquery.dataTables.min.css}" /> -->
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/datatables/dataTables.bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/datatables/select.dataTables.min.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/datatables/plugins/responsive/responsive.bootstrap.min.css}" />
+
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap/bootstrap.vertical-tabs.min.css}" />
+
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/select2.min.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap/select2-bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/file-upload/jquery.fileupload.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap-datepicker/datepicker3.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/clockpicker/bootstrap-clockpicker.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/fuelux.min.css}" />
+
+<link rel="stylesheet" th:href="@{/css/ionicons.min.css}"/>
+<link rel="stylesheet" th:href="@{/css/AdminLTE.css}"/>
+<link rel="stylesheet" th:href="@{/css/skins/skin-credit.css}"/>
+
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/offline/themes/offline-language-english.css}" />
+
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/js/lib/codemirror/lib/codemirror.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/js/lib/codemirror/addon/hint/show-hint.css}" />
+
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/toastr.css}" />
+
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/global.css}" />
+<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/signin2.css}" />
+
+</head>
+<body class="hold-transition skin-credit sidebar-mini fixed">
+	<div id="templates"></div>
+	<div class="wrapper">
+	<div layout:fragment="maincontent" th:remove="tag">
+		
+	</div>
+	</div>
+</body>
+</html>

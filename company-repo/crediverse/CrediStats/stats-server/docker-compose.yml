@@ -1,0 +1,33 @@
+version: '3.3'
+
+services:
+  credistats-server:
+    #user: "cs:cs"
+    container_name: credistats-server
+    image: ghcr.io/concurrent-systems/crediverse/credistats-server:0.0.1
+    restart: always
+    environment:
+      PORT: "8801"
+      DB_HOST: "10.0.2.15"
+      DB_PORT: "3306"
+      DB_USER: "crediverse"
+      DB_PASSWORD: "crediverse"
+      DB_NAME: "hxc"
+      LOG_FILE_SIZE_BYTES: 1024000
+      LOG_FILE_COUNT_LIMIT: 100
+      LOG_FILE_COUNT_MIN: 10
+    ports:
+      - "8801:8801"
+    volumes:
+      - "${LOG_OUTPUT:-./logs}:/var/log/credistats-server"
+    networks:
+      default:
+        aliases:
+        - cs_crediverse_stats_server
+    command: [ "/bin/bash", "/app/run-server.sh" ]
+
+networks:
+  default:
+    external:
+      name: cs_default
+

@@ -1,0 +1,31 @@
+<div>
+
+	<script id="breadcrumb">
+		<h1>{{heading}}
+			{{#if subheading}}
+				<small>{{subheading}}</small>		
+			{{/if}}
+		</h1>
+    	<ol class="breadcrumb">
+    		{{#each breadcrumb}}
+	      		<li>
+	      			{{#if href}}
+		  				<a href="{{href}}" class="routerlink">
+		  			{{/if}}
+		  				
+	  				{{#if iclass}}
+		  				<i class="{{iclass}}"></i>
+		  			{{/if}}
+	  				
+		  			{{text}}
+		  				
+	      			{{#if href}}
+	      				</a>
+		  			{{/if}}		  			
+		  		</li>
+    		{{/each}}
+    	
+    	</ol>
+	</script>
+		
+</div>

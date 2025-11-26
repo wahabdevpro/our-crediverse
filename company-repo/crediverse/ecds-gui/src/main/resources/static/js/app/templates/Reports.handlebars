@@ -1,0 +1,999 @@
+<div>
+	<!-- RETAILER REPORT -->
+
+	<script id="retailerperformancelist">
+	    <div class="datatablesview">
+	        <div class="box">
+				<div id="dtButtonBarListTemplate" style="display:none;">
+					{{#hasPerms "Reports_Add"}}
+						<a class="btn btn-primary routerlink" href="#retailerPerformanceReport">{{i18n "reports.retailerPerformanceList.buttonNewReport"}}</a>
+					{{/hasPerms}}
+	            </div>
+	            <div class="box-body">
+					<div class="advancedSearchResults">
+					    <table class="retailerperformancelisttable tableview table table-bordered" data-sshash-base='retailerPerformanceReportList'>
+		       	    	</table>
+		        	</div>
+	            </div>
+	        </div>
+	    </div>
+	</script>
+
+	<script id="retailerperformance">
+	    <div class="datatablesview">
+	        <div class="box">
+				<div id="dtButtonBarTemplate" style="display:none;">
+					{{!-- {{#hasPerms "Batch_Download"}} --}}
+						<!-- <button class="btn btn-primary exportReportButton" role="button">{{i18n "global.exportBtn"}}</button> -->
+					{{!-- {{/hasPerms}} --}}
+	            </div>
+	            <div class="box-body">
+	            
+		            <div class="advancedSearchForm">
+					<form id="searchform" name="searchForm" class="form-horizontal">
+						<div id="report-error-message" style="display:none;">
+							<div id="error_general_message" class="alert alert-danger" style="padding:6px 15px; margin-right:20px;">{{i18n "reports.messageSaveFailed"}}</div>
+						</div>
+						<div>
+							<div>
+									<div class="row" style="border-bottom:1px solid #e0e0e0; margin-bottom:15px;">
+										<div class="col-sm-6">
+											{{>modalInput name="name" label="reports.saveName" hint="reports.saveNameHint" className="" required="true" value=this.name}}
+										</div>
+										<div class="col-sm-6">
+											<div class="form-group">
+												<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.saveDescription"}}</label>
+												<div class="col-xs-8 col-sm-8">
+													<textarea id="description" type="text" name="description" rows="2" class="form-control novalidate" placeholder='{{i18n "reports.saveDescriptionHint"}}'>{{this.description}}</textarea>
+												</div>
+											</div>								
+										</div>
+									</div>	
+									<div class="row">
+										<div class="col-sm-6">
+											<div class="row" style="margin-bottom:15px;">
+													<label for="period" class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchPeriod"}}</label>
+													<div class="col-xs-3 col-sm-3">
+														{{>modalSelectNoLabel name="period" className="novalidate" data="CURRENT_DAY:reports.period.today,PREVIOUS_DAY:reports.period.yesterday,CURRENT_WEEK:reports.period.thisWeek,PREVIOUS_WEEK:reports.period.lastWeek,CURRENT_MONTH:reports.period.thisMonth,PREVIOUS_30DAYS:reports.period.last30Days,PREVIOUS_MONTH:reports.period.lastMonth,CURRENT_YEAR:reports.period.thisYear,PREVIOUS_YEAR:reports.period.lastYear,:reports.period.custom" }}
+													</div>
+													<div class="col-xs-5 col-sm-5">
+														<div id="period-custom-range" class="row" style="display:none;">
+															<div class="col-xs-6">
+																<input id="date-from" type="text" name="dateFrom" class="form-control novalidate" placeholder="YYYY-MM-DD" data-date-format="yyyy-mm-dd"  value="{{this.dateFrom}}" />
+															</div>
+															<div class="col-xs-6">
+																<input id="date-to" type="text" name="dateTo" class="form-control novalidate" placeholder="YYYY-MM-DD" data-date-format="yyyy-mm-dd" value="{{this.dateTo}}" />
+															</div>
+														</div>	
+													</div>
+											</div>	
+											
+											<!--
+											{{>modalInput name="a_MobileNumber" label="reports.searchAgentMsisdn" hint="reports.searchAgentMsisdnHint" className="novalidate" value=this.a_MobileNumber}}
+											{{>modalInput name="a_OwnerMobileNumber" label="reports.searchOwnerMsisdn" hint="reports.searchOwnerMsisdnHint" className="novalidate" value=this.a_OwnerMobileNumber}}
+											-->
+
+											<div class="form-group">
+												<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchAgentByMsisdnName"}}</label>
+												<div class="col-xs-8 col-sm-8">
+													<select id="a_AgentID" style="width: 100%;" name="a_AgentID" class="form-control">
+														<option value="">{{i18n "reports.searchAgentByMsisdnNameHint"}}</option>
+														<option value="{{this.a_AgentID}}" selected="selected">{{this.a_AgentID}}</option>
+													</select>
+												</div>
+											</div>								
+											<div class="form-group">
+												<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchOwnerByMsisdnName"}}</label>
+												<div class="col-xs-8 col-sm-8">
+													<select id="a_OwnerID" style="width: 100%;" name="a_OwnerID" class="form-control">
+														<option value="">{{i18n "reports.searchOwnerByMsisdnNameHint"}}</option>
+														<option value="{{this.a_OwnerID}}" selected="selected">{{this.a_OwnerID}}</option>
+													</select>
+												</div>
+											</div>								
+
+											{{>modalInput name="a_imei" label="reports.searchImei" hint="reports.searchImeiHint" className="novalidate" value=this.a_imei}}
+
+											<div class="form-group">
+												<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchTierName"}}</label>
+												<div class="col-xs-8 col-sm-8">
+													<select id="a_TierName" style="width: 100%;" name="a_TierName" class="form-control" value="{{this.a_TierName}}">
+														<option value="">{{i18n "reports.searchTierNameHint"}}</option>
+														{{#each tierList}}
+															<option value="{{name}}" data-tier-id="{{id}}" {{#ifCond name "==" this.a_TierName}}selected="selected"{{/ifCond}}>{{name}}</option>
+														{{/each}}
+													</select>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchGroupName"}}</label>
+												<div class="col-xs-8 col-sm-8">
+													<select id="a_GroupName" style="width: 100%;" name="a_GroupName" class="form-control">
+														<option value="{{this.a_GroupName}}" selected="selected">{{this.a_GroupName}}</option>
+													</select>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchServiceClassName"}}</label>
+												<div class="col-xs-8 col-sm-8">
+													<select id="a_ServiceClassName" style="width: 100%;" name="a_ServiceClassName" class="form-control">
+														<option value="{{this.a_ServiceClassName}}" selected="selected">{{this.a_ServiceClassName}}</option>
+													</select>
+												</div>
+											</div>								
+										</div>
+										
+										<div class="col-sm-6">
+											<div class="row" style="margin-bottom:15px;">
+													<label for="amount-from" class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchTotalAmount"}}</label>
+													<div class="col-xs-4 col-sm-4">
+														<input id="amount-from" type="text" name="totalAmountMin" class="form-control autonum" data-digits="2" hint="reports.searchTotalAmountMinHint" value="{{this.amount_from}}"/>
+													</div>
+													<div class="col-xs-4 col-sm-4">
+														<input id="amount-to" type="text" name="totalAmountMax" class="form-control autonum" data-digits="2" hint="reports.searchTotalAmountMaxHint" value="{{this.amount_to}}"/>
+													</div>
+											</div>	
+											
+											{{>modalSelectTDS name="transactionType" className="novalidate" label="reports.searchTransactionType"  data=":reports.transactionTypeAll,SELL:reports.transactionTypeSell,SELF_TOPUP:reports.transactionTypeSelfTopup,NON_AIRTIME_DEBIT:reports.transactionTypeNonAirtimeDebit,NON_AIRTIME_REFUND:reports.transactionTypeNonAirtimeRefund,REVERSE:reports.transactionTypeReverse,TRANSFER:reports.transactionTypeTransfer,ADJUDICATE:reports.transactionTypeAdjudicate" }}
+											{{>modalSelectTDS name="transactionStatus" className="novalidate" label="reports.searchTransactionStatus"  data=":reports.transactionStatusAll,true:reports.transactionStatusSuccess,false:reports.transactionStatusFail" }}
+											{{>modalSelectTDS name="followUp" className="novalidate" label="transactions.followUp" 
+												data=":enums.transactionFollowUp.IGNORE,PENDING:enums.transactionFollowUp.PENDING,ADJUDICATED:enums.transactionFollowUp.ADJUDICATED"
+												hint="transactions.followUp"
+											}}
+											
+										</div>	
+									</div>
+							</div>
+							<div class="" style="border-top:1px solid #eaeaea; padding-top:10px; margin-bottom:20px;">
+								<div class="form-group">
+									<div class="pull-right">
+										<button type="submit" class="btn btn-primary novalidate viewReportButton">{{i18n "global.previewBtn"}}</button>
+										{{#hasPerms "Reports_Update"}}
+										<button type="button" class="btn btn-primary saveReportButton">{{i18n "global.saveBtn"}}</button>
+										{{/hasPerms}}
+										<!-- <button type="button" class="btn btn-primary scheduleReportButton">{{i18n "global.scheduleBtn"}}</button> -->
+										<button type="button" class="btn btn-primary exportReportButton">{{i18n "global.exportBtn"}}</button>
+										<button type="button" class="btn btn-primary editReportButton">{{i18n "global.editBtn"}}</button>
+										<button type="button" class="btn btn-default resetReportButton">{{i18n "global.clearBtn"}}</button>
+										<button type="button" class="btn btn-default cancelReportButton">{{i18n "global.cancelBtn"}}</button>
+										&nbsp;&nbsp;&nbsp;
+									</div>
+									<div id="report-saved-message" class="label label-success pull-right" style="margin-right:20px; padding:10px; font-size:14px; display:none;">{{i18n "reports.messageSaveSuccess"}}</div>
+								</div>
+							</div>
+						</div>
+					</form>	
+			    </div>
+			    <div class="advancedSearchResults">
+				    <table class="retailerperformancetable tableview table table-bordered table-hover table-striped" data-sshash-base='retailerPerformanceReport/{{this.id}}'>
+		            </table>
+		        </div>
+	            </div>
+	        </div>
+	    </div>
+	</script>	
+	
+
+	<!-- WHOLESALER REPORT -->
+
+	<script id="wholesalerperformancelist">
+	    <div class="datatablesview">
+	        <div class="box">
+				<div id="dtButtonBarListTemplate" style="display:none;">
+					{{#hasPerms "Reports_Add"}}
+						<a class="btn btn-primary routerlink" href="#wholesalerPerformanceReport">{{i18n "reports.wholesalerPerformanceList.buttonNewReport"}}</a>
+					{{/hasPerms}}
+	            </div>
+	            <div class="box-body">
+					<div class="advancedSearchResults">
+					    <table class="wholesalerperformancelisttable tableview table table-bordered" data-sshash-base='wholesalerPerformanceReportList'>
+		       	    	</table>
+		        	</div>
+	            </div>
+	        </div>
+	    </div>
+	</script>
+
+	<script id="wholesalerperformance">
+	    <div class="datatablesview">
+	        <div class="box">
+				<div id="dtButtonBarTemplate" style="display:none;">
+					{{!-- {{#hasPerms "Batch_Download"}} --}}
+						<!-- <button class="btn btn-primary exportReportButton" role="button">{{i18n "global.exportBtn"}}</button> -->
+					{{!-- {{/hasPerms}} --}}
+	            </div>
+	            <div class="box-body">
+	            
+		            <div class="advancedSearchForm">
+					<form id="searchform" name="searchForm" class="form-horizontal">
+			        <div>
+			            <div>
+								<div class="row" style="border-bottom:1px solid #e0e0e0; margin-bottom:15px;">
+									<div class="col-sm-6">
+										{{>modalInput name="name" label="reports.saveName" hint="reports.saveNameHint" className="" required="true" value=this.name}}
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.saveDescription"}}</label>
+											<div class="col-xs-8 col-sm-8">
+												<textarea id="description" type="text" name="description" rows="2" class="form-control novalidate" placeholder='{{i18n "reports.saveDescriptionHint"}}'>{{this.description}}</textarea>
+											</div>
+										</div>								
+									</div>
+								</div>	
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="row" style="margin-bottom:15px;">
+												<label for="period" class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchPeriod"}}</label>
+												<div class="col-xs-3 col-sm-3">
+													{{>modalSelectNoLabel name="period" className="novalidate" data="CURRENT_DAY:reports.period.today,PREVIOUS_DAY:reports.period.yesterday,CURRENT_WEEK:reports.period.thisWeek,PREVIOUS_WEEK:reports.period.lastWeek,CURRENT_MONTH:reports.period.thisMonth,PREVIOUS_30DAYS:reports.period.last30Days,PREVIOUS_MONTH:reports.period.lastMonth,CURRENT_YEAR:reports.period.thisYear,PREVIOUS_YEAR:reports.period.lastYear,:reports.period.custom" }}
+												</div>
+												<div class="col-xs-5 col-sm-5">
+													<div id="period-custom-range" class="row" style="display:none;">
+														<div class="col-xs-6">
+															<input id="date-from" type="text" name="dateFrom" class="form-control novalidate" placeholder="YYYY-MM-DD" data-date-format="yyyy-mm-dd" value="{{this.dateFrom}}"  />
+														</div>
+														<div class="col-xs-6">
+															<input id="date-to" type="text" name="dateTo" class="form-control novalidate" placeholder="YYYY-MM-DD" data-date-format="yyyy-mm-dd" value="{{this.dateTo}}" />
+														</div>
+													</div>	
+												</div>
+										</div>	
+										
+										<div class="row" style="margin-bottom:15px;">
+												<label for="amount-from" class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchTotalAmount"}}</label>
+												<div class="col-xs-4 col-sm-4">
+													<input id="amount-from" type="text" name="totalAmountMin" class="form-control autonum" data-digits="2" hint="reports.searchTotalAmountMinHint" value="{{this.amount_from}}"/>
+												</div>
+												<div class="col-xs-4 col-sm-4">
+													<input id="amount-to" type="text" name="totalAmountMax" class="form-control autonum" data-digits="2" hint="reports.searchTotalAmountMaxHint" value="{{this.amount_to}}"/>
+												</div>
+										</div>	
+										
+									
+									</div>
+									
+									<div class="col-sm-6">
+										
+										{{>modalSelectTDS name="transactionType" className="novalidate" label="reports.searchTransactionType"  data=":reports.transactionTypeAll,TRANSFER:reports.transactionTypeTransfer,SELF_TOPUP:reports.transactionTypeSelfTopup,REVERSE:reports.transactionTypeReverse,ADJUST:reports.transactionTypeAdjust,PROMOTION_REWARD:reports.transactionTypePromotionReward,ADJUDICATE:reports.transactionTypeAdjudicate" }}
+										{{>modalSelectTDS name="transactionStatus" className="novalidate" label="reports.searchTransactionStatus"  data=":reports.transactionStatusAll,true:reports.transactionStatusSuccess,false:reports.transactionStatusFail" }}
+										{{>modalSelectTDS name="followUp" className="novalidate" label="transactions.followUp" 
+											data=":enums.transactionFollowUp.IGNORE,PENDING:enums.transactionFollowUp.PENDING,ADJUDICATED:enums.transactionFollowUp.ADJUDICATED"
+											hint="transactions.followUp"
+										}}
+									</div>	
+								</div>
+
+								<div class="row form-panel">
+									<div class="col-sm-6">
+										<h5>A-SIDE</h5>
+
+          								<!--
+										{{>modalInput name="a_MobileNumber" label="reports.searchAgentMsisdn" hint="reports.searchAgentMsisdnHint" className="novalidate" value=this.a_MobileNumber}}
+										{{>modalInput name="a_OwnerMobileNumber" label="reports.searchOwnerMsisdn" hint="reports.searchOwnerMsisdnHint" className="novalidate" value=this.a_OwnerMobileNumber}}
+										-->
+
+										<div class="form-group">
+											<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchAgentByMsisdnName"}}</label>
+											<div class="col-xs-8 col-sm-8">
+												<select id="a_AgentID" style="width: 100%;" name="a_AgentID" class="form-control">
+													<option value="">{{i18n "reports.searchAgentByMsisdnNameHint"}}</option>
+													<option value="{{this.a_AgentID}}" selected="selected">{{this.a_AgentID}}</option>
+												</select>
+											</div>
+										</div>								
+										<div class="form-group">
+											<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchOwnerByMsisdnName"}}</label>
+											<div class="col-xs-8 col-sm-8">
+												<select id="a_OwnerID" style="width: 100%;" name="a_OwnerID" class="form-control">
+													<option value="">{{i18n "reports.searchOwnerByMsisdnNameHint"}}</option>
+													<option value="{{this.a_OwnerID}}" selected="selected">{{this.a_OwnerID}}</option>
+												</select>
+											</div>
+										</div>								
+
+										{{>modalInput name="a_imei" label="reports.searchImei" hint="reports.searchImeiHint" className="novalidate" value=this.a_imei}}
+
+										<div class="form-group">
+											<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchTierName"}}</label>
+											<div class="col-xs-8 col-sm-8">
+												 <select id="a_TierName" style="width: 100%;" name="a_TierName" class="form-control" value="{{this.a_TierName}}">
+												   	<option value="">{{i18n "reports.searchTierNameHint"}}</option>
+													{{#each tierListA}}
+												    	<option value="{{name}}" data-tier-id="{{id}}" {{#ifCond name "==" this.a_TierName}}selected="selected"{{/ifCond}}>{{name}}</option>
+												  	{{/each}}
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchGroupName"}}</label>
+											<div class="col-xs-8 col-sm-8">
+												<select id="a_GroupName" style="width: 100%;" name="a_GroupName" class="form-control" data-linked-tier="#a_TierName">
+													<option value="{{this.a_GroupName}}" selected="selected">{{this.a_GroupName}}</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchServiceClassName"}}</label>
+											<div class="col-xs-8 col-sm-8">
+												<select id="a_ServiceClassName" style="width: 100%;" name="a_ServiceClassName" class="form-control">
+													<option value="{{this.a_ServiceClassName}}" selected="selected">{{this.a_ServiceClassName}}</option>
+												</select>
+											</div>
+										</div>								
+									</div>
+									<div class="col-sm-6">
+										<h5>B-SIDE</h5>
+
+										<!--
+										{{>modalInput name="b_MobileNumber" label="reports.searchAgentMsisdn" hint="reports.searchAgentMsisdnHint" className="novalidate" value=this.b_MobileNumber}}
+										{{>modalInput name="b_OwnerMobileNumber" label="reports.searchOwnerMsisdn" hint="reports.searchOwnerMsisdnHint" className="novalidate" value=this.b_OwnerMobileNumber}}
+										-->
+
+										<div class="form-group">
+											<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchAgentByMsisdnName"}}</label>
+											<div class="col-xs-8 col-sm-8">
+												<select id="b_AgentID" style="width: 100%;" name="b_AgentID" class="form-control">
+													<option value="">{{i18n "reports.searchAgentByMsisdnNameHint"}}</option>
+													<option value="{{this.b_AgentID}}" selected="selected">{{this.b_AgentID}}</option>
+												</select>
+											</div>
+										</div>								
+										<div class="form-group">
+											<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchOwnerByMsisdnName"}}</label>
+											<div class="col-xs-8 col-sm-8">
+												<select id="b_OwnerID" style="width: 100%;" name="b_OwnerID" class="form-control">
+													<option value="">{{i18n "reports.searchOwnerByMsisdnNameHint"}}</option>
+													<option value="{{this.b_OwnerID}}" selected="selected">{{this.b_OwnerID}}</option>
+												</select>
+											</div>
+										</div>								
+
+										{{>modalInput name="b_imei" label="reports.searchImei" hint="reports.searchImeiHint" className="novalidate" value=this.b_imei}}
+
+										<div class="form-group">
+											<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchTierName"}}</label>
+											<div class="col-xs-8 col-sm-8">
+												 <select id="b_TierName" style="width: 100%;" name="b_TierName" class="form-control" value="{{this.b_TierName}}">
+												   	<option value="">{{i18n "reports.searchTierNameHint"}}</option>
+													{{#each tierListB}}
+												    	<option value="{{name}}" data-tier-id="{{id}}" {{#ifCond name "==" this.b_TierName}}selected="selected"{{/ifCond}}>{{name}}</option>
+												  	{{/each}}
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchGroupName"}}</label>
+											<div class="col-xs-8 col-sm-8">
+												<select id="b_GroupName" style="width: 100%;" name="b_GroupName" class="form-control" data-linked-tier="#b_TierName">
+													<option value="{{this.b_GroupName}}" selected="selected">{{this.b_GroupName}}</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchServiceClassName"}}</label>
+											<div class="col-xs-8 col-sm-8">
+												<select id="b_ServiceClassName" style="width: 100%;" name="b_ServiceClassName" class="form-control">
+													<option value="{{this.b_ServiceClassName}}" selected="selected">{{this.b_ServiceClassName}}</option>
+												</select>
+											</div>
+										</div>								
+									</div>
+								</div>
+			            </div>
+						<div class="" style="border-top:1px solid #eaeaea; padding-top:10px; margin-bottom:20px;">
+			  			  	<div class="form-group">
+					        	<div class="pull-right">
+		           			 		<button type="submit" class="btn btn-primary viewReportButton">{{i18n "global.previewBtn"}}</button>
+									{{#hasPerms "Reports_Update"}}
+					           		<button type="button" class="btn btn-primary saveReportButton">{{i18n "global.saveBtn"}}</button>
+									{{/hasPerms}}
+					           		<!-- <button type="button" class="btn btn-primary scheduleReportButton">{{i18n "global.scheduleBtn"}}</button> -->
+					           		<button type="button" class="btn btn-primary exportReportButton">{{i18n "global.exportBtn"}}</button>
+									<button type="button" class="btn btn-primary editReportButton">{{i18n "global.editBtn"}}</button>
+					           		<button type="button" class="btn btn-default resetReportButton">{{i18n "global.clearBtn"}}</button>
+									<button type="button" class="btn btn-default cancelReportButton">{{i18n "global.cancelBtn"}}</button>
+									&nbsp;&nbsp;&nbsp;
+								</div>
+								<div id="report-error-message" class="pull-right" style="display:none;">
+									<div id="error_general_message" class="alert alert-danger" style="padding:6px 15px; margin-right:20px;">{{i18n "reports.messageSaveFailed"}}</div>
+								</div>
+								<div id="report-saved-message" class="label label-success pull-right" style="margin-right:20px; padding:10px; font-size:14px; display:none;">{{i18n "reports.messageSaveSuccess"}}</div>
+					    	</div>
+						</div>
+			        </div>
+					</form>	
+			    </div>
+			    <div class="advancedSearchResults">
+				    <table class="wholesalerperformancetable tableview table table-bordered table-hover table-striped" data-sshash-base='wholesalerPerformanceReport/{{this.id}}'>
+		            </table>
+		        </div>
+	            </div>
+	        </div>
+	    </div>
+	</script>	
+
+
+	<!-- SALES SUMMARY REPORT -->
+
+	<script id="salessummarylist">
+	    <div class="datatablesview">
+	        <div class="box">
+				<div id="dtButtonBarListTemplate" style="display:none;">
+	            </div>
+	            <div class="box-body">
+					<div class="advancedSearchResults">
+					    <table class="salessummarylisttable tableview table table-bordered" data-sshash-base='salesSummaryReportList'>
+		       	    	</table>
+		        	</div>
+	            </div>
+	        </div>
+	    </div>
+	</script>
+
+	<!-- DAILY GROUP SALES REPORT -->
+
+	<script id="dailygroupsaleslist">
+	    <div class="datatablesview">
+	        <div class="box">
+				<div id="dtButtonBarListTemplate" style="display:none;">
+					{{#hasPerms "Reports_Add"}}
+						<a class="btn btn-primary routerlink" href="#dailyGroupSalesReport">{{i18n "reports.dailyGroupSalesList.buttonNewReport"}}</a>
+					{{/hasPerms}}
+	            </div>
+	            <div class="box-body">
+					<div class="advancedSearchResults">
+					    <table class="dailygroupsaleslisttable tableview table table-bordered" data-sshash-base='dailyGroupSalesReportList'>
+		       	    	</table>
+		        	</div>
+	            </div>
+	        </div>
+	    </div>
+	</script>
+
+	<script id="dailygroupsales">
+	    <div class="datatablesview">
+	        <div class="box">
+				<div id="dtButtonBarTemplate" style="display:none;">
+					{{!-- {{#hasPerms "Batch_Download"}} --}}
+						<!-- <button class="btn btn-primary exportReportButton" role="button">{{i18n "global.exportBtn"}}</button> -->
+					{{!-- {{/hasPerms}} --}}
+	            </div>
+	            <div class="box-body">
+	            
+		            <div class="advancedSearchForm">
+					<form id="searchform" name="searchForm" class="form-horizontal">
+			        <div>
+			            <div>
+								<div class="row" style="border-bottom:1px solid #e0e0e0; margin-bottom:15px;">
+									<div class="col-sm-6">
+										{{>modalInput name="name" label="reports.saveName" hint="reports.saveNameHint" className="" required="true" value=this.name}}
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.saveDescription"}}</label>
+											<div class="col-xs-8 col-sm-8">
+												<textarea id="description" type="text" name="description" rows="2" class="form-control novalidate" placeholder='{{i18n "reports.saveDescriptionHint"}}'>{{this.description}}</textarea>
+											</div>
+										</div>								
+									</div>
+								</div>	
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchTierName"}}</label>
+											<div class="col-xs-8 col-sm-8">
+												 <select id="a_TierName" style="width: 100%;" name="a_TierName" class="form-control" value="{{this.a_TierName}}">
+												   	<option value="">{{i18n "reports.searchTierNameHint"}}</option>
+													{{#each tierList}}
+												    	<option value="{{name}}" data-tier-id="{{id}}" {{#ifCond name "==" this.a_TierName}}selected="selected"{{/ifCond}}>{{name}}</option>
+												  	{{/each}}
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchGroupName"}}</label>
+											<div class="col-xs-8 col-sm-8">
+												<select id="a_GroupName" style="width: 100%;" name="a_GroupName" class="form-control">
+													<option value="{{this.a_GroupName}}" selected="selected">{{this.a_GroupName}}</option>
+												</select>
+											</div>
+										</div>
+										{{>modalSelect name="transactionType" className="novalidate" label="reports.searchTransactionType"  data=":reports.transactionTypeOne,ALL_TRANSACTIONS:reports.transactionTypeAllAirtimeAndNonAirtime,AIRTIME:reports.transactionTypeAirtime,NON_AIRTIME:reports.transactionTypeNonAirtime" }}
+									</div>
+									
+								</div>
+			            </div>
+						<div class="" style="border-top:1px solid #eaeaea; padding-top:10px; margin-bottom:20px;">
+			  			  	<div class="form-group">
+					        	<div class="pull-right">
+		           			 		<button type="submit" class="btn btn-primary viewReportButton">{{i18n "global.previewBtn"}}</button>
+									{{#hasPerms "Reports_Update"}}
+					           		<button type="button" class="btn btn-primary saveReportButton">{{i18n "global.saveBtn"}}</button>
+									{{/hasPerms}}
+					           		<!-- <button type="button" class="btn btn-primary scheduleReportButton">{{i18n "global.scheduleBtn"}}</button> -->
+					           		<button type="button" class="btn btn-primary exportReportButton">{{i18n "global.exportBtn"}}</button>
+									<button type="button" class="btn btn-primary editReportButton">{{i18n "global.editBtn"}}</button>
+					           		<button type="button" class="btn btn-default resetReportButton">{{i18n "global.clearBtn"}}</button>
+									<button type="button" class="btn btn-default cancelReportButton">{{i18n "global.cancelBtn"}}</button>
+									&nbsp;&nbsp;&nbsp;
+								</div>
+								<div id="report-error-message" class="pull-right" style="display:none;">
+									<div id="error_general_message" class="alert alert-danger" style="padding:6px 15px; margin-right:20px;">{{i18n "reports.messageSaveFailed"}}</div>
+								</div>
+								<div id="report-saved-message" class="label label-success pull-right" style="margin-right:20px; padding:10px; font-size:14px; display:none;">{{i18n "reports.messageSaveSuccess"}}</div>
+					    	</div>
+						</div>
+			        </div>
+					</form>	
+			    </div>
+			    <div class="advancedSearchResults">
+				    <table class="dailygroupsalestable tableview table table-bordered table-hover table-striped" data-sshash-base='dailyGroupSalesReport/{{this.id}}'>
+		            </table>
+		        </div>
+	            </div>
+	        </div>
+	    </div>
+	</script>	
+
+	<!-- ACCOUNT BALANCE SUMMARY REPORT -->
+
+	<script id="accountbalancesummarylist">
+	    <div class="datatablesview">
+	        <div class="box">
+				<div id="dtButtonBarListTemplate" style="display:none;">
+					{{#hasPerms "Reports_Add"}}
+						<a class="btn btn-primary routerlink" href="#accountBalanceSummaryReport">{{i18n "reports.accountBalanceSummaryList.buttonNewReport"}}</a>
+					{{/hasPerms}}
+	            </div>
+	            <div class="box-body">
+					<div class="advancedSearchResults">
+					    <table class="accountbalancesummarylisttable tableview table table-bordered" data-sshash-base='accountBalanceSummaryReportList'>
+		       	    	</table>
+		        	</div>
+	            </div>
+	        </div>
+	    </div>
+	</script>
+
+	<script id="accountbalancesummary">
+	    <div class="datatablesview">
+	        <div class="box">
+				<div id="dtButtonBarTemplate" style="display:none;">
+					{{!-- {{#hasPerms "Batch_Download"}} --}}
+						<!-- <button class="btn btn-primary exportReportButton" role="button">{{i18n "global.exportBtn"}}</button> -->
+					{{!-- {{/hasPerms}} --}}
+	            </div>
+	            <div class="box-body">
+	            
+		            <div class="advancedSearchForm">
+					<form id="searchform" name="searchForm" class="form-horizontal">
+			        <div>
+			            <div>
+								<div class="row" style="border-bottom:1px solid #e0e0e0; margin-bottom:15px;">
+									<div class="col-sm-6">
+										{{>modalInput name="name" label="reports.saveName" hint="reports.saveNameHint" className="" required="true" value=this.name}}
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.saveDescription"}}</label>
+											<div class="col-xs-8 col-sm-8">
+												<textarea id="description" type="text" name="description" rows="2" class="form-control novalidate" placeholder='{{i18n "reports.saveDescriptionHint"}}'>{{this.description}}</textarea>
+											</div>
+										</div>								
+									</div>
+								</div>	
+							
+								<div class="row">
+									<div class="col-sm-6">
+										{{>modalSelect name="tierType" label="reports.searchTierTypeHint" data=":enums.tierType.any,.:enums.tierType.root,T:enums.tierType.store,W:enums.tierType.wholesaler,R:enums.tierType.retailer"}}
+										<div class="form-group">
+											<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchTierName"}}</label>
+											<div class="col-xs-8 col-sm-8">
+												 <select id="tierName" style="width: 100%;" name="tierName" class="form-control" value="{{this.tierName}}">
+												   	<option value="">{{i18n "reports.searchTierNameHint"}}</option>
+													{{#each tierList}}
+												    	<option value="{{name}}" data-tier-id="{{id}}" data-type="{{type}}" {{#ifCond name "==" this.tierName}}selected="selected"{{/ifCond}}>{{name}}</option>
+												  	{{/each}}
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchGroupName"}}</label>
+											<div class="col-xs-8 col-sm-8">
+												<select id="groupName" style="width: 100%;" name="groupName" class="form-control" value="{{this.groupName}}">
+													<option value="{{this.groupName}}" selected="selected">{{this.groupName}}</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									
+									<div class="col-sm-6">
+										<div id="activityCutOffDiv" class="form-group {{#ifCond this.activityScale "!=" disabled}}required dialog-spacing{{/ifCond}}" style="margin-bottom:0;">
+											<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.activityTitle"}}</label>
+											<div class="col-xs-2">
+												<input id="activityValue" name="activityValue" style="padding-right: 0;" class="form-control" type="text" placeholder="" value="{{this.activityValue}}"/>
+											</div>
+											<div class="col-xs-3">
+												<select id="activityScale" style="width: 100%;" name="activityScale" class="form-control" >
+													<option value="disabled">{{i18n "reports.activity.disabled"}} {{#ifCond name "==" this.activityScale}}selected="selected"{{/ifCond}}</option>
+													<option value="days">{{i18n "reports.activity.days"}} {{#ifCond name "==" this.activityScale}}selected="selected"{{/ifCond}}</option>
+													<option value="weeks">{{i18n "reports.activity.weeks"}} {{#ifCond name "==" this.activityScale}}selected="selected"{{/ifCond}}</option>
+													<option value="months">{{i18n "reports.activity.months"}} {{#ifCond name "==" this.activityScale}}selected="selected"{{/ifCond}}</option>
+													<option value="years">{{i18n "reports.activity.years"}} {{#ifCond name "==" this.activityScale}}selected="selected"{{/ifCond}}</option>
+												</select>
+											</div>
+											<div class="col-xs-3">
+											</div>
+										</div>
+									</div>
+									<!-- <div class="col-sm-6">
+										<div class="form-group" style="margin-bottom:0;">
+											<div class="col-xs-4"></div>
+											<div class="col-xs-8" style="padding-top:8px;">
+												<input id="includeDeleted" name="includeDeleted" class="custom-checkbox-fa" value="{{#ifCond this.includeDeleted "==" "1"}}1{{/ifCond}}" {{#ifCond this.includeDeleted "==" "1"}}checked="checked"{{/ifCond}} type="checkbox">
+												<label for="includeDeleted">{{i18n "reports.searchIncludeDeleted"}}</label>
+											</div>
+										</div>
+									</div> -->
+									<div class="col-sm-6">
+										<div class="form-group" style="margin-bottom:0;">
+											<div class="col-xs-4"></div>
+											<div class="col-xs-8" style="padding-top:8px;">
+												<input id="includeZeroBalance" name="includeZeroBalance" class="custom-checkbox-fa" value="{{#ifCond this.includeZeroBalance "==" "1"}}1{{/ifCond}}" {{#ifCond this.includeZeroBalance "==" "1"}}checked="checked"{{/ifCond}} type="checkbox">
+												<label for="includeZeroBalance">{{i18n "reports.searchIncludeZeroBalance"}}</label>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+			            </div>
+						<div class="" style="border-top:1px solid #eaeaea; padding-top:10px; margin-bottom:20px;">
+			  			  	<div class="form-group">
+					        	<div class="pull-right">
+		           			 		<button type="submit" class="btn btn-primary viewReportButton">{{i18n "global.previewBtn"}}</button>
+									{{#hasPerms "Reports_Update"}}
+					           		<button type="button" class="btn btn-primary saveReportButton">{{i18n "global.saveBtn"}}</button>
+									{{/hasPerms}}
+					           		<!-- <button type="button" class="btn btn-primary scheduleReportButton">{{i18n "global.scheduleBtn"}}</button> -->
+					           		<button type="button" class="btn btn-primary exportReportButton">{{i18n "global.exportBtn"}}</button>
+									<button type="button" class="btn btn-primary editReportButton">{{i18n "global.editBtn"}}</button>
+					           		<button type="button" class="btn btn-default resetReportButton">{{i18n "global.clearBtn"}}</button>
+					           		<button type="button" class="btn btn-default cancelReportButton">{{i18n "global.cancelBtn"}}</button>
+									&nbsp;&nbsp;&nbsp;
+								</div>
+								<div id="report-error-message" class="pull-right" style="display:none;">
+									<div id="error_general_message" class="alert alert-danger" style="padding:6px 15px; margin-right:20px;">{{i18n "reports.messageSaveFailed"}}</div>
+								</div>
+								<div id="report-saved-message" class="label label-success pull-right" style="margin-right:20px; padding:10px; font-size:14px; display:none;">{{i18n "reports.messageSaveSuccess"}}</div>
+					    	</div>
+						</div>
+			        </div>
+					</form>	
+			    </div>
+			    <div class="advancedSearchResults">
+				    <table class="accountbalancesummarytable tableview table table-bordered table-hover table-striped" data-sshash-base='accountBalanceSummaryReport/{{this.id}}'>
+		            </table>
+		        </div>
+	            </div>
+	        </div>
+	    </div>
+	</script>
+
+	<!-- MONTHLY SALES PERFORMANCE REPORT -->
+
+	<script id="monthlysalesperformancelist">
+	    <div class="datatablesview">
+	        <div class="box">
+				<div id="dtButtonBarListTemplate" style="display:none;">
+					{{#hasPerms "Reports_Add"}}
+						<a class="btn btn-primary routerlink" href="#monthlySalesPerformanceReport">{{i18n "reports.monthlySalesPerformanceList.buttonNewReport"}}</a>
+					{{/hasPerms}}
+	            </div>
+	            <div class="box-body">
+					<div class="advancedSearchResults">
+					    <table class="monthlysalesperformancelisttable tableview table table-bordered" data-sshash-base='monthlySalesPerformanceReportList'>
+		       	    	</table>
+		        	</div>
+	            </div>
+	        </div>
+	    </div>
+	</script>
+
+	<script id="monthlysalesperformance">
+	    <div class="datatablesview">
+	        <div class="box">
+				<div id="dtButtonBarTemplate" style="display:none;">
+					{{!-- {{#hasPerms "Batch_Download"}} --}}
+						<!-- <button class="btn btn-primary exportReportButton" role="button">{{i18n "global.exportBtn"}}</button> -->
+					{{!-- {{/hasPerms}} --}}
+	            </div>
+	            <div class="box-body">
+	            
+		            <div class="advancedSearchForm">
+					<form id="searchform" name="searchform" class="form-horizontal">
+			        <div>
+			            <div>
+							<div class="row" style="border-bottom:1px solid #e0e0e0; margin-bottom:15px;">
+								<div class="col-sm-6">
+									{{>modalInput name="name" label="reports.saveName" hint="reports.saveNameHint" className="name" value=this.name}}
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.saveDescription"}}</label>
+										<div class="col-xs-8 col-sm-8">
+											<textarea id="description" type="text" name="description" rows="2" class="form-control" placeholder='{{i18n "reports.saveDescriptionHint"}}'>{{this.description}}</textarea>
+										</div>
+									</div>								
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchPeriod"}}</label>
+										<div class="col-xs-8 col-sm-8">
+											 <select id="period" name="period" style="width: 100%;" class="form-control">
+											   	<option value="">{{i18n "reports.searchPeriodHint"}}</option>
+											   	<option value="CURRENT_MONTH">{{i18n "reports.period.thisMonth"}}</option>
+											   	<option value="PREVIOUS_MONTH">{{i18n "reports.period.lastMonth"}}</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchTiers"}}</label>
+										<div class="col-xs-8 col-sm-8">
+											 <select id="tiers" name="tiers" style="width: 100%;" class="form-control" multiple="multiple">
+											   	<!--<option value="">{{i18n "reports.searchTiersHint"}}</option>-->
+												{{#each this.tiers}}
+											    	<option value="{{this}}" selected="selected">{{this}}</option>
+											  	{{/each}}
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchGroups"}}</label>
+										<div class="col-xs-8 col-sm-8">
+											<select id="groups" name="groups" style="width: 100%;" class="form-control" multiple="multiple">
+												<!--<option value="">{{i18n "reports.searchGroupsHint"}}</option>-->
+												{{#each this.groups}}
+													<option value="{{this}}" selected="selected">{{this}}</option>
+												{{/each}}								
+											</select>
+										</div>
+									</div>
+									{{>modalSelect name="transactionStatus" className="novalidate" label="reports.searchTransactionStatus" data=":reports.transactionStatusOne,true:reports.transactionStatusSuccess,false:reports.transactionStatusFail" }}
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchOwnerAgents"}}</label>
+										<div class="col-xs-8 col-sm-8">
+											<select id="ownerAgents" name="ownerAgents" style="width: 100%;" class="form-control" multiple="multiple">
+												{{#each this.ownerAgents}}
+													<option value="{{this}}" selected="selected">{{this}}</option>
+												{{/each}}								
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchAgents"}}</label>
+										<div class="col-xs-8 col-sm-8">
+											<select id="agents" name="agents" style="width: 100%;" class="form-control" multiple="multiple">
+												{{#each agents}}
+													<option value="{{this}}" selected="selected">{{this}}</option>
+												{{/each}}								
+											</select>
+										</div>
+									</div>
+									{{>modalSelect name="transactionTypes" className="novalidate" label="reports.searchTransactionType" data=":reports.transactionTypeOne,SALES_ONLY:reports.transactionTypeSalesOnly,AIRTIME_NET_SALES:reports.transactionTypeAirtimeNetSalesOnly,NON_AIRTIME_NET_SALES:reports.transactionTypeNonAirtimeNetSalesOnly,REVERSALS_ONLY:reports.transactionTypeReversalsOnly,NET_SALES:reports.transactionTypeNetSales,SELL:reports.transactionTypeAirtimeSaleOnly,SELF_TOPUP:reports.transactionTypeSelfTopUpOnly,NON_AIRTIME_DEBIT:reports.transactionTypeNonAirtimeSaleOnly,NON_AIRTIME_REFUND:reports.transactionTypeNonAirtimeRefundOnly" }}
+								</div>
+								
+							</div>
+			            </div>
+						<div class="" style="border-top:1px solid #eaeaea; padding-top:10px; margin-bottom:20px;">
+			  			  	<div class="form-group">
+					        	<div class="pull-right">
+		           			 		<button type="submit" class="btn btn-primary viewReportButton">{{i18n "global.previewBtn"}}</button>
+									{{#hasPerms "Reports_Update"}}
+					           		<button type="button" class="btn btn-primary saveReportButton">{{i18n "global.saveBtn"}}</button>
+									{{/hasPerms}}
+					           		<!-- <button type="button" class="btn btn-primary scheduleReportButton">{{i18n "global.scheduleBtn"}}</button> -->
+					           		<button type="button" class="btn btn-primary exportReportButton">{{i18n "global.exportBtn"}}</button>
+									<button type="button" class="btn btn-primary editReportButton">{{i18n "global.editBtn"}}</button>
+					           		<button type="button" class="btn btn-default resetReportButton">{{i18n "global.clearBtn"}}</button>
+									<button type="button" class="btn btn-default cancelReportButton">{{i18n "global.cancelBtn"}}</button>
+									&nbsp;&nbsp;&nbsp;
+								</div>
+								<div id="report-error-message" class="pull-right" style="display:none;">
+									<div id="error_general_message" class="alert alert-danger" style="padding:6px 15px; margin-right:20px;">{{i18n "reports.messageSaveFailed"}}</div>
+								</div>
+								<div id="report-saved-message" class="label label-success pull-right" style="margin-right:20px; padding:10px; font-size:14px; display:none;">{{i18n "reports.messageSaveSuccess"}}</div>
+					    	</div>
+						</div>
+			        </div>
+					</form>	
+			    </div>
+			    <div class="advancedSearchResults">
+				    <table class="monthlysalesperformancetable tableview table table-bordered table-hover table-striped" data-sshash-base='monthlySalesPerformanceReport/{{this.id}}'>
+		            </table>
+		        </div>
+	            </div>
+	        </div>
+	    </div>
+	</script>
+
+	<!-- SCHEDULE DIALOG -->
+	
+	<script id="scheduledialogview">
+		<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		    <h4 class="modal-title">{{{dialogTitle}}}</h4>
+		</div>
+		<div class="modal-body">
+			<div class="scheduledetails form-panel">
+				<form name="scheduleDetails" class="form-horizontal">
+					<div class="row" style="padding-bottom:15px;">
+						<label class="col-xs-4 control-label">{{i18n "reports.report"}}</label>
+						<div class="col-xs-8">
+							<label id="report-name" class="control-label">{{this.reportName}}</label>
+						</div>
+					</div>	
+					<div class="row">
+						<div class="col-sm-12">
+							{{>modalInput name="description" label="reports.schedule.description" hint="reports.schedule.descriptionHint" value=this.description}}
+						</div>
+					</div>	
+					
+					<div class="row form-group required">
+						<label class="col-xs-4 control-label">{{i18n "reports.schedule.period"}}</label>
+						<div class="col-xs-8">
+							<select id="period" name="period" class="form-control">
+								{{#ifCond this.excludeHourly "!=" true}}
+							   	<option value="HOUR">{{i18n "reports.schedule.periodHOUR"}}</option>
+								{{/ifCond}}
+							   	<option value="DAY">{{i18n "reports.schedule.periodDAY"}}</option>
+							   	<option value="WEEK">{{i18n "reports.schedule.periodWEEK"}}</option>
+							   	<option value="MONTH">{{i18n "reports.schedule.periodMONTH"}}</option>
+							</select>
+						</div>
+					</div>
+					
+					<div id="timeBlock" class="row form-group" style="display:none;">
+						<label class="col-xs-4 control-label">{{i18n "reports.schedule.timeOfDay"}}</label>
+
+						<div class="col-xs-8">
+							<div class="row">
+								<div class="col-xs-6">
+									{{>modalInputField name="timeOfDayString" label="reports.schedule.timeOfDay" hint="reports.schedule.timeOfDayHint"}}
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div id="timeIntervalBlock" class="row form-group">
+						<label class="col-xs-4 control-label">{{i18n "reports.schedule.timeInterval"}}</label>
+
+						<div class="col-xs-8">
+							<div class="row">
+								<div class="col-xs-6">
+									{{>modalInputField name="startTimeOfDayString" label="reports.schedule.startTimeOfDay" hint="reports.schedule.startTimeOfDayHint"}}
+								</div>
+								<div class="col-xs-6">
+									{{>modalInputField name="endTimeOfDayString" label="reports.schedule.endTimeOfDay" hint="reports.schedule.endTimeOfDayHint"}}
+								</div>
+							</div>
+						</div>
+					</div>
+				
+					<div class="row channel-selection">
+						<label class="col-xs-4 control-label">{{i18n "reports.schedule.deliveryChannels"}}</label>
+						
+						<div class="col-xs-8">
+							<div class="form-group row" style="margin-bottom:0;">
+								<div class="col-xs-12" style="padding-top:8px;">
+									<input id="deliveryChannelEmail" name="deliveryChannelEmail" class="delivery-channel custom-checkbox-fa" value="true" {{#if this.deliveryChannelEmail}}checked="checked"{{/if}} type="checkbox">
+									<label for="deliveryChannelEmail">{{i18n "reports.schedule.deliveryChannelEmail"}}</label>
+									&nbsp;&nbsp;&nbsp;
+									<input id="deliveryChannelSms" name="deliveryChannelSms" class="delivery-channel custom-checkbox-fa" value="true" {{#if this.deliveryChannelSms}}checked="checked"{{/if}} type="checkbox">
+									<label for="deliveryChannelSms">{{i18n "reports.schedule.deliveryChannelSms"}}</label>
+								</div>
+								<div id="deliveryChannelError" class="col-xs-12 help-block" style="display:none; position:relative; top:-7px;">{{i18n "reports.schedule.deliveryChannelNotSelected"}}</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row form-group">
+						<label class="col-xs-4 control-label">{{i18n "reports.schedule.webUsers"}}</label>
+						
+						<div class="col-xs-8">
+							<div style="margin-bottom:5px;">
+								<input id="user-filter-input" class="form-control" type="text" placeholder="{{i18n "reports.schedule.webUserFilterHint"}}" value=""/>
+							</div>
+							<div id="web-users-list" style="height:154px; overflow:auto; padding:5px 10px; border:1px solid #e0e0e0;">
+								{{#each userList}}
+								{{#ifCond state "!=" "P"}}
+								<div class="web-user-div">
+								 	<input id="web-user-{{id}}" name="webUserIds[]" value="{{id}}" class="web-user-selector custom-checkbox-fa" type="checkbox"/>
+								 	<label for="web-user-{{id}}">{{firstName}} {{surname}}</label>
+								</div>
+							  	{{/ifCond}}
+							  	{{/each}}
+							</div>
+							<div style="margin-top:5px;">
+								Showing <strong><span id="web-users-shown"></span></strong> of <strong><span id="web-users-total"></span></strong> users, <strong><span id="web-users-selected"></span></strong> users selected.
+							</div>
+						</div>
+					</div>	
+
+					<hr/>
+							
+					<div class="row">
+						<label class="col-xs-4 control-label">&nbsp;</label>
+						
+						<div class="col-xs-8">
+							<div class="form-group" style="margin-bottom:0;">
+								<div class="col-xs-12" style="padding-top:8px;">
+									<input id="scheduleActive" name="enabled" class="custom-checkbox-fa" value="" {{#if this.enabled}}checked="checked"{{/if}} type="checkbox">
+									<label for="scheduleActive">{{i18n "reports.schedule.scheduleEnabled"}}</label>
+								</div>
+							</div>
+						</div>
+					</div>	
+				</form>
+			</div>
+		</div>
+		<div class="modal-footer">
+		    <div class="row form-group">
+		        <div class="col-xs-12">
+		        	<button type="button" class="btn btn-primary scheduleSubmitButton">{{i18n "reports.schedule.createButton"}}</button>
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "reports.schedule.cancelButton"}}</button>
+		        </div>
+			</div>
+		</div>
+	</script>
+
+	<!-- SCHEDULE EXECUTE DIALOG -->
+	
+	<script id="scheduleexecutedialogview">
+		<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		    <h4 class="modal-title">{{{dialogTitle}}}</h4>
+		</div>
+		<div class="modal-body">
+			<div class="scheduledetails form-panel">
+				<form name="scheduleDetails" class="form-horizontal">
+					<div class="row" style="padding-bottom:15px;">
+						<label class="col-xs-3 control-label">{{i18n "reports.report"}}</label>
+						<div class="col-xs-9">
+							<label id="report-name" class="control-label">{{this.reportName}}</label>
+						</div>
+					</div>	
+					<div class="row form-group required">
+						<label class="col-xs-3 control-label">{{i18n "reports.schedule.referenceDate"}}</label>
+						<div class="col-xs-4">
+							<input type="text" id="referenceDt" name="referenceDt" class="form-control" placeholder="{{i18n "reports.schedule.referenceDateHint"}}"/>
+						</div>
+						<div class="col-xs-3">
+							<input type="text" id="referenceTm" name="referenceTm" class="form-control" placeholder="{{i18n "reports.schedule.referenceDateHint"}}"/>
+						</div>
+						<label class="col-xs-2 form-control-static">UTC</label>
+					</div>	
+				</form>
+
+			</div>
+		</div>
+		<div class="modal-footer">
+			<div id="execution-result" class="row" style="text-align:center; display:none;">
+				<div class="col-xs-12">
+					<div class="alert alert-success"></div>
+				</div>
+			</div>
+		    <div class="row form-group">
+		        <div class="col-xs-12">
+		        	<button type="button" class="btn btn-primary executeSubmitButton">{{i18n "reports.schedule.executeButton"}}</button>
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "reports.schedule.cancelButton"}}</button>
+		        </div>
+			</div>
+		</div>
+	</script>
+
+</div>

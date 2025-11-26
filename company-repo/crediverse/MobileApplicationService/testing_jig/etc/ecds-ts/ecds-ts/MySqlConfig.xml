@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>MySQL Connection Parameters</comment>
+<entry key="server">mariadb</entry>
+<entry key="user">root</entry>
+<entry key="archiveAfterDays">1</entry>
+<entry key="backupNameFormat">%1$s%2$s.bak</entry>
+<entry key="usePipelineAuth">false</entry>
+<entry key="skipArchival">true</entry>
+<entry key="databaseName">hxc</entry>
+<entry key="backupDirectory">/var/opt/cs/c4u/backup/database</entry>
+<entry key="fitnessCheckCommand"/>
+<entry key="poolsize">20</entry>
+<entry key="additionalParameters">--skip-lock-tables --single-transaction</entry>
+<entry key="deleteAfterDays">1</entry>
+<entry key="password">c2d1OWZqZXhzbTJoeTlOSlFqN1NLWWFkdQ==</entry>
+<entry key="driver">org.mariadb.jdbc.Driver</entry>
+</properties>

@@ -1,0 +1,42 @@
+<form id="airSimSmsForm" name="airSimSmsForm" class="form-horizontal" role="form">
+	<div class="form-group row">
+		<label class="control-label col-sm-2" for="smsFrom">From Address:</label>
+		<div class="col-sm-5">
+			<input type="text" class="form-control" id="smsFrom" name="smsFrom" placeholder="FROM ADDRESS" />
+			<span id="smsFrom_error" class="error_message hide"></span>
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label class="control-label col-sm-2" for="smsTo">To Address:</label>
+		<div class="col-sm-5">
+			<input type="text" class="form-control" id="smsTo" name="smsTo" placeholder="TO ADDRESS" />
+			<span id="smsTo_error" class="error_message hide"></span>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="control-label col-sm-2" for="smsText">SMS:</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" id="smsText" name="smsText" placeholder="SMS Text" />
+			<span id="smsText_error" class="error_message hide"></span>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button type="button" class="btn btn-default sendSms">Send SMS</button>
+		</div>	
+	</div>
+	
+	<div class="form-group hide smsReplyDiv">
+		<label class="control-label col-sm-2" for="email">Response:</label>
+		<div class="col-sm-8">
+			<div class="highlight">
+				<pre class="smsReply">
+				</pre>
+			</div>
+		</div>
+	</div>
+	
+</form>

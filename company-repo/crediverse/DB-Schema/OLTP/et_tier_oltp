@@ -1,0 +1,23 @@
+*************************** 1. row ***************************
+       Table: et_tier
+Create Table: CREATE TABLE `et_tier` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `description` varchar(80) NOT NULL,
+  `down_pct` decimal(20,8) DEFAULT NULL,
+  `lm_time` datetime NOT NULL,
+  `lm_userid` int(11) NOT NULL,
+  `max_daily_amount` decimal(20,4) DEFAULT NULL,
+  `max_daily_count` int(11) DEFAULT NULL,
+  `max_monthly_amount` decimal(20,4) DEFAULT NULL,
+  `max_monthly_count` int(11) DEFAULT NULL,
+  `max_amount` decimal(20,4) DEFAULT NULL,
+  `name` varchar(50) NOT NULL,
+  `permanent` bit(1) NOT NULL,
+  `state` varchar(1) NOT NULL,
+  `type` varchar(1) NOT NULL,
+  `version` int(11) NOT NULL,
+  `allow_intratier_transfer` bit(1) NOT NULL DEFAULT b'0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `et_tier_name` (`company_id`,`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8

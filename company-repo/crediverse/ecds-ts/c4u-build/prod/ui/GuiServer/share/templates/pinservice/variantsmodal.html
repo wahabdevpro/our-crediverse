@@ -1,0 +1,95 @@
+<!-- Modal Server Info -->
+<div class="modal fade" id="variantsModal" tabindex="-1" role="dialog" aria-labelledby="variantsModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div id="variantsModalHeader" class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="variantsModalTitle">Add New Variant</h4>
+      </div>
+      <div class="modal-body">
+      	<form id="variantsModalForm" name="variantsModalForm">
+      		<ul class="nav nav-tabs">
+			  <li class="active"><a href="#variantsModalConfig" data-toggle="tab">Configuration</a></li>
+			  <li><a href="#variantsModalTexts" data-toggle="tab">Multilingual Text</a></li>
+			</ul>
+			
+			<div class="tab-content">
+				<!-- General Configuration -->
+				<div class="tab-pane modalconent active" id="variantsModalConfig">
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="VariantID" class="control-label">Variant ID</label>
+							<input type="text" class="form-control modalInput" id="VariantID" name="VariantID" placeholder="Variant ID" />
+							<span id="VariantID_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="MaxRetries" class="control-label">Maximum Retries</label>
+							<input type="text" class="form-control numericfields modalInput" id="MaxRetries" name="MaxRetries" placeholder="Maximum Retries" />
+							<span id="MaxRetries_error" class="error_message hide"></span>
+						</div>
+					</div>
+				
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="MinLength" class="control-label">Minimum Length</label>
+							<input type="text" class="form-control numericfields modalInput" id="MinLength" name="MinLength" placeholder="Minimum Length" />
+							<span id="MinLength_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="MaxLength" class="control-label">Maximum Length</label>
+							<input type="text" class="form-control numericfields modalInput" id="MaxLength" name="MaxLength" placeholder="Maximum Length" />
+							<span id="MaxLength_error" class="error_message hide"></span>
+						</div>
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="firstRenewalWarningHoursBefore" class="control-label">Default PIN</label>
+							<input type="text" class="form-control numericfields modalInput" id="DefaultPin" name="DefaultPin" placeholder="Default PIN" />
+							<span id="DefaultPin_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="recurring">May Use Default</label>
+							<div class="checkbox modalcheckbox">
+							  <label>
+							    <input id="MayUseDefault" name="MayUseDefault" type="checkbox" class="modalInput" />May Use Default
+							  </label>
+							</div>
+						</div>
+					</div>
+									
+				</div>
+				
+				<!--  Text Configuration -->
+				 <div class="tab-pane modalconent" id="variantsModalTexts">
+					 <div class="row modalrowcontent">
+						<div class="panel-group modaltexts" id="vr_accordion">
+						
+						<div th:include="advconfig/messageField :: messagePanel" th:with="label=${'PIN Service Variant Name'}, field=${'Name'}, tab=${'var'}, always=${'1'}, state=${'1'}" class="panel panel-default"/>
+							
+						</div>	
+					 </div>
+				 </div>
+				 
+			</div>
+
+      	</form>
+      	
+		<div id="variantsModalError" class="row alert alert-danger hide">
+				Things went wrong!!
+		</div>
+		<div class="modal-footer">
+			<img id="variantsModalWaiting" src="/img/cell_wait.gif" class="waiting hide" />
+			<button type="button" class="btn btn-default" data-dismiss="modal" >Cancel</button>
+			<button id="variantsModalSave" type="button" class="btn btn-primary savebtn" onclick="saveModalCall()">Save</button>
+		</div>
+			
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<script language="javascript">
+	bindDragable("variantsModal", "variantsModalHeader");
+</script>

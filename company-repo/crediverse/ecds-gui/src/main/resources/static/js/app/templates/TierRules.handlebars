@@ -1,0 +1,185 @@
+<div>
+	<script id="edittierdialogview">
+           	<div class="modal-header">
+              		<button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+              		<h4 class="modal-title">{{{dialogTitle}}}</h4>
+          		</div>
+  				
+  				<div class="modal-body">
+  					<form name="tierForm" class="form-horizontal">
+						{{>modalInput  name="name" label="global.name" hint="Tier Name Identifier" value=this.name}}
+						{{>modalInput  name="description" label="global.description" hint="Tier Description" value=this.description}}
+						<div class="form-group required">
+							<label class="col-xs-4 control-label">{{i18n "tiers.type"}}</label>
+							<div class="col-xs-8">
+								<select id="type" name="type" class="form-control">
+									<option value="">{{i18n "tiers.typeHint"}}</option>
+									<option value="R">{{i18n "enums.tierType.retailer"}}</option>
+									<option value="T">{{i18n "enums.tierType.store"}}</option>
+									<option value="W">{{i18n "enums.tierType.wholesaler"}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group required">
+							<label class="col-xs-4 control-label">{{i18n "global.state"}}</label>
+							<div class="col-xs-8">
+								<select id="state" name="state" class="form-control" value="{{this.state}}">
+									<option value="">{{i18n "global.stateHint"}}</option>
+									<option value="A">{{i18n "enums.state.active"}}</option>
+									<option value="I">{{i18n "enums.state.inactive"}}</option>
+								</select>
+							</div>
+						</div>	
+						{{>modalInput  name="buyerDefaultTradeBonusPercentage" label="tiers.buyerDefaultTradeBonusPercentage" hint="tiers.buyerDefaultTradeBonusPercentage"  value=this.buyerDefaultTradeBonusPercentage}}
+						{{>modalInputNumber  name="maxTransactionAmount" label="global.maxTransactionAmount" hint="global.maxTransactionAmountHint" value=this.maxTransactionAmount}}
+						{{>modalInputNumber  name="maxDailyCount" label="global.maxDailyCount" hint="global.maxDailyCountHint" value=this.maxDailyCount}}
+						{{>modalInputNumber  name="maxDailyAmount" label="global.maxDailyAmount" hint="global.maxDailyAmountHint" value=this.maxDailyAmount}}						
+						{{>modalInputNumber  name="maxMonthlyCount" label="global.maxMonthlyCount" hint="global.maxMonthlyCountHint" value=this.maxMonthlyCount}}
+						{{>modalInputNumber  name="maxMonthlyAmount" label="global.maxMonthlyAmount" hint="global.maxMonthlyAmountHint" value=this.maxMonthlyAmount}}
+					</form>
+  				</div>
+  				
+            <div class="modal-footer">
+               	<button type="button" class="btn btn-primary tierCreateButton">{{i18n "global.saveBtn"}}</button>
+               	<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+           	</div>
+	</script>
+
+	<script id="tierrulesmaster">
+	    <div id="tierrulesmaster" class="datatablesview col-xs-12">
+
+			<!-- Tier Details Section -->
+			<div class="row">
+	            		<div class="col-lg-12 col-centered">
+	            		
+			            	<div class="box box-info">
+			            		<div class="panel-heading" style="padding: 10px 30px;">
+			            			<h4>Tier: <b>{{this.name}}</b>
+				            			{{#if this.description}}
+				            			  <span>&nbsp;{{this.description}}</span>
+				            			{{/if}}
+				            			<span>
+					            			<div class="btn-group pull-right" role="group" aria-label="...">
+						            			{{#hasPerms "Tier_Update"}}
+						            				<button type="button" class="editTierButton btn btn-primary">{{i18n "tiers.tierEditButton"}}</button>
+												{{/hasPerms}}
+												{{#hasPerms "Tier_Delete"}}
+						            				<button type="button" class="deleteTierButton btn btn-danger">{{i18n "tiers.tierDeleteButton"}}</button>
+												{{/hasPerms}}
+											</div>
+										</span>
+			            			</h4>
+		        	    		</div>
+								<div class="panel-body">
+									<div class="col-lg-12">
+										<div class="panel panel-default">
+											<div class="panel-heading text-center">
+									  			<b>{{i18n "config.generalSettings"}}</b>
+									  		</div>
+											  
+									  		<div class="panel-body">
+							  					<div class="row">
+													<div class="col-sm-3">
+														<label class="control-label">{{i18n "tiers.tierType"}}</label>
+													</div>
+													<div class="col-sm-3">
+														{{i18n this.typeRef}}
+													</div>
+													<div class="col-sm-3">
+														<label class="control-label">{{i18n "tiers.allowIntraTierTransfer"}}</label>
+													</div>
+													<div class="col-sm-3">
+														{{#ifCond this.allowIntraTierTransfer "==" true}}
+															{{i18n "enums.yesNo.yes"}}
+														{{/ifCond}}
+														{{#ifCond this.allowIntraTierTransfer "==" false}}
+															{{i18n "enums.yesNo.no"}}
+														{{/ifCond}}
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-sm-3">
+														<label class="control-label">{{i18n "tiers.buyerDefaultTradeBonusPercentage"}}</label>
+													</div>
+													<div class="col-sm-3">
+														{{this.buyerDefaultTradeBonusPercentage}}
+													</div>
+												</div>
+									  		</div>
+								  		</div>
+								  	</div>
+
+								  	<div class="col-lg-12">
+									  	<div class="panel panel-default">
+									  		<div class="panel-heading text-center">
+									  			<b>{{i18n "serviceclass.transferLimits"}}</b>
+									  		</div>
+									  			
+									  		<div class="panel-body">
+										  		<div class="col-sm-6">
+										  			{{>detailsNumericLabel label=(i18n "serviceclass.maxDailyCountLabel") number=this.maxDailyCount }}
+										  			{{>detailsNumericLabel label=(i18n "serviceclass.maxDailyAmountLabel") number=this.maxDailyAmount}}
+										  		</div>
+										  		
+										  		<div class="col-sm-6">
+										  			{{>detailsNumericLabel label=(i18n "serviceclass.maxMonthlyCountLabel") number=this.maxMonthlyCount}}
+										  			{{>detailsNumericLabel label=(i18n "serviceclass.maxMonthlyAmountLabel") number=this.maxMonthlyAmount}}
+										  		</div>
+										  		
+										  		<div class="col-sm-6">
+										  			{{>detailsNumericLabel label=(i18n "tiers.transferAmount") number=this.maxTransactionAmount}}
+										  		</div>
+									  		</div>
+									  		
+								  		</div>
+								  		
+									</div>
+								</div>
+		            		</div>	            		
+	            		
+	            		
+	            		</div>
+	            	</div>
+
+			<div class="row">  
+				<div class="col-lg-12"> 	
+					<div class="nav-tabs-custom">
+						<ul class="nav nav-tabs">
+    						<li class="active">
+								<a href="#incomingRules" data-tab="" data-toggle="tab">{{i18n "tiers.incomingRules"}}</a>
+							</li>
+    						<li>
+								<a href="#outGoingRules" data-tab="" data-toggle="tab">{{i18n "tiers.outgoingRules"}}</a>
+							</li>
+  						</ul>
+						<div class="tab-content">
+							<div class="active tab-pane info-panel" id="incomingRules" style="margin:8px;">
+								<div class="row">
+									<div class="col-lg-12">
+										{{>spinner spinnerId="incoming_spinner"}}
+											<table class="incomingRules table table-bordered table-hover table-striped">
+											</table>
+										{{>nodata classId="incomingRulesNoData"}}
+									</div>
+								</div>
+							</div>
+
+							<div class="tab-pane info-panel" id="outGoingRules" style="margin:8px;">
+								<div class="row">
+									<div class="col-lg-12">
+										{{>spinner spinnerId="outgoing_spinner"}}
+											<table class="outgoingRules table table-bordered table-hover table-striped">
+											</table>
+										{{>nodata classId="outgoingRulesNoData"}}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	    
+		</div>
+	</script>	
+</div>
+

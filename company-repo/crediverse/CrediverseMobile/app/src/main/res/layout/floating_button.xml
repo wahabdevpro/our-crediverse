@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <FrameLayout
+        android:id="@+id/fa_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:background="@drawable/circle_border_transparent"
+        android:backgroundTint="@color/gray"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/fa_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/fa_solid"
+            android:text="@string/fa_clock_rotate_left"
+            android:textColor="@color/black"
+            android:textSize="32sp" />
+
+    </FrameLayout>
+
+</merge>

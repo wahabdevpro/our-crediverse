@@ -1,0 +1,33 @@
+<?xml version='1.0'?>
+<!DOCTYPE service_bundle SYSTEM '/usr/share/lib/xml/dtd/service_bundle.dtd.1'>
+<service_bundle type='manifest' name='${APP_NAME}'>
+	<service name='application/${APP_NAME}' type='service' version='1'>
+		<create_default_instance enabled='false' />
+		<single_instance />
+
+		<dependency name='net-loopback' grouping='require_all' restart_on='none' type='service'>
+			<service_fmri value='svc:/network/loopback'/>
+		</dependency>
+		
+		<dependency name='net-physical' grouping='require_all' restart_on='none' type='service'>
+			<service_fmri value='svc:/network/physical'/>
+		</dependency>
+
+		<exec_method type='method' name='start' exec='${INSTALL_DIR}/libexec/init.sh %m' timeout_seconds='30'>
+   		</exec_method>
+
+		<exec_method type='method' name='restart' exec='${INSTALL_DIR}/libexec/init.sh %m' timeout_seconds='30'>
+   		</exec_method>
+		
+		<exec_method type='method' name='stop' exec='${INSTALL_DIR}/libexec/init.sh %m' timeout_seconds='30'>
+   		</exec_method>
+		
+		<template>
+			<common_name>
+				<loctext xml:lang='java'>${APP_NAME}</loctext>
+			</common_name>
+		</template>
+	</service>
+</service_bundle>
+
+

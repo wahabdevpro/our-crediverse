@@ -1,0 +1,368 @@
+<!-- vim: set ft=html sts=4 ts=4 sw=4 noexpandtab fo-=t: -->
+<div>
+
+	<script id="configMainHeading" type="partial">
+		<div class="box-header with-border">
+			<h2 class="box-title configHeading">{{i18n heading}}</h2>
+			{{#if permission}}
+				{{#hasPerms this.permission}}
+					<div class="pull-right">
+						<button class="btn btn-primary {{btnclass}}">{{i18n btntext}}</button>
+					</div>
+				{{/hasPerms}}
+			{{else}}
+				<div class="pull-right">
+					<button class="btn btn-primary {{btnclass}}">{{i18n btntext}}</button>
+				</div>
+			{{/if}}
+		</div>
+	</script>
+	
+	<script id="ussdMenuToolbar">
+		<span class="btn btn-primary fileinput-button importUssdMenuButton">
+		<!-- <i class="glyphicon glyphicon-plus"></i> -->
+	        <span>{{i18n "global.importBtn"}}</span>
+	        <!-- The file input field used as target for the file upload widget -->
+	        <input id="file-import" name="fileimport" type="file" class="form-control file-import">
+	    </span>
+	
+		<button class="btn btn-primary exportUssdMenuButton">{{i18n "global.exportBtn"}}</button>
+		<!-- <button class="btn btn-primary showUssdMenuConfigDialog">{{i18n "global.editBtn"}}</button> -->
+		<button class="btn btn-primary menuSaveLayout">{{i18n "global.saveBtn"}}</button>
+		<button class="btn btn-primary resetUssdMenuConfig">{{i18n "global.resetBtn"}}</button>
+	</script>
+	
+	<!-- USSD Menu -->
+	<script id="ussdMenuConfig">
+	
+	
+	
+	
+
+
+				<div>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="alert alert-danger form-error-panel error-panel remove-margins hide" role="alert">
+				        		<span class="form-error-heading">
+				        			Unexpected failure.
+				        		</span>
+				        	</div>
+						</div>
+					</div>
+					
+					
+						<div class="row unsavedChangesDialog">
+							<div class="col-xs-offset-3 col-xs-6">
+							{{#if this.unsavedChanges}}
+								<div class="alert alert-warning form-error-panel error-panel remove-margins" role="alert">
+								{{else}}
+								<div class="alert alert-warning form-error-panel error-panel remove-margins invisible" role="alert">
+							{{/if}}
+					        		<span class="form-unsaved-heading">
+					        			{{i18n "ussdmenu.unsavedChangesMessage"}}
+					        		</span>
+					        	</div>
+							</div>
+						</div>
+					
+				
+					{{#if this.showCommandField}}
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="menu-command">
+									<div class="panel panel-info">
+										<div class="panel-heading item-title">
+											<span class="label label-default">Menu Command</span>
+											<span class="item-type">{{ussdMenuCommand}}</span>
+											{{#hasPerms "Transaction_ConfigUssd"}}
+												<a class="editCommandAction action-button float-right" href="#edit-action-button" role="button">
+								          			<span>
+								          				<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+								          			</span>
+								          		</a>
+								          	{{/hasPerms}}
+							          	</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					{{/if}}
+					
+					<div class="row">
+					<div class="col-xs-12">
+						<div id="menu-container" class="carousel slide">
+							<!-- Indicators -->
+							<!-- <ol class="carousel-indicators">
+						    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+						    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+						    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+						  </ol> -->
+						  
+						  
+						  <!-- Wrapper for slides -->
+						  <div class="carousel-inner list-of-menus" role="listbox">
+							  {{#each menus}}
+								<div class="item menu{{id}}" data-menu-id="{{id}}" data-menu-offset="{{offset}}">
+									<div class="html-content">
+										<h2 class="configHeading">
+											{{name}}
+											{{#hasPerms "Transaction_ConfigUssd"}}
+												<a class="editNameAction action-button" data-menu-offset="{{offset}}" data-menu-id="{{id}}" href="#edit-button-{{id}}" role="button">
+								          			<span>
+								          				<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+								          			</span>
+								          		</a>
+											{{/hasPerms}}
+										</h2>
+										<ol class="simple_with_animation vertical" data-menu-id="{{offset}}">
+											{{#each buttons}}
+												<li class="" data-button-id="{{id}}">
+												
+													{{#ifCond this.type "!=" "P"}}
+														<div class="panel panel-info">
+													{{else}}
+														{{#if this.disabled}}
+															<div class="panel panel-default">
+														{{else}}
+															<div class="panel panel-info">
+														{{/if}}
+													{{/ifCond}}
+													
+														<div class="panel-heading item-title">
+															<span class="label label-default">{{typeName}}</span>
+														
+															<span class="item-type">
+											              	{{#notIn this.type 'E' }}
+												              	{{#if text.texts.fr}}
+											              			<span class="label label-default langueage-text"><span class="label label-primary language-marker">Fr</span>{{text.texts.fr}}</span>
+											              		{{/if}}
+											              		<span class="label label-default langueage-text"><span class="label label-success language-marker">En</span>{{text.texts.en}}</span>
+											          		{{else}}
+											          			<!-- No text for me, id {{id}} -->
+											          		{{/notIn}}
+											          		</span>
+											          		{{#hasPerms "Transaction_ConfigUssd"}}
+												          		{{#ifCond this.type "==" "P"}}
+													          		{{#if this.disabled}}
+													          			<a class="enableToggleAction toggle-button float-right switch round off" data-button-id="{{id}}" href="#toggle-button" role="button">
+													          		{{else}}
+														          		<a class="enableToggleAction toggle-button float-right switch round on" data-button-id="{{id}}" href="#toggle-button" role="button">
+														          	{{/if}}
+													          			<span class="toggle"></span>
+													          		</a>
+													          	{{/ifCond}}
+													          	
+													          	<!-- <a class="deleteItemAction delete-button float-right" data-button-id="{{id}}" href="#delete-button-{{id}}" role="button">
+												          			<span>
+												          				<i class="fa fa-trash-o" aria-hidden="true"></i>
+												          			</span>
+												          		</a> -->
+													          		
+													          	<!-- <span class="label label-success">type: {{type}}</span> -->
+													          		
+												          		{{#notIn this.type "!=" "E" }}
+													          		<a class="editItemAction action-button float-right" data-button-id="{{id}}" href="#edit-button-{{id}}" role="button">
+													          			<span>
+													          				<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+													          			</span>
+													          		</a>
+												          		{{/notIn}}
+													          	
+													          	
+													         {{/hasPerms}}
+											          		
+											          		
+											          		{{#ifCond this.nextMenuID ">=" "0"}}
+												          		<a class="menu-navigation-arrow navigate-button float-right destination-{{nextMenuID}}" href="#navigate-{{nextMenuOffset}}" role="button">
+												          			<span class="label label-success">
+												          				{{this.nextMenuName}}
+												          				<i class="fa fa-chevron-right" aria-hidden="true"></i>
+												          			</span>
+												          		</a>
+												          	{{else}}
+													          	<a class="menu-no-action hidden-navigate-button float-right destination-{{nextMenuID}}" href="#" role="button">
+												          			<span>
+												          				<i class="fa fa-chevron-right" aria-hidden="true"></i>
+												          			</span>
+												          		</a>
+											          		{{/ifCond}}
+											            </div>
+											            <!-- <div class="panel-body">
+											            	<form class="form-horizontal">
+													            {{#ifCond this.nextMenuID ">=" "0"}}
+												          			<a class="menu-navigation-arrow destination-{{nextMenuID}}" href="#navigate-{{nextMenuOffset}}" role="button">
+																      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+																      <span class="sr-only">Navigate To</span>
+																    </a>
+															    {{/ifCond}}
+															    
+															    
+														    	{{#notIn this.type 'E' }}
+															    	<div class="form-group">
+																    	<label class="col-sm-2 control-label">{{i18n "ussdmenu.english"}}</label>
+																    	<p class="form-control-static">{{text.texts.en}}</p>
+																    </div>
+																    <div class="form-group">
+																    	<label class="col-sm-2 control-label">{{i18n "ussdmenu.french"}}</label>
+																    	<p class="form-control-static">{{text.texts.fr}}</p>
+																    </div>
+										          				{{/notIn}}
+															    
+															    
+															    
+															    
+															    
+															    <div class="form-group">
+															    	<label class="col-sm-2 control-label">{{i18n "ussdmenu.typeLabel"}}</label>
+															    	<p class="form-control-static">{{typeName}}</p>
+															    </div>
+															    {{#ifCond this.nextMenuID ">=" "0"}}
+																    <div class="form-group">
+																    	<label class="col-sm-2 control-label">{{i18n "ussdmenu.nextLabel"}}</label>
+																    	<p class="form-control-static">Menu {{nextMenuID}}</p>
+																    </div>
+															    {{/ifCond}}
+															    {{#ifCond this.type "==" "C" }}
+																    <div class="form-group">
+																    	<label class="col-sm-2 control-label">{{i18n "ussdmenu.captureFieldLabel"}}</label>
+																    	<p class="form-control-static">{{{ captureField }}}</p>
+																    </div>
+															    {{/ifCond}}
+														    </form>
+											            </div> -->
+													</div>
+								          		</li>
+								          	{{/each}}
+										</ol>
+									</div>
+								</div>
+							  {{/each}}
+						  </div>
+						    
+						    
+						    <!-- Controls -->
+						    <a class="left carousel-control carousel-left-button" href="#menu-container" role="button">
+						      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						      <span class="sr-only">{{i18n "ussdmenu.previousText"}}</span>
+						    </a>
+						    <a class="right carousel-control carousel-right-button" href="#menu-container" role="button" data-slide="next">
+						      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+						      <span class="sr-only">{{i18n "ussdmenu.nextText"}}</span>
+						    </a>
+							
+						</div>
+					</div>
+
+	</script>
+	
+	<script id="ussdMenuItem">
+		<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		    <h4 class="modal-title">{{{dialogTitle}}}</h4>
+		</div>
+		<div class="modal-body">
+			<form name="menuItem" class="form-horizontal">
+				{{#notIn this.type 'E' }}
+					<div class="col-sm-offset-3 col-sm-9">
+						{{i18n "ussdmenu.textLengthWarning"}}
+					</div>
+					{{>configNotificationInput name="text" notification=this.text}}
+      			{{else}}
+      				<!-- No text for me, id {{id}} -->
+      			{{/notIn}}
+				
+				
+			
+				<!-- <div class="form-group">
+					<label class="col-xs-4 control-label">{{i18n "ussdmenu.selectType"}}</label>
+					<div class="col-xs-8">
+						<select id="type" style="width: 100%;" name="type" class="form-control">
+							<option value="{{type}}" selected="selected">{{this.typeName}}</option>
+						</select>
+					</div>
+				</div> -->
+				
+				<!-- {{#in this.type 'P' }}
+					<div class="form-group">
+						<label class="col-xs-4 control-label">{{i18n "ussdmenu.commandLabel"}}</label>
+						<div class="col-xs-8">
+							<select id="commandID" style="width: 100%;" name="commandID" class="form-control">
+								<option value="{{commandID}}" selected="selected">{{this.commandName}}</option>
+							</select>
+						</div>
+					</div>
+				{{/in}}
+				
+				{{#if nextMenuID}}
+					<div class="form-group">
+						<label class="col-xs-4 control-label">{{i18n "ussdmenu.nextMenuLabel"}}</label>
+						<div class="col-xs-8">
+							<select id="nextMenuID" style="width: 100%;" name="nextMenuID" class="form-control">
+								<option value="{{nextMenuID}}" selected="selected">{{i18n "ussdmenu.menuPrefix"}}{{this.nextMenuID}}</option>
+							</select>
+						</div>
+					</div>
+				{{/if}} -->
+			</form>
+		</div>
+		<div class="modal-footer">
+			<div class="form-group">
+		        <div class="col-sm-offset-2 col-sm-10">
+		        	<button type="button" class="btn btn-primary itemSaveButton">{{i18n "ussdmenu.saveButtonLabel"}}</button>
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "ussdmenu.cancelButtonLabel"}}</button>
+		        </div>
+			</div>
+		</div>
+	</script>
+	
+	<script id="ussdMenuCommand">
+		<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		    <h4 class="modal-title">{{{dialogTitle}}}</h4>
+		</div>
+		<div class="modal-body">
+			<form name="menuItem" class="form-horizontal">
+				<div class="form-group required">
+					<label class="col-xs-4 control-label">{{i18n "ussdmenu.ussdMenuCommandLabel"}}</label>
+					<div class="col-xs-8">
+						<input id="ussdMenuCommand" type="text" name="ussdMenuCommand" class="form-control ussdmenucommand" placeholder="{{i18n "ussdmenu.ussdMenuCommandPlaceholder"}}" value="{{ussdMenuCommand}}" />
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<div class="form-group">
+		        <div class="col-sm-offset-2 col-sm-10">
+		        	<button type="button" class="btn btn-primary itemSaveButton">{{i18n "ussdmenu.saveButtonLabel"}}</button>
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "ussdmenu.cancelButtonLabel"}}</button>
+		        </div>
+			</div>
+		</div>
+	</script>
+	
+	<script id="ussdMenuName">
+		<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		    <h4 class="modal-title">{{{dialogTitle}}}</h4>
+		</div>
+		<div class="modal-body">
+			<form name="menuItem" class="form-horizontal">
+				<div class="form-group required">
+					<label class="col-xs-4 control-label">{{i18n "ussdmenu.ussdMenuNameLabel"}}</label>
+					<div class="col-xs-8">
+						<input id="name" type="text" name="name" class="form-control ussdmenuname" placeholder="{{i18n "ussdmenu.ussdMenuNamePlaceholder"}}" value="{{name}}" />
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<div class="form-group">
+		        <div class="col-sm-offset-2 col-sm-10">
+		        	<button type="button" class="btn btn-primary itemSaveButton">{{i18n "ussdmenu.saveButtonLabel"}}</button>
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "ussdmenu.cancelButtonLabel"}}</button>
+		        </div>
+			</div>
+		</div>
+	</script>
+</div>

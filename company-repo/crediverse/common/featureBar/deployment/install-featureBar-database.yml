@@ -1,0 +1,37 @@
+- name: Install a featurebar etcd on site
+
+  hosts: etcd 
+  become: yes
+  become_user: root
+  become_method: sudo  
+  gather_facts: true 
+
+  pre_tasks:
+    - name: Check ansible version
+      include: includes/ansible-version.yml 
+
+  tasks:
+    - name: Stop etcd 
+      block: 
+        - stat: path=/srv/docker-compose/etcd/docker-compose.yml
+          register: etcd_compose 
+        - docker_compose:
+            project_src: /srv/docker-compose/etcd
+            state: absent
+          when: etcd_compose.stat.exists
+ 
+    - name: Ensure correct directory strucure exists
+      file:
+        path: "{{ item }}" 
+        state: directory
+      loop: "{{ etcd_base_directories }}" 
+
+    - name: Template etcd docker-compose files
+      template:
+        src:  etcd/docker-compose.yml.j2
+        dest: /srv/docker-compose/etcd/docker-compose.yml 
+        force: yes
+
+    - name: Start etcd 
+      docker_compose:
+        project_src: /srv/docker-compose/etcd

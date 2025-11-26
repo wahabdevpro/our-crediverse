@@ -1,0 +1,57 @@
+package hxc.ecds.protocol.rest;
+
+import java.util.List;
+
+// REST End-Point: ~/transactions/deposits_query
+public class DepositsQueryRequest extends TransactionRequest
+{
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Fields
+	//
+	// /////////////////////////////////
+	protected Boolean suppressSms = false;
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Construction
+	//
+	// /////////////////////////////////
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Properties
+	//
+	// /////////////////////////////////
+	public Boolean getSuppressSms()
+	{
+		return suppressSms;
+	}
+
+	public DepositsQueryRequest setSuppressSms(Boolean suppressSms)
+	{
+		this.suppressSms = suppressSms;
+		return this;
+	}
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Methods
+	//
+	// /////////////////////////////////
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public DepositsQueryResponse createResponse()
+	{
+		return new DepositsQueryResponse(this);
+	}
+
+	@Override
+	public List<Violation> validate()
+	{
+		return new Validator(super.validate()) //
+				.toList();
+	}
+
+}

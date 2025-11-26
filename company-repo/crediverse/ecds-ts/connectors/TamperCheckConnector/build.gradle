@@ -1,0 +1,39 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.connectors.tampercheck.TamperCheckConnector")
+   }
+}
+dependencies {
+    implementation project(':Configuration')
+    implementation project(':CoreInterfaces')
+    implementation project(':MySqlConnector')
+    implementation project(':CreditDistributionService')
+    implementation project(':RestProtocol')
+    implementation project(':UIConnectorProtocol')
+    implementation 'org.lucee:antlr'
+    implementation 'com.mchange:c3p0'
+    implementation 'org.lucee:dom4j'
+    implementation 'org.apache.geronimo.specs:geronimo-jta_1.1_spec'
+    implementation 'org.hibernate:hibernate-c3p0'
+    implementation 'org.hibernate.common:hibernate-commons-annotations'
+    implementation 'org.hibernate:hibernate-core'
+    implementation 'org.hibernate:hibernate-entitymanager'
+    implementation 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api'
+    implementation 'org.javassist:javassist'
+    implementation 'org.jboss.logging:jboss-logging'
+    implementation 'com.mchange:mchange-commons-java'
+    implementation 'mysql:mysql-connector-java'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:2.3.0'
+    implementation 'xml-apis:xml-apis'
+    implementation 'org.slf4j:slf4j-api'
+}

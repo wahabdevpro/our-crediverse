@@ -1,0 +1,157 @@
+/usr/bin/python3 /home/martinc/Projects/Crediverse/ecds-ts/c4u-build/generateGradle.py
+martinc@martinc-pc:~/Projects/Crediverse/ecds-ts$ /usr/bin/python3 /home/martinc/Projects/Crediverse/ecds-ts/c4u-build/generateGradle.py
+Adding ./c4u-build/svccore/connectors/SVCCORESuTConnector/build.gradle to ignore list.
+./c4u-build/prod/services/ReportingService/build.gradle
+More confused by ||compile('net.sf.jasperreports:jasperreports') {||
+
+Invalid Details
+{}
+
+Discarding compile('net.sf.jasperreports:jasperreports') {
+From ./c4u-build/prod/services/ReportingService/build.gradle
+Please process manually ./c4u-build/prod/services/ReportingService/build.gradle
+
+Traceback (most recent call last):
+  File "/home/martinc/Projects/Crediverse/ecds-ts/c4u-build/generateGradle.py", line 528, in <module>
+    for singleDependency in dependencyDetails["depends"]:
+TypeError: 'bool' object is not iterable
+martinc@martinc-pc:~/Projects/Crediverse/ecds-ts$ /usr/bin/python3 /home/martinc/Projects/Crediverse/ecds-ts/c4u-build/generateGradle.py
+Adding ./c4u-build/svccore/connectors/SVCCORESuTConnector/build.gradle to ignore list.
+./c4u-build/prod/services/ReportingService/build.gradle
+More confused by ||compile('net.sf.jasperreports:jasperreports') {||
+
+Invalid Details
+{}
+
+Discarding compile('net.sf.jasperreports:jasperreports') {
+From ./c4u-build/prod/services/ReportingService/build.gradle
+Please process manually ./c4u-build/prod/services/ReportingService/build.gradle
+
+martinc@martinc-pc:~/Projects/Crediverse/ecds-ts$ /usr/bin/python3 /home/martinc/Projects/Crediverse/ecds-ts/c4u-build/generateGradle.py
+./c4u-build/prod/services/ReportingService/build.gradle
+More confused by ||compile(net.sf.jasperreports:jasperreports) {||
+
+Invalid Details
+{}
+
+Discarding compile(net.sf.jasperreports:jasperreports) {
+From ./c4u-build/prod/services/ReportingService/build.gradle
+Please process manually ./c4u-build/prod/services/ReportingService/build.gradle
+
+Writing ./c4u-build/svccore/connectors/SVCCORESuTConnector/build.gradle
+Writing ./c4u-build/classic/tests/ClassicTests/build.gradle
+Writing ./c4u-build/classic/tests/BasicLocationServiceTest/build.gradle
+Writing ./c4u-build/classic/connectors/ClassicSuTConnector/build.gradle
+Writing ./c4u-build/classic/services/TariffPlanMigrationService/build.gradle
+Writing ./c4u-build/classic/services/BasicLocationService/build.gradle
+Writing ./c4u-build/classic/services/ClassicServices/build.gradle
+Writing ./c4u-build/classic/services/ClassicServices/ClassicM2U/build.gradle
+Writing ./c4u-build/classic/services/ClassicServices/ClassicFAF/build.gradle
+Writing ./c4u-build/classic/services/ClassicServices/ClassicCVR/build.gradle
+Writing ./c4u-build/classic/services/ClassicServices/ClassicWAMI/build.gradle
+Writing ./c4u-build/classic/services/ClassicServices/ClassicTPM/build.gradle
+Writing ./c4u-build/classic/services/ClassicServices/ClassicCMBK/build.gradle
+Writing ./c4u-build/pcc/utils/PccConfiguration/build.gradle
+Writing ./c4u-build/pcc/utils/CaiProtocol/build.gradle
+Writing ./c4u-build/pcc/connectors/PCCSuTConnector/build.gradle
+Writing ./c4u-build/pcc/services/CaiSimService/build.gradle
+Writing ./c4u-build/mtncm/tests/CreditSharingServicesTests/build.gradle
+Writing ./c4u-build/mtncm/ui/wui/GuiWebServer/build.gradle
+Writing ./c4u-build/mtncm/ui/wui/plugins/CustomerCareUI/build.gradle
+Writing ./c4u-build/mtncm/services/CreditSharingService/CreditSharingService/build.gradle
+Writing ./c4u-build/prod/utils/Reflection/build.gradle
+Writing ./c4u-build/prod/utils/TcpServer/build.gradle
+Writing ./c4u-build/prod/utils/HmxProtocol/build.gradle
+Writing ./c4u-build/prod/utils/C4UPluginLoader/build.gradle
+Writing ./c4u-build/prod/utils/Instrumentation/build.gradle
+Writing ./c4u-build/prod/utils/SoapProtocol/build.gradle
+Writing ./c4u-build/prod/utils/XmlRpc/build.gradle
+Writing ./c4u-build/prod/utils/Hsx0Protocol/build.gradle
+Writing ./c4u-build/prod/utils/UIConnectorProtocol/build.gradle
+Writing ./c4u-build/prod/utils/FileWatcher/build.gradle
+Writing ./c4u-build/prod/utils/SdpProtocol/build.gradle
+Writing ./c4u-build/prod/utils/HuxProtocol/build.gradle
+Writing ./c4u-build/prod/utils/General/build.gradle
+Writing ./c4u-build/prod/utils/CsvParser/build.gradle
+Writing ./c4u-build/prod/utils/Notification/build.gradle
+Writing ./c4u-build/prod/utils/Registration/build.gradle
+Writing ./c4u-build/prod/utils/AirProtocol/build.gradle
+Writing ./c4u-build/prod/utils/Calendar/build.gradle
+Writing ./c4u-build/prod/utils/VsipProtocol/build.gradle
+Writing ./c4u-build/prod/utils/StringUtilities/build.gradle
+Writing ./c4u-build/prod/utils/UnitTestUtils/build.gradle
+Writing ./c4u-build/prod/utils/ZTEProtocol/build.gradle
+Writing ./c4u-build/prod/utils/ProcessModel/build.gradle
+Writing ./c4u-build/prod/utils/Threads/build.gradle
+Writing ./c4u-build/prod/utils/ASN.1Parser/build.gradle
+Writing ./c4u-build/prod/utils/Configuration/build.gradle
+Writing ./c4u-build/prod/utils/HsxProtocol/build.gradle
+Writing ./c4u-build/prod/utils/HttpServer/build.gradle
+Writing ./c4u-build/prod/tests/AirSimTests/build.gradle
+Writing ./c4u-build/prod/tests/UIConnectorTests/build.gradle
+Writing ./c4u-build/prod/tests/UnitTests/build.gradle
+Writing ./c4u-build/prod/tests/VoucherSimTests/build.gradle
+Writing ./c4u-build/prod/tests/CLITests/build.gradle
+Writing ./c4u-build/prod/connectors/ZTEConnector/build.gradle
+Writing ./c4u-build/prod/connectors/C4USuTConnector/build.gradle
+Writing ./c4u-build/prod/connectors/FileConnector/build.gradle
+Writing ./c4u-build/prod/connectors/SoapConnector/build.gradle
+Writing ./c4u-build/prod/connectors/HuxConnector/build.gradle
+Writing ./c4u-build/prod/connectors/MySqlConnector/build.gradle
+Writing ./c4u-build/prod/connectors/KerberosConnector/build.gradle
+Writing ./c4u-build/prod/connectors/UIConnector/build.gradle
+Writing ./c4u-build/prod/connectors/LifecycleConnector/build.gradle
+Writing ./c4u-build/prod/connectors/AirConnector/build.gradle
+Writing ./c4u-build/prod/connectors/DiagnosticConnector/build.gradle
+Writing ./c4u-build/prod/connectors/PccBundleConnector/build.gradle
+Writing ./c4u-build/prod/connectors/ArchivingConnector/build.gradle
+Writing ./c4u-build/prod/connectors/HsxConnector/build.gradle
+Writing ./c4u-build/prod/connectors/DataWarehouseConnector/build.gradle
+Writing ./c4u-build/prod/connectors/SmppConnector/build.gradle
+Writing ./c4u-build/prod/connectors/SmtpConnector/build.gradle
+Writing ./c4u-build/prod/connectors/SnmpConnector/build.gradle
+Writing ./c4u-build/prod/connectors/CtrlConnector/build.gradle
+Writing ./c4u-build/prod/connectors/HmxConnector/build.gradle
+Writing ./c4u-build/prod/connectors/CaiConnector/build.gradle
+Writing ./c4u-build/prod/ui/GuiServer/build.gradle
+Writing ./c4u-build/prod/ui/MarketingGUI/build.gradle
+Writing ./c4u-build/prod/ui/HxC/build.gradle
+Writing ./c4u-build/prod/ui/CustomerCare/CrmWebServer/build.gradle
+Writing ./c4u-build/prod/ui/CustomerCare/plugins/CrmPlugin/build.gradle
+Writing ./c4u-build/prod/core/HostProcess/build.gradle
+Writing ./c4u-build/prod/core/ServiceBus/build.gradle
+Writing ./c4u-build/prod/core/TestHost/build.gradle
+Writing ./c4u-build/prod/core/CoreInterfaces/build.gradle
+Writing ./c4u-build/prod/core/EcdsTestHost/build.gradle
+Writing ./c4u-build/prod/core/Supervisor/build.gradle
+Writing ./c4u-build/prod/tools/jenkins/c4u-build-plugin/build.gradle
+Writing ./c4u-build/prod/tools/performance/BurnTester/build.gradle
+Writing ./c4u-build/prod/tools/C4uEclipseTemplate/build.gradle
+Writing ./c4u-build/prod/tools/AntFileCreator/build.gradle
+Writing ./c4u-build/prod/services/CreditTransferService/build.gradle
+Writing ./c4u-build/prod/services/AdvancedCreditTransfer/AdvancedCreditTransfer/build.gradle
+Writing ./c4u-build/prod/services/AdvancedCreditTransfer/tests/AdvancedCreditTransferTests/build.gradle
+Writing ./c4u-build/prod/services/LanguageService/LanguageService/build.gradle
+Writing ./c4u-build/prod/services/LanguageService/andriod/LanguageChange/build.gradle
+Writing ./c4u-build/prod/services/AirSimService/build.gradle
+Writing ./c4u-build/prod/services/CallMeBackService/CallMeBackService/build.gradle
+Writing ./c4u-build/prod/services/GroupSharedAccounts/GroupSharedAccounts/build.gradle
+Writing ./c4u-build/prod/services/GroupSharedAccounts/tests/GroupSharedAccountsTests/build.gradle
+Writing ./c4u-build/prod/services/TransactionService/build.gradle
+Writing ./c4u-build/prod/services/FriendsAndFamilyService/FriendsAndFamilyService/build.gradle
+Writing ./c4u-build/prod/services/VoucherSimService/build.gradle
+Writing ./c4u-build/prod/services/NumberPlanService/build.gradle
+Writing ./c4u-build/prod/services/ReportingService/build.gradle
+Writing ./c4u-build/prod/services/SecurityService/build.gradle
+Writing ./c4u-build/prod/services/SubscriptionService/tests/SubscriptionServiceTests/build.gradle
+Writing ./c4u-build/prod/services/SubscriptionService/SubscriptionService/build.gradle
+Writing ./c4u-build/prod/services/LoggerService/build.gradle
+Writing ./c4u-build/prod/services/PinService/build.gradle
+Writing ./utils/EcdsEncrypt/build.gradle
+Writing ./utils/RestProtocol/build.gradle
+Writing ./utils/EcdsConfigure/build.gradle
+Writing ./connectors/EcdsApiRestConnector/build.gradle
+Writing ./connectors/TamperCheckConnector/build.gradle
+Writing ./services/CreditDistributionService/build.gradle
+Writing ./services/CreditDistributionService/tests/CreditDistributionServiceTests/build.gradle
+martinc@martinc-pc:~/Projects/Crediverse/ecds-ts$ 

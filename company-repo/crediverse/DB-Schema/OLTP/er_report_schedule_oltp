@@ -1,0 +1,25 @@
+*************************** 1. row ***************************
+       Table: er_report_schedule
+Create Table: CREATE TABLE `er_report_schedule` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) NOT NULL,
+  `description` varchar(80) NOT NULL,
+  `enabled` tinyint(4) NOT NULL,
+  `end_time_of_day` int(11) DEFAULT NULL,
+  `internal_name` varchar(50) DEFAULT NULL,
+  `last_executed` datetime DEFAULT NULL,
+  `lm_time` datetime NOT NULL,
+  `lm_userid` int(11) NOT NULL,
+  `originator` varchar(64) DEFAULT NULL,
+  `period` varchar(255) NOT NULL,
+  `report_specification_id` int(11) NOT NULL,
+  `start_time_of_day` int(11) DEFAULT NULL,
+  `time_of_day` int(11) DEFAULT NULL,
+  `delivery_channels` varchar(64) DEFAULT NULL,
+  `email_to_agent` tinyint(4) NOT NULL DEFAULT 0,
+  `version` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `er_report_schedule_internal_name` (`company_id`,`internal_name`),
+  KEY `FK_ReportSchedule_ReportSpecification` (`report_specification_id`),
+  CONSTRAINT `FK_ReportSchedule_ReportSpecification` FOREIGN KEY (`report_specification_id`) REFERENCES `er_report` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=502 DEFAULT CHARSET=utf8

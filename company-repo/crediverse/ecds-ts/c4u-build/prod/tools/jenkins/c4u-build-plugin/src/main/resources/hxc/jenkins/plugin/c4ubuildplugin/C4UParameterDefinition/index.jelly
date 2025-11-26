@@ -1,0 +1,119 @@
+<j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form" xmlns:st="jelly:stapler">
+  
+  	<f:entry>
+  	
+		<!-- REQUIRED DIV -->
+		<div name="parameter">
+		
+			<input type="hidden" name="name" value="${it.name}"/>
+		
+			<!-- VARIABLE DECLARATIONS -->
+			<j:set var="folders" value="${it.tags}"/>
+			<j:set var="presets" value="${it.presets}"/>
+			<j:set var="file" value="${it.presetsFile}"/>
+			
+			<!-- HEADING -->
+			<h1>${it.name}</h1>
+			  
+			<!-- DESCRIPTION -->
+			<small>${it.description}</small>
+			<br/><br/>
+			
+			<!-- INPUT FOR BUILD PREFFIX -->
+			Preffix of Build: <input type="text" name="build_preffix"/>
+			<br/><br/>
+			
+			<!-- TABLES OF PLUGINS -->
+			<div id="plugins_stuff">
+				<j:set var="outer_index" value="0"/>
+				<j:forEach var="folder" items="${folders}">
+						<table style="display: inline-block;vertical-align: top;width:200px;">
+							<tr style="text-align: left;width:200px;">
+								<th style="text-transform: capitalize;font-size: 11pt;">${it.folderNames[outer_index]}</th>
+							</tr>
+							<j:set var="index" value="0"/>
+							<j:forEach var="value" items="${folder}">
+				  				<tr id="c4u_check_${it.name}_${index}">
+				  					<td style="font-size: 8pt">
+				  						<j:set var="fullValue" value="${it.folderNames[outer_index] + '/' + value}"/>
+										<f:checkbox name="value" title="${value}" value="${value}" json="${fullValue}">${value}</f:checkbox>
+									</td>
+								</tr> 
+								<j:set var="index" value="${index + 1}"/> 		
+							</j:forEach>
+						</table>
+						<j:set var="outer_index" value="${outer_index + 1}"/>
+				</j:forEach>
+			</div>
+			<br/><br/>
+			
+			<!-- SELECTION -->
+			<div id="selection">
+				<input type="button" onClick="togglePlugins(true);" value="Select All"/><input type="button" onClick="togglePlugins(false);" value="Unselect All"/>
+			</div>
+			<br/><br/>
+			
+			<!-- PRESETS -->
+			<div id="presets">
+				<h4>Presets</h4>
+				<input type="checkbox" name="presetName">Save Current as Preset</input>
+				<br/><br/>
+				
+				<j:forEach var="preset" items="${presets}">
+					
+					<input type="button" onClick="loadPreset(this);" name="${preset}" value="${preset[0]}" style="display: inline;"/>
+					
+				</j:forEach>
+			</div>
+			<br/><br/>
+			
+			<!-- EXTRA CONFIG -->
+			<div id="extra">
+				<h4>Extra Config</h4>
+				
+				<input type="checkbox" name="unitTests">Run Unit Tests</input>
+				
+			</div>
+			<br/><br/>
+  
+  			<small>Please note: Do not use '-' or ' ' when naming the preset. This does cause some issues.</small>
+		</div>
+		
+  	</f:entry>
+  
+  	<script>
+		<![CDATA[  
+	  		function togglePlugins(checked) {
+			
+				var plugins = document.getElementsByName('value');
+				for (var i = 0; i < plugins.length; i++) {
+				
+					plugins[i].checked = checked;
+				
+				}
+		
+			}
+			
+			function loadPreset(preset) {
+						
+				togglePlugins(false);
+					
+				var plugins = document.getElementsByName('value');
+				
+				for (var i = 0; i < plugins.length; i++) {
+				
+					if (preset.name.indexOf(plugins[i].value) > -1) {
+						
+						plugins[i].checked = true;
+						
+					}
+				
+				}
+				
+				document.getElementsByName('build_preffix')[0].value = preset.value.split(' ').join('_').toLowerCase();
+				
+			}
+			
+		]]>  		
+  	</script>
+</j:jelly>

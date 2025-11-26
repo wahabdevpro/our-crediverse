@@ -1,0 +1,1394 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<vsip ver="2.4">
+	<messages>
+		<message name="Get Voucher Details">
+			<purpose>
+				The message GetVoucherDetails is used in order to obtain detailed information
+				on an individual voucher.
+			</purpose>
+			<request method="GetVoucherDetails">
+				<field name="serialNumber" type="M" comments="1" />
+				<field name="activationCode" type="M" comments="1" />
+				<field name="networkOperatorId" type="O" comments="2" />
+				<comment id="1">
+					One of the elements serialNumber and activationCode must be present. In the case that both elements are present, an error will be returned.
+				</comment>
+				<comment id="2">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated; otherwise, the element is optional.
+				</comment>
+			</request>
+			<response>
+				<field name="activationCode" pc ="01915" type="O"  />
+				<field name="agent" type="O"  />
+				<field name="batchId" type="M"  />
+				<field name="currency" type="M"  />
+				<field name="expiryDate" type="M"  />
+				<field name="extensionText1" type="O"  />
+				<field name="extensionText2" type="O"  />
+				<field name="extensionText3" type="O"  />
+				<field name="operatorId" type="O"  />
+				<field name="responseCode" type="M"  />
+				<field name="subscriberId" type="O"  />
+				<field name="timestamp" type="O"  />
+				<field name="state" type="M"  />
+				<field name="value" type="M"  />
+				<field name="voucherGroup" type="M"  />
+				<field name="serialNumber" type="O" comments="1" />
+				<field name="voucherExpired" type="O"  />
+				<field name="supplierId" pc="09502" type="O"  />
+				<comment id="1">The serial number is included in the response when the request includes the activation code.</comment>
+			</response>
+		</message>
+
+		<message name="Get Voucher History">
+			<purpose>
+				The message GetVoucherHistory is used to get historical information for a
+				voucher including information about voucher state changes performed for a
+				specific voucher.
+			</purpose>
+			<request method="GetVoucherHistory">
+				<field name="serialNumber" type="M" comments="1" />
+				<field name="activationCode" type="M" comments="1" />
+				<field name="networkOperatorId" type="O" comments="2" />
+				<comment id="1">
+					One of the elements serialNumber and activationCode must be present. In the case that both elements are present, an error will be returned.
+				</comment>
+				<comment id="2">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated; otherwise, the element is optional.
+				</comment>
+			</request>
+			<response>
+				<field name="agent" type="O"  />
+				<field name="batchId" type="M"  />
+				<field name="currency" type="M"  />
+				<field name="expiryDate" type="M"  />
+				<field name="extensionText1" type="O"  />
+				<field name="extensionText2" type="O"  />
+				<field name="extensionText3" type="O"  />
+				<field name="responseCode" type="M"  />
+				<field name="state" type="M"  />
+				<field name="value" type="M"  />
+				<field name="voucherGroup" type="M"  />
+				<field name="transactionRecords" type="O" array="true" comments="1" />
+				<field name="voucherExpired" type="O"  />
+				<field name="supplierId" type="O" pc="09502"  />
+				<comment id="1">
+					Each transaction record is enclosed in a &lt;struct&gt; of its own. Structs are placed in an &lt;array&gt;
+				</comment>
+			</response>
+			<struct name="transactionRecords">
+				<field name="operatorId" type="O"  />
+				<field name="subscriberId" type="O"  />
+				<field name="newState" type="M"  />
+				<field name="timestamp" type="M"  />
+				<field name="transactionId" type="O"  />
+			</struct>
+		</message>
+
+		<message name="Update Voucher State">
+			<purpose>
+				The message UpdateVoucherState is used to update the voucher state.
+				The requested state change pointed out by the “newState” parameter must
+				follow the state model with allowed state transitions defined for the voucher
+				server.
+			</purpose>
+			<request method="UpdateVoucherState">
+				<field name="serialNumber" type="M" comments="1" />
+				<field name="activationCode" type="M" comments="1" />
+				<field name="newState" type="M" comments="2" />
+				<field name="oldState" type="O" comments="2,3" />
+				<field name="networkOperatorId" type="O" comments="4" />
+				<comment id="1">
+					One of the elements serialNumber and activationCode must be present. In the case that both
+					elements are present, an error will be returned.
+				</comment>
+				<comment id="2">The following state changes are available, see Table 11.</comment>
+				<comment id="3">
+					If oldState is omitted, the state change will be applied, no matter what state the voucher
+					currently has, if the state change is supported.
+				</comment>
+				<comment id="4">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+			</request>
+			<response>
+				<field name="responseCode" type="M"  />
+			</response>
+		</message>
+
+		<message name="Load Voucher Check">
+			<purpose>
+				The message LoadVoucherCheck is used to check if the vouchers in a serial
+				number range are loaded into the database. The number of voucher found
+				within the range are returned. If any voucher is missing, this is indicated
+				in the response code, which is 10 (Voucher Does not exist), in that case.
+				The requested serial number range is pointed out by serialNumberFirst and
+				serialNumberLast.
+
+				Note: When using alphanumeric serial numbers (PC) the numberOfVouchers
+				parameter will not always be correct. The use of message
+				LoadVoucherCheck is not recommended for alphanumeric serial
+				numbers (PC).
+			</purpose>
+			<request method="LoadVoucherCheck">
+				<field name="serialNumberFirst" type="M" comments="1" />
+				<field name="serialNumberLast" type="M" comments="1" />
+				<field name="networkOperatorId" type="O"  comments="2"/>
+				<comment id="1">serialNumberFirst and serialNumberLast must contain serial numbers of equal length.</comment>
+				<comment id="2">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+			</request>
+			<response>
+				<field name="numberOfVouchers" type="M"  />
+				<field name="responseCode" type="M"  />
+			</response>
+		</message>
+
+		<message pc="true" name="Generate Voucher">
+			<purpose>
+				The message GenerateVoucher is used to schedule a generate voucher task.
+				The GenerateVoucher message will be added to the VS Task Manager for
+				immediate or scheduled execution.
+			</purpose>
+			<request method="GenerateVoucher">
+				<field name="numberOfVouchers" type="M" comments="1" />
+				<field name="activationCodeLength" type="M"  />
+				<field name="currency" type="M"  />
+				<field name="serialNumber" type="M"  />
+				<field name="value" type="M"  />
+				<field name="voucherGroup" type="M"  />
+				<field name="expiryDate" type="M" comments="2" />
+				<field name="agent" type="O"  />
+				<field name="extensionText1" type="O"  />
+				<field name="extensionText2" type="O"  />
+				<field name="extensionText3" type="O"  />
+				<field name="schedulation" type="O" comments="3" />
+				<field name="networkOperatorId" type="O" comments="4" />
+				<comment id="1">A maximum of 1000000 vouchers may be generated at a time.</comment>
+				<comment id="2">
+					Not allowed when PC:10505 is active. The date will instead be generated from pre-configured
+					values.
+				</comment>
+				<comment id="3">The schedulation record is a &lt;struct&gt; of its own.</comment>
+				<comment id="4">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+			</request>
+			<response>
+				<field name="taskId" type="M"  />
+				<field name="responseCode" type="M"  />
+			</response>
+			<struct name="schedulation">
+				<field name="executionTime" type="M"  />
+			</struct>
+		</message>
+
+		<message pc="true" name="Get Generate Voucher Task Info">
+			<purpose>
+				The message GetGenerateVoucherTaskInfo is used to retrieve information
+				about a GenerateVoucher task.
+			</purpose>
+			<request method="GetGenerateVoucherTaskInfo">
+				<field name="taskId" type="O"  />
+				<field name="networkOperatorId" type="O"  />
+				<field name="responseCode" type="M"  />
+				<field name="tasks" type="O" array="true" comments="1" />
+				<comment id="1">
+					Each task record is enclosed in a &lt;struct&gt;
+					of its own. Structs are placed in an &lt;array&gt;.
+				</comment>
+			</request>
+			<response>
+				<field name="responseCode" type="M"  />
+				<field name="tasks" type="O" comments="1" array="true" />
+				<comment id="1">
+					Each task record is enclosed in a &lt;struct&gt;
+					of its own. Structs are placed in an &lt;array&gt;
+				</comment>
+			</response>
+			<struct name="tasks">
+				<field name="taskId" type="M"  />
+				<field name="taskStatus" type="M"  />
+				<field name="executionTime" type="M"  />
+				<field name="operatorId" type="M"  />
+				<field name="filename" type="O"  />
+				<field name="failReason" type="O"  />
+				<field name="additionalInfo" type="O"  />
+				<field name="taskData" type="M"  />
+				<comment id="1">Will only be included if taskStatus is completed</comment>
+				<comment id="2">failReason will be included if taskStatus is failed</comment>
+				<comment id="3">The taskData record is a &lt;struct&gt; of its own. It contains the parameters used to create the task.</comment>
+			</struct>
+			<struct name="taskData">
+				<field name="numberOfVouchers" type="M"  />
+				<field name="activationCodeLength" type="M"  />
+				<field name="currency" type="M"  />
+				<field name="serialNumber" type="M"  />
+				<field name="value" type="M"  />
+				<field name="voucherGroup" type="M"  />
+				<field name="expiryDate" type="M"  />
+				<field name="agent" type="O"  />
+				<field name="extensionText1" type="O"  />
+				<field name="extensionText2" type="O"  />
+				<field name="extensionText3" type="O"  />
+			</struct>
+		</message>
+
+		<message pc="true" name="Load Voucher Batch File">
+			<purpose>
+				The message LoadVoucherBatchFile is used to schedule the loading of a
+				batch file. This message will be added to the task manager for immediate or
+				scheduled execution.
+			</purpose>
+			<request method="LoadVoucherBatchFile">
+				<field name="filename" type="M"  />
+				<field name="batchId" type="M"  />
+				<field name="newState" type="O" comments="1,2" />
+				<field name="schedulation" type="O" comments="3" />
+				<field name="networkOperatorId" type="O" comments="4" />
+				<comment id="1">Valid states are available and unavailable.</comment>
+				<comment id="2">If newState is omitted, the default value configured in VS will be used.</comment>
+				<comment id="3">The schedulation record is a &lt;struct&gt; of its own.</comment>
+				<comment id="4">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+			</request>
+			<response>
+				<field name="taskId" type="M"  />
+				<field name="responseCode" type="M"  />
+			</response>
+			<struct name="schedulation">
+				<field name="executionTime" type="M"  />
+			</struct>
+		</message>
+
+		<message pc="true" name="Get Load Voucher Batch File Task Info">
+			<purpose>
+				The message GetLoadVoucherBatchFileTaskInfo is used to retrieve information
+				about a LoadVoucherBatchFile.
+			</purpose>
+			<request method="GetLoadVoucherBatchFileTaskInfo">
+				<field name="taskId" type="O" comments="1" />
+				<field name="networkOperatorId" type="O" comments="2" />
+				<comment id="1">If omitted all LoadVoucherBatchFile tasks are returned.</comment>
+				<comment id="2">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+			</request>
+			<response>
+				<field name="responseCode" type="M"  />
+				<field name="tasks" array="true" type="O" comments="1" />
+				<comment id="1">
+					Each task record is enclosed in a &lt;struct&gt; of its own. Structs are placed in an &lt;array&gt;.
+				</comment>
+			</response>
+			<struct name="tasks">
+				<field name="taskId" type="M"  />
+				<field name="taskStatus" type="M"  />
+				<field name="executionTime" type="M"  />
+				<field name="operatorId" type="M"  />
+				<field name="failReason" type="O"  />
+				<field name="additionalInfo" type="O"  />
+				<field name="taskData" type="M" array="true" comments="1" />
+				<comment id="1">The taskData record is a &lt;struct&gt; of its own. It contains the parameters used to create the task</comment>
+			</struct>
+			<struct name="taskData">
+				<field name="filename" type="M"  />
+				<field name="batchId" type="M"  />
+				<field name="newState" type="O"  />
+				<field name="initialVoucherState" type="M"  />
+			</struct>
+		</message>
+
+		<message pc="true" name="Get Voucher Batch Files List">
+			<purpose>
+				The message GetVoucherBatchFilesList is used to get a list of all generated
+				batch files. The filenames returned in the response are the names of the
+				batchfiles that are used for loading vouchers in the LoadVoucherBatchFile
+				tasks.
+			</purpose>
+			<request method="GetVoucherBatchFilesList">
+				<field name="networkOperatorId" type="O" comments="1" />
+				<comment id="1">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+			</request>
+			<response>
+				<field name="responseCode" type="M"  />
+				<field name="filenames" array="true" type="O"  />
+				<comment id="1">
+					Each filename is enclosed within a &lt;string&gt;
+					tag of its own. All filenames are placed in an
+					&lt;array&gt;.
+				</comment>
+			</response>
+			<struct name="filenames">
+				<field name="filename" type="M"  />
+			</struct>
+		</message>
+
+		<message pc="true" name="Change Voucher State">
+			<purpose>
+				The message ChangeVoucherState message is used to schedule a task to
+				change the state of vouchers.
+
+				Caution!
+				When using alphanumeric serial numbers (PC), range based operations are not
+				recommended since it is likely to affect more vouchers than intended.
+			</purpose>
+			<request method="ChangeVoucherState">
+				<field name="batchId" type="M" comments="1" />
+				<field name="activationCode" type="M" comments="1" />
+				<field name="serialNumber" type="M" comments="1" />
+				<field name="serialNumberFirst" type="M" comments="1" />
+				<field name="serialNumberLast" type="M" comments="1" />
+				<field name="newState" type="M" comments="2" />
+				<field name="oldState" type="O" comments="2,3" />
+				<field name="reportFormat" type="O"  />
+				<field name="schedulation" type="O" comments="4" />
+				<field name="networkOperatorId" type="O" comments="5" />
+				<comment id="1">
+					One of the elements batchId, activationCode, serialNumber or a combination of
+					serialNumberFirst and serialNumberLast must be present. In case two or more of the above
+					elements are present (except for the combination of serialNumberFirst and serialNumberLast),
+					an error will be returned.
+				</comment>
+				<comment id="2">The following state changes are valid: see Table 34</comment>
+				<comment id="3">
+					If oldState is omitted, the state change will be applied to all vouchers, within the specified
+					range, where the operation is supported.
+				</comment>
+				<comment id="4">The scheduled record is a &lt;struct&gt; of its own, see Table 33.</comment>
+				<comment id="5">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+			</request>
+			<response>
+				<field name="taskId" type="M"  />
+				<field name="responseCode" type="M"  />
+			</response>
+			<struct name="schedulation">
+				<field name="executionTime" type="M"  />
+			</struct>
+		</message>
+
+		<message pc="true" name="Get Change Voucher State Task Info">
+			<purpose>
+				The message GetChangeVoucherStateTaskInfo message is used to retrieve
+				information about a ChangeVoucherState task.
+			</purpose>
+			<request method="GetChangeVoucherStateTaskInfo">
+				<field name="taskId" type="O" comments="1" />
+				<field name="networkOperatorId" type="O" comments="2" />
+				<comment id="1">If omitted all ChangeVoucherState tasks are returned.</comment>
+				<comment id="2">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+			</request>
+			<response>
+				<field name="responseCode" type="M"  />
+				<field name="tasks" type="O" array="true" comments="1" />
+				<comment id="1">The task record is enclosed in a &lt;struct&gt;. Structs are placed in an &lt;array&gt;, see Table 38.</comment>
+			</response>
+			<struct name="tasks">
+				<field name="taskId" type="M"  />
+				<field name="taskStatus" type="M"  />
+				<field name="executionTime" type="M"  />
+				<field name="operatorId" type="M"  />
+				<field name="filename" type="O" comments="1" />
+				<field name="failReason" type="O" comments="2" />
+				<field name="additionalInfo" type="O"  />
+				<field name="taskData" type="M" comments="3" />
+				<comment id="1">Will only be included if taskStatus is completed.</comment>
+				<comment id="2">failReason will be included if taskStatus is failed.</comment>
+				<comment id="3">The taskData record is a &lt;struct&gt; of its own. It contains the parameters used to create the task</comment>
+			</struct>
+			<struct name="taskData">
+				<field name="batchId" type="O"  />
+				<field name="serialNumber" type="O"  />
+				<field name="serialNumberFirst" type="O"  />
+				<field name="serialNumberLast" type="O"  />
+				<field name="activationCode" type="O"  />
+				<field name="newState" type="M"  />
+				<field name="oldState" type="O"  />
+				<field name="reportFormat" type="O"  />
+			</struct>
+		</message>
+
+		<message pc="true" name="Purge Vouchers">
+			<purpose>
+				The message PurgeVouchers is used to schedule a purge voucher task. The
+				purge voucher task purges all voucher that match the specified criteria.
+			</purpose>
+			<request method="PurgeVouchers">
+				<field name="expiryDate" type="M" comments="1" />
+				<field name="offset" type="M" comments="1" />
+				<field name="state" type="M"  />
+				<field name="networkOperatorId" pc="03478" type="O" comments="2" />
+				<field name="purgeVouchers" type="O"  />
+				<field name="outputVAC" pc="03478" type="O"  />
+				<field name="schedulation" type="O" comments="3" />
+				<comment id="1">
+					One of the elements expiryDate and offset must be present. In the case that both elements
+					are present, an error will be returned.
+				</comment>
+				<comment id="2">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+				<comment id="3">The schedulation record is a struct of its own, see Table 41.</comment>
+			</request>
+			<response>
+				<field name="taskId" type="M"  />
+				<field name="responseCode" type="M"  />
+
+			</response>
+			<struct name="schedulation">
+				<field name="executionTime" type="M"  />
+				<field name="recurrence" type="O"  />
+				<field name="recurrenceValue" type="O"  />
+				<comment id="1">
+					If any recurrence is used, both recurrence and recurrenceValue must be present. This can
+					only be used when offset is used for criteria.
+				</comment>
+			</struct>
+		</message>
+
+		<message pc="true" name="Get Purge Vouchers Task Info">
+			<purpose>
+				The message GetPurgeVouchersTaskInfo message is used to return
+				information about a PurgeVoucherTask.
+			</purpose>
+			<request method="GetPurgeVouchersTaskInfo">
+				<field name="taskId" type="O"  />
+				<field name="networkOperatorId" type="O"  />
+				<comment id="1">If omitted all PurgeVouchers tasks is returned.</comment>
+				<comment id="2">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+			</request>
+			<response>
+				<field name="responseCode" type="M"  />
+				<field name="tasks" array="true" type="O" comments="1" />
+				<comment id="1">Task record. Each task record is enclosed in a &lt;struct&gt; of its own. Structs are placed in an &lt;array&gt;</comment>
+			</response>
+			<struct name="tasks">
+				<field name="taskId" type="M"  />
+				<field name="taskStatus" type="M"  />
+				<field name="executionTime" type="M"  />
+				<field name="operatorId" type="M"  />
+				<field name="filename" type="O"  />
+				<field name="failReason" type="O"  />
+				<field name="additionalInfo" type="O"  />
+				<field name="recurrence" type="O"  />
+				<field name="recurrenceValue" type="O"  />
+				<field name="taskData" type="M"  />
+				<comment id="1">Will only be included if taskStatus is completed</comment>
+				<comment id="2">failReason will be included if taskStatus is failed</comment>
+				<comment id="3">If any recurrence was used, both recurrence and recurrenceValue will be present.</comment>
+				<comment id="4">If any recurrence was used, both recurrence and recurrenceValue will be present.</comment>
+				<comment id="5">The taskData record is a &lt;struct&gt; of its own. It contains the parameters used to create the task.</comment>
+			</struct>
+			<struct name="taskData">
+				<field name="expiryDate" type="O"  />
+				<field name="offset" type="O"  />
+				<field name="state" type="M"  />
+			</struct>
+		</message>
+
+		<message pc="true" name="Generate Voucher Details Report">
+			<purpose>
+				The GenerateVoucherDetailsReport message is used to schedule a report
+				of all vouchers in a specified batch.
+				For information of the report file, see Protocol Message Specification Voucher
+				Details Report File, Reference [3].
+			</purpose>
+			<request method="GenerateVoucherDetailsReport">
+				<field name="batchId" type="M"  />
+				<field name="networkOperatorId" type="O" comments="1" />
+				<field name="schedulation" type="O" comments="2" />
+				<comment id="1">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+				<comment id="2">The schedulation record is a &lt;struct&gt; of its own</comment>
+			</request>
+			<response>
+				<field name="taskId" type="M"  />
+				<field name="responseCode" type="M"  />
+
+			</response>
+			<struct name="schedulation">
+				<field name="executionTime" type="M"  />
+				<field name="recurrence" type="O"  />
+				<field name="recurrenceValue" type="O"  />
+			</struct>
+		</message>
+
+		<message pc="true" name="Get Generate Voucher Details Report Task Info">
+			<purpose>
+				The GetGenerateVoucherDetailsReportTaskInfo message is used to return
+				information about a GenerateVoucherDetailsReport Task.
+			</purpose>
+			<request method="GetGenerateVoucherDetailsReportTaskInfo">
+				<field name="taskId" type="O" comments="1" />
+				<field name="networkOperatorId" type="O" comments="2" />
+				<comment id="1">If omitted all GenerateVoucherDetails tasks are returned</comment>
+				<comment id="2">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+			</request>
+			<response>
+				<field name="responseCode" type="M"  />
+				<field name="tasks" array="true" type="O" comments="1" />
+				<comment id="1">Task record. Each task record is enclosed in a &lt;struct&gt; of its own. Structs are placed in an &lt;array&gt;</comment>
+			</response>
+			<struct name="tasks">
+				<field name="taskId" type="M"  />
+				<field name="taskStatus" type="M"  />
+				<field name="executionTime" type="M" comments="1" />
+				<field name="operatorId" type="M"  />
+				<field name="filename" type="O" comments="2" />
+				<field name="failReason" type="O" comments="3" />
+				<field name="additionalInfo" type="O"  />
+				<field name="recurrence" type="O" comments="4" />
+				<field name="recurrenceValue" type="O" comments="5" />
+				<field name="taskData" type="M" comments="6" />
+				<comment id="1">The time zone part is always +0000.</comment>
+				<comment id="2">Will only be included if taskStatus is completed.</comment>
+				<comment id="3">failReason will be included if taskStatus is failed</comment>
+				<comment id="4">If any recurrence was used, both recurrence and recurrenceValue will be present.</comment>
+				<comment id="5">If any recurrence was used, both recurrence and recurrenceValue will be present.</comment>
+				<comment id="6">The taskData record is a &lt;struct&gt; of its own. It contains the parameters used to create the task</comment>
+			</struct>
+			<struct name="taskData">
+				<field name="batchId" type="M"  />
+			</struct>
+		</message>
+
+		<message pc="true" name="Generate Voucher Distribution Report">
+			<purpose>
+				The GenerateVoucherDistributionReport message is used to create a voucher
+				distribution report either for a batch or for all vouchers in the database.
+
+				For information about the report file, see PMS Voucher Distribution Report
+				File, Reference [4].
+			</purpose>
+			<request method="GenerateVoucherDistributionReport">
+				<field name="batchId" type="O" comments="1" />
+				<field name="networkOperatorId" type="O" comments="2" />
+				<field name="schedulation" type="O" comments="3" />
+				<comment id="1">If batchId is omitted all vouchers in the database will be included in the report.</comment>
+				<comment id="2">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+				<comment id="3">
+					The schedulation record is a &lt;struct&gt; of its own
+				</comment>
+			</request>
+			<response>
+				<field name="taskId" type="M"  />
+				<field name="responseCode" type="M"  />
+			</response>
+			<struct name="schedulation">
+				<field name="executionTime" type="M"  />
+				<field name="recurrence" type="O" comments="1" />
+				<field name="recurrenceValue" type="O" comments="2" />
+				<comment id="1">If any recurrence is used, both recurrence and recurrenceValue must be present.</comment>
+				<comment id="2">If any recurrence is used, both recurrence and recurrenceValue must be present.</comment>
+			</struct>
+		</message>
+
+		<message pc="true" name="Get Generate Voucher Distribution Report Task Info">
+			<purpose>
+				The GetGenerateVoucherDistributionReportTaskInfo message is used to return
+				information about a GenerateVoucherDistributionReport task.
+			</purpose>
+			<request method="GetGenerateVoucherDistributionReportTaskInfo">
+				<field name="taskId" type="O" comments="1" />
+				<field name="networkOperatorId" type="O" comments="2" />
+				<comment id="1">If omitted all GenerateVoucherDistributionReport tasks are returned.</comment>
+				<comment id="2">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+			</request>
+			<response>
+				<field name="responseCode" type="M"  />
+				<field name="tasks" array="true" type="O" comments="1" />
+				<comment id="1">Each task record is enclosed in a &lt;struct&gt; of its own. Structs are placed in an &lt;array&gt;</comment>
+			</response>
+			<struct name="tasks">
+				<field name="taskId" type="M"  />
+				<field name="taskStatus" type="M"  />
+				<field name="executionTime" type="M"  />
+				<field name="operatorId" type="M"  />
+				<field name="filename" type="O"  />
+				<field name="failReason" type="O"  />
+				<field name="additionalInfo" type="O"  />
+				<field name="recurrence" type="O"  />
+				<field name="recurrenceValue" type="O"  />
+				<field name="taskData" type="M"  />
+				<comment id="1">Will only be included if taskStatus is completed.</comment>
+				<comment id="2">failReason will be included if taskStatus is failed</comment>
+				<comment id="3">If any recurrence was used, both recurrence and recurrenceValue will be present.</comment>
+				<comment id="4">If any recurrence was used, both recurrence and recurrenceValue will be present.</comment>
+				<comment id="5">The taskData record is a &lt;struct&gt; of its own. It contains the parameters used to create the task.</comment>
+			</struct>
+			<struct name="taskData">
+				<field name="batchId" type="O"  />
+			</struct>
+		</message>
+
+		<message pc="true" name="Generate Voucher Usage Report">
+			<purpose>
+				The GenerateVoucherUsageReport message is used to schedule a report of all
+				vouchers that was used within a specified time frame.
+			</purpose>
+			<request method="GenerateVoucherUsageReport">
+				<field name="fromTime" type="O" comments="1" />
+				<field name="toTime" type="O" comments="2" />
+				<field name="networkOperatorId" type="O" comments="3" />
+				<field name="schedulation" type="O" comments="4" />
+				<comment id="1">If fromTime is omitted all vouchers up to the toTime will be included in the report.</comment>
+				<comment id="2">If toTime is omitted all vouchers from the fromTime will be included in the report.</comment>
+				<comment id="3">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+				<comment id="4">
+					The schedulation record is a &lt;struct&gt; of its own
+				</comment>
+			</request>
+			<response>
+				<field name="taskId" type="M"  />
+				<field name="responseCode" type="M"  />
+
+			</response>
+			<struct name="schedulation">
+				<field name="executionTime" type="M"  />
+				<field name="recurrence" type="O" comments="1" />
+				<field name="recurrenceValue" type="O" comments="2" />
+				<comment id="1">If any recurrence is used, both recurrence and recurrenceValue must be present.</comment>
+				<comment id="2">If any recurrence is used, both recurrence and recurrenceValue must be present.</comment>
+			</struct>
+		</message>
+
+		<message pc="true" name="Get Generate Voucher Usage Report Task Info">
+			<purpose>
+				The GetGenerateVoucherUsageReportTaskInfo message is used to return
+				information about a specific or all GenerateVoucherUsageReport tasks.
+			</purpose>
+			<request method="GetGenerateVoucherUsageReportTaskInfo">
+				<field name="taskId" type="O" comments="1" />
+				<field name="networkOperatorId" type="O" comments="2" />
+				<comment id="1">If omitted all GenerateVoucherUsageReport tasks is returned.</comment>
+				<comment id="2">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+			</request>
+			<response>
+				<field name="responseCode" type="M"  />
+				<field name="tasks" array ="true" type="O" comments="1" />
+				<comment id="1">Each task record is enclosed in a &lt;struct&gt; of its own. Structs are placed in an &lt;array&gt;</comment>
+			</response>
+			<struct name="tasks">
+				<field name="taskId" type="M"  />
+				<field name="taskStatus" type="M"  />
+				<field name="executionTime" type="M"  />
+				<field name="operatorId" type="M"  />
+				<field name="filename" type="O" comments="1" />
+				<field name="failReason" type="O" comments="2" />
+				<field name="additionalInfo" type="O"  />
+				<field name="recurrence" type="O" comments="3" />
+				<field name="recurrenceValue" type="O" comments="4" />
+				<field name="taskData" type="M" comments="5" />
+				<comment id="1">Will only be included if taskStatus is completed.</comment>
+				<comment id="2">Will only be included if taskStatus is completed.</comment>
+				<comment id="3">If any recurrence was used, both recurrence and recurrenceValue will be present.</comment>
+				<comment id="4">If any recurrence was used, both recurrence and recurrenceValue will be present.</comment>
+				<comment id="5">The taskData record is a &lt;struct&gt; of its own. It contains the parameters used to create the task</comment>
+			</struct>
+			<struct name="taskData">
+				<field name="fromTime" type="O"  />
+				<field name="toTime" type="O"  />
+				<comment id="1">Time part of DateTime is always T00:00:00+0000.</comment>
+				<comment id="2">Time part of DateTime is always T00:00:00+0000.</comment>
+			</struct>
+		</message>
+
+		<message pc="true" name="Delete Generate Voucher Task">
+			<purpose>
+				The DeleteTask message is used to delete a task. There is one request for
+				each type of task but the parameters and behavior are the same for all of them.
+			</purpose>
+			<request method="DeleteGenerateVoucherTask">
+				<field name="taskId" type="M"  />
+				<field name="networkOperatorId" type="O" comments="1" />
+				<comment id="1">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+			</request>
+			<response>
+				<field name="responseCode" type="M"  />
+			</response>
+		</message>
+
+		<message pc="true" name="Delete Load Voucher Batch Task">
+			<purpose>
+				The DeleteTask message is used to delete a task. There is one request for
+				each type of task but the parameters and behavior are the same for all of them.
+			</purpose>
+			<request method="DeleteLoadVoucherBatchTask">
+				<field name="taskId" type="M"  />
+				<field name="networkOperatorId" type="O" comments="1" />
+				<comment id="1">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+			</request>
+			<response>
+				<field name="responseCode" type="M"  />
+			</response>
+		</message>
+
+		<message pc="true" name="Delete Change Voucher State Task">
+			<purpose>
+				The DeleteTask message is used to delete a task. There is one request for
+				each type of task but the parameters and behavior are the same for all of them.
+			</purpose>
+			<request method="DeleteChangeVoucherStateTask">
+				<field name="taskId" type="M"  />
+				<field name="networkOperatorId" type="O" comments="1" />
+				<comment id="1">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+			</request>
+			<response>
+				<field name="responseCode" type="M"  />
+			</response>
+		</message>
+
+		<message pc="true" name="Delete Purge Voucher Task">
+			<purpose>
+				The DeleteTask message is used to delete a task. There is one request for
+				each type of task but the parameters and behavior are the same for all of them.
+			</purpose>
+			<request method="DeletePurgeVoucherTask">
+				<field name="taskId" type="M"  />
+				<field name="networkOperatorId" type="O" comments="1" />
+				<comment id="1">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+			</request>
+			<response>
+				<field name="responseCode" type="M"  />
+			</response>
+		</message>
+
+		<message pc="true" name="Delete Voucher Details Report Task">
+			<purpose>
+				The DeleteTask message is used to delete a task. There is one request for
+				each type of task but the parameters and behavior are the same for all of them.
+			</purpose>
+			<request method="DeleteVoucherDetailsReportTask">
+				<field name="taskId" type="M"  />
+				<field name="networkOperatorId" type="O" comments="1" />
+				<comment id="1">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+			</request>
+			<response>
+				<field name="responseCode" type="M"  />
+			</response>
+		</message>
+
+		<message pc="true" name="Delete Voucher Distribution Report Task">
+			<purpose>
+				The DeleteTask message is used to delete a task. There is one request for
+				each type of task but the parameters and behavior are the same for all of them.
+			</purpose>
+			<request method="DeleteVoucherDistributionReportTask">
+				<field name="taskId" type="M"  />
+				<field name="networkOperatorId" type="O" comments="1" />
+				<comment id="1">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+			</request>
+			<response>
+				<field name="responseCode" type="M"  />
+			</response>
+		</message>
+
+		<message pc="true" name="Delete Voucher Usage Report Task">
+			<purpose>
+				The DeleteTask message is used to delete a task. There is one request for
+				each type of task but the parameters and behavior are the same for all of them.
+			</purpose>
+			<request method="DeleteVoucherUsageReportTask">
+				<field name="taskId" type="M"  />
+				<field name="networkOperatorId" type="O" comments="1" />
+				<comment id="1">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+			</request>
+			<response>
+				<field name="responseCode" type="M"  />
+			</response>
+		</message>
+
+		<message pc="true" name="Reserve Voucher">
+			<purpose>
+				This message is used to reserve a voucher. The message represents the start
+				of a refill transaction.
+				The additionalAction parameter can be used to request different reservation
+				mechanisms, and it controls the need of issuing specific commit or rollback
+				messages.
+			</purpose>
+			<request method="ReserveVoucher">
+				<field name="activationCode" type="M"  />
+				<field name="additionalAction" type="O"  />
+				<field name="operatorId" type="O"  />
+				<field name="subscriberId" type="M"  />
+				<field name="transactionId" type="M"  />
+				<field name="networkOperatorId" type="O" comments="1" />
+				<comment id="1">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+			</request>
+			<response>
+				<field name="agent" type="O"  />
+				<field name="currency" type="M"  />
+				<field name="extensionText1" type="O"  />
+				<field name="extensionText2" type="O"  />
+				<field name="extensionText3" type="O"  />
+				<field name="responseCode" type="M"  />
+				<field name="serialNumber" type="M"  />
+				<field name="voucherGroup" type="M"  />
+				<field name="value" type="M"  />
+				<field name="supplierId" pc="09502" type="O"  />
+			</response>
+		</message>
+
+		<message pc="true" name="End Reservation">
+			<purpose>
+				This message is sent after a refill has been carried out. A successful refill
+				will result in the transaction committing, and the voucher state is updated to
+				"used". An unsuccessful refill will cause the refill transaction to be rolled back.
+				The voucher status will then be reset to "available".
+			</purpose>
+			<request method="EndReservation">
+				<field name="activationCode" type="M"  />
+				<field name="action" type="M"  />
+				<field name="subscriberId" type="M"  />
+				<field name="transactionId" type="M"  />
+				<field name="networkOperatorId" type="O" comments="1" />
+				<comment id="1">
+					This element is mandatory if Mobile Virtual Network Operator functionality is activated;
+					otherwise, the element is optional.
+				</comment>
+			</request>
+			<response>
+				<field name="responseCode" type="M"  />
+
+			</response>
+		</message>
+
+	</messages>
+
+	<elements>
+
+		<element name="action" type="string">
+			<purpose>
+				This flag is used on completion of the refill transaction. It indicates to the
+				Voucher Server if the transaction should be committed or rolled back.
+			</purpose>
+			<value range="commit">Commit Transaction</value>
+			<value range="rollback">Rollback Transaction</value>
+		</element>
+
+		<element name="activationCode" type="string" size="8-20" allowed="0-9">
+			<purpose>
+				The activationCode parameter is the unique secret code which is used to
+				refill the account. The activation code may have leading zeros. The element
+				size defined below defines the limit at protocol level, and may be further
+				restricted at application level by the server side.
+			</purpose>
+		</element>
+
+		<element name="activationCodeLength" type="i4" size="" allowed="" range="8-20">
+			<purpose>
+				This flag can be used on reservation to automatically commit the voucher or
+				to request automatic rollback of the voucher in case of no commit within a
+				specified time.
+			</purpose>
+
+		</element>
+
+		<element name="additionalAction" type="string" size="" allowed="" range="">
+			<purpose></purpose>
+			<value range="commit">Commit Transaction</value>
+			<value range="autoRollback">
+				Automatic Rollback of Transaction in
+				case of no commit within specified
+				time
+			</value>
+		</element>
+
+		<element name="additionalInfo" type="string" size="1-255" allowed="" range="">
+			<purpose>
+				The additionalInfo parameter is used to hold additional information such
+				as how many vouchers of a voucher batch file that was successfully loaded.
+			</purpose>
+		</element>
+
+		<element name="agent" type="string" size="1-8" allowed="A-Z,a-z,0-9" range="">
+			<purpose>
+				The agent parameter is used to indicate the name of the dealer who has
+				received the card from the service provider.
+			</purpose>
+		</element>
+
+		<element name="batchId" type="string" size="1-30" allowed="A-Z,a-z,0-9,_" range="">
+			<purpose>
+				The batchId parameter indicates what batch a voucher belongs to. The
+				batchId is assigned when vouchers are generated.
+			</purpose>
+		</element>
+
+		<element name="currency" type="string" size="3" allowed="" range="ISO 4217">
+			<purpose>
+				The currency parameter is used to indicate the currency of the voucher value.
+				The currency is expressed as a three letter string according to the ISO 4217
+				standard, see Codes for the representation of currencies and funds, Reference
+				[6]. Examples are "EUR" for Euro and "SEK" for Swedish Kronor.
+			</purpose>
+		</element>
+
+		<element name="executionTime" type="dateTime.iso8601" size="" allowed="yyyyMMddThh:mm:ssTZ" range="">
+			<purpose>
+				The executionTime parameter is used to define the time when a task was
+				run or should be run.
+			</purpose>
+		</element>
+
+		<element name="expiryDate" type="dateTime.iso8601" size="" allowed="yyyyMMddThh:mm:ssTZ" range="">
+			<purpose>
+				The expiryDate parameter is used to identify the last date when the voucher
+				will be usable in the system. Only the date information will be considered by
+				this parameter. The time and timezone should be set to all zeroes, and will
+				be ignored.
+
+				TZ is the deviation in hours from UTC. This field is optional. This date format
+				does not strictly follow the XML-RPC specification on date format. It does
+				however follow the ISO 8601 specification. Parsers for this protocol must be
+				prepared to parse dates containing timezone.
+			</purpose>
+		</element>
+
+		<element name="extensionText1" type="string" size="1-30" allowed="-A-Za-z0-9_=:?.()" range="">
+			<purpose>
+				The extensionText1, extensionText2 and extensionText3 parameters
+				are used to store any additional information connected to a voucher. The
+				definition of the extension texts are site specific and have no special meaning
+				within VS.
+
+				Note: Space is an allowed character.
+			</purpose>
+		</element>
+
+		<element name="extensionText2" type="string" size="1-30" allowed="-A-Za-z0-9_=:?.()" range="">
+			<purpose>
+				The extensionText1, extensionText2 and extensionText3 parameters
+				are used to store any additional information connected to a voucher. The
+				definition of the extension texts are site specific and have no special meaning
+				within VS.
+
+				Note: Space is an allowed character.
+			</purpose>
+		</element>
+
+		<element name="extensionText3" type="string" size="1-30" allowed="-A-Za-z0-9_=:?.()" range="">
+			<purpose>
+				The extensionText1, extensionText2 and extensionText3 parameters
+				are used to store any additional information connected to a voucher. The
+				definition of the extension texts are site specific and have no special meaning
+				within VS.
+
+				Note: Space is an allowed character.
+			</purpose>
+		</element>
+
+		<element name="failReason" type="string" size="1-255" allowed="" range="">
+			<purpose>
+				The failReason parameter is used to describe the cause of a failed task
+				in execution.
+			</purpose>
+		</element>
+
+		<element name="faultCode" type="i4" size="" allowed="" range="">
+			<purpose>
+				The faultCode parameter is used to signify that a request failed due to illegal
+				request data or internal processing errors. This does not cover business level
+				logic faults, which instead are covered in the responseCode parameter, see
+				Section 9.29 on page 73.
+			</purpose>
+			<value range="1000">Illegal request message</value>
+			<value range="1001">Mandatory field missing</value>
+			<value range="1002">Illegal data type</value>
+			<value range="1003">Data out of bounds</value>
+			<value range="1004">Unknown operation</value>
+			<value range="1005">Internal server error</value>
+			<value range="1006">This fault code is reserved for future use</value>
+			<value range="1007">Overload rejection</value>
+		</element>
+
+		<element name="faultString" type="string" size="1-255" allowed="" range="">
+			<purpose>
+				The faultString parameter is used to give a descriptive message as a
+				complement to the faultCode parameter.
+			</purpose>
+		</element>
+
+		<element name="filename" type="string" size="1-255" allowed="A-Z,a-z,0-9,_,." range="">
+			<purpose>
+				The filename parameter is the filename generated as output from the specific
+				operation. Note that the filename is not a complete filename. The full path of
+				the file is not included and the suffix of the file may be excluded (for report
+				files for example).
+			</purpose>
+		</element>
+
+		<element name="fromTime" type="dateTime.iso8601" size="" allowed="yyyyMMddThh:mm:ssTZ" range="">
+			<purpose>
+				The fromTime parameter together with toTime parameter is used to create
+				a time frame, which can be used to define, for example a matching criteria.
+				The fromTime parameter is used to determine which vouchers was used in
+				a specific time frame.
+			</purpose>
+		</element>
+
+		<element name="newState" type="i4" size="" allowed="" range="">
+			<purpose>
+				The newState parameter is used to represent the state of the voucher as it is,
+				or will be, after a specific event. Such an event could be a request to change
+				a voucher to the new state, or it could be a historical record that represents a
+				state change in the past.
+			</purpose>
+			<value range="0">available</value>
+			<value range="1">used</value>
+			<value range="2">damaged</value>
+			<value range="3">stolen/missing</value>
+			<value range="4">pending</value>
+			<value range="5">unavailable</value>
+			<value range="6">reserved</value>
+		</element>
+
+		<element name="initialVoucherState" type="string" size="" allowed="" range="">
+			<purpose>
+				The initialVoucherState parameter is used to set which state the voucher
+				will be in when a voucher is loaded (Voucher Load). A voucher can be set
+				to the state available or unavailable.
+				When performing the GetLoadVoucherBatchFileTaskInfo operation the name
+				and which state the voucher is in will be presented. See Section 9.18.1 on
+				page 67.
+			</purpose>
+			<value range="unavailable">Voucher is loaded, but still unavailable for usage.</value>
+			<value range="available">Voucher is loaded and available for usage.</value>
+			<value range="pending">Voucher was reserved, but never commited.</value>
+			<value range="used">Voucher is used.</value>
+			<value range="damaged">Voucher is marked as damaged.</value>
+			<value range="stolen">Voucher is marked as stolen/missing.</value>
+		</element>
+
+		<element name="networkOperatorId" type="string" size="0-20" allowed="A-Z,a-z,0-9" range="">
+			<purpose>
+				The networkOperatorId parameter is used to reference a Mobile Virtual
+				Network Operator. The VS system is capable of administering and managing
+				multiple operators simultaneously. Each Mobile Virtual Network Operator has
+				its own database schema, in which this operator's own vouchers are stored.
+				The parameter is bound to the Mobile Virtual Network Operator functionality,
+				which must be explicitly configured. If not activated, the parameter is not
+				mandatory, in which case all requests are targeted to the default database
+				schema of the VS system.
+			</purpose>
+		</element>
+
+		<element name="numberOfVouchers" type="i4" size="" allowed="" range="1:1000000">
+			<purpose>
+				The numberOfVouchers parameter is used to define the number of vouchers
+				in a batch or a serial number range.
+			</purpose>
+		</element>
+
+		<element name="offset" type="i4" size="" allowed="" range="0:999">
+			<purpose>
+				The offset parameter is used to indicate a date in the past, by specifying the
+				offset, in days, from the current date. If this parameter is used in a scheduled
+				request the offset will based on the time of execution rather than the current
+				date.
+			</purpose>
+		</element>
+
+		<element name="oldState" type="string" size="" allowed="" range="">
+			<purpose>
+				The oldState parameter is used to represent the state of the voucher as it is,
+				or was, prior to a specific event. Such an event could be a request to change a
+				vouchers state from the specified state, or it could be a historical record that
+				represents a state change in the past.
+			</purpose>
+			<value range="unavailable">Voucher is loaded, but still unavailable for usage.</value>
+			<value range="available">Voucher is loaded and available for usage.</value>
+			<value range="pending">Voucher was reserved, but never commited.</value>
+			<value range="used">Voucher is used.</value>
+			<value range="damaged">Voucher is marked as damaged.</value>
+			<value range="stolen">Voucher is marked as stolen/missing.</value>
+		</element>
+
+		<element name="operatorId" type="string" size="1-255" allowed="A-Z,a-z,0-9,–,,,/,." range="">
+			<purpose>
+				The operatorId parameter is used to define the name of the operator who
+				carried out the operation.
+				When used in a response message it represents the operator that did the
+				change on the voucher.
+			</purpose>
+
+		</element>
+
+		<element name="outputVAC" type="boolean" size="" allowed="" range="" pc="03478">
+			<purpose>
+				The outputVAC parameter is used to specify whether the Voucher Activation
+				Code should be included in the report generated by a scheduled task.
+			</purpose>
+			<value range="0">
+				The voucher activation code will not be included in the
+				scheduled report.
+			</value>
+			<value range="1">
+				The voucher activation code will be included in the
+				scheduled report.
+			</value>
+		</element>
+
+		<element name="purgeVouchers" type="boolean" size="" allowed="" range="">
+			<purpose>
+				The purgeVouchers parameter is used to specify whether the vouchers
+				should actually be purged by the PurgeVouchers scheduled task. The
+				PurgeVouchers task will still generate a report even when the vouchers are not
+				actually purged.
+			</purpose>
+			<value range="0">Vouchers will not be purged.</value>
+			<value range="1">Vouchers will be purged.</value>
+		</element>
+
+		<element name="recurrence" type="string" size="" allowed="" range="daily,weekly,monthly">
+			<purpose>
+				The recurrence parameter is, in combination with the recurrenceValue
+				parameter, used to define how often a scheduled task should be executed. This
+				parameter indicates whether the recurrence is described in terms of days,
+				weeks or months.
+			</purpose>
+
+		</element>
+
+		<element name="recurrenceValue" type="i4" size="" allowed="" range="1:99999">
+			<purpose>
+				The recurrenceValue parameter is, in combination with the
+				recurrence parameter, used to define how often a scheduled task should be
+				executed. This parameter defines the interval of the recurrence.
+			</purpose>
+
+		</element>
+
+		<element name="reportFormat" type="i4" size="" allowed="" range="">
+			<purpose>
+				The reportFormat parameter is used to determine what output format the
+				result report file will have.
+			</purpose>
+			<value range="0">Only failed is written</value>
+			<value range="1">Both failed and successful changes are written</value>
+		</element>
+
+		<element name="responseCode" type="i4" size="" allowed="" range="">
+			<purpose>
+				The responseCode parameter is sent back after a message has been
+				processed and indicates success or failure of the message.
+			</purpose>
+			<value range="0">Successful</value>
+			<value range="10">Voucher does not exist</value>
+			<value range="11">Voucher already used by other subscriber</value>
+			<value range="12">Voucher missing/stolen</value>
+			<value range="13">Voucher unavailable</value>
+			<value range="100">Voucher already used by same subscriber</value>
+			<value range="101">Voucher reserved by same subscriber (pending)</value>
+			<value range="102">Voucher expired</value>
+			<value range="103">This responseCode is reserved for future use</value>
+			<value range="104">Subscriber Id mismatch between the reservation and the end of reservation</value>
+			<value range="105">Voucher not reserved</value>
+			<value range="106">Transaction Id mismatch between messages between reservation and the end of reservation</value>
+			<value range="107">Voucher damaged</value>
+			<value range="108">Voucher reserved by other subscriber</value>
+			<value range="109">Database error</value>
+			<value range="110">Bad state transition requested</value>
+			<value range="111">Voucher state change limits exceeded</value>
+			<value range="200">Task does not exist</value>
+			<value range="201">Can not delete a running task</value>
+		</element>
+
+		<element name="serialNumber" type="string" size="8-20" allowed="" range="0-9,a-z,A-Z">
+			<purpose>
+				The serialNumber parameter is used to state the unique voucher serial
+				number that is used to identify the voucher. Leading zeros are allowed. The
+				element size defined below defines the limit at protocol level, and may be
+				further restricted at application level by the server side.
+			</purpose>
+		</element>
+
+		<element name="serialNumberFirst" type="string" size="8-20" allowed="0-9,a-z,A-Z" range="">
+			<purpose>
+				The serialNumberFirst parameter is used to state the first voucher in the
+				serial number range to be checked. Leading zeros are allowed. The element
+				size defined bellow defines the limit at protocol level, and may be further
+				restricted at application level by the server side.
+			</purpose>
+		</element>
+
+		<element name="serialNumberLast" type="string" size="8-20" allowed="0-9,a-z,A-Z" range="">
+			<purpose>
+				The serialNumberLast parameter states the last voucher in the serial
+				number range to be checked. Leading zeros are allowed. The element size
+				defined below defines the limit at protocol level, and may be further restricted at
+				application level by the server side.
+			</purpose>
+		</element>
+
+		<element name="state" type="string" size="" allowed="" range="">
+			<purpose>
+				The state parameter is used to represent the state of a voucher, as it currently
+				is.
+			</purpose>
+			<value range="unavailable">Voucher is loaded, but still unavailable for usage.</value>
+			<value range="available">Voucher is loaded and available for usage.</value>
+			<value range="pending">Voucher was reserved, but never committed.</value>
+			<value range="used">Voucher is used.</value>
+			<value range="damaged">Voucher is marked as damaged.</value>
+			<value range="stolen">Voucher is marked as stolen/missing.</value>
+			<value range="expired">Voucher expiryDate is older than purge expiryDate.</value>
+		</element>
+
+		<element name="subscriberId" type="string" size="1-15" allowed="0-9" range="">
+			<purpose>
+				The subscriberId parameter is used to identify a subscriber in the system.
+				This field will hold the phone number of the subscriber in the same format
+				as held in the account database. The number is usually in national format.
+				Leading zeroes are allowed.
+			</purpose>
+		</element>
+
+		<element name="taskId" type="i4" size="" allowed="" range="0:99999999">
+			<purpose>
+				The taskId parameter is used to state the unique Id that identifies a task in
+				the VS Task Manager.
+			</purpose>
+
+		</element>
+
+		<element name="taskStatus" type="string" size="" allowed="" range="">
+			<purpose>The taskStatus parameter is used to indicate in what state a task is in.</purpose>
+			<value range="ordered">The task is scheduled for execution</value>
+			<value range="completed">The task have finished executing and was successful</value>
+			<value range="failed">The task have finished executing and was unsuccessful</value>
+			<value range="running">The task is currently executing</value>
+		</element>
+
+		<element name="timestamp" type="dateTime.iso8601" size="" allowed="" range="yyyyMMddThh:mm:ssTZ">
+			<purpose>
+				The timestamp parameter is detailing the time a voucher state change was
+				done.
+			</purpose>
+
+		</element>
+
+		<element name="toTime" type="dateTime.iso8601" size="" allowed="" range="yyyyMMddThh:mm:ssTZ">
+			<purpose>
+				The toTime parameter together with the fromTime parameter is used to
+				create an interval and within this time frame is the matching criteria. The
+				toTime parameter is used to determine which vouchers was used in a specific
+				time frame.
+			</purpose>
+
+		</element>
+
+		<element name="transactionId" type="string" size="1-20" allowed="0-9" range="">
+			<purpose>
+				The transactionId parameter should be unique among transactions, and it
+				must be common among different requests within the same transaction.
+			</purpose>
+
+		</element>
+
+		<element name="value" type="string" size="1-12" allowed="0-9" range="">
+			<purpose>
+				The value parameter is used to specify the actual value of the voucher
+				in currency units. The value is formatted as a numeric string. No decimal
+				separator is included. The amount is expressed in the lowest denomination of
+				the specified currency. For example a USD 100 value is represented as 10000.
+			</purpose>
+
+		</element>
+
+		<element name="voucherGroup" type="string" size="1-4" allowed="A-Z,a-z,0-9" range="">
+			<purpose>
+				The voucherGroup parameter is used to define a set of properties that are
+				associated with a voucher. Each voucher is assigned to a voucher group and
+				many vouchers can be assigned the same voucher group.
+			</purpose>
+
+		</element>
+
+		<element name="voucherExpired" type="boolean" size="" allowed="" range="">
+			<purpose>
+				The voucherExpired parameter is used to indicate if the voucher has passed
+				the expiration date. When this parameter is set the voucher can no longer be
+				used. If the voucher is not expired this parameter will not be included.
+			</purpose>
+			<value range="1">Voucher is expired.</value>
+		</element>
+
+		<element name="supplierId" type="string" size="1-8" allowed="A-Z,a-z,0-9" range="" pc="09502">
+			<purpose>
+				The supplierId parameter is used to indicate the supplier (print shop) for
+				which voucher batch files with separate encryption keys per supplier will be
+				generated.
+			</purpose>
+
+		</element>
+
+	</elements>
+
+</vsip>
+
+
+
+
+

@@ -1,0 +1,16 @@
+
+
+<!-- Modal -->
+<div id="configmodal" th:include="airsim/usagemodal" />
+
+<!--  Config Role List -->
+<div class="row" >
+	<div class="col-xs-11 col-sm-5 col-md-7 user_heading" style="margin-left: 20px;">Air Simulator Usage Timers</div>
+	<div class="col-xs-6 col-md-4" style="float:right; margin-right:20px" >
+		<button id="addUsageTimer" type="button" class="btn btn-success btn-xs" style="float:right;" data-toggle="modal" onclick="deleteRecordInfo();" title="remove all usage timers"><span class="glyphicon glyphicon-minus"></span></button>
+		<button id="addUsageTimer" type="button" class="btn btn-success btn-xs" style="float:right;" data-toggle="modal" onclick="showAddUsageTimer();" title="add new usage timer"><span class="glyphicon glyphicon-plus"></span></button>
+	</div>
+</div>
+
+<!-- Usage Table -->
+<div id="usagetimers" th:include="airsim/usagetimerrecords" />

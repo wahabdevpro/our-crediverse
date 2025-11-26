@@ -1,0 +1,1847 @@
+<xsd:schema
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xhtml="http://www.w3.org/1999/xhtml"
+	xmlns:xcipt="urn:ericsson:xcip:5.0:1.0:types"
+	xmlns:dcbk="http://docbook.org/ns/docbook"
+	xmlns:csxbaset="urn:concurrent-systems:cxx:libbase:1.0"
+	dcbk:version="5.0"
+	xml:lang="en"
+	attributeFormDefault="unqualified"
+	elementFormDefault="unqualified"
+	version="1.10.4"
+	xsi:schemaLocation="
+		http://www.w3.org/2001/XMLSchema-instance http://www.w3.org/2001/XMLSchema-instance
+		http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd
+		http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-strict.xsd
+		http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
+		urn:ericsson:xcip:5.0:1.0:types xcip-types.xsd
+	">
+
+	<xsd:import namespace="urn:ericsson:xcip:5.0:1.0:types" schemaLocation="xcip-types.xsd"/>
+	<xsd:import namespace="urn:concurrent-systems:cxx:libbase:1.0" schemaLocation="cs-cxx-libbase-types.xsd"/>
+
+	<!--
+	targetNamespace="urn:concurrent-systems:pcc:configuration:service:2.0"
+	xmlns:pccs="urn:concurrent-systems:pcc:configuration:service:2.0"
+	-->
+
+	<!--
+		What if I put general/psoBits/bit[@x=10] = false and subscriber doesnt have this set to begin with - will it be set anyway on deprovisioning ?
+	-->
+
+	<!-- shared types -->
+
+	<!-- Common Types -->
+
+	<xsd:complexType name="period">
+		<xsd:all>
+			<xsd:element name="time" type="time">
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+
+	<xsd:complexType name="time">
+		<xsd:all>
+			<xsd:element name="unitType" type="timeUnitType">
+				<!-- default: none -->
+				<!-- invalid -> default -->
+				<!-- XXX:time:C1 -->
+			</xsd:element>
+			<xsd:element name="unitCount" type="csxbaset:stringx.integer">
+				<!-- default: 0 -->
+				<!-- invalid -> default -->
+				<!-- XXX:time:C1 -->
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+
+	<xsd:simpleType name="timeUnitType">
+		<!-- default: none -->
+		<!-- invalid -> none -->
+		<xsd:union>
+<!--
+days
+day
+hours
+hour
+minutes
+minute
+s/[A-Za-z]/[\U&\l&]/gc
+s/.*/<xsd:enumeration value="&"\/>/gc
+s/.*/<xsd:pattern value="&"\/>/gc
+-->
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="days"/>
+					<xsd:enumeration value="day"/>
+					<xsd:enumeration value="hours"/>
+					<xsd:enumeration value="hour"/>
+					<xsd:enumeration value="minutes"/>
+					<xsd:enumeration value="minute"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[Dd][Aa][Yy][Ss]"/>
+					<xsd:pattern value="[Dd][Aa][Yy]"/>
+					<xsd:pattern value="[Hh][Oo][Uu][Rr][Ss]"/>
+					<xsd:pattern value="[Hh][Oo][Uu][Rr]"/>
+					<xsd:pattern value="[Mm][Ii][Nn][Uu][Tt][Ee][Ss]"/>
+					<xsd:pattern value="[Mm][Ii][Nn][Uu][Tt][Ee]"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:union>
+	</xsd:simpleType>
+
+	<xsd:complexType name="psoBits">
+		<xsd:sequence>
+			<xsd:element name="bit" minOccurs="0" maxOccurs="unbounded" type="psoBit">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="psoBit">
+		<!-- XXX:psoBit:C1 -->
+		<xsd:simpleContent>
+			<xsd:extension base="psoBitValue">
+				<xsd:attribute name="id" type="psoBitId" use="required"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+
+	<xsd:simpleType name="psoBitId">
+		<!-- XXX:psoBit:C1 -->
+		<!-- invalid -> 0 -->
+		<xsd:restriction base="xsd:positiveInteger">
+			<xsd:maxInclusive value="31"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="psoBitValue">
+		<!-- default: off -->
+		<!-- invalid -> default -->
+<!--
+on
+off
+s/[A-Za-z]/[\U&\l&]/gc
+s/.*/<xsd:enumeration value="&"\/>/gc
+s/.*/<xsd:pattern value="&"\/>/gc
+-->
+		<xsd:union>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="on"/>
+					<xsd:enumeration value="off"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[Oo][Nn]"/>
+					<xsd:pattern value="[Oo][Ff][Ff]"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:union>
+	</xsd:simpleType>
+
+	<xsd:complexType name="emaVariables">
+		<xsd:sequence>
+			<xsd:element name="variable" minOccurs="0" maxOccurs="unbounded" type="emaVariable">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="emaVariable">
+		<!-- spec says only true/false - PCC accepts yes/no and on/off -->
+		<xsd:simpleContent>
+			<xsd:extension base="emaVariableValue">
+				<xsd:attribute name="id" type="xsd:string" use="required"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+
+	<!--
+	<xsd:simpleType name="emaVariableId">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="intl_roaming"/>
+			<xsd:enumeration value="gprs"/>
+			<xsd:enumeration value="wap"/>
+			<xsd:enumeration value="mms"/>
+			<xsd:enumeration value="call_forwarding"/>
+			<xsd:enumeration value="2SIM"/>
+			<xsd:enumeration value="3SIM"/>
+			<xsd:enumeration value="4SIM"/>
+			<xsd:enumeration value="Primary SIM"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	-->
+
+	<xsd:simpleType name="emaVariableValue">
+		<!-- default: "" -->
+		<!-- invalid -> "" -->
+		<!-- "" -> false -->
+<!--
+true
+yes
+on
+false
+no
+off
+s/[A-Za-z]/[\U&\l&]/gc
+s/.*/<xsd:enumeration value="&"\/>/gc
+s/.*/<xsd:pattern value="&"\/>/gc
+-->
+		<xsd:union>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="true"/>
+					<xsd:enumeration value="yes"/>
+					<xsd:enumeration value="on"/>
+					<xsd:enumeration value="false"/>
+					<xsd:enumeration value="no"/>
+					<xsd:enumeration value="off"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[Tt][Rr][Uu][Ee]"/>
+					<xsd:pattern value="[Yy][Ee][Ss]"/>
+					<xsd:pattern value="[Oo][Nn]"/>
+					<xsd:pattern value="[Ff][Aa][Ll][Ss][Ee]"/>
+					<xsd:pattern value="[Nn][Oo]"/>
+					<xsd:pattern value="[Oo][Ff][Ff]"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:union>
+	</xsd:simpleType>
+
+	<xsd:complexType name="numericPropertyRejections">
+		<!-- XXX not in spec ... -->
+		<xsd:all>
+			<xsd:element name="subscribe" minOccurs="0" type="numericCondition"/>
+			<xsd:element name="extend" minOccurs="0" type="numericCondition"/>
+			<xsd:element name="migrate" minOccurs="0" type="numericCondition"/>
+		</xsd:all>
+	</xsd:complexType>
+
+	<xsd:complexType name="numericCondition">
+		<!-- @enabled = false -->
+		<xsd:simpleContent>
+			<xsd:extension base="csxbaset:stringx.integer">
+				<xsd:attribute name="condition" type="relationalOperator" use="required">
+					<!-- default: ne -->
+					<!-- invalid -> default -->
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+
+	<xsd:simpleType name="relationalOperator">
+		<xsd:union>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="ne"/>
+					<xsd:enumeration value="gt"/>
+					<xsd:enumeration value="lt"/>
+					<xsd:enumeration value="le"/>
+					<xsd:enumeration value="eq"/>
+					<xsd:enumeration value="ge"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[Nn][Ee]"/>
+					<xsd:pattern value="[Gg][Tt]"/>
+					<xsd:pattern value="[Ll][Tt]"/>
+					<xsd:pattern value="[Ll][Ee]"/>
+					<xsd:pattern value="[Ee][Qq]"/>
+					<xsd:pattern value="[Gg][Ee]"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:union>
+	</xsd:simpleType>
+
+	<!-- config -->
+
+	<xsd:element name="config" type="config"/>
+
+	<xsd:complexType name="config">
+		<xsd:sequence>
+			<xsd:element name="header" type="header">
+				<xsd:annotation>
+					<xsd:appinfo>
+					</xsd:appinfo>
+					<xsd:documentation>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="services" type="services">
+				<xsd:annotation>
+					<xsd:appinfo>
+					</xsd:appinfo>
+					<xsd:documentation>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- config / header -->
+
+	<xsd:complexType name="header">
+		<xsd:sequence>
+			<xsd:element name="type" type="headerType"/>
+			<xsd:element name="name" type="headerName"/>
+			<xsd:element name="structureVersion" type="structureVersion"/>
+			<xsd:element name="configVersion" type="xsd:string"/>
+			<xsd:element name="generator" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:simpleType name="headerType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PCC"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="headerName">
+		<xsd:union memberTypes="xsd:string">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Provisioning Charging Component"/>
+					<xsd:enumeration value="Promotion Creation Center"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:union>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="structureVersion">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="(1\.9|1\.10|2\.0)(\.[0-9]+)?"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<!-- config / services -->
+
+	<xsd:complexType name="services">
+		<xsd:sequence>
+			<xsd:element name="service" type="service" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- config / services / service -->
+
+	<xsd:complexType name="service">
+		<!-- TODO unique id ... -->
+		<xsd:all>
+			<xsd:element name="general" type="general"/>
+			<xsd:element name="packages" type="packages"/>
+			<xsd:element name="messages" type="serviceMessages"/>
+		</xsd:all>
+		<xsd:attribute name="id" type="serviceId" use="required"/>
+		<xsd:attribute name="deleted" type="csxbaset:stringx.boolean" />
+	</xsd:complexType>
+
+	<xsd:simpleType name="serviceId">
+		<!-- TODO unique -->
+		<xsd:restriction base="xsd:unsignedInt">
+			<xsd:minInclusive value="1"/>
+			<xsd:maxInclusive value="8"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<!-- config / services / service / general -->
+
+	<xsd:complexType name="general">
+		<!--
+			missing:
+				serviceCodeSms
+		-->
+		<xsd:all>
+			<xsd:element name="serviceEnable" type="csxbaset:stringx.boolean">
+				<!-- XXX:C1 -->
+			</xsd:element>
+			<xsd:element name="serviceName" type="xsd:string">
+				<!-- XXX:C1 -->
+				<!-- TODO unique ? -->
+			</xsd:element>
+			<xsd:element name="ussdEocn" type="ussdEocn">
+			</xsd:element>
+			<xsd:element name="ussdBearer" type="ussdBearer">
+				<!-- XXX:C1 -->
+			</xsd:element>
+			<xsd:element name="extend" minOccurs="0" type="extend">
+				<!-- XXX:C1 -->
+			</xsd:element>
+			<xsd:element name="giftSubscription" minOccurs="0" type="csxbaset:stringx.boolean">
+				<!-- XXX:C1 -->
+			</xsd:element>
+			<xsd:element name="giftCancellation" minOccurs="0" type="csxbaset:stringx.boolean">
+				<!-- XXX:C1 -->
+				<!-- TODO assert ( giftSubscription != null && giftCancellation == giftSubscription ) || ( giftSubscription == null && giftCancellation == false ) -->
+			</xsd:element>
+			<xsd:element name="targetCommunityId" type="xsd:string">
+				<!-- XXX:C1 -->
+			</xsd:element>
+			<xsd:element name="targetServiceClass" type="xsd:string">
+				<!-- XXX:C1 -->
+			</xsd:element>
+			<xsd:element name="fallbackServiceClass" type="xsd:string">
+				<!-- XXX:C1 -->
+			</xsd:element>
+			<xsd:element name="smsOriginatorId" type="xsd:string">
+				<!-- XXX:C1 -->
+				<!-- https://trac.concurrent.co.za/pcc/wiki/AdditionalSmsNotification -->
+			</xsd:element>
+			<xsd:element name="useGiftPin" minOccurs="0" type="csxbaset:stringx.boolean">
+				<!-- XXX:C1 -->
+				<!-- https://trac.concurrent.co.za/pcc/wiki/GiftPinCode -->
+			</xsd:element>
+			<xsd:element name="schedule" minOccurs="0" type="schedule">
+				<!-- XXX:C1 -->
+				<!-- https://trac.concurrent.co.za/pcc/wiki/PromotionStopStartAutomation -->
+			</xsd:element>
+			<xsd:element name="psoBits" minOccurs="0" type="psoBits">
+				<!-- XXX:C1 -->
+				<!-- XXX spec says optional, config alwasy has it ?? -->
+			</xsd:element>
+			<xsd:element name="autoRenew" type="autoRenew">
+				<!-- XXX:C1 -->
+			</xsd:element>
+			<xsd:element name="cancellation" type="cancellation">
+			</xsd:element>
+			<xsd:element name="confirmations" type="confirmations">
+				<!-- XXX:C1 -->
+			</xsd:element>
+			<xsd:element name="allowed" type="allowed">
+				<!-- XXX:C1 -->
+			</xsd:element>
+			<xsd:element name="identification" minOccurs="0" type="identification">
+				<!-- XXX:C1 -->
+			</xsd:element>
+			<xsd:element name="smsBearer" minOccurs="0" type="smsBearer">
+				<!-- XXX:C1 -->
+				<!-- XXX spec says optional, config alwasy has it ?? -->
+			</xsd:element>
+			<xsd:element name="reject" minOccurs="0" type="reject">
+				<!-- XXX:C1 -->
+				<!-- XXX spec says optional, config alwasy has it ?? -->
+			</xsd:element>
+			<xsd:element name="emaVariables" minOccurs="0" type="emaVariables">
+				<!-- XXX:C1 -->
+				<!-- XXX spec says optional, config alwasy has it ?? -->
+			</xsd:element>
+			<xsd:element name="accounts" minOccurs="0" type="accounts">
+				<!-- XXX:C1 -->
+				<!-- XXX spec says optional, config alwasy has it ?? -->
+			</xsd:element>
+			<xsd:element name="accumulators" minOccurs="0" type="accumulators">
+				<!-- XXX:C1 -->
+				<!-- TODO : spec ??? -->
+			</xsd:element>
+			<xsd:element name="offerIds" minOccurs="0" type="offers">
+				<!-- XXX:C1 -->
+				<!-- TODO : spec says mandatory, does not always occur -->
+				<!-- TODO : https://trac.concurrent.co.za/pcc/wiki/OfferIdProvisionEnhancement -->
+			</xsd:element>
+			<xsd:element name="blackBerry" minOccurs="0" type="blackBerry">
+				<!-- XXX:C1 -->
+				<!-- XXX spec says optional, config alwasy has it ?? -->
+			</xsd:element>
+			<xsd:element name="multiPackageOption" type="multiPackageOption">
+				<!-- XXX:C1 -->
+				<!-- XXX the example is not valid according to requirements -->
+			</xsd:element>
+			<xsd:element name="clearFafList" minOccurs="0" type="csxbaset:stringx.boolean.novalid">
+				<!-- default: false -->
+				<!-- blank -> default -->
+				<!-- invalid -> default -->
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	
+	<!-- config / services / service / general / ussdEocn -->
+
+	<xsd:complexType name="ussdEocn">
+		<xsd:all>
+			<xsd:element name="targetId" minOccurs="0" type="xsd:string">
+				<!-- default: "" -->
+				<!-- blank -> default -->
+				<!-- [ 0, 255 ] -->
+			</xsd:element>
+			<xsd:element name="fallbackId" minOccurs="0" type="xsd:string">
+				<!-- default: "" -->
+				<!-- blank -> default -->
+				<!-- [ 0, 255 ] | ORIGINAL -->
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+
+	<!-- config / services / service / general / ussdEocn / fallbackId -->
+
+	<xsd:simpleType name="ussdEocnFallbackId">
+		<!-- XXX:extend:C1 -->
+		<xsd:union memberTypes="csxbaset:stringx.integer.novalid">
+<!--
+ORIGINAL
+csxbaset:stringx.integer.novalid
+-->
+			<!-- default: reject -->
+			<!-- "" -> default -->
+			<!-- invalid -> default -->
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="ORIGINAL"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:union>
+	</xsd:simpleType>
+
+	<!-- config / services / service / general / ussdBearer -->
+
+	<xsd:complexType name="ussdBearer">
+		<xsd:all>
+			<xsd:element name="serviceCode" minOccurs="0" type="xsd:string">
+				<!-- XXX:ussdBearer:C1 -->
+				<!-- XXX does not match spec - spec says subServiceCode is part of this -->
+				<!-- TODO empty -->
+				<!-- default: "101<service_id>" -->
+				<!-- blank -> default -->
+			</xsd:element>
+			<xsd:element name="serviceCodeAdditional" minOccurs="0" type="xsd:string">
+				<!-- XXX:ussdBearer:C1 -->
+				<!-- TODO empty -->
+				<!-- default: "000" -->
+				<!-- blank -> default -->
+			</xsd:element>
+			<xsd:element name="subServiceCode" minOccurs="0" type="xsd:string">
+				<!-- XXX:ussdBearer:C1 -->
+				<!-- XXX not in spec ... -->
+				<!-- TODO empty -->
+				<!-- default: "" -->
+				<!-- blank -> default -->
+			</xsd:element>
+			<xsd:element name="statusCode" minOccurs="0" type="xsd:string">
+				<!-- XXX:ussdBearer:C1 -->
+				<!-- XXX can this be empty ? -->
+				<!-- TODO empty -->
+				<!-- default: "" -->
+			</xsd:element>
+			<xsd:element name="giftServiceCode" minOccurs="0" type="xsd:string">
+				<!-- XXX:ussdBearer:C1 -->
+				<!-- XXX type not defined in spec ... -->
+				<!-- TODO empty -->
+				<!-- TODO assert ( giftServiceCode == null && ( giftSubscription == null || giftSubscription == false ) ) || ( giftServiceCode != null && giftSubscription == true ) -->
+				<!-- default: "" -->
+			</xsd:element>
+			<xsd:element name="cancelCode" minOccurs="0" type="xsd:string">
+				<!-- XXX:ussdBearer:C1 -->
+				<!-- XXX type not defined in spec ... -->
+				<!-- TODO default = '0' -->
+				<!-- TODO empty -->
+				<!-- default: "0" -->
+			</xsd:element>
+			<xsd:element name="helpCode" minOccurs="0" type="xsd:string">
+				<!-- XXX:ussdBearer:C1 -->
+				<!-- XXX type not defined in spec ... -->
+				<!-- TODO default = '' -->
+				<!-- TODO empty -->
+				<!-- default: "" -->
+			</xsd:element>
+			<xsd:element name="menu" minOccurs="0" type="csxbaset:stringx.boolean">
+				<!-- XXX:ussdBearer:C1 -->
+				<!-- TODO empty -->
+				<!-- default: false -->
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+
+	<!-- config / services / service / general / extend -->
+
+	<xsd:complexType name="extend">
+		<xsd:all>
+			<xsd:element name="allow" type="csxbaset:stringx.boolean">
+				<!-- XXX:extend:C1 -->
+				<!-- spec says "true"|"false" - xmlconf allows ... -->
+				<!-- default: false -->
+			</xsd:element>
+			<xsd:element name="maxLimit" minOccurs="0" type="maxLimit">
+				<!-- XXX:extend:C1 -->
+				<!-- spec says "true"|"false" - xmlconf allows ... -->
+				<!-- default: ... -->
+			</xsd:element>
+			<xsd:element name="action" minOccurs="0" type="extendAction">
+				<!-- XXX:extend:C1 -->
+				<!-- default: update -->
+				<!-- "" -> default -->
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+
+	<!-- config / services / service / general / extend / maxLimit -->
+
+	<xsd:complexType name="maxLimit">
+		<xsd:all>
+			<xsd:element name="time" type="time">
+				<!-- default: ... -->
+			</xsd:element>
+			<xsd:element name="limitAction" type="limitAction">
+				<!-- XXX:extend:C1 -->
+				<!-- default: reject -->
+				<!-- "" -> default -->
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+
+	<!-- config / services / service / general / extend / maxLimit / limitAction -->
+
+	<xsd:simpleType name="limitAction">
+		<!-- XXX:extend:C1 -->
+		<xsd:union>
+<!--
+limit
+reject
+s/[A-Za-z]/[\U&\l&]/gc
+s/.*/<xsd:enumeration value="&"\/>/gc
+s/.*/<xsd:pattern value="&"\/>/gc
+-->
+			<!-- default: reject -->
+			<!-- "" -> default -->
+			<!-- invalid -> default -->
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value=""/>
+					<xsd:enumeration value="limit"/>
+					<xsd:enumeration value="reject"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[Ll][Ii][Mm][Ii][Tt]"/>
+					<xsd:pattern value="[Rr][Ee][Jj][Ee][Cc][Tt]"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:union>
+	</xsd:simpleType>
+
+	<!-- config / services / service / general / extend / action -->
+
+	<xsd:simpleType name="extendAction">
+		<!-- XXX:extend:C1 -->
+		<xsd:union>
+<!--
+
+update
+set
+s/[A-Za-z]/[\U&\l&]/gc
+s/.*/<xsd:enumeration value="&"\/>/gc
+s/.*/<xsd:pattern value="&"\/>/gc
+-->
+			<!-- default: update -->
+			<!-- "" -> default -->
+			<!-- invalid -> default -->
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value=""/>
+					<xsd:enumeration value="update"/>
+					<xsd:enumeration value="set"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[Uu][Pp][Dd][Aa][Tt][Ee]"/>
+					<xsd:pattern value="[Ss][Ee][Tt]"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:union>
+	</xsd:simpleType>
+
+	<!-- config / services / service / general / schedule -->
+
+	<xsd:complexType name="schedule">
+		<xsd:all>
+			<xsd:element name="activePeriod" minOccurs="0" type="activePeriod">
+				<!-- XXX: -->
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+
+	<!-- config / services / service / general / schedule / activePeriod -->
+
+	<xsd:complexType name="activePeriod">
+		<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="single" minOccurs="0" maxOccurs="1" type="scheduleSingle">
+				<!-- XXX: -->
+			</xsd:element>
+			<xsd:element name="repeat" minOccurs="0" maxOccurs="1" type="scheduleRepeat">
+				<!-- XXX: -->
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- config / services / service / general / schedule / activePeriod / single -->
+
+	<xsd:complexType name="scheduleSingle">
+		<!-- XXX: need atleast one ... -->
+		<xsd:all>
+			<xsd:element name="start" minOccurs="0" type="scheduleSingleStart">
+				<!-- -->
+			</xsd:element>
+			<xsd:element name="end" minOccurs="0" type="scheduleSingleEnd">
+				<!-- -->
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+
+	<!-- config / services / service / general / schedule / activePeriod / repeat -->
+
+	<xsd:complexType name="scheduleRepeat">
+		<xsd:all>
+			<xsd:element name="start" minOccurs="0" type="scheduleRepeatStart">
+			</xsd:element>
+			<xsd:element name="end" minOccurs="0" type="scheduleRepeatEnd">
+			</xsd:element>
+			<xsd:element name="monthDays" minOccurs="0" type="xsd:string">
+			</xsd:element>
+			<xsd:element name="weekDays" minOccurs="0" type="xsd:string">
+			</xsd:element>
+		</xsd:all>
+		<xsd:attribute name="period" type="xsd:string" use="required">
+			<!-- FIXME ... accept any value ... -->
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:complexType name="scheduleSingleStart">
+		<xsd:attribute name="day" type="xsd:string" use="required"/>
+		<xsd:attribute name="time" type="scheduleTime" use="optional"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="scheduleSingleEnd">
+		<xsd:attribute name="day" type="xsd:string" use="required"/>
+		<xsd:attribute name="time" type="scheduleTime" use="optional"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="scheduleRepeatStart">
+		<xsd:attribute name="day" type="xsd:string" use="required"/>
+		<xsd:attribute name="time" type="scheduleTime" use="optional"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="scheduleRepeatEnd">
+		<xsd:attribute name="day" type="xsd:string" use="required"/>
+		<xsd:attribute name="time" type="scheduleTime" use="optional"/>
+	</xsd:complexType>
+
+	<xsd:simpleType name="scheduleDate">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9]{2}/[0-9]{2}/[0-9]{2}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="scheduleTime">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9]{2}:[0-9]{2}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<!-- config / services / service / general / cancellation -->
+
+	<xsd:complexType name="cancellation">
+		<!-- TODO test me ... -->
+		<xsd:all>
+			<xsd:element name="mode" type="cancellationMode">
+				<!-- default: none -->
+				<!-- invalid -> default -->
+			</xsd:element>
+			<xsd:element name="giftCancellation" type="csxbaset:stringx.boolean.novalid">
+				<!-- default: false -->
+				<!-- invalid -> default -->
+			</xsd:element>
+		</xsd:all>
+		<xsd:attribute name="allow" type="csxbaset:stringx.boolean.novalid" use="required">
+			<!-- invalid: false -->
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:simpleType name="cancellationMode">
+		<xsd:union memberTypes="xsd:string">
+<!--
+immediate
+expiry
+onexpiry
+on-expiry
+s/[A-Za-z]/[\U&\l&]/gc
+s/.*/<xsd:enumeration value="&"\/>/gc
+s/.*/<xsd:pattern value="&"\/>/gc
+-->
+			<!--
+				default is none
+				invalid -> default
+			-->
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="immediate"/>
+					<xsd:enumeration value="expiry"/>
+					<xsd:enumeration value="onexpiry"/>
+					<xsd:enumeration value="on-expiry"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[Ii][Mm][Mm][Ee][Dd][Ii][Aa][Tt][Ee]"/>
+					<xsd:pattern value="[Ee][Xx][Pp][Ii][Rr][Yy]"/>
+					<xsd:pattern value="[Oo][Nn][Ee][Xx][Pp][Ii][Rr][Yy]"/>
+					<xsd:pattern value="[Oo][Nn]-[Ee][Xx][Pp][Ii][Rr][Yy]"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:union>
+	</xsd:simpleType>
+
+	<!-- config / services / service / general / autoRenew -->
+
+	<xsd:complexType name="autoRenew">
+		<!-- TODO test me ... -->
+		<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="allow" minOccurs="0" maxOccurs="1" type="csxbaset:stringx.boolean">
+				<!-- constraint: mandatory -->
+				<!-- default: false -->
+				<!-- invalid -> default -->
+				<!-- XXX:autoRenew:C1 -->
+			</xsd:element>
+			<xsd:element name="action" minOccurs="0" maxOccurs="unbounded" type="period">
+				<!-- default: [] -->
+				<!-- XXX:autoRenew:C1 -->
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- config / services / service / general / confirmations -->
+
+	<xsd:complexType name="confirmations">
+		<xsd:all>
+			<xsd:element name="subscribe" type="csxbaset:stringx.boolean">
+				<!-- invalid -> false -->
+				<!-- XXX:confirmations:C1 -->
+			</xsd:element>
+			<xsd:element name="cancel" type="csxbaset:stringx.boolean">
+				<!-- invalid -> false -->
+				<!-- XXX:confirmations:C1 -->
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+
+	<!-- config / services / service / general / allowed -->
+
+	<xsd:complexType name="allowed">
+		<xsd:sequence>
+			<xsd:element name="serviceClass" minOccurs="1" maxOccurs="unbounded" type="csxbaset:stringx.integer">
+				<!-- default: 0 -->
+				<!-- invalid -> default -->
+				<!-- XXX:allowed:C1 ... -->
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- config / services / service / general / identification -->
+
+	<xsd:complexType name="identification">
+		<xsd:all>
+			<xsd:element name="externalData1" type="xsd:string"/>
+			<xsd:element name="externalData2" type="xsd:string"/>
+		</xsd:all>
+	</xsd:complexType>
+
+	<!-- config / services / service / general / smsBearer -->
+
+	<xsd:complexType name="smsBearer">
+		<!-- smsNumber && smsNumber.size() -> active=true -->
+		<xsd:all>
+			<xsd:element name="smsNumber" minOccurs="0" type="xsd:string">
+				<!-- XXX:smsBearer:C1 -->
+				<!-- constraint: mandatory when enabled -->
+			</xsd:element>
+			<xsd:element name="smsCancel" minOccurs="0" type="xsd:string">
+				<!-- XXX:smsBearer:C1 -->
+				<!-- constraint: mandatory when enabled -->
+			</xsd:element>
+			<xsd:element name="smsStatus" minOccurs="0" type="xsd:string">
+				<!-- XXX:smsBearer:C1 -->
+				<!-- constraint: mandatory when enabled -->
+			</xsd:element>
+			<xsd:element name="smsHelp" minOccurs="0" type="xsd:string">
+				<!-- XXX:smsBearer:C1 -->
+				<!-- constraint: mandatory when enabled -->
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+
+	<!-- config / services / service / general / reject -->
+
+	<xsd:complexType name="reject">
+		<xsd:all>
+			<xsd:element name="psoBits" minOccurs="0" type="psoBits">
+				<!-- XXX:reject:C1 -->
+			</xsd:element>
+			<xsd:element name="community" minOccurs="0" type="communities">
+				<!-- XXX:reject:C1 -->
+			</xsd:element>
+			<xsd:element name="ema" minOccurs="0" type="emaVariables">
+				<!-- XXX:reject:C1 -->
+			</xsd:element>
+			<xsd:element name="offerIds" minOccurs="0" type="rejectOfferIds">
+				<!-- XXX:reject:C1 -->
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+
+	<!-- config / services / service / general / reject / community -->
+
+	<xsd:complexType name="communities">
+		<!-- XXX:reject:C1 -->
+		<xsd:sequence>
+			<xsd:element name="communityID" minOccurs="0" maxOccurs="unbounded" type="csxbaset:stringx.integer">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- config / services / service / general / reject / offerIds -->
+
+	<xsd:complexType name="rejectOfferIds">
+		<!-- XXX:reject:C1 -->
+		<xsd:sequence>
+			<xsd:element name="offerId" minOccurs="0" maxOccurs="unbounded" type="csxbaset:stringx.integer">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- config / services / service / general / accounts -->
+
+	<xsd:complexType name="accounts">
+		<!-- XXX why allow zero subsections ? -->
+		<!-- XXX one place says 0 or more, other says up to 8 ? -->
+		<xsd:sequence>
+			<xsd:element name="account" minOccurs="0" maxOccurs="unbounded" type="account">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="account">
+		<!-- XXX overwritten on config level ? - does it invalidate this level or add to it ? -->
+		<xsd:all>
+			<xsd:element name="value" type="accountValue">
+				<!-- XXX:account:C1 -->
+				<!-- default: 0 -->
+				<!-- invalid -> 0 -->
+			</xsd:element>
+			<xsd:element name="terminationAction" minOccurs="0" type="accountTerminationAction">
+				<!-- XXX:account:C1 -->
+				<!-- default: clear -->
+				<!-- invalud -> default -->
+				<!-- ../@id == 0 -> none -->
+			</xsd:element>
+			<xsd:element name="conversion" minOccurs="0" type="csxbaset:stringx.double">
+				<!-- XXX:account:C1 -->
+				<!-- default: 1 -->
+				<!-- invalid -> 0 -->
+				<!-- FIXME ... -->
+			</xsd:element>
+			<xsd:element name="name" minOccurs="0" type="xsd:string">
+				<!-- XXX:account:C1 -->
+			</xsd:element>
+			<xsd:element name="period" minOccurs="0" type="period">
+				<!-- XXX:account:C1 -->
+			</xsd:element>
+			<xsd:element name="units" type="csxbaset:stringx.integer">
+				<!-- XXX:account:C1 -->
+				<!-- default: -1 -->
+				<!-- invalid -> 0 -->
+			</xsd:element>
+			<xsd:element name="rejections" type="numericPropertyRejections">
+				<!-- XXX:account:C1 -->
+			</xsd:element>
+			<xsd:element type="xsd:string" name="valueUpdateModeExtend" minOccurs="0"/>
+			<xsd:element type="xsd:string" name="valueUpdateModeRenew" minOccurs="0"/>
+		</xsd:all>
+		<xsd:attribute name="id" type="csxbaset:stringx.integer" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="accountValue">
+		<!-- XXX:account:C1 -->
+		<xsd:simpleContent>
+			<xsd:extension base="csxbaset:stringx.long">
+				<xsd:attribute name="action" type="accountAdjustmentAction" default="update">
+					<!-- default: update -->
+					<!-- invalud -> default -->
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+
+	<xsd:simpleType name="accountAdjustmentAction">
+		<!-- XXX:account:C1 -->
+		<!-- FIXME: UI sets 1 in this ... -->
+		<xsd:union memberTypes="xsd:string">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="update"/>
+					<xsd:enumeration value="set"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:union>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="accountTerminationAction">
+		<!-- XXX:account:C1 -->
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="none"/>
+			<xsd:enumeration value="clear"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<!-- config / services / service / general / accumulators -->
+
+	<xsd:complexType name="accumulators">
+		<!-- Not in spec ... : -->
+		<xsd:sequence>
+			<xsd:element name="accumulator" minOccurs="0" maxOccurs="unbounded" type="accumulator">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="accumulator">
+		<!-- Not in spec ... : -->
+		<xsd:all>
+			<xsd:element name="value" type="csxbaset:stringx.integer">
+				<!-- XXX:accumulator:C1 -->
+			</xsd:element>
+			<xsd:element name="subscribeAction" minOccurs="0" type="accumulatorAction">
+				<!-- XXX:accumulator:C1 -->
+			</xsd:element>
+			<xsd:element name="extendAction" minOccurs="0" type="accumulatorAction">
+				<!-- XXX:accumulator:C1 -->
+			</xsd:element>
+			<xsd:element name="migrationAction" minOccurs="0" type="accumulatorAction">
+				<!-- XXX:accumulator:C1 -->
+			</xsd:element>
+			<xsd:element name="terminateAction" minOccurs="0" type="accumulatorAction">
+				<!-- XXX:accumulator:C1 -->
+			</xsd:element>
+			<xsd:element name="rejections" type="numericPropertyRejections">
+				<!-- XXX:accumulator:C1 -->
+			</xsd:element>
+		</xsd:all>
+		<xsd:attribute name="id" type="csxbaset:stringx.integer" use="required"/>
+	</xsd:complexType>
+
+	<xsd:simpleType name="accumulatorAction">
+		<!-- default: none -->
+		<!-- invalid -> none -->
+<!--
+set
+update
+clear
+s/[A-Za-z]/[\U&\l&]/gc
+s/.*/<xsd:enumeration value="&"\/>/gc
+s/.*/<xsd:pattern value="&"\/>/gc
+-->
+		<xsd:union>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="set"/>
+					<xsd:enumeration value="update"/>
+					<xsd:enumeration value="clear"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[Ss][Ee][Tt]"/>
+					<xsd:pattern value="[Uu][Pp][Dd][Aa][Tt][Ee]"/>
+					<xsd:pattern value="[Cc][Ll][Ee][Aa][Rr]"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:union>
+	</xsd:simpleType>
+
+	<!-- config / services / service / general / offers -->
+
+	<xsd:complexType name="offers">
+		<xsd:sequence>
+			<xsd:element name="offer" minOccurs="0" maxOccurs="unbounded" type="offer">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="offer">
+		<xsd:all>
+			<xsd:element name="type" minOccurs="0" type="offerType">
+				<!-- XXX:offer:C1 -->
+			</xsd:element>
+			<xsd:element name="updateMode" minOccurs="0" type="offerUpdateMode">
+				<!-- XXX:offer:C1 -->
+			</xsd:element>
+			<xsd:element name="period" minOccurs="0" type="period">
+				<!-- XXX:offer:C1 -->
+			</xsd:element>
+			<xsd:element name="usageCounter" minOccurs="0" type="usageCounter">
+			</xsd:element>
+		</xsd:all>
+		<xsd:attribute name="id" type="csxbaset:stringx.integer" use="required"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="usageCounter">
+		<xsd:sequence>
+			<xsd:element type="xsd:long" name="thresholdId"/>
+			<xsd:element type="xsd:long" name="thresholdValue"/>
+			<xsd:element type="xsd:string" name="counterType"/>
+			<xsd:element type="xsd:string" name="extendMode"/>
+			<xsd:element type="xsd:string" name="renewMode"/>
+		</xsd:sequence>
+		<xsd:attribute type="xsd:int" name="id" use="optional"/>
+	</xsd:complexType>
+
+	<xsd:simpleType name="offerType">
+		<!-- default: none -->
+		<!-- invalid -> none -->
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="account"/>
+			<xsd:enumeration value="timer"/>
+			<xsd:enumeration value="multiuser"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="offerUpdateMode">
+		<!-- default: set -->
+		<!-- invalid -> set -->
+		<xsd:union>
+<!--
+update
+set
+s/[A-Za-z]/[\U&\l&]/gc
+s/.*/<xsd:enumeration value="&"\/>/gc
+s/.*/<xsd:pattern value="&"\/>/gc
+-->
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="update"/>
+					<xsd:enumeration value="set"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[Uu][Pp][Dd][Aa][Tt][Ee]"/>
+					<xsd:pattern value="[Ss][Ee][Tt]"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:union>
+	</xsd:simpleType>
+
+	<!-- config / services / service / general / blackBerry -->
+
+	<xsd:complexType name="blackBerry">
+		<xsd:sequence>
+			<xsd:element name="bbService" minOccurs="0" maxOccurs="unbounded" type="bbService"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:simpleType name="bbService">
+		<!-- invalid -> false -->
+<!--
+prosumer
+enterprise
+enterpris
+prosumer lite
+mail
+prepaid prosumer
+s/[A-Za-z]/[\U&\l&]/gc
+s/.*/<xsd:enumeration value="&"\/>/gc
+s/.*/<xsd:pattern value="&"\/>/gc
+-->
+		<xsd:union>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="prosumer"/>
+					<xsd:enumeration value="enterprise"/>
+					<xsd:enumeration value="enterpris"/>
+					<xsd:enumeration value="prosumer lite"/>
+					<xsd:enumeration value="mail"/>
+					<xsd:enumeration value="prepaid prosumer"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[Pp][Rr][Oo][Ss][Uu][Mm][Ee][Rr]"/>
+					<xsd:pattern value="[Ee][Nn][Tt][Ee][Rr][Pp][Rr][Ii][Ss][Ee]"/>
+					<xsd:pattern value="[Ee][Nn][Tt][Ee][Rr][Pp][Rr][Ii][Ss]"/>
+					<xsd:pattern value="[Pp][Rr][Oo][Ss][Uu][Mm][Ee][Rr] [Ll][Ii][Tt][Ee]"/>
+					<xsd:pattern value="[Mm][Aa][Ii][Ll]"/>
+					<xsd:pattern value="[Pp][Rr][Ee][Pp][Aa][Ii][Dd] [Pp][Rr][Oo][Ss][Uu][Mm][Ee][Rr]"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:union>
+	</xsd:simpleType>
+
+	<!-- config / services / service / general / multiPackageOption -->
+
+	<xsd:complexType name="multiPackageOption">
+		<!-- default: migration.enabled=true -->
+		<!-- default: migration.action=set -->
+		<xsd:all>
+			<xsd:element name="coexistence" type="coexistence">
+			</xsd:element>
+			<xsd:element name="migration" type="migration">
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+
+	<xsd:complexType name="coexistence">
+		<xsd:all>
+			<xsd:element name="enabled" type="coexistenceEnabled">
+			</xsd:element>
+			<xsd:element name="maximum" minOccurs="0" type="csxbaset:stringx.integer">
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+
+	<xsd:simpleType name="coexistenceEnabled">
+		<!-- invalid -> false -->
+<!--
+s/[A-Za-z]/[\U&\l&]/gc
+s/.*/<xsd:enumeration value="&"\/>/gc
+s/.*/<xsd:pattern value="&"\/>/gc
+-->
+		<xsd:union>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="true"/>
+					<xsd:enumeration value="yes"/>
+					<xsd:enumeration value="false"/>
+					<xsd:enumeration value="no"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[Tt][Rr][Uu][Ee]"/>
+					<xsd:pattern value="[Yy][Ee][Ss]"/>
+					<xsd:pattern value="[Ff][Aa][Ll][Ss][Ee]"/>
+					<xsd:pattern value="[Nn][Oo]"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:union>
+	</xsd:simpleType>
+
+	<xsd:complexType name="migration">
+		<xsd:all>
+			<xsd:element name="enabled" type="migrationEnabled">
+			</xsd:element>
+			<xsd:element name="action" minOccurs="0" type="migrationAction">
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+
+	<xsd:simpleType name="migrationEnabled">
+<!--
+true
+yes
+false
+no
+s/[A-Za-z]/[\U&\l&]/gc
+s/.*/<xsd:enumeration value="&"\/>/gc
+s/.*/<xsd:pattern value="&"\/>/gc
+-->
+		<xsd:union>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="true"/>
+					<xsd:enumeration value="yes"/>
+					<xsd:enumeration value="false"/>
+					<xsd:enumeration value="no"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[Tt][Rr][Uu][Ee]"/>
+					<xsd:pattern value="[Yy][Ee][Ss]"/>
+					<xsd:pattern value="[Ff][Aa][Ll][Ss][Ee]"/>
+					<xsd:pattern value="[Nn][Oo]"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:union>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="migrationAction">
+<!--
+update
+set
+s/[A-Za-z]/[\U&\l&]/gc
+s/.*/<xsd:enumeration value="&"\/>/gc
+s/.*/<xsd:pattern value="&"\/>/gc
+-->
+		<xsd:union>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="update"/>
+					<xsd:enumeration value="set"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[Uu][Pp][Dd][Aa][Tt][Ee]"/>
+					<xsd:pattern value="[Ss][Ee][Tt]"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:union>
+	</xsd:simpleType>
+
+	<!-- config / services / service / packages -->
+
+	<xsd:complexType name="packages">
+		<xsd:sequence>
+			<xsd:element name="package" minOccurs="0" maxOccurs="unbounded" type="package">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="package">
+		<xsd:all>
+			<xsd:element name="description" type="xsd:string">
+			</xsd:element>
+			<xsd:element name="active" type="csxbaset:stringx.boolean">
+			</xsd:element>
+			<xsd:element name="whiteList" type="csxbaset:stringx.boolean">
+				<!-- default: false -->
+			</xsd:element>
+			<xsd:element name="selectionCode" type="xsd:string">
+			</xsd:element>
+			<xsd:element name="giftSubscription" minOccurs="0" type="csxbaset:stringx.boolean">
+			</xsd:element>
+			<xsd:element name="ussdEocn" minOccurs="0" type="ussdEocn">
+			</xsd:element>
+			<xsd:element name="subscriptionCharge" type="charge">
+			</xsd:element>
+			<xsd:element name="extensionCharge" minOccurs="0" type="charge">
+			</xsd:element>
+			<xsd:element name="renewalCharge" minOccurs="0" type="charge">
+			</xsd:element>
+			<xsd:element name="giftPremiumCharge" minOccurs="0" type="csxbaset:stringx.long">
+			</xsd:element>
+			<xsd:element name="subscriptionPeriodHours" type="subscriptionPeriodHours">
+			</xsd:element>
+			<xsd:element name="subscriptionExpiryTime" type="xsd:string">
+				<!-- XXX: Why is this only read if subscriptionPeriodHours is set ? -->
+				<!-- TODO: type ... -->
+			</xsd:element>
+			<xsd:element name="allowed" minOccurs="0" type="allowed">
+			</xsd:element>
+			<xsd:element name="targetCommunityId" minOccurs="0" type="xsd:string">
+			</xsd:element>
+			<xsd:element name="targetServiceClass" minOccurs="0" type="xsd:string">
+			</xsd:element>
+			<xsd:element name="fallbackServiceClass" minOccurs="0" type="xsd:string">
+			</xsd:element>
+			<xsd:element name="smsSubscribe" minOccurs="0" type="xsd:string">
+			</xsd:element>
+			<xsd:element name="smsStatus" minOccurs="0" type="xsd:string">
+			</xsd:element>
+			<xsd:element name="smsCancel" minOccurs="0" type="xsd:string">
+			</xsd:element>
+			<xsd:element name="extend" minOccurs="0" type="extend">
+			</xsd:element>
+			<xsd:element name="migration" minOccurs="0" type="packageRelation">
+			</xsd:element>
+			<xsd:element name="coexistence" minOccurs="0" type="packageRelation">
+			</xsd:element>
+			<xsd:element name="cancellation" minOccurs="0" type="cancellation">
+			</xsd:element>
+			<xsd:element name="freeSubscriptions" minOccurs="0" type="packageLimit">
+			</xsd:element>
+			<xsd:element name="subscriptionLimit" minOccurs="0" type="packageLimit">
+			</xsd:element>
+			<xsd:element name="emaVariables" minOccurs="0" type="emaVariables">
+			</xsd:element>
+			<xsd:element name="autoRenew" minOccurs="0" type="autoRenew">
+			</xsd:element>
+			<xsd:element name="psoBits" minOccurs="0" type="psoBits">
+			</xsd:element>
+			<xsd:element name="reminders" type="reminders">
+			</xsd:element>
+			<xsd:element name="identification" minOccurs="0" type="identification">
+			</xsd:element>
+			<xsd:element name="accounts" minOccurs="0" type="accounts">
+			</xsd:element>
+			<xsd:element name="accumulators" minOccurs="0" type="accumulators">
+			</xsd:element>
+			<xsd:element name="offerIds" minOccurs="0" type="offers">
+			</xsd:element>
+			<xsd:element name="blackBerry" minOccurs="0" type="blackBerry">
+			</xsd:element>
+			<xsd:element name="bundleSuggestionInfo" minOccurs="0" type="bundleSuggestionInfo">
+			</xsd:element>
+			<xsd:element name="variables" minOccurs="0" type="variables">
+			</xsd:element>
+			<xsd:element name="schedule" minOccurs="0" type="schedule">
+			</xsd:element>
+			<xsd:element name="messages" minOccurs="0" type="packageMessages">
+			</xsd:element>
+			<xsd:element name="clearFafList" minOccurs="0" type="csxbaset:stringx.boolean.novalid">
+				<!-- default: false -->
+				<!-- blank -> default -->
+				<!-- invalid -> default -->
+			</xsd:element>
+		</xsd:all>
+		<xsd:attribute name="id" type="csxbaset:stringx.unsingedInteger" use="required">
+		</xsd:attribute>
+		<xsd:attribute name="deleted" type="csxbaset:stringx.boolean" />
+	</xsd:complexType>
+
+	<xsd:complexType name="charge">
+		<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="chargeAccount" minOccurs="0" type="csxbaset:stringx.integer">
+			</xsd:element>
+			<xsd:element name="default" minOccurs="0" type="csxbaset:stringx.long">
+			</xsd:element>
+			<xsd:element name="class" minOccurs="0" type="chargeClass">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="chargeClass">
+		<xsd:simpleContent>
+			<xsd:extension base="csxbaset:stringx.long">
+				<xsd:attribute name="id" type="csxbaset:stringx.integer" use="required"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+
+	<xsd:simpleType name="subscriptionPeriodHours">
+		<xsd:union memberTypes="csxbaset:stringx.integer">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="unl"/>
+					<xsd:enumeration value="none"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:union>
+	</xsd:simpleType>
+
+	<xsd:complexType name="packageRelation">
+		<xsd:all>
+			<xsd:element name="default" type="packageRelationDefault">
+				<!-- invalid -> allow -->
+			</xsd:element>
+			<xsd:element name="deny" minOccurs="0" type="packageIds">
+			</xsd:element>
+			<xsd:element name="allow" minOccurs="0" type="packageIds">
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	
+	<xsd:simpleType name="packageRelationDefault">
+<!--
+allow
+deny
+s/[A-Za-z]/[\U&\l&]/gc
+s/.*/<xsd:enumeration value="&"\/>/gc
+s/.*/<xsd:pattern value="&"\/>/gc
+-->
+		<xsd:union>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="allow"/>
+					<xsd:enumeration value="deny"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[Aa][Ll][Ll][Oo][Ww]"/>
+					<xsd:pattern value="[Dd][Ee][Nn][Yy]"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:union>
+	</xsd:simpleType>
+
+	<xsd:complexType name="packageIds">
+		<xsd:sequence>
+			<xsd:element name="packageId" minOccurs="0" maxOccurs="unbounded" type="csxbaset:stringx.integer">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="packageLimit">
+		<xsd:all>
+			<xsd:element name="number" type="csxbaset:stringx.integer">
+			</xsd:element>
+			<xsd:element name="periodDays" type="csxbaset:stringx.integer">
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+
+	<xsd:complexType name="reminders">
+		<xsd:all>
+			<xsd:element name="expiry" minOccurs="0" type="reminderSequence">
+			</xsd:element>
+			<xsd:element name="renewal" minOccurs="0" type="reminderSequence">
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+
+	<xsd:complexType name="reminderSequence">
+		<xsd:sequence>
+			<xsd:element name="reminder" minOccurs="0" maxOccurs="unbounded" type="period">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="bundleSuggestionInfo">
+		<xsd:sequence>
+			<xsd:element name="element" minOccurs="0" maxOccurs="unbounded" type="bundleSuggestionInfoElement">
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="active" type="bundleSuggestionInfoActive" use="required">
+			<!-- invalid -> false -->
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:simpleType name="bundleSuggestionInfoActive">
+<!--
+true
+false
+s/[A-Za-z]/[\U&\l&]/gc
+s/.*/<xsd:enumeration value="&"\/>/gc
+s/.*/<xsd:pattern value="&"\/>/gc
+-->
+		<xsd:union>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="true"/>
+					<xsd:enumeration value="false"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[Tt][Rr][Uu][Ee]"/>
+					<xsd:pattern value="[Ff][Aa][Ll][Ss][Ee]"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:union>
+	</xsd:simpleType>
+	
+	<xsd:complexType name="bundleSuggestionInfoElement">
+		<xsd:simpleContent>
+			<xsd:extension base="bundleSuggestionInfoElementValue">
+				<xsd:attribute name="type" type="bundleSuggestionInfoElementType" use="required"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+
+	<xsd:simpleType name="bundleSuggestionInfoElementValue">
+		<!-- TODO partial validation, failures ignored ... -->
+<!--
+daily
+day
+weekly
+week
+monthly
+month
+s/[A-Za-z]/[\U&\l&]/gc
+s/.*/<xsd:enumeration value="&"\/>/gc
+s/.*/<xsd:pattern value="&"\/>/gc
+-->
+		<xsd:union memberTypes="csxbaset:stringx.long">
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="daily"/>
+					<xsd:enumeration value="day"/>
+					<xsd:enumeration value="weekly"/>
+					<xsd:enumeration value="week"/>
+					<xsd:enumeration value="monthly"/>
+					<xsd:enumeration value="month"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[Dd][Aa][Ii][Ll][Yy]"/>
+					<xsd:pattern value="[Dd][Aa][Yy]"/>
+					<xsd:pattern value="[Ww][Ee][Ee][Kk][Ll][Yy]"/>
+					<xsd:pattern value="[Ww][Ee][Ee][Kk]"/>
+					<xsd:pattern value="[Mm][Oo][Nn][Tt][Hh][Ll][Yy]"/>
+					<xsd:pattern value="[Mm][Oo][Nn][Tt][Hh]"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:union>
+	</xsd:simpleType>
+	
+
+	<xsd:simpleType name="bundleSuggestionInfoElementType">
+		<!-- TODO partial validation, failures ignored ... -->
+<!--
+smsall
+smsonnet
+smslocal
+smsoffnet
+smsintl
+voiceall
+voiceonnet
+voicelocal
+voiceoffnet
+voiceintl
+datatime
+datavolume
+period
+s/[A-Za-z]/[\U&\l&]/gc
+s/.*/<xsd:enumeration value="&"\/>/gc
+s/.*/<xsd:pattern value="&"\/>/gc
+-->
+		<xsd:union>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="smsall"/>
+					<xsd:enumeration value="smsonnet"/>
+					<xsd:enumeration value="smslocal"/>
+					<xsd:enumeration value="smsoffnet"/>
+					<xsd:enumeration value="smsintl"/>
+					<xsd:enumeration value="voiceall"/>
+					<xsd:enumeration value="voiceonnet"/>
+					<xsd:enumeration value="voicelocal"/>
+					<xsd:enumeration value="voiceoffnet"/>
+					<xsd:enumeration value="voiceintl"/>
+					<xsd:enumeration value="datatime"/>
+					<xsd:enumeration value="datavolume"/>
+					<xsd:enumeration value="period"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="[Ss][Mm][Ss][Aa][Ll][Ll]"/>
+					<xsd:pattern value="[Ss][Mm][Ss][Oo][Nn][Nn][Ee][Tt]"/>
+					<xsd:pattern value="[Ss][Mm][Ss][Ll][Oo][Cc][Aa][Ll]"/>
+					<xsd:pattern value="[Ss][Mm][Ss][Oo][Ff][Ff][Nn][Ee][Tt]"/>
+					<xsd:pattern value="[Ss][Mm][Ss][Ii][Nn][Tt][Ll]"/>
+					<xsd:pattern value="[Vv][Oo][Ii][Cc][Ee][Aa][Ll][Ll]"/>
+					<xsd:pattern value="[Vv][Oo][Ii][Cc][Ee][Oo][Nn][Nn][Ee][Tt]"/>
+					<xsd:pattern value="[Vv][Oo][Ii][Cc][Ee][Ll][Oo][Cc][Aa][Ll]"/>
+					<xsd:pattern value="[Vv][Oo][Ii][Cc][Ee][Oo][Ff][Ff][Nn][Ee][Tt]"/>
+					<xsd:pattern value="[Vv][Oo][Ii][Cc][Ee][Ii][Nn][Tt][Ll]"/>
+					<xsd:pattern value="[Dd][Aa][Tt][Aa][Tt][Ii][Mm][Ee]"/>
+					<xsd:pattern value="[Dd][Aa][Tt][Aa][Vv][Oo][Ll][Uu][Mm][Ee]"/>
+					<xsd:pattern value="[Pp][Ee][Rr][Ii][Oo][Dd]"/>
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:union>
+	</xsd:simpleType>
+
+	<xsd:complexType name="variables">
+		<xsd:sequence>
+			<xsd:element name="variable" minOccurs="0" maxOccurs="unbounded" type="variable">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="variable">
+		<xsd:sequence>
+			<xsd:element name="class" minOccurs="0" maxOccurs="unbounded" type="variableClass">
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="required">
+		</xsd:attribute>
+		<xsd:attribute name="default" type="xsd:string" use="required">
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:complexType name="variableClass">
+		<xsd:attribute name="id" type="csxbaset:stringx.integer" use="required">
+		</xsd:attribute>
+		<xsd:attribute name="value" type="xsd:string" use="required">
+		</xsd:attribute>
+	</xsd:complexType>
+
+
+	<xsd:complexType name="packageMessages">
+		<xsd:sequence>
+			<xsd:element name="message" minOccurs="0" maxOccurs="unbounded" type="packageMessage">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="packageMessage">
+		<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="description" minOccurs="0" type="xsd:string">
+			</xsd:element>
+			<xsd:element name="languages" minOccurs="0" type="messageLanguages">
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="id" type="xsd:string" use="required">
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<!-- config / services / service / messages -->
+
+	<xsd:complexType name="serviceMessages">
+		<xsd:sequence>
+			<xsd:element name="message" minOccurs="0" maxOccurs="unbounded" type="serviceMessage">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<!-- config / services / service / messages / message -->
+
+	<xsd:complexType name="serviceMessage">
+		<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="description" minOccurs="0" type="xsd:string">
+			</xsd:element>
+			<xsd:element name="languages" minOccurs="0" type="messageLanguages">
+			</xsd:element>
+			<xsd:element name="exception" minOccurs="0" type="serviceMessageExceptions">
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="id" type="xsd:string" use="required">
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:complexType name="serviceMessageExceptions">
+		<xsd:all>
+			<xsd:element name="description" type="xsd:string">
+			</xsd:element>
+			<xsd:element name="classes" type="xsd:string">
+			<!-- TODO -->
+			</xsd:element>
+			<xsd:element name="languages" type="messageLanguages">
+			</xsd:element>
+		</xsd:all>
+		<xsd:attribute name="id" type="xsd:string" use="required">
+			<!-- TODO -->
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:complexType name="messageLanguages">
+		<xsd:sequence>
+			<xsd:element name="language" minOccurs="0" maxOccurs="unbounded" type="messageLanguage">
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="type" type="xsd:string" use="optional">
+			<!-- TODO -->
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:complexType name="messageLanguage">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string">
+				<xsd:attribute name="id" type="xsd:string" use="required"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+
+<!--
+package_messages:
+	STATUS
+	FUNDS-SUBS
+	INVALID-SERVICE-CLASS-PKG
+	INSUFFICIENT-FUNDS-EXTEND
+	WELCOME-NEW
+	WELCOME-EXTEND
+	AUTO-RENEW
+	EXPIRY-1
+	EXPIRY-2
+	ON-EXPIRY
+	FUNDS-RENEW
+	SUBS-TERMINATE
+	EXTEND-NOT-ALLOWED
+	INVALID-MIGRATION
+	MAX-EXTEND
+	REJECT-WHITELIST
+	FUNDS-EARLY-RENEW
+	EXPIRY-1-DONOR
+	EXPIRY-2-DONOR
+	ON-EXPIRY-DONOR
+	WELCOME-NEW-A
+	WELCOME-NEW-B
+	WELCOME-EXTEND-A
+	WELCOME-EXTEND-B
+	CANCEL-DONE
+	CANCEL-DONE-B
+	RENEWAL-1
+	RENEWAL-2
+	RENEWAL-1-DONOR
+	RENEWAL-2-DONOR
+	INVALID-CO-EXISTENCE
+	SUBSCRIPTION-LIMIT-EXCEEDED
+	REJECT-DA-CONDITION
+	REJECT-UA-CONDITION
+	PROMOTION-INFO
+	REJECT-OUTSIDE-SCHEDULE
+
+service_messages:
+	HELP
+	CANCEL-NOT-SUBSCRIBED
+	MAX-COM
+	INVALID-SERVICE-CLASS-SRV
+	POSTPAID
+	INACTIVE
+	SUB-CONFIRM
+	SUB-DECLINED
+	CANCEL-CONFIRM
+	CANCEL-DECLINED
+	INV-USSD
+	NETWORK-ERROR
+	CANCEL-NOT-ALLOWED
+	INVALID-SERVICE-CLASS-X1
+	INVALID-SERVICE-CLASS-X2
+	INVALID-SERVICE-CLASS-X3
+	INVALID-SERVICE-CLASS-X4
+	INVALID-SERVICE-CLASS-X5
+	INVALID-PSO-SETTING
+	INVALID-COM-ID
+	INVALID-EMA-STATE
+	STATUS-NOT-SUBSCRIBED
+	INVALID-MSISDNB
+	ACCOUNT-ACCESS-DENIED
+	INVALID-OFFER-ID
+	NOT-DEFINED
+	NOT-DEFINED
+	NOT-DEFINED
+	NOT-DEFINED
+	NOT-DEFINED
+	NOT-DEFINED
+	NOT-DEFINED
+	NOT-DEFINED
+	INVALID-OPTION
+	HELP-SMS
+	PROMPT-MSISDNB
+	NOT-DEFINED
+	NOT-DEFINED
+	NOT-DEFINED
+	NOT-DEFINED
+	NOT-DEFINED
+	NOT-DEFINED
+	NOT-DEFINED
+	NOT-DEFINED
+	MAX-PACKAGES
+	CANCELLATION-MENU
+	STATUS-MENU
+	PROMPT-PIN
+	PIN-INVALID
+	PIN-NOT-REGISTERED
+	PIN-BLOCKED
+-->
+
+	<!-- ... -->
+
+	<!--
+	<xsd:complexType name="allowCancel">
+		<xsd:all>
+			<xsd:element name="allow" type="csxbaset:stringx.boolean">
+			</xsd:element>
+		</xsd:all>
+	</xsd:complexType>
+	-->
+
+	<!-- placeholder -->
+
+	<!--
+	<xsd:complexType name="TODO" mixed="true">
+		<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+			<xsd:any processContents="lax"/>
+		</xsd:sequence>
+		<xsd:anyAttribute processContents="lax"/>
+	</xsd:complexType>
+	-->
+
+</xsd:schema>

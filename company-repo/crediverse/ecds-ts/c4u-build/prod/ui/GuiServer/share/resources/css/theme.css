@@ -1,0 +1,31 @@
+body {
+  padding-top: 70px;
+  padding-bottom: 30px;
+}
+
+.theme-dropdown .dropdown-menu {
+  display: block;
+  position: static;
+  margin-bottom: 20px;
+}
+
+.theme-showcase > p > .btn {
+  margin: 5px 0;
+}
+
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
+
+.update_notification {
+    float: none;
+    margin: 0 auto 5px auto;
+	padding-top: 5px;
+	padding-bottom: 5px;	
+}
+
+/** For Service Configuration Content **/
+.config-prop-headings {
+	margin: 0px auto 15px 20px
+}

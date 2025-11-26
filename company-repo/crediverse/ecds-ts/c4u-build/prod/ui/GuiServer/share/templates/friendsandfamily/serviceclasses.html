@@ -1,0 +1,85 @@
+<div>
+	<div id="" th:if="${#lists.isEmpty(session.ServiceClasses)}">
+		<p>Currently No Service Classes defined</p>
+	</div>
+	<div th:if="${!#lists.isEmpty(session.ServiceClasses)}" class="row">
+		<table id="sc_table" class="table infotable table-hover table-bordered table-striped" style="width: 100%; table-layout: fixed;">
+			<col width="10%" />
+	 		<col width="10%" />
+			<col width="28%" />
+			<col width="10%"/>
+			<col width="10%"/>
+			<col width="10%"/>
+			<col width="10%"/>
+			<col width="8%"/>
+			<col width="8%"/>
+			<col width="12%"/>
+			<thead>
+				<tr>
+					<th>Service Class ID</th>
+					<th>Name</th>
+					<th>variantString</th>
+					<th>Post Paid</th>
+					<th>Min | Max Balance</th>
+					<th>Subscribe Cost | Days</th>
+					<th>Daily Lists Free | Max</th>
+					<th>List Cost</th>
+					<th>List Size</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="sc,iterStat : ${session.ServiceClasses}">
+
+					<td th:text="${ utils.extractField(sc, 'serviceClassID') }">-</td>
+					<td th:text="${ utils.extractPhraseField(sc, 'name', 'eng') }" th:dir="${directions != null ? directions.length > 0 ? directions[0] : 'ltr' : 'ltr'}">-</td>
+					<td th:text="${ utils.extractField(sc, 'variantString') }" style="text-align: center">-</td>
+					<td>
+						<center>
+							<span th:if="${ utils.extractField(sc, 'postPaid') }" class="glyphicon glyphicon-ok-circle isexclusive"></span>
+							<span th:if="${ !utils.extractField(sc, 'postPaid') }" class="glyphicon glyphicon-remove-circle notexclusive"></span>
+						</center>
+					</td>		
+					<td> 
+						<span th:text="${ utils.extractField(sc, 'minBal') }"></span> 
+						<span>|</span>
+						<span th:text="${ utils.extractField(sc, 'maxBal') }"></span>
+					</td>
+					<td> 
+						<span th:text="${ utils.extractField(sc, 'fafSubcriptionCost') }"></span> 
+						<span>|</span>
+						<span th:text="${ utils.extractField(sc, 'fafSubcriptionExpiry') }"></span>
+					</td>
+					<td> 
+						<span th:text="${ utils.extractField(sc, 'freeDailyLists') }"></span> 
+						<span>|</span>
+						<span th:text="${ utils.extractField(sc, 'maxDailyLists') }"></span>
+					</td>
+					
+					<td th:text="${ utils.extractField(sc, 'chargeList') }">-</td>
+					<td th:text="${ utils.extractField(sc, 'maxListSize') }">-</td>
+					<td style="text-align: center">
+						<a th:id="${'scview_' + iterStat.index}"  th:onclick="'javascript:showServiceclass(\'view\',' + ${iterStat.index} + ');return false;'" href="#"><span class="glyphicon glyphicon-eye-open viewbutton" title="view"></span></a> 
+						<span>|</span>
+						<a th:id="${'scedit_' + iterStat.index}" th:onclick="'javascript:showServiceclass(\'edit\',' + ${iterStat.index} + ');return false;'" href="#"><span class="glyphicon glyphicon-pencil editbutton" title="edit"></span></a> 
+						<span>|</span>
+						<a th:id="${'scedit_' + iterStat.index}" th:onclick="'javascript:deleteServiceClass(' + ${iterStat.index} + ',\'' + ${ utils.extractField(sc, 'serviceClassID') } + '\');return false;'" href="#"><span class="glyphicon glyphicon-trash deletebutton" title="delete"></span></a> 
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+</div>
+
+<script th:inline="javascript">
+$(document).ready(function() {
+	// <![CDATA[        
+	var serviceClassIDs = /*[[ ${ utils.extractFieldIds(session.serviceclasses, 'serviceClassID') } ]]*/;
+    // ]]>
+    try {
+    	hashIDStore.addItem("serviceClassIDs", serviceClassIDs);
+    } catch(err) {
+    }
+});
+</script>

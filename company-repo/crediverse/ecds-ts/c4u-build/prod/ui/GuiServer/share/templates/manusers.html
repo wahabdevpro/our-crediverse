@@ -1,0 +1,173 @@
+<style>
+	.user_heading {
+		font-size: 22px;
+		font-weight: bold;
+	}
+	
+	.error_message {
+		color:red;
+	}
+	
+	.model_content {
+		height: 300px;
+	}
+	
+	.waiting {
+		margin-left: -5px;
+		float:left;
+	}
+	
+	.roleindent {
+		margin-left: 10px;
+	}
+	
+	.passstrength {
+	    font-family:verdana;
+	    font-size:10px;
+	    font-weight:bold;
+	}
+	.pass_chars {
+		color: red; 
+	}
+	.pass_strong {
+		color: #336600; 
+	}
+	.pass_medium {
+		color: orange; 
+	}
+	.pass_weak {
+		color: red; 
+	}
+</style>
+
+
+<div class="row">
+  <div class="col-xs-12 col-sm-6 col-md-8 user_heading">Current User List</div>
+	  <div th:if="${can_update}" class="col-xs-6 col-md-4"><button type="button" class="btn btn-success btn-xs" style="float:right;" data-toggle="modal" onclick="addNewUser()" title="add new user"><span class="glyphicon glyphicon-plus"></span></button></div>
+</div>
+
+<div class="row">
+	<table id="manusers" class="table infotable table-hover table-bordered table-striped">
+		<thead>
+			<tr>
+				<th>Username</th>
+				<th>Full Name</th>
+				<th>Mobile Number</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="userDetail : ${userDetails}" >
+				<td th:text="${userDetail.userId}">Onions</td>
+				<td th:text="${userDetail.name}">2.41</td>
+				<td th:text="${userDetail.mobileNumber}">2.41</td>
+				<td>
+					<a th:id="${userDetail.userId}" href="#" onclick="showUserInfo(this.id, false)" th:if="(${userDetail.userId} != 'Supplier')"><span class="glyphicon glyphicon-eye-open viewbutton" title="view"></span></a> 
+					<span th:if="(${userDetail.userId} != 'Supplier')  and (${can_update})">|</span>
+					<a th:id="${userDetail.userId}" href="#" onclick="showUserInfo(this.id, true)" th:if="(${userDetail.userId} != 'Supplier')  and (${can_update})"><span class="glyphicon glyphicon-pencil editbutton" title="edit"></span></a> 
+					<span th:if="(${userDetail.userId} != 'Supplier') and (${userDetail.userId} != 'Administrator')  and (${can_update})">|</span>
+					<a th:id="${userDetail.userId}" href="#" onclick="deleteUser(this.id)" th:if="(${userDetail.userId} != 'Supplier') and (${userDetail.userId} != 'Administrator') and (${can_update})"><span class="glyphicon glyphicon-trash deletebutton" title="delete"></span></a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<!--  Delete Modal -->
+<div th:include="common :: deleteModal" />
+
+<!-- Modal -->
+<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Add New User</h4>
+      </div>
+      <div class="modal-body">
+      	<form id="modalform" name="modalform">
+		<div id="General" class="model_content">
+			<div class="row">
+				<div class="col-md-5">
+					<label for="userid" class="control-label">User ID</label>
+					<input type="text" class="form-control" id="userid" name="userid" placeholder="Username" />
+					<span id="userid_error" class="error_message hide"></span>
+				</div>
+				<div class="col-md-5">
+					<label for="fullname" class="control-label">Full Name</label>
+					<input type="text" class="form-control" id="fullname" name="fullname" placeholder="Full Name" />
+					<span id="fullname_error" class="error_message hide"></span>
+				</div>
+			</div>
+			<br/>
+			<div class="row">
+				<div class="col-md-5">
+					<label for="mobile" class="control-label">Mobile Number</label>
+					<input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile Number" />
+					<span id="mobile_error" class="error_message hide"></span>
+				</div>
+			</div>
+			<br/>
+			<div class="row">
+				<div class="col-md-5">
+					<label for="password1" class="control-label">Password</label>
+					<input type="password" class="form-control" id="password1" name="password1" placeholder="Password" />
+					<span id="password1_error" class="error_message hide">passwords do not match</span>
+					<div class="passstrength"></div>
+				</div>
+				<div class="col-md-5">
+					<label for="password2" class="control-label">Repeat Password</label>
+					<input type="password" class="form-control" id="password2" name="password2" placeholder="Password" />
+					<span id="password2_error" class="error_message hide">passwords do not match</span>
+				</div>
+			</div>
+		</div>
+		<div id="editRoles" class="model_content hide">
+			<div class="row">
+				<div class="col-md-5">
+					<label for="userid">Roles</label>
+				</div>
+			</div>
+			<div th:each="roleDetail : ${roleDetails}" class="row checkbox roleindent" >
+    			<label>
+     				<input type="checkbox" id="tl"  th:id="${'role_' + roleDetail.roleId}" th:name="${'role_' + roleDetail.roleId}" th:text="${roleDetail.name}" th:disabled="${!roleDetail.assignable}"/>  
+     			</label>				
+			</div>
+			<div th:switch="${roleLevel}">
+				<div th:case="'noview'" class="alert alert-danger">You do not have sufficient rights to view roles.</div>
+				<div th:case="*"></div>
+			</div>
+		</div>
+
+		<div id="viewRoles" class="model_content hide">
+			<div class="row">
+				<div class="col-md-5">
+					<label for="userid">Roles</label>
+				</div>
+			</div>
+			<div th:each="roleDetail : ${roleDetails}" class="row checkbox roleindent" >
+    			<label>
+     				<input type="checkbox" id="tl"  th:id="${'viewrole_' + roleDetail.roleId}" th:text="${roleDetail.name}" th:disabled="${true}"/>  
+     			</label>				
+			</div>
+			<div th:switch="${roleLevel}">
+				<div th:case="'noview'" class="alert alert-danger">You do not have sufficient rights to view roles.</div>
+				<div th:case="*"></div>
+			</div>
+		</div>
+		
+	      <div class="modal-footer">
+	      	<img id="waiting" src="/img/cell_wait.gif" class="waiting hide" />
+	        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="clearModal();">Cancel</button>
+	        <button id="nextmodalwindow" type="button" class="btn" onclick="modalSwitch();">Roles</button>
+	        <button id="saveUser" type="button" class="btn btn-primary" onclick="validateAndSend()">Add User</button>
+	      </div>
+      	</form>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<script src="/js/pagejs/userman.js"></script>
+<script src="/js/pagejs/mancommon.js"></script>

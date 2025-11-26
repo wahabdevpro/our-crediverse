@@ -1,0 +1,10 @@
+#!/bin/bash
+
+## XXX TODO FIXME this template is garbage ... you should not use template variables that look like bash variables and at that should also not use variables that have specific meaning like PATH ... please don't ever do anything like this again ...
+
+if [ -z "$C4U_JAVA_HOME" ]
+then
+        exec java -cp ${PATH}/guiserver/lib:${PATH}/guiserver/lib/*:${PATH}/guiserver/lib/*.jar hxc.userinterfaces.gui.jetty.JettyMain "${@}" 2>&1
+else
+        exec $C4U_JAVA_HOME/bin/java -cp ${PATH}/guiserver/lib:${PATH}/guiserver/lib/*:${PATH}/guiserver/lib/*.jar hxc.userinterfaces.gui.jetty.JettyMain "${@}" 2>&1
+fi

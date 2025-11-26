@@ -1,0 +1,366 @@
+<!-- Modal Server Info -->
+<div class="modal fade" id="transferModal" tabindex="-1" role="dialog" aria-labelledby="transferModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div id="ecstransferModalHeader" class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="transferModalTitle">Add New Transfer Mode</h4>
+      </div>
+      <div class="modal-body">
+      	<form id="transferModalForm" name="transferModalForm">
+      		<ul class="nav nav-tabs">
+			  <li class="active"><a href="#transferModalTransfer" data-toggle="tab">Transfer</a></li>
+			  <li><a href="#transferModalDonor" data-toggle="tab">Donor</a></li>
+			  <li><a href="#transferModalRecipient" data-toggle="tab">Recipient</a></li>
+			  <li><a href="#transferModalCommission" data-toggle="tab">Transfer Charge</a></li>
+			  <li><a href="#transferModalTexts" data-toggle="tab">Multilingual Text</a></li>
+			</ul>
+			
+			<div class="tab-content">
+				<!-- Transfer Configuration -->
+				<div class="tab-pane modalconent active" id="transferModalTransfer">
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="transferModeID" class="control-label">Transfer Mode ID</label>
+							<input type="text" class="form-control modalInput" id="transferModeID" name="transferModeID" placeholder="Transfer Mode ID" />
+							<span id="transferModeID_error" class="error_message hide"></span>
+						</div>
+						
+						<div class="col-md-6" id="transferTypeContent">
+							<label for="transferType" class="control-label">Transfer Type</label>
+							<select id="transferType" name="transferType" class="selectpicker modalInput">
+								<option value="OnceOff">Once-Off</option>
+								<option value="Periodic">Periodic</option>
+								<option value="UponDepletion">Upon Depletion</option>
+							</select>
+							<span id="serviceType_error" class="error_message hide"></span>
+						</div>				
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="interval" class="control-label">Interval</label>
+							<input type="text" class="form-control numericfields modalInput" id="interval" name="interval" placeholder="Interval" />
+							<span id="interval_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6" id="intervalTypeContent">
+							<label for="intervalType" class="control-label">Interval Type</label>
+							<select id="intervalType" name="intervalType" class="selectpicker modalInput">
+								<option value="Days">Days</option>
+								<option value="Weeks">Weeks</option>
+								<option value="Months">Months</option>
+							</select>
+							<span id="serviceType_error" class="error_message hide"></span>
+						</div>	
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="retryIntervalMinutes" class="control-label">Retry Interval in Minutes</label>
+							<input type="text" class="form-control numericfields modalInput" id="retryIntervalMinutes" name="retryIntervalMinutes" placeholder="Retry Interval in Minutes" />
+							<span id="retryIntervalMinutes_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="maxRetries" class="control-label">Max Retries</label>
+							<input type="text" class="form-control numericfields modalInput" id="maxRetries" name="maxRetries" placeholder="Maximum Retries" />
+							<span id="maxRetries_error" class="error_message hide"></span>
+						</div>		
+					</div>
+					
+					<div class="row modalrowcontent" id="conversionRateContent">
+						<div class="col-md-6" id="conversionRateDiv">
+							<label for="conversionRate" class="control-label">Transfer Conversion Rate
+								<span id='copyCommandHelpBtn' class='glyphicon glyphicon-question-sign' style='margin-left:10px; color:blue;' data-toggle="tooltip" data-placement="right" title="Recipient Value = Donor value (In Charging System) x Transfer Conversion Rate"></span>
+							</label>
+							<select id="conversionRate" name="conversionRate" data-id="conversionRate" class="selectpicker modalInput">
+								<option value="640000">None</option>
+								<option value="655360000">Multiply by 1024</option>
+								<option value="640000000">Multiply by 1000</option>
+								<option value="64000000">Multiply by 100</option>
+								<option value="6400000">Multiply by 10</option>
+								<option value="64000">Divide by 10</option>
+								<option value="6400">Divide by 100</option>
+								<option value="640">Divide by 1000</option>
+								<option value="625">Divide by 1024</option>
+							</select>
+							<span id="conversionRate_error" class="error_message hide"></span>
+						</div>
+					</div>
+									
+					<div class="row modalrowcontent">
+						<div class="col-md-12" id="requiredVariantsContent">
+							<label for="requiredSubscriptionVariants" class="control-label">Required Subscription Variants</label>
+								<select id="requiredSubscriptionVariants" name="requiredSubscriptionVariants" class="form-control selectpicker modalInput" multiple="true" title="Required Subscription Variants..." >
+								    <option>Daily</option>
+								    <option>Weekly</option>
+								    <option>Monthly</option>
+								    <option>OneMonth</option>
+								</select>
+							<span id="requiredSubscriptionVariants_error" class="error_message hide"></span>
+						</div>
+					</div>
+										
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="topUpOnly">Top-up Only</label>
+							<div class="checkbox modalcheckbox">
+							  <label>
+							    <input id="topUpOnly" name="topUpOnly" type="checkbox" class="modalInput" />This is a Top-up only Transfer Mode
+							  </label>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<label for="topUpOnly">Pin Required</label>
+							<div class="checkbox modalcheckbox">
+							  <label>
+							    <input id="requiresPIN" name="requiresPIN" type="checkbox" class="modalInput" />PIN Required
+							  </label>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="topUpOnly">Auto-suspend</label>
+							<div class="checkbox modalcheckbox">
+							  <label>
+							    <input id="autoSuspend" name="autoSuspend" type="checkbox" class="modalInput" />Auto-suspend (insufficient funds)
+							  </label>
+							</div>
+						</div>
+					</div>					
+				</div>
+				
+				
+				<!-- Donor Configuration -->
+				<div class="tab-pane modalconent" id="transferModalDonor">
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="donorAccountID" class="control-label">Donor Account ID</label>
+							<input type="text" class="form-control numericfields modalInput" id="donorAccountID" name="donorAccountID" placeholder="Donor Offer ID" />
+							<span id="donorAccountID_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6" id="donorAccountTypeContent">
+							<label for="donorAccountType" class="control-label">Donor Account Type</label>
+							<select id="donorAccountType" name="donorAccountType" class="selectpicker modalInput">
+								<option value="0">Time</option>
+								<option value="1">Money</option>
+								<option value="2">Octets (Total)</option>
+								<option value="3">Octets (In)</option>
+								<option value="4">Octets (Out)</option>
+								<option value="5">Units</option>
+								<option value="6">Volume</option>
+							</select>
+							<span id="serviceType_error" class="error_message hide"></span>
+						</div>
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="donorMinBalanceUI" class="control-label">Minimum Donor Balance</label>
+							<input type="text" class="form-control currencyfields modalInput" id="donorMinBalanceUI" name="donorMinBalanceUI" placeholder="Minimum Donor Balance" />
+							<span id="donorMinBalanceUI_error" class="error_message hide"></span>
+						</div>
+							
+						<div class="col-md-6">
+							<label for="donorMaxBalanceUI" class="control-label">Maximum Donor Balance</label>
+							<input type="text" class="form-control currencyfields modalInput" id="donorMaxBalanceUI" name="donorMaxBalanceUI" placeholder="Maximum Donor Balance" />
+							<span id="donorMaxBalanceUI_error" class="error_message hide"></span>
+						</div>
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="maxAmountPerPeriod" class="control-label">Maximum Amount per Period</label>
+							<input type="text" class="form-control currencyfields modalInput" id="maxAmountPerPeriod" name="maxAmountPerPeriod" placeholder="Maximum allowed amount transferred by Donor for given period" />
+							<span id="maxAmountPerPeriod_error" class="error_message hide"></span>
+						</div>
+							
+						<div class="col-md-6">
+							<label for="maxCountPerPeriod" class="control-label">Maximum Transfer Period Count</label>
+							<input type="text" class="form-control currencyfields modalInput" id="maxCountPerPeriod" name="maxCountPerPeriod" placeholder="Maximum allowed count of transfers by Donor for given period." />
+							<span id="maxCountPerPeriod_error" class="error_message hide"></span>
+						</div>
+					</div>
+					
+					
+					
+					<div class="row modalrowcontent" id="donorUnitsDisplayConversionContent">
+						<div class="col-md-6">
+							<label for="donorUnitsDisplayConversion" class="control-label">Donor Conversion Rate
+								<span id='copyCommandHelpBtn' class='glyphicon glyphicon-question-sign' style='margin-left:10px; color:blue;' data-toggle="tooltip" data-placement="right" title="Conversion rate associated with the Minimum and Maximum Balance"></span>
+							</label>
+							<select id="donorUnitsDisplayConversion" name="donorUnitsDisplayConversion" class="selectpicker modalInput">
+								<option value="640000">None</option>
+								<option value="655360000">Multiply by 1024</option>
+								<option value="640000000">Multiply by 1000</option>
+								<option value="64000000">Multiply by 100</option>
+								<option value="6400000">Multiply by 10</option>
+								<option value="64000">Divide by 10</option>
+								<option value="6400">Divide by 100</option>
+								<option value="640">Divide by 1000</option>
+								<option value="625">Divide by 1024</option>
+							</select>
+							<span id="donorUnitsDisplayConversion_error" class="error_message hide"></span>
+						</div>
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-12">
+							<label for="validDonorServiceClasses" class="control-label">Valid Donor Service Classes</label>
+							<input type="text" class="form-control modalInput" id="validDonorServiceClasses" name="validDonorServiceClasses" placeholder="Valid Donor Service Classes" />
+							<span id="validDonorServiceClasses_error" class="error_message hide"></span>
+						</div>
+					</div>
+				</div>
+				
+				<!-- Recipient Configuration -->
+				<div class="tab-pane modalconent" id="transferModalRecipient">
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="recipientAccountID" class="control-label">Recipient Account ID</label>
+							<input type="text" class="form-control numericfields modalInput" id="recipientAccountID" name="recipientAccountID" placeholder="Recipient Account ID" />
+							<span id="recipientAccountID_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6" id="recipientAccountTypeContent">
+							<label for="recipientAccountType" class="control-label">Recipient Account Type</label>
+							<select id="recipientAccountType" name="recipientAccountType" class="selectpicker modalInput">
+								<option value="0">Time</option>
+								<option value="1">Money</option>
+								<option value="2">Octets (Total)</option>
+								<option value="3">Octets (In)</option>
+								<option value="4">Octets (Out)</option>
+								<option value="5">Units</option>
+								<option value="6">Volume</option>
+							</select>
+							<span id="recipientAccountType_error" class="error_message hide"></span>
+						</div>
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="thresholdID" class="control-label">Recipient Threshold ID</label>
+							<input type="text" class="form-control numericfields modalInput" id="thresholdID" name="thresholdID" placeholder="Recipient Threshold ID" />
+							<span id="thresholdID_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="recipientExpiryDays" class="control-label">Benefit Validity Period (days)</label>
+							<input type="text" class="form-control numericfields modalInput" id="recipientExpiryDays" name="recipientExpiryDays" placeholder="Leave blank for none" />
+							<span id="recipientExpiryDays_error" class="error_message hide"></span>
+						</div>
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="recipientMinBalanceUI" class="control-label">Minimum Recipient Balance</label>
+							<input type="text" class="form-control currencyfields modalInput" id="recipientMinBalanceUI" name="recipientMinBalanceUI" placeholder="Minimum Recipient Balance" />
+							<span id="recipientMinBalanceUI_error" class="error_message hide"></span>
+						</div>
+							
+						<div class="col-md-6">
+							<label for="recipientMaxBalanceUI" class="control-label">Maximum Recipient Balance</label>
+							<input type="text" class="form-control currencyfields modalInput" id="recipientMaxBalanceUI" name="recipientMaxBalanceUI" placeholder="Maximum Recipient Balance" />
+							<span id="recipientMaxBalanceUI_error" class="error_message hide"></span>
+						</div>
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="minAmountUI" class="control-label">Minimum Transfer Amount</label>
+							<input type="text" class="form-control currencyfields modalInput" id="minAmountUI" name="minAmountUI" placeholder="Minimum Transfer Amount" />
+							<span id="minAmountUI_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="maxAmountUI" class="control-label">Maximum Transfer Amount</label>
+							<input type="text" class="form-control currencyfields modalInput" id="maxAmountUI" name="maxAmountUI" placeholder="Maximum Transfer Amount" />
+							<span id="maxAmountUI_error" class="error_message hide"></span>
+						</div>	
+					</div>
+					
+					<div class="row modalrowcontent" id="recipientUnitsDisplayConversionContent">
+						<div class="col-md-6">
+							<label for="recipientUnitsDisplayConversion" class="control-label">Recipient Conversion Rate
+								<span id='copyCommandHelpBtn' class='glyphicon glyphicon-question-sign' style='margin-left:10px; color:blue;' data-toggle="tooltip" data-placement="right" title="Donor Charge = Recipient Value (In Charging System) x Recipient Conversion factor"></span>
+							</label>
+							<select id="recipientUnitsDisplayConversion" name="recipientUnitsDisplayConversion" class="selectpicker modalInput">
+								<option value="640000">None</option>
+								<option value="655360000">Multiply by 1024</option>
+								<option value="640000000">Multiply by 1000</option>
+								<option value="64000000">Multiply by 100</option>
+								<option value="6400000">Multiply by 10</option>
+								<option value="64000">Divide by 10</option>
+								<option value="6400">Divide by 100</option>
+								<option value="640">Divide by 1000</option>
+								<option value="625">Divide by 1024</option>
+							</select>
+							<span id="recipientUnitsDisplayConversion_error" class="error_message hide"></span>
+						</div>
+					</div>
+					
+
+					<div class="row modalrowcontent">
+						<div class="col-md-12">
+							<label for="validRecipientServiceClasses" class="control-label">Valid Recipient Service Classes</label>
+							<input type="text" class="form-control modalInput" id="validRecipientServiceClasses" name="validRecipientServiceClasses" placeholder="Valid Recipient Service Classes" />
+							<span id="validRecipientServiceClasses_error" class="error_message hide"></span>
+						</div>
+					</div>
+
+					<div class="row modalrowcontent">
+						<div class="col-md-12">
+							<label for="validRecipientServiceClasses" class="control-label">Black Listed PSO Bits (CSV list)</label>
+							<input type="text" class="form-control modalInput" id="blackListedPSOBits" name="blackListedPSOBits" placeholder="Black Listed PSO Bits (CSV list)" />
+							<span id="blackListedPSOBits_error" class="error_message hide"></span>
+						</div>
+					</div>
+				</div>
+				
+				<!-- Recipient Configuration -->
+				<div class="tab-pane modalconent" id="transferModalCommission">
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="commissionAmount" class="control-label" th:text="${'Transfer Charge  Amount (' + session.curSymbol + ')'}">Transfer Charge Amount (USD)</label>
+							<input type="text" class="form-control currencyfields modalInput" id="commissionAmount" name="commissionAmount" placeholder="Transfer Charge Amount (Fixed Amount)" />
+							<span id="commissionAmount_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="commissionPercentage" class="control-label">Transfer Charge Percentage</label>
+							<input type="text" class="form-control currencyfields modalInput" id="commissionPercentage" name="commissionPercentage" placeholder="Transfer Charge Percentage" />
+							<span id="commissionPercentage_error" class="error_message hide"></span>
+						</div>
+					</div>
+				</div>
+				
+				<!--  Text Configuration -->
+				 <div class="tab-pane modalconent" id="transferModalTexts">
+					 <div class="row modalrowcontent">
+						<div class="panel-group modaltexts" id="qt_accordion">
+						
+							<div th:include="advconfig/phraseField :: messagePanel" th:with="label=${'Transfer Mode Name'}, field=${'name'}, tab=${'tm'}, state=${'1'}" class="panel panel-default"/>
+							
+							<div th:include="advconfig/phraseField :: messagePanel" th:with="label=${'Service Units'}, field=${'units'}, tab=${'tm'}" class="panel panel-default"/>					
+						
+						</div>	
+					 </div>
+				 </div>
+				 
+			</div>
+      	</form>
+      	
+		<div id="transferModalError" class="row alert alert-danger hide">
+				Things went wrong!!
+		</div>
+		<div class="modal-footer">
+			<img id="transferModalWaiting" src="/img/cell_wait.gif" class="waiting hide" />
+			<button type="button" class="btn btn-default" data-dismiss="modal" >Cancel</button>
+			<button id="transferModalSave" type="button" class="btn btn-primary savebtn" onclick="saveModalCall()">Save</button>
+		</div>
+		
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script language="javascript">
+	bindDragable("transferModal", "ecstransferModalHeader");
+</script>

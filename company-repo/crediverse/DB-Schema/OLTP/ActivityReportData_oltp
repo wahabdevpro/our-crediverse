@@ -1,0 +1,12 @@
+*************************** 1. row ***************************
+       Table: ActivityReportData
+Create Table: CREATE TABLE `ActivityReportData` (
+  `serviceID` varchar(50) DEFAULT NULL,
+  `variantID` varchar(50) DEFAULT NULL,
+  `processID` varchar(50) DEFAULT NULL,
+  `channel` varchar(50) DEFAULT NULL,
+  `succeeded` bigint(20) DEFAULT NULL,
+  `failed` bigint(20) DEFAULT NULL,
+  `chargeLevied` decimal(20,4) DEFAULT NULL,
+  `ts` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

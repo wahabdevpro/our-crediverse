@@ -1,0 +1,45 @@
+FROM rust:1.83.0-slim as base
+
+RUN apt-get -y update && apt-get -y install apt-utils runit wget unzip libssl-dev pkg-config build-essential && rm -rf /var/lib/apt/lists/*
+
+#RUN apt-get -y install apt-utils libprotoc-dev libprotoc23 wget runit
+
+RUN wget https://github.com/protocolbuffers/protobuf/releases/download/v23.2/protoc-23.2-linux-x86_64.zip
+
+RUN unzip protoc-23.2-linux-x86_64.zip -d /usr/local/
+
+RUN mkdir src
+
+WORKDIR /usr/src/team_service_api
+
+ADD Cargo.toml .
+ADD src/dummy.rs src/
+
+RUN cargo install --path . --bin dummy
+
+COPY . .
+
+RUN cargo install --profile release --path . --locked 
+
+ENTRYPOINT ["/usr/src/team_service_api/target/release/team-service"]
+
+
+FROM rust:1.83.0-slim
+
+RUN apt-get -y update && apt-get -y install apt-utils runit wget unzip   && rm -rf /var/lib/apt/lists/*
+
+RUN wget https://github.com/protocolbuffers/protobuf/releases/download/v23.2/protoc-23.2-linux-x86_64.zip
+
+RUN unzip protoc-23.2-linux-x86_64.zip -d /usr/local/
+
+WORKDIR /usr/src/team_service_api
+
+ARG team_service_api_port=5100 
+
+EXPOSE $team_service_api_port
+
+ENV TEAM_SERVICE_API_PORT=$team_service_api_port
+
+COPY --from=base /usr/src/team_service_api/target/release/team-service /usr/local/bin
+
+CMD ["/usr/local/bin/team-service"]

@@ -1,0 +1,168 @@
+<link type="text/css" href="/css/pagecss/creditSharing.css" rel="stylesheet" />
+
+<div class="row">
+	<div class="col-sm-12">
+		<h1 class="page-header config-prop-headings">Service Configuration Properties</h1>
+	</div>
+</div>
+		
+<!-- Tabbed Content -->
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#general" data-toggle="tab">General</a></li>
+  <li><a href="#returnCodes" data-toggle="tab">Return Codes</a></li>
+  <li><a href="#serviceclasses" data-toggle="tab">Service Classes</a></li>
+  <li><a href="#quotas" data-toggle="tab">Quotas</a></li>
+  <li><a href="#variants" data-toggle="tab">Variants</a></li>
+  <li><a href="#ussd" data-toggle="tab">USSD Menu</a></li>
+</ul>
+
+<div class="tab-content">
+	<div class="tab-pane tabcontent active" id="general">
+		<form th:if="${not no_config}" id="configForm" name="configForm" class="form-horizontal" role="form">
+				<div th:each="field : ${fields}" th:if="${!(#strings.endsWith(field.fieldName,'ReturnCodesTexts') || #strings.endsWith(field.fieldName,'UssdProcess') || #strings.endsWith(field.fieldName,'Quotas') || #strings.endsWith(field.fieldName,'ServiceClasses') || #strings.endsWith(field.fieldName,'Variants')) }" class="form-group">
+					<div class="row">
+						<label for="something" class="col-sm-4 control-label"
+							th:text="${utils.splitCamelCaseString(field.fieldName)}">label</label>
+
+						<!--  Boolean -->
+						<div th:if="${#strings.endsWith(field.valueType, 'Boolean')}" class="col-sm-3">
+							<input type="checkbox"
+								th:readonly="${field.readOnly}" th:id="${field.fieldName}"
+								th:name="${field.fieldName}" th:checked="${field.value}" 
+								th:onchange="'javascript:dataUpdated();'"
+								/>
+						</div>
+						
+						<!-- Integer -->
+						<div th:if="${#strings.endsWith(field.valueType, 'Integer')}" class="col-sm-3">
+							<input class="numericfields form-control" id="directoryName" type="text"
+								th:readonly="${field.readOnly}" th:id="${field.fieldName}"
+								th:name="${field.fieldName}" th:value="${field.value}"
+								th:onchange="'javascript:dataUpdated();'"
+								/>
+						</div>
+						
+						<!-- String -->
+						<div th:if="${#strings.endsWith(field.valueType, 'String')}" class="col-sm-3">
+							<input class="form-control" id="directoryName" type="text"
+								th:readonly="${field.readOnly}" th:id="${field.fieldName}"
+								th:name="${field.fieldName}" th:value="${field.value}"
+								th:onchange="'javascript:dataUpdated();'"
+								/>
+						</div>
+						
+						<!-- Texts -->
+						<div th:if="${#strings.endsWith(field.valueType, 'Texts')}" class="col-sm-6">
+							<div th:each="lang,iterStat : ${langs}">
+								<div th:if="${! #strings.isEmpty(lang.langDesc)}" class="row" style="margin-top:5px;">
+									<label for="defaults" class="col-sm-2 col-md-2 control-label" th:text="${lang.langDesc}">Default</label>
+									<div th:if="${#strings.endsWith(field.valueType, 'Texts')}" class="col-sm-3">
+										<input class="form-control" type="text"
+											th:readonly="${field.readOnly}" th:id="${field.fieldName}"
+											th:name="${field.fieldName + '_' + iterStat.count}" 
+											th:value="${field.value.getText(iterStat.count)}"
+											th:onchange="'javascript:dataUpdated();'"
+										/>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					
+
+					
+				</div>
+		</form>
+	</div>
+	
+	<!-- Return Codes -->
+	<div class="tab-pane tabcontent" id="returnCodes">
+		<div class="row" >
+				<div class="col-xs-11 col-sm-5 col-md-7 user_heading" style="margin-left: 20px;">Return Codes</div>
+		</div>	
+		<form th:if="${not no_config}" id="configReturnCodeForm" name="configReturnCodeForm" class="form-horizontal" role="form">
+			<div th:include="advconfig/returnCodesTexts" />
+		</form>
+	</div>
+	
+	<!--  Service Classes -->
+	<div class="tab-pane tabcontent" id="serviceclasses">
+		<div class="row" >
+			<div class="col-xs-11 col-sm-5 col-md-7 user_heading" style="margin-left: 20px;">Service Classes</div>
+			<div class="col-xs-6 col-md-4" style="float:right; margin-right:20px" >
+				<button type="button" class="btn btn-success btn-xs" style="float:right;" data-toggle="modal" onclick="showAddServiceClass();" title="add service class"><span class="glyphicon glyphicon-plus"></span></button>
+			</div>
+		</div>
+		<div id="scinfo" th:include="creditsharing/serviceclasses" />
+	</div>
+	
+	<!--  Quotas -->
+	<div class="tab-pane tabcontent" id="quotas">
+		<div class="row" >
+			<div class="col-xs-11 col-sm-5 col-md-7 user_heading" style="margin-left: 20px;">Quotas/Bundles</div>
+			<div class="col-xs-6 col-md-4" style="float:right; margin-right:20px" >
+				<button type="button" class="btn btn-success btn-xs" style="float:right;" data-toggle="modal" onclick="showAddQuotas();" title="add quota"><span class="glyphicon glyphicon-plus"></span></button>
+			</div>
+		</div>
+		<div id="qtinfo" th:include="creditsharing/quotas" />
+	</div>
+		
+	<!--  Variants -->
+	<div class="tab-pane tabcontent" id="variants">
+		<div class="row" >
+			<div class="col-xs-11 col-sm-5 col-md-7 user_heading" style="margin-left: 20px;">Variants</div>
+		</div>
+		<div id="varinfo" th:include="creditsharing/variants" />
+	</div>
+
+	<!--  USSD Process Model -->		
+	<div class="tab-pane tabcontent" id="ussd">
+		<div th:include="advconfig/processgrid :: ussdGrid" th:with="label=${'USSD Process Configuration'}" class="panel panel-default"/>
+	</div>
+</div>
+
+<!-- Update Buttons -->
+<div th:include="common :: updateAndNotify" />
+
+<!-- Add/Edit Modals -->
+<div th:include="creditsharing/serviceclassmodal" />
+<div th:include="creditsharing/quotasmodal" />
+<div th:include="creditsharing/variantsmodal" />
+
+<!--  Delete Modal -->
+<div th:include="common :: deleteModal" />
+
+<link type="text/css" href="/css/bootstrap-select.min.css" rel="stylesheet" />
+<script src="/js/min/bootstrap-select.min.js"></script>
+<script src="/js/pagejs/mancommon.js"></script>
+
+<!-- Process Grid Libraries -->
+<link type="text/css" href="/css/c4u/c4u-process-grid.css" rel="stylesheet" />
+<script type="text/javascript" src="/js/full/c4uprocessgrid.js"></script>
+<link type="text/css" href="/css/jstree/style.css" rel="stylesheet" />
+<link type="text/css" href="/css/bpmn.css" rel="stylesheet" />
+<script type="text/javascript" src="/js/jstree/jstree.min.js"></script>
+
+<script type="text/javascript" src="/js/full/resultcode.js"></script>
+<script type="text/javascript" src="/js/pagejs/creditsharing.js"></script>
+
+
+
+<script th:inline="javascript">
+$(document).ready(function() {
+	// <![CDATA[        
+	var json = /*[[${ussdprocessJson}]]*/;
+    // ]]>
+	
+	try {
+		loadProcessModelTree(json);
+		initMessaging();
+	} catch(err) {
+		alert("page error: " + err);
+	}
+//	$(".returncodetexts").resultCodeController({
+//	});
+	//registerInputs();
+});
+</script>

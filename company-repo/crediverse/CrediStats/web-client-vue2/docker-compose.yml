@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+  credistats-portal:
+    #user: "cs:cs"
+    container_name: credistats-portal
+    image: ghcr.io/concurrent-systems/crediverse/credistats-portal:0.0.1
+    restart: always
+    environment:
+      WEB_PORTAL_PORT: "8802"
+      LOG_FILE_SIZE_BYTES: 1024000
+      LOG_FILE_COUNT_LIMIT: 100
+      LOG_FILE_COUNT_MIN: 10
+    ports:
+      - "8802:8802"
+    volumes:
+      - "${LOG_OUTPUT:-./logs}:/var/log/credistats-portal"
+    networks:
+      default:
+        aliases:
+        - cs_crediverse_stats_portal
+    command: [ "/bin/sh", "/app/run-portal.sh" ]
+
+networks:
+  default:
+    external:
+      name: cs_default
+

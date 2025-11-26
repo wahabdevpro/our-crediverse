@@ -1,0 +1,71 @@
+<div>
+	<div id="" th:if="${#lists.isEmpty(session.serviceclasses)}">
+		<p>Currently No Service Classes defined</p>
+	</div>
+	<div th:if="${!#lists.isEmpty(session.ServiceClasses)}" class="row">
+		<table id="servicesTable" class="table infotable table-hover table-bordered table-striped" style="width: 100%; table-layout: fixed;">
+			<col width="40px" />
+			<col width="30%" />
+			<col width="120px" />
+			<col width="120px" />
+			<col width="120px" />
+			<col width="120px" />
+			<col width="80px" />
+			<col width="150px" />
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Name</th>
+					<th>Provider</th>
+					<th>Consumer</th>
+					<th>Prosumer</th>
+					<th>Post Paid</th>
+					<th>Max</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="sc,iterStat : ${session.ServiceClasses}">
+
+					<td th:text="${ utils.extractField(sc, 'serviceClassID') }">-</td>
+					<td th:text="${ utils.extractPhraseField(sc, 'names', 'eng') }" th:dir="${directions != null ? directions.length > 0 ? directions[0] : 'ltr' : 'ltr'}">-</td>
+					<td>
+						<center>
+							<span th:if="${ utils.extractField(sc, 'eligibleForProvider') }" class="glyphicon glyphicon-ok-circle isexclusive"></span>
+							<span th:if="${ !utils.extractField(sc, 'eligibleForProvider') }" class="glyphicon glyphicon-remove-circle notexclusive"></span>
+						</center>
+					</td>
+					<td>
+						<center>
+							<span th:if="${ utils.extractField(sc, 'eligibleForConsumer') }" class="glyphicon glyphicon-ok-circle isexclusive"></span>
+							<span th:if="${ !utils.extractField(sc, 'eligibleForConsumer') }" class="glyphicon glyphicon-remove-circle notexclusive"></span>
+						</center>
+					</td>
+					<td>
+						<center>
+							<span th:if="${ utils.extractField(sc, 'eligibleForProsumer') }" class="glyphicon glyphicon-ok-circle isexclusive"></span>
+							<span th:if="${ !utils.extractField(sc, 'eligibleForProsumer') }" class="glyphicon glyphicon-remove-circle notexclusive"></span>
+						</center>
+					</td>
+					<td>
+						<center>
+							<span th:if="${ utils.extractField(sc, 'postPaid') }" class="glyphicon glyphicon-ok-circle isexclusive"></span>
+							<span th:if="${ !utils.extractField(sc, 'postPaid') }" class="glyphicon glyphicon-remove-circle notexclusive"></span>
+						</center>
+					</td>
+					<td th:text="${ utils.extractField(sc, 'maxConsumers') }" style="text-align: center">-</td>				
+
+					<td style="text-align: center">
+						<a th:id="${'scview_' + iterStat.index}"  th:onclick="'javascript:showServiceclass(\'view\',' + ${iterStat.index} + ');return false;'" href="#"><span class="glyphicon glyphicon-eye-open viewbutton" title="view"></span></a> 
+						<span>|</span>
+						<a th:id="${'scedit_' + iterStat.index}" th:onclick="'javascript:showServiceclass(\'edit\',' + ${iterStat.index} + ');return false;'" href="#"><span class="glyphicon glyphicon-pencil editbutton" title="edit"></span></a> 
+						<span>|</span>
+						<a th:id="${'scedit_' + iterStat.index}" th:onclick="'javascript:deleteServiceclass(' + ${iterStat.index} + ',\'' + ${ utils.extractField(sc, 'serviceClassID') } + '\');return false;'" href="#"><span class="glyphicon glyphicon-trash deletebutton" title="delete"></span></a> 
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+</div>
+

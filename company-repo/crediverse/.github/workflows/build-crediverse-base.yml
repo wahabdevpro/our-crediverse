@@ -1,0 +1,154 @@
+name: Build Crediverse BASE
+on:
+  workflow_call:
+    outputs:
+      version:
+        description: ' version as output'
+        value: ${{ jobs.build-crediverse.outputs.version }}
+concurrency:
+  group: build_main
+env:
+  TS_IMAGE_NAME: ecds-ts
+  API_IMAGE_NAME: ecds-api
+  GUI_IMAGE_NAME: ecds-gui
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+jobs:
+  build-and-publish-featurebar:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+      packages: 'write'
+    steps:
+      - name: 'Feature Bar Start Time'
+        run: |
+          CS_FEATURE_BAR_START_TIME=$(date +"%Y-%m-%dT%H:%M:%S")
+          echo "Feature Bar Build Starts at => $CS_FEATURE_BAR_START_TIME"
+      - uses: 'actions/checkout@v3'
+      - name: Login to ghcr
+        run: |-
+          echo ${{ github.repository }}
+          echo ${{ github.run_id }}
+          echo ${{ github.run_number }}
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+      - name: Configure Version Information
+        id: version-info
+        run: |-
+          IMAGE_ID=ghcr.io/${{ github.repository }}/feature-bar
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          #[ "$VERSION" == "main" ] && VERSION=build-${{github.run_number}}
+          VERSION=$VERSION-build-${{github.run_id}}
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+          echo GCR_PROJECT_ID=$GCR_PROJECT_ID
+          # Share variables between steps (which each run in a separate process)
+          echo "IMAGE_ID=$IMAGE_ID" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+      - name: Build Image
+        run: |-
+          IMAGE_NAME=feature-bar
+          echo "Building $IMAGE_NAME"
+          cd common/featureBar/server/featureBarImage
+
+          docker build -t ${{ env.IMAGE_ID }}:${{ env.VERSION }} .
+          docker tag ${{ env.IMAGE_ID }}:${{ env.VERSION }} ${{ env.IMAGE_ID }}:latest
+          docker push ${{ env.IMAGE_ID }}:${{ env.VERSION }}
+          docker push ${{ env.IMAGE_ID }}:latest
+  build-crediverse:
+    strategy:
+      matrix:
+        #IMAGE_NAME: [$API_IMAGE_NAME]
+        IMAGE_NAME: [$TS_IMAGE_NAME, $API_IMAGE_NAME, $GUI_IMAGE_NAME]
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+      packages: 'write'
+    outputs:
+      version: ${{ steps.version-info.outputs.version }}
+    steps:
+      - name: 'Job Start Time'
+        run: |
+          CS_START_TIME=$(date +"%Y-%m-%dT%H:%M:%S")
+          echo "Start Time => $CS_START_TIME"
+      - uses: 'actions/checkout@v3'
+      - name: Set up JDK 11 for x64
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          architecture: x64
+      #- name: Validate Gradle wrapper
+      #  # See https://github.com/gradle/wrapper-validation-action
+      #  uses: gradle/wrapper-validation-action@v1.0.4
+      #- name: Run the Gradle package task
+      #  # See https://github.com/gradle/gradle-build-action
+      #  uses: gradle/gradle-build-action@v2
+      #  with:
+      #    gradle-version: wrapper
+      #    arguments: build -x test -x check
+      - name: Print java version
+        run: |-
+          which java
+          java --version
+      - name: Login to ghcr
+        run: |-
+          echo ${{ github.repository }}
+          echo ${{ github.run_id }}
+          echo ${{ github.run_number }}
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+          #echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      - name: Configure Version Information
+        id: version-info
+        run: |-
+          IMAGE_ID=ghcr.io/${{ github.repository }}/${{ matrix.IMAGE_NAME }}
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          if [[ "${{ github.ref }}" == "refs/tags/"* ]] 
+          then
+          VERSION=$(echo $VERSION | sed -e 's/^v//') # Removes the `v` from the start of a version tag
+          echo TAG_VERSION=$VERSION
+          echo "TAG_VERSION=$VERSION" >> $GITHUB_ENV
+          fi
+          # [ "$VERSION" == "main" ] && VERSION=build-${{github.run_number}}
+          VERSION=$VERSION-build-${{github.run_id}}
+          #VERSION=build-${{github.run_id}}
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+          echo GCR_PROJECT_ID=$GCR_PROJECT_ID
+          # Share variables between steps (which each run in a separate process)
+          echo "IMAGE_ID=$IMAGE_ID" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Build Image
+        run: |-
+          IMAGE_NAME=${{ matrix.IMAGE_NAME }}
+          export CI_BUILD_DATETIME=$(date +"%Y-%m-%dT%H:%M:%S")
+          export CI_BUILD_NUMBER=${{github.run_id}}
+          export CI_COMMIT_REF=${{github.sha}}
+          export CI_GITHUB_TAG="PR_MERGED_BUILD,NO_GITHUB_TAG"
+          export CI_BRANCH_NAME=${{ github.ref }}
+          export CI_DOCKER_TAG=${{env.VERSION}}
+          echo $CI_BUILD_DATETIME
+          echo $CI_BUILD_NUMBER
+          echo $CI_COMMIT_REF
+          echo $CI_GITHUB_TAG
+          echo $CI_BRANCH_NAME
+          echo $CI_DOCKER_TAG
+          echo "Building $IMAGE_NAME"
+          cd ./$IMAGE_NAME
+          ./gradlew --info --stacktrace clean
+          ./gradlew --info --stacktrace publish
+          docker build -t ${{ env.IMAGE_ID }}:${{ env.VERSION }} .
+          docker tag ${{ env.IMAGE_ID }}:${{ env.VERSION }} ${{ env.IMAGE_ID }}:latest
+          if [[ "${{ github.ref }}" == "refs/tags/"* ]] 
+          then
+          docker tag ${{ env.IMAGE_ID }}:${{ env.VERSION }} ${{ env.IMAGE_ID }}:${{ env.TAG_VERSION }}
+          docker push ${{ env.IMAGE_ID }}:${{ env.TAG_VERSION }}
+          fi
+          docker push ${{ env.IMAGE_ID }}:${{ env.VERSION }}
+          docker push ${{ env.IMAGE_ID }}:latest

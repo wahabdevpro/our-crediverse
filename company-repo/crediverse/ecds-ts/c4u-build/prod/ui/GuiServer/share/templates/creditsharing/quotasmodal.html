@@ -1,0 +1,145 @@
+<!-- Modal Server Info -->
+<div class="modal fade" id="quotasModal" tabindex="-1" role="dialog" aria-labelledby="quotasModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="quotasModalTitle">Add New Quota</h4>
+      </div>
+      <div class="modal-body">
+      	<form id="quotasModalForm" name="quotasModalForm">
+      		<ul class="nav nav-tabs">
+			  <li class="active"><a href="#quotasModalConfig" data-toggle="tab">Configuration</a></li>
+			  <li><a href="#quotasModalTexts" data-toggle="tab">Multilingual Text</a></li>
+			</ul>
+			
+			<div class="tab-content">
+				<!-- General Configuration -->
+				<div class="tab-pane modalconent active" id="quotasModalConfig">
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="serviceType" class="control-label">Service Type</label>
+							<select id="serviceType" name="serviceType" class="selectpicker modalInput">
+								<option value="DATA">Data</option>
+								<option value="MMS">MMS</option>
+								<option value="SMS">SMS</option>
+								<option value="VOICE">Voice</option>
+							</select>
+							<span id="serviceType_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="sponsorOfferID" class="control-label">Sponsor Offer ID</label>
+							<input type="text" class="form-control numericfields modalInput" id="sponsorOfferID" name="sponsorOfferID" placeholder="Sponsor Offer ID" />
+							<span id="sponsorOfferID_error" class="error_message hide"></span>
+						</div>
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="sponsorUsageCounterID" class="control-label">Sponsor Usage Counter ID</label>
+							<input type="text" class="form-control numericfields modalInput" id="sponsorUsageCounterID" name="sponsorUsageCounterID" placeholder="Sponsor Usage Counter ID" />
+							<span id="sponsorUsageCounterID_error" class="error_message hide"></span>
+						</div>
+							
+						<div class="col-md-6">
+							<label for="beneficiaryOfferID" class="control-label">Beneficiary Offer ID</label>
+							<input type="text" class="form-control numericfields modalInput" id="beneficiaryOfferID" name="beneficiaryOfferID" placeholder="Beneficiary Offer ID" />
+							<span id="beneficiaryOfferID_error" class="error_message hide"></span>
+						</div>
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="beneficiaryUsageCounterID" class="control-label">Beneficiary Usage Counter ID</label>
+							<input type="text" class="form-control numericfields modalInput" id="beneficiaryUsageCounterID" name="beneficiaryUsageCounterID" placeholder="Beneficiary Usage Counter ID" />
+							<span id="beneficiaryUsageCounterID_error" class="error_message hide"></span>
+						</div>
+							
+						<div class="col-md-6">
+							<label for="beneficiaryWarningUsageThresholdID" class="control-label">Beneficiary Warn Usage Threshold ID</label>
+							<input type="text" class="form-control numericfields modalInput" id="beneficiaryWarningUsageThresholdID" name="beneficiaryWarningUsageThresholdID" placeholder="Beneficiary Warning Usage Threshold ID" />
+							<span id="beneficiaryWarningUsageThresholdID_error" class="error_message hide"></span>
+						</div>
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="beneficiaryTotalThresholdID" class="control-label">Beneficiary Total Threshold ID</label>
+							<input type="text" class="form-control numericfields modalInput" id="beneficiaryTotalThresholdID" name="beneficiaryTotalThresholdID" placeholder="Beneficiary Total Threshold ID" />
+							<span id="beneficiaryTotalThresholdID_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="priceCentsCONVERTTOCENTS" class="control-label"  th:text="${'Quota Price (' + session.curSymbol + ')'}">Quota Price (USD)</label>
+							<input type="text" class="form-control currencyfields modalInput" id="priceCentsCONVERTTOCENTS" name="priceCentsCONVERTTOCENTS" placeholder="Quota Price" />
+							<span id="priceCentsCONVERTTOCENTS_error" class="error_message hide"></span>
+						</div>					
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="minUnits" class="control-label">Minimum Units</label>
+							<input type="text" class="form-control numericfields modalInput" id="minUnits" name="minUnits" placeholder="Minimum Units" />
+							<span id="minUnits_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="maxUnits" class="control-label">Maximum Units</label>
+							<input type="text" class="form-control numericfields modalInput" id="maxUnits" name="maxUnits" placeholder="Maximum Units" />
+							<span id="maxUnits_error" class="error_message hide"></span>
+						</div>
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="warningMargin" class="control-label">Warning Margin</label>
+							<input type="text" class="form-control numericfields modalInput" id="warningMargin" name="warningMargin" placeholder="Warning Margin" />
+							<span id="warningMargin_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="unitConversionFactor" class="control-label">CS Unit Conversion Factor</label>
+							<input type="text" class="form-control numericfields modalInput" id="unitConversionFactor" name="unitConversionFactor" placeholder="Unit Conversion Factor" />
+							<span id="csUnitConversionFactor_error" class="error_message hide"></span>
+						</div>
+					</div>
+				</div>
+				
+				<!--  Text Configuration -->
+				 <div class="tab-pane modalconent" id="quotasModalTexts">
+					 <div class="row modalrowcontent">
+						<div class="panel-group modaltexts" id="qt_accordion">
+						
+							<div th:include="advconfig/messageField :: messagePanel" th:with="label=${'Bundle name'}, field=${'name'}, tab=${'quotas'}, state=${'1'}" class="panel panel-default"/>
+
+							<div th:include="advconfig/messageField :: messagePanel" th:with="label=${'Service type name'}, field=${'service'}" class="panel panel-default"/>
+
+							<div th:include="advconfig/messageField :: messagePanel" th:with="label=${'Destination name'}, field=${'destination'}" class="panel panel-default"/>
+
+							<div th:include="advconfig/messageField :: messagePanel" th:with="label=${'Days of week name'}, field=${'daysOfWeek'}" class="panel panel-default"/>
+							
+							<div th:include="advconfig/messageField :: messagePanel" th:with="label=${'Time of day'}, field=${'timeOfDay'}" class="panel panel-default"/>
+							
+							<div th:include="advconfig/messageField :: messagePanel" th:with="label=${'Service/Monetary units name'}, field=${'unitName'}" class="panel panel-default"/>
+							
+						</div>	
+					 </div>
+				 </div>
+				 
+			</div>
+      	</form>
+      	
+		<div id="quotasModalError" class="row alert alert-danger hide">
+				Things went wrong!!
+		</div>
+		<div class="modal-footer">
+			<img id="quotasModalWaiting" src="/img/cell_wait.gif" class="waiting hide" />
+			<button type="button" class="btn btn-default" data-dismiss="modal" >Cancel</button>
+			<button id="quotasModalSave" type="button" class="btn btn-primary savebtn" onclick="saveModalCall()">Save</button>
+		</div>
+		
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script language="javascript">
+
+</script>

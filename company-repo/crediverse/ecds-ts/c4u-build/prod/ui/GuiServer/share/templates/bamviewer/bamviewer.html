@@ -1,0 +1,194 @@
+<!-- CSS Import -->
+
+<link type="text/css" rel="stylesheet" href="/css/pagecss/bamviewer.css"/>
+<link type="text/css" rel="stylesheet" href="/css/flot/custom-flot.css"/>
+<link type="text/css" rel="stylesheet" href="/css/flot/flot.css"/>
+<link type="text/css" rel="stylesheet" href="/css/radial-responsive-menu.css"/>
+<link type="text/css" rel="stylesheet" href="/css/bootstrap-select.css"/>
+
+<!--[if lte IE 8]>
+	<style type="text/css">
+		li.sortable-placeholder-show {
+			border: 1px dashed #CCC;
+			opacity: 0.99;
+			position: relative;
+			z-index: 1000;
+		}
+	</style>
+<![endif]-->
+
+<!-- HTML -->
+
+<!-- Heading -->
+<div class="row">
+	<div class="text-center">
+		<div class="user_heading">
+			Business Activity Monitoring
+		</div>
+	</div>
+</div>
+<br/>
+
+<!-- Main Content -->
+<div class="main-section row" style="min-height: 500px;display: none;">
+	
+	<!-- Side Menu -->
+	<div id="side-menu" class="col-lg-0 col-md-0 col-xs-0" style="text-align: center;">
+	
+		<!-- Heading For Side Menu -->
+		<div class="page-header" style="min-width: 180px;">
+  			<h1>BAM <small>Menu</small></h1>
+		</div>
+		
+		<!-- Two Sections - Main, Properties -->
+		<div role="tabpanel" style="min-width: 180px;">
+			
+			<!-- Sections -->
+ 			<ul id="nav-side-menu" class="nav nav-pills" role="tablist">
+    			<li role="presentation" class="active"><a href="#main" aria-controls="main" role="tab" data-toggle="tab">Main</a></li>
+    			<li role="presentation"><a href="#main-settings" aria-controls="main-settings" role="tab" data-toggle="tab">Settings</a></li>
+  			</ul>
+  			
+  			<!-- Underline -->
+			<span style="border-bottom: 1px solid #eee;display: block;padding-top: 15px;"></span>
+			
+ 			<!-- Section Pages -->
+  			<div class="tab-content">
+  			
+  				<!-- Menu Page -->
+    			<div role="tabpanel" class="tab-pane active" id="main">
+    			    				
+    				<!-- Carousel For Slide Menus -->
+    				<div id="side-menu-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
+
+						<!-- Carousel Pages -->
+  						<div class="carousel-inner" role="listbox">
+  						
+  							<!-- Components -->
+   							<div class="item active">
+   							
+   								<!-- Heading -->
+    							<span class="side-menu-carousel-heading label label-default">Components</span>
+    							
+    							<!-- Components Items -->
+      							<ul class="components-menu"></ul>
+      							
+    						</div>
+    						
+    						<!-- Metrics -->
+    						<div class="item">
+    						
+    							<!-- Heading -->
+    							<span class="side-menu-carousel-heading label label-default side-menu-carousel-back-metrics">
+    								<span class="side-menu-carousel-back glyphicon glyphicon-chevron-left">&nbsp;</span>
+    								Metrics
+    							</span>
+    							
+    							<ul class="metrics-menu metrics-sortable sortable-connected"></ul>
+    						</div>
+    						
+  						</div>
+  						
+  					</div>
+    			
+    			</div>
+    			
+    			<div role="tabpanel" class="tab-pane" id="main-settings">
+    				
+    				<div class="main-settings-group">
+    				
+    					<div class="btn-group">
+  							<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+   								 Change Theme <span class="caret"></span>
+  							</button>
+  							<ul class="dropdown-menu widget-themes-list" role="menu">
+  							</ul>
+						</div>
+    					<button id="saveDashboard" class="btn btn-large btn-primary" type="button">Save</button>
+    					<button id="reloadDashboard" class="btn btn-large btn-primary" type="button">Reload</button>
+    					<button id="clearDashboard" class="btn btn-large btn-danger" type="button">Clear Dashboard</button>
+    				
+    				</div>
+    				
+    			</div>
+ 			</div>
+		</div>
+	</div>
+	
+	<!-- Canvas For Widgets -->
+	<div id="bam-content" class="col-lg-12 col-md-12 col-xs-12">
+	
+		<!-- Arrow To Toggle Side Menu -->
+		<div class="toggler">
+			<span class="toggler-glyph glyphicon glyphicon-chevron-right"></span>
+		</div>
+		
+		<!-- Grid For Widgets -->
+		<ul class="bam-sortable grid sortable-connected"></ul>
+		
+	</div>
+	
+	<div class="widget-settings-panel hide">
+	
+		<ul>
+		
+			<li class="remove"><img src="/img/bam/remove.png"/> Remove</li>
+			<br/>
+			<li class="graph-type"><img src="/img/bam/graphs.png"/> Graph Type<br/>
+			
+				<ul class="graph-type-list hide">		
+				</ul>
+			
+			</li>
+			<br/>
+			<li class="widget-series"><img src="/img/bam/series.png"/> Series<br/>
+			
+				<div class="series-checkboxes hide"></div>
+			
+			</li>
+			<br/>
+			<li class="widget-max-data">
+			
+				<div class="widget-selectpicker">
+				
+					<img src="/img/bam/interval.png"/>
+					
+					<select class="widget-selector">
+					
+						<option value="2">2 sec Interval</option>
+						<option value="10">10 sec Interval</option>
+						<option value="30">30 sec Interval</option>
+						<option value="60">60 sec Interval</option>
+						<option value="300">5 min Interval</option>
+						<option value="600">10 min Interval</option>
+						<option value="1800">30 min Interval</option>
+						<option value="3600">60 min Interval</option>
+						<option value="18000">5 hours Interval</option>
+						<option value="36000">10 hours Interval</option>
+						<option value="86400">24 hours Interval</option>
+				
+					</select>
+				
+				</div>
+			
+			</li>
+			<br/>
+		</ul>
+	
+	</div>
+	
+</div>
+
+<!-- Javascript Import -->
+<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="/js/flot/excanvas.min.js"></script><![endif]-->
+
+<script type="text/javascript" src="/js/flot/jquery.flot.js"></script>
+<script type="text/javascript" src="/js/flot/jquery.flot.time.js"></script>
+<script type="text/javascript" src="/js/flot/jquery.flot.pie.js"></script>
+<script type="text/javascript" src="/js/flot/jquery.flot.resize.js"></script>
+<script type="text/javascript" src="/js/flot/jquery.flot.axislabels.js"></script>
+
+<script type="text/javascript" src="/js/bam/bam-to-flot.js"></script>
+<script type="text/javascript" src="/js/bam/bam-widget.js"></script>
+<script type="text/javascript" src="/js/bam/bamviewer.js"></script>
+

@@ -1,0 +1,52 @@
+<div>
+	<div id="" th:if="${#arrays.isEmpty(cdrHistory)}">
+		<p>Currently No CDR's Available</p>
+	</div>
+	
+	<div th:if="${!#arrays.isEmpty(cdrHistory)}" class="row">
+		<br/>
+		<table id="serverroles_table" class="table infotable table-hover table-bordered table-striped" style="width: 100%; table-layout: fixed;">
+			<col width="100px" />
+			<col width="100px" />
+			<col width="130px" />
+			<col width="100px" />
+			<col width="70px" />
+			<col width="70px" />
+			<col width="100px" />
+			<col width="100px" />
+			<col width="70px" />
+			<col width="120px" />
+			<col width="65px" />
+			<thead>
+				<tr>
+					<th>Msisdn A</th>
+					<th>Msisdn B</th>
+					<th>Time</th>
+					<th>Channel</th>
+					<th>Mode</th>
+					<th>Service</th>					
+					<th>Variant</th>
+					<th>Process</th>
+					<th>Charge</th>
+					<th>Code</th>
+					<th>Rolled Back</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="cdr,iterStat : ${cdrHistory}">
+					<td th:text="${#strings.isEmpty(cdr.getA_MSISDN())? '' : cdr.getA_MSISDN() }">-</td>
+					<td th:text="${#strings.isEmpty(cdr.getB_MSISDN())? '' : cdr.getB_MSISDN() }">-</td>
+					<td th:text="${cdr.getStartTime() == null ? '' : new java.text.SimpleDateFormat('yyyyMMdd\'T\'HH:mm:ss').format(cdr.getStartTime()) }">-</td>
+					<td th:text="${cdr.getChannel() == null ? '' : cdr.getChannel() }">-</td>
+					<td th:text="${cdr.getRequestMode() == null ? '' : cdr.getRequestMode() }">-</td>
+					<td th:text="${#strings.isEmpty(cdr.getServiceID())? '' : cdr.getServiceID() }">-</td>
+					<td th:text="${#strings.isEmpty(cdr.getVariantID())? '' : cdr.getVariantID() }">-</td>
+					<td th:text="${#strings.isEmpty(cdr.getProcessID())? '' : cdr.getProcessID() }">-</td>
+					<td th:text="${cdr.getChargeLevied()}">-</td>
+					<td th:text="${cdr.getReturnCode() == null ? '' : cdr.getReturnCode() }">-</td>
+					<td style="text-align: center"><input type="checkbox" th:checked="${cdr.isRolledBack()}" onclick="return false"/></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

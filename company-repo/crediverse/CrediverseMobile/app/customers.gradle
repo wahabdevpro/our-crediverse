@@ -1,0 +1,266 @@
+android {
+    signingConfigs {
+        movivy {
+            keyAlias 'movivyapk'
+            keyPassword 'Er1c$$on'
+            storeFile file('keystore/movivy_selfsigned_apk_keystore.jks') // Relative path to keystore
+            storePassword 'Er1c$$on'
+        }
+
+        movtog {
+            keyAlias 'movtogapk'
+            keyPassword 'Er1c$$on'
+            storeFile file('keystore/movtog_selfsigned_apk_keystore.jks') // Relative path to keystore
+            storePassword 'Er1c$$on'
+        }
+    }
+
+    buildTypes {
+        /**
+         * WARNING
+         * WARNING
+         * WARNING
+         * WARNING
+         *
+         * If you change params in MOVIVY_DEMO_SERVER.....
+         *      you must also change them in MOVIVY_SELF_SIGNED
+         *      you must also change them in MOVIVY
+         *
+         * WARNING
+         * WARNING
+         * WARNING
+         * WARNING
+         */
+        movivy_demo_server {
+            /**
+             * Only purpose of this DEMO SERVER option ...
+             * is to allow QA to test this APK against our local Demo server
+             */
+            signingConfig signingConfigs.movivy
+
+            // -------------Network Configurations
+            // MAS
+            buildConfigField "String", "mas_hostname", "\"demo.gcp.concurrent.systems\""
+            buildConfigField "int", "mas_port", "5000"
+            buildConfigField "String", "mas_ca_path", "\"NONE\""
+            // SSAPI
+            buildConfigField "String", "ssapi_hostname", "\"demo.gcp.concurrent.systems\""
+            buildConfigField "int", "ssapi_port", "14701"
+            buildConfigField "String", "ssapi_ca_path", "\"NONE\""
+
+            // ------------- Login Page
+            // valid options are EN | FR | NONE --- this overrides whatever we receive from Crediverse
+            buildConfigField "String", "default_app_language", "\"FR\""
+            // When using a custom logo that is transparent ...
+            // decide if want the primary or secondary colour to fill background of the logo
+            buildConfigField "boolean", "logo_has_primary_background", "true"
+            buildConfigField "boolean", "logo_has_secondary_background", "false"
+            buildConfigField "boolean", "request_location_permission_enabled", "true"
+
+            // ------------- Currency / Locale
+            buildConfigField "String", "currency_locale_code", "\"fr-CI\""
+            buildConfigField "String", "currency_pattern_without_currency", "\"#,##0\""
+            buildConfigField "String", "currency_pattern", "\"#,##0 \\u00A4\""
+            buildConfigField "String", "currency_symbol", "\"Fcfa\""
+            buildConfigField "String", "currency_decimal_separator", "\",\""
+            buildConfigField "String", "currency_group_separator", "\"\\u0020\""
+
+            // ------------- For Stats
+            buildConfigField "String", "start_of_week", "\"sunday\""
+
+            // ------------- Navigation Toggles
+            buildConfigField "boolean", "nav_bundle_page_enabled", "true"
+            buildConfigField "boolean", "nav_stats_page_enabled", "true"
+            buildConfigField "boolean", "nav_transfer_page_enabled", "false"
+            buildConfigField "boolean", "nav_execu_stats_page_enabled", "false"
+            buildConfigField "boolean", "nav_buy_with_mobile_money_enabled", "false"
+            buildConfigField "boolean", "nav_team_navigation_enabled", "false"
+            buildConfigField "boolean", "nav_mobile_money_deposit_enabled", "false"
+            buildConfigField "boolean", "nav_mobile_money_withdraw_enabled", "false"
+
+            // ------------- Teams
+            buildConfigField "boolean", "team_agents_location_view_enabled", "false"
+            buildConfigField "boolean", "team_page_show_weekly_bar_graph", "false"
+            // ------------- Home Dashboard
+            buildConfigField "boolean", "show_total_and_trade_bonus", "false"
+            buildConfigField "boolean", "home_page_show_weekly_bar_graph", "false"
+            buildConfigField "boolean", "home_page_show_today_sales_breakdown", "false"
+            // ------------- Agent Profile
+            buildConfigField "boolean", "my_location_enabled", "false"
+            buildConfigField "boolean", "change_pin_enabled", "true"
+            buildConfigField "boolean", "update_profile_enabled", "true"
+            buildConfigField "boolean", "allow_editing_profile_name_fields", "false"
+        }
+
+        movivy_self_signed {
+            signingConfig signingConfigs.movivy
+
+            // -------------Network Configurations
+            // MAS
+            buildConfigField "String", "mas_hostname", "\"smartapp.test.app.moov-africa.ci\""
+            buildConfigField "int", "mas_port", "5001"
+            buildConfigField "String", "mas_ca_path", "\"tls/ca.root.certificate\""
+            // SSAPI
+            buildConfigField "String", "ssapi_hostname", "\"smartapp.test.app.moov-africa.ci\""
+            buildConfigField "int", "ssapi_port", "14701"
+            buildConfigField "String", "ssapi_ca_path", "\"tls/ca.root.certificate\""
+
+            // ------------- Login Page
+            // valid options are EN | FR | NONE --- this overrides whatever we receive from Crediverse
+            buildConfigField "String", "default_app_language", "\"FR\""
+            // When using a custom logo that is transparent ...
+            // decide if want the primary or secondary colour to fill background of the logo
+            buildConfigField "boolean", "logo_has_primary_background", "true"
+            buildConfigField "boolean", "logo_has_secondary_background", "false"
+            buildConfigField "boolean", "request_location_permission_enabled", "true"
+
+            // ------------- Currency / Locale
+            buildConfigField "String", "currency_locale_code", "\"fr-CI\""
+            buildConfigField "String", "currency_pattern_without_currency", "\"#,##0\""
+            buildConfigField "String", "currency_pattern", "\"#,##0 \\u00A4\""
+            buildConfigField "String", "currency_symbol", "\"Fcfa\""
+            buildConfigField "String", "currency_decimal_separator", "\",\""
+            buildConfigField "String", "currency_group_separator", "\"\\u0020\""
+
+            // ------------- For Stats
+            buildConfigField "String", "start_of_week", "\"sunday\""
+
+            // ------------- Navigation Toggles
+            buildConfigField "boolean", "nav_bundle_page_enabled", "true"
+            buildConfigField "boolean", "nav_stats_page_enabled", "true"
+            buildConfigField "boolean", "nav_transfer_page_enabled", "false"
+            buildConfigField "boolean", "nav_execu_stats_page_enabled", "false"
+            buildConfigField "boolean", "nav_buy_with_mobile_money_enabled", "false"
+            buildConfigField "boolean", "nav_team_navigation_enabled", "false"
+            buildConfigField "boolean", "nav_mobile_money_deposit_enabled", "false"
+            buildConfigField "boolean", "nav_mobile_money_withdraw_enabled", "false"
+
+            // ------------- Teams
+            buildConfigField "boolean", "team_agents_location_view_enabled", "false"
+            buildConfigField "boolean", "team_page_show_weekly_bar_graph", "false"
+            // ------------- Home Dashboard
+            buildConfigField "boolean", "show_total_and_trade_bonus", "false"
+            buildConfigField "boolean", "home_page_show_weekly_bar_graph", "false"
+            buildConfigField "boolean", "home_page_show_today_sales_breakdown", "false"
+            // ------------- Agent Profile
+            buildConfigField "boolean", "my_location_enabled", "false"
+            buildConfigField "boolean", "change_pin_enabled", "true"
+            buildConfigField "boolean", "update_profile_enabled", "true"
+            buildConfigField "boolean", "allow_editing_profile_name_fields", "false"
+        }
+
+        movivy {
+            signingConfig signingConfigs.movivy
+
+            // -------------Network Configurations
+            // MAS
+            buildConfigField "String", "mas_hostname", "\"smartapp.prod.app.moov-africa.ci\""
+            buildConfigField "int", "mas_port", "5001"
+            buildConfigField "String", "mas_ca_path", "\"NONE\""
+            // SSAPI
+            buildConfigField "String", "ssapi_hostname", "\"smartapp.prod.app.moov-africa.ci\""
+            buildConfigField "int", "ssapi_port", "14701"
+            buildConfigField "String", "ssapi_ca_path", "\"NONE\""
+
+            // ------------- Login Page
+            // valid options are EN | FR | NONE --- this overrides whatever we receive from Crediverse
+            buildConfigField "String", "default_app_language", "\"FR\""
+            // When using a custom logo that is transparent ...
+            // decide if want the primary or secondary colour to fill background of the logo
+            buildConfigField "boolean", "logo_has_primary_background", "true"
+            buildConfigField "boolean", "logo_has_secondary_background", "false"
+            buildConfigField "boolean", "request_location_permission_enabled", "true"
+
+            // ------------- Currency / Locale
+            buildConfigField "String", "currency_locale_code", "\"fr-CI\""
+            buildConfigField "String", "currency_pattern_without_currency", "\"#,##0\""
+            buildConfigField "String", "currency_pattern", "\"#,##0 \\u00A4\""
+            buildConfigField "String", "currency_symbol", "\"Fcfa\""
+            buildConfigField "String", "currency_decimal_separator", "\",\""
+            buildConfigField "String", "currency_group_separator", "\"\\u0020\""
+
+            // ------------- For Stats
+            buildConfigField "String", "start_of_week", "\"sunday\""
+
+            // ------------- Navigation Toggles
+            buildConfigField "boolean", "nav_bundle_page_enabled", "true"
+            buildConfigField "boolean", "nav_stats_page_enabled", "true"
+            buildConfigField "boolean", "nav_transfer_page_enabled", "false"
+            buildConfigField "boolean", "nav_execu_stats_page_enabled", "false"
+            buildConfigField "boolean", "nav_buy_with_mobile_money_enabled", "false"
+            buildConfigField "boolean", "nav_team_navigation_enabled", "false"
+            buildConfigField "boolean", "nav_mobile_money_deposit_enabled", "false"
+            buildConfigField "boolean", "nav_mobile_money_withdraw_enabled", "false"
+
+            // ------------- Teams
+            buildConfigField "boolean", "team_agents_location_view_enabled", "false"
+            buildConfigField "boolean", "team_page_show_weekly_bar_graph", "false"
+            // ------------- Home Dashboard
+            buildConfigField "boolean", "show_total_and_trade_bonus", "false"
+            buildConfigField "boolean", "home_page_show_weekly_bar_graph", "false"
+            buildConfigField "boolean", "home_page_show_today_sales_breakdown", "false"
+            // ------------- Agent Profile
+            buildConfigField "boolean", "my_location_enabled", "false"
+            buildConfigField "boolean", "change_pin_enabled", "true"
+            buildConfigField "boolean", "update_profile_enabled", "true"
+            buildConfigField "boolean", "allow_editing_profile_name_fields", "false"
+        }
+
+        movtog_demo_server {
+            signingConfig signingConfigs.movtog
+
+            // -------------Network Configurations
+            // MAS
+            buildConfigField "String", "mas_hostname", "\"demo.gcp.concurrent.systems\""
+            buildConfigField "int", "mas_port", "5000"
+            buildConfigField "String", "mas_ca_path", "\"NONE\""
+            // SSAPI
+            buildConfigField "String", "ssapi_hostname", "\"demo.gcp.concurrent.systems\""
+            buildConfigField "int", "ssapi_port", "14701"
+            buildConfigField "String", "ssapi_ca_path", "\"NONE\""
+
+            // ------------- Login Page
+            // valid options are EN | FR | NONE --- this overrides whatever we receive from Crediverse
+            buildConfigField "String", "default_app_language", "\"FR\""
+            // When using a custom logo that is transparent ...
+            // decide if want the primary or secondary colour to fill background of the logo
+            buildConfigField "boolean", "logo_has_primary_background", "true"
+            buildConfigField "boolean", "logo_has_secondary_background", "false"
+            buildConfigField "boolean", "request_location_permission_enabled", "false"
+
+            // ------------- Currency / Locale
+            buildConfigField "String", "currency_locale_code", "\"fr-CI\""
+            buildConfigField "String", "currency_pattern_without_currency", "\"#,##0\""
+            buildConfigField "String", "currency_pattern", "\"#,##0 \\u00A4\""
+            buildConfigField "String", "currency_symbol", "\"Fcfa\""
+            buildConfigField "String", "currency_decimal_separator", "\",\""
+            buildConfigField "String", "currency_group_separator", "\"\\u0020\""
+
+            // ------------- For Stats
+            buildConfigField "String", "start_of_week", "\"sunday\""
+
+            // ------------- Navigation Toggles
+            buildConfigField "boolean", "nav_bundle_page_enabled", "false"
+            buildConfigField "boolean", "nav_stats_page_enabled", "false"
+            buildConfigField "boolean", "nav_transfer_page_enabled", "true"
+            buildConfigField "boolean", "nav_execu_stats_page_enabled", "false"
+            buildConfigField "boolean", "nav_buy_with_mobile_money_enabled", "false"
+            buildConfigField "boolean", "nav_team_navigation_enabled", "false"
+            buildConfigField "boolean", "nav_mobile_money_deposit_enabled", "false"
+            buildConfigField "boolean", "nav_mobile_money_withdraw_enabled", "false"
+
+            // ------------- Teams
+            buildConfigField "boolean", "team_agents_location_view_enabled", "false"
+            buildConfigField "boolean", "team_page_show_weekly_bar_graph", "false"
+            // ------------- Home Dashboard
+            buildConfigField "boolean", "show_total_and_trade_bonus", "true"
+            buildConfigField "boolean", "home_page_show_weekly_bar_graph", "false"
+            buildConfigField "boolean", "home_page_show_today_sales_breakdown", "false"
+            // ------------- Agent Profile
+            buildConfigField "boolean", "my_location_enabled", "false"
+            buildConfigField "boolean", "change_pin_enabled", "false"
+            buildConfigField "boolean", "update_profile_enabled", "false"
+            buildConfigField "boolean", "allow_editing_profile_name_fields", "false"
+        }
+    }
+}

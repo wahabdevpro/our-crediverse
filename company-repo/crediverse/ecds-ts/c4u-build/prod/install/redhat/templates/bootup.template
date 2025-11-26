@@ -1,0 +1,2 @@
+#This starts the ${NAME} service at boot up
+/etc/init.d/${NAME} start

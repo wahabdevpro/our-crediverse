@@ -1,0 +1,9 @@
+*************************** 1. row ***************************
+       Table: ap_schema_data
+Create Table: CREATE TABLE `ap_schema_data` (
+  `vkey` varchar(64) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `value` varchar(128) NOT NULL,
+  PRIMARY KEY (`vkey`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1

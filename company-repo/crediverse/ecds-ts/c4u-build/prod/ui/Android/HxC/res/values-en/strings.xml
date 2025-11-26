@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="my_services">My Services</string>
+    <string name="all_services">All Services</string>
+</resources>

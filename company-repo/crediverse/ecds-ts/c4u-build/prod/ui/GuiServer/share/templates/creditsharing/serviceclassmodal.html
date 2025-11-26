@@ -1,0 +1,134 @@
+<!-- Modal Server Info -->
+<div class="modal fade" id="serviceClassModal" tabindex="-1" role="dialog" aria-labelledby="serviceClassModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="serviceClassModalTitle">Add New Service Class</h4>
+      </div>
+      <div class="modal-body">
+      	<form id="serviceClassModalForm" name="serviceClassModalForm">
+      		<ul class="nav nav-tabs">
+			  <li class="active"><a href="#scconfig" data-toggle="tab">Configuration</a></li>
+			  <li><a href="#sctexts" data-toggle="tab">Multilingual Text</a></li>
+			</ul>
+			
+			<div class="tab-content">
+				<!-- General Configuration -->
+				<div class="tab-pane modalconent active" id="scconfig">
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="serviceClassID" class="control-label">Service Class ID</label>
+							<input type="text" class="form-control numericfields modalInput" id="serviceClassID" name="serviceClassID" placeholder="Service Class ID" />
+							<span id="serviceClassID_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="maxConsumers" class="control-label">Maximum Consumers</label>
+							<input type="text" class="form-control numericfields modalInput" id="maxConsumers" name="maxConsumers" placeholder="Max Consumers" />
+							<span id="maxConsumers_error" class="error_message hide"></span>
+						</div>
+					</div>
+					
+					<div class="row modalrowcontent">
+							
+						<div class="col-md-6">
+							<label for="addConsumerCharge" class="control-label" th:text="${'Consumer Addition (' + session.curSymbol + ')'}">Consumer Addition (USD)</label>
+							<input type="text" class="form-control numericfields modalInput" id="addConsumerCharge" name="addConsumerCharge" placeholder="Consumer Addition Charge" />
+							<span id="addConsumerCharge_error" class="error_message hide"></span>
+						</div>
+						
+						<div class="col-md-6">
+							<label for="removeConsumerCharge" class="control-label" th:text="${'Consumer Removal (' + session.curSymbol + ')'}">Consumer Removal (USD)</label>
+							<input type="text" class="form-control numericfields modalInput" id="removeConsumerCharge" name="removeConsumerCharge" placeholder="Consumer Removal Charge" />
+							<span id="removeConsumerCharge_error" class="error_message hide"></span>
+						</div>
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="removeQuotaCharge" class="control-label" th:text="${'Remove Quota (' + session.curSymbol + ')'}">Remove Quota (USD)</label>
+							<input type="text" class="form-control numericfields modalInput" id="removeQuotaCharge" name="removeQuotaCharge" placeholder="Remove Quota Charge" />
+							<span id="removeQuotaCharge_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="providerBalanceEnquiryCharge" class="control-label" th:text="${'Provider Balance Enquiry(' + session.curSymbol + ')'}">Provider Balance Enquiry (USD)</label>
+							<input type="text" class="form-control numericfields modalInput" id="providerBalanceEnquiryCharge" name="providerBalanceEnquiryCharge" placeholder="Provider Balance Enquiry Charge" />
+							<span id="providerBalanceEnquiryCharge_error" class="error_message hide"></span>
+						</div>			
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="consumerBalanceEnquiryCharge" class="control-label" th:text="${'Consumer Balance Enquiry (' + session.curSymbol + ')'}">Consumer Balance Enquiry (USD)</label>
+							<input type="text" class="form-control numericfields modalInput" id="consumerBalanceEnquiryCharge" name="consumerBalanceEnquiryCharge" placeholder="Consumer Balance Enquiry Charge" />
+							<span id="consumerBalanceEnquiryCharge_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="unsubscribeCharge" class="control-label" th:text="${'Unsubscribe (' + session.curSymbol + ')'}">Unsubscribe (USD)</label>
+							<input type="text" class="form-control numericfields modalInput" id="unsubscribeCharge" name="unsubscribeCharge" placeholder="Unsubscribe Charge" />
+							<span id="unsubscribeCharge_error" class="error_message hide"></span>
+						</div>						
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="eligibleForProvider">Provider</label>
+							<div class="checkbox modalcheckbox">
+							  <label>
+							    <input id="eligibleForProvider" name="eligibleForProvider" type="checkbox" class="modalInput" />Is Eligible for Provider
+							  </label>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<label for="eligibleForConsumer">Consumer</label>
+							<div class="checkbox modalcheckbox">
+							  <label>
+							    <input id="eligibleForConsumer" name="eligibleForConsumer" type="checkbox" class="modalInput" />Is Eligible for Consumer
+							  </label>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="postPaid">Post Paid</label>
+							<div class="checkbox modalcheckbox">
+							  <label>
+							    <input id="postPaid" name="postPaid" type="checkbox" class="modalInput" />Is Post Paid
+							  </label>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!--  Text Configuration -->
+				 <div class="tab-pane modalconent" id="sctexts">
+					 <div class="row modalrowcontent">
+						<div class="panel-group modaltexts" id="accordion">
+						
+							<div th:include="advconfig/messageField :: messagePanel" th:with="label=${'Name'}, field=${'name'}, state=${'1'}" class="panel panel-default"/>
+							
+						</div>	
+					 </div>
+				 </div>
+				 
+			</div>
+      	</form>
+      	
+		<div id="serviceClassModalError" class="row alert alert-danger hide">
+				Things went wrong!!
+		</div>
+		<div class="modal-footer">
+			<img id="serviceClassModalWaiting" src="/img/cell_wait.gif" class="waiting hide" />
+			<button type="button" class="btn btn-default" data-dismiss="modal" >Cancel</button>
+			<button id="serviceClassModalSave" type="button" class="btn btn-primary savebtn" onclick="saveModalCall()">Add Host</button>
+		</div>
+		
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script language="javascript">
+
+</script>

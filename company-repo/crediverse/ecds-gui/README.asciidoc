@@ -1,0 +1,337 @@
+= ecds/ecds-gui/README
+:doctype: article
+:numbered:
+:toc: left
+:toclevels: 4
+:sectnumlevels: 5
+
+
+== Recommended git aliases
+
+In order to make the git commands easier to remember, run the following commands:
+
+----
+git config --global alias.scheckout '!f(){ git checkout "$@" && git submodule update --init --recursive; }; f'
+git config --global alias.sclone '!f(){ git clone --recursive "$@"; }; f'
+git config --global alias.spull '!f(){ git pull "$@" && git submodule update --init --recursive; }; f'
+git config --global alias.spulla '!f(){ git pull "$@" && git submodule update --init --recursive && git submodule foreach --recursive '"'"'branch="$(git -C "${toplevel}" config -f .gitmodules --get submodule.${name}.branch)" && git checkout "${branch}" && git pull'"'"'; }; f'
+----
+
+== Cloning Repository
+
+-----
+git clone git@git.concurrent.systems:ecds/ecds-gui.git --recursive
+-----
+
+Otherwise you'll get an issue with 
+
+-----
+error: cache entry has null sha1: docs/asciidoctor-common
+-----
+
+== Running the various GUI's
+When the GUI is run, by default, it will activate the admin profile and therefore act as an admin GUI.  Spring profiles are used to switch to different GUI installations. The available profiles are admin, portal and mobile.  For example, to run as the portal GUI on port 8085 (instead of the default 8084) add the following to the VM argumanets of Eclipse:
+
+	-Dspring.profiles.active=portal -Dserver.port=8085
+	
+Note that when the GUI is run in development mode, the less file that provides the color for the GUI will not be geneerated, so the GUI will look a little bland.
+
+== Making releases
+
+Check that the major and minor versions are correct in `gradle.properties`:
+
+----
+$ grep version gradle.properties 
+version=1.7-SNAPSHOT
+----
+
+See what version will be released for specific release tasks:
+
+----
+$ ./gradlew tasks | grep releaseNext
+releaseNext - releases next appropriately qualified version (i.e. will create tag 1.8.0-beta-2 - because latest relevant tag is 1.8.0-beta-1 and current project version is 1.8-SNAPSHOT)
+releaseNextAlpha - releases next alpha version (i.e. will create tag 1.8.1-alpha-0 - because latest relevant tag is 1.8.0-beta-1 and current project version is 1.8-SNAPSHOT)
+releaseNextBeta - releases next beta version (i.e. will create tag 1.8.0-beta-2 - because latest relevant tag is 1.8.0-beta-1 and current project version is 1.8-SNAPSHOT)
+releaseNextRc - releases next release candidate (rc) version (i.e. will create tag 1.8.0-rc-0 - because latest relevant tag is 1.8.0-beta-1 and current project version is 1.8-SNAPSHOT)
+releaseNextUnqualified - releases next unqualified version (i.e. will create tag 1.8.0 - because latest relevant tag is 1.8.0-beta-1 and current project version is 1.8-SNAPSHOT)
+----
+
+Run the appropriate gradle task for releasing:
+
+----
+./gradlew clean releaseNext
+./gradlew clean releaseNextAlpha
+./gradlew clean releaseNextBeta
+./gradlew clean releaseNextRc
+./gradlew clean releaseNextUnqualified
+----
+
+== Gradle Usage
+
+To see all available tasks run `./gradlew tasks`:
+
+Commonly used gradle commands:
+
+----
+###
+
+# build
+./gradlew --info build
+
+# build without testing
+./gradlew --info build -x test
+
+# build without testing or running require.js
+./gradlew --info build -x packJavascript -x test
+
+# build classes without testing
+./gradlew --info classes
+
+# continuously build classes without testing
+./gradlew --continuous --info classes
+
+# only regenerate resources
+./gradlew --info processResources
+
+# continuously regenerate resources
+./gradlew --continuous --info processResources
+
+###
+
+# run gui
+./gradlew --info bootRun
+
+# run gui with custom properties
+./gradlew --info bootRun -Dserver.port=8084 -Dcs.rest.server.host=127.0.0.1 
+./gradlew --info bootRun -Dserver.port=8084 -Dcs.rest.server.host=172.17.4.251
+
+# run portal with custom properties
+./gradlew --info bootRun -Dspring.profiles.active=portal -Dcs.rest.server.host=127.0.0.1 -Dserver.port=8085 
+
+###
+
+# install into maven local repo
+./gradlew --info install
+
+# upload archives
+./gradlew --info publish
+
+# upload archives without testing or running require.js (use with caution ... dont use on tags)
+./gradlew --info publish -x packJavascript -x test
+
+# other things
+./gradlew asciidoctor
+./gradlew upload
+./gradlew uploadAndNotify
+./gradlew uploadAsciidoctor
+./gradlew publish
+----
+
+== Gradle settings
+
+The following values can be set in `~/.gradle/gradle.properties`:
+
+.`~/.gradle/gradle.properties`
+----
+ga.csys.warehouse.http.username=<...>
+ga.csys.warehouse.http.password=<...>
+
+## this is optional and only needed if your username differs from your ssh username
+ga.csys.warehouse.ssh.username=<...>
+----
+
+If you have problems with memory running out add the following to `~/.gradle/gradle.properties`:
+
+.`~/.gradle/gradle.properties`
+----
+org.gradle.jvmargs=-XX:+HeapDumpOnOutOfMemoryError
+----
+
+== Updating CSS Styles
+
+=== Installing CSS precompiler
+
+Use Node Package Manager (NPM) to install less compiler globally):
+
+```
+npm install -g less
+npm install -g less-plugin-clean-css
+```
+
+=== Compiling less into css
+Currently there is a less folder under the src/main/resources/static path. The following files need get compiled (using node)
+
+To compile a single file:
+
+```
+lessc --clean-css="--compatibility=ie10 --advanced" src/main/resources/static/less/skin-credit.less > src/main/resources/static/css/skins/skin-credit.min.css
+```
+
+== Building and running
+
+To clean your build:
+
+----
+mvn clean
+----
+
+To build locally and without running tests
+
+----
+## Run WebUser Portal
+mvn spring-boot:run -DskipTests
+
+## Run Agent Portal
+mvn spring-boot:run -DskipTests -Dspring.profiles.active=portal -Dserver.port=8085
+----
+
+To build run directly (not through `spring-boot:run`)
+
+----
+mvn -DskipTests install
+
+## Run WebUser Portal (will listen on port 8084)
+java -server -Decdsui.instance=default -Dserver.port=8084 -jar "$(ls ./{build/libs,target}/ecds-gui.jar | head -1)" cs.Application
+
+## Run Agent Portal (will listen on port 8085)
+java -server -Decdsui.instance=default -Dspring.profiles.active=portal -Dserver.port=8085 -jar "$(ls ./{build/libs,target}/ecds-gui.jar | head -1)" cs.Application
+----
+
+To use a different IP for transaction server (C4U) add the following:
+
+----
+-Dcs.rest.server.host=127.0.0.1
+----
+
+For example:
+
+----
+java -server -Decdsui.instance=default -Dserver.port=8084 -Dcs.rest.server.host=127.0.0.1 -jar "$(ls ./{build/libs,target}/ecds-gui.jar | head -1)" cs.Application
+java -server -Decdsui.instance=default -Dspring.profiles.active=portal -Dserver.port=8085 -Dcs.rest.server.host=127.0.0.1 -jar "$(ls ./{build/libs,target}/ecds-gui.jar | head -1)" cs.Application
+
+mvn spring-boot:run -DskipTests -Dcs.rest.server.host=127.0.0.1
+mvn spring-boot:run -DskipTests -Dspring.profiles.active=portal -Dserver.port=8085 -Dcs.rest.server.host=127.0.0.1
+----
+
+== Other things ...
+
+----
+view "$(ls ./{build/libs,target}/ecds-gui.jar | head -1)"
+----
+
+The URL for accessing the GUI when running locally
+
+----
+http://localhost:8084/ecds-gui/
+----
+
+In order to track down issues with requirejs minification, modify to
+
+----
+optimize: "none",
+----
+
+Instead of
+
+----
+optimize: "uglify2",
+----
+
+This will combine the javascript files, but not optimize them, so the javascript errors are traceble back to the original source, where the issue can be corrected.
+
+== proto run
+
+To run from proto with the ecdsui.sh script:
+
+----
+mvn clean
+
+
+JAVA_HOME="" \
+ECDSUI_PREFIX=`pwd`/proto/opt/cs/ecdsui \
+ECDSUI_SYSCONFDIR=`pwd`/proto/etc/opt/cs/ecdsui/default \
+ECDSUI_SHAREDSTATEDIR=`pwd`/proto/var/opt/cs/ecdsui \
+./proto/opt/cs/ecdsui/bin/ecdsui.sh
+
+JAVA_HOME="" \
+ECDSUI_PROFILES="portal" \
+ECDSUI_PREFIX=`pwd`/proto/opt/cs/ecdsui \
+ECDSUI_SYSCONFDIR=`pwd`/proto/etc/opt/cs/ecdsui/portal \
+ECDSUI_SHAREDSTATEDIR=`pwd`/proto/var/opt/cs/ecdsui \
+./proto/opt/cs/ecdsui/bin/ecdsui.sh
+----
+
+== Test run
+
+https://maven.apache.org/surefire/maven-surefire-plugin/examples/single-test.html
+
+----
+mvn test -Dtest=TypeConvertorServiceTest
+----
+
+== TODO
+
+* https://forum.gitlab.com/t/gitlab-ci-maven-getting-mvn-release-to-work-with-gitlab-ci/4904/2
+
+== Trash
+
+----
+/opt/oracle-jdk-bin-1.8.0.92/jre/bin/java -server -Decdsui.instance=default -Dserver.port=8084 -jar "$(ls ./{build/libs,target}/ecds-gui.jar | head -1)" cs.Application
+/opt/oracle-jdk-bin-1.8.0.92/jre/bin/java -server -Decdsui.instance=default -Dspring.profiles.active=portal -Dserver.port=8085 -jar "$(ls ./{build/libs,target}/ecds-gui.jar | head -1)" cs.Application
+----
+
+----
+/opt/oracle-jdk-bin-1.8.0.92/jre/bin/java -server -Decdsui.instance=default -Dserver.port=8084 -Dcs.rest.server.host=127.0.0.1 -jar "$(ls ./{build/libs,target}/ecds-gui.jar | head -1)" cs.Application
+/opt/oracle-jdk-bin-1.8.0.92/jre/bin/java -server -Decdsui.instance=default -Dspring.profiles.active=portal -Dcs.rest.server.host=127.0.0.1 -Dserver.port=8085 -jar "$(ls ./{build/libs,target}/ecds-gui.jar | head -1)" cs.Application
+----
+
+----
+mvn clean && mvn spring-boot:run -DskipTests
+----
+
+----
+mvn-8 -DskipTests install
+mvn-8 clean && mvn-8 -DskipTests install
+
+./gradlew clean build -x test
+
+## Run WebUser Portal (will listen on port 8084)
+hnb oracle-jdk-8u101 java -server -Decdsui.instance=default -Dserver.port=8084 -Dcs.rest.server.host=127.0.0.1 -jar "$(ls ./{build/libs,target}/ecds-gui.jar | head -1)" cs.Application
+
+## Run Agent Portal (will listen on port 8085)
+hnb oracle-jdk-8u101 java -server -Decdsui.instance=default -Dspring.profiles.active=portal -Dcs.rest.server.host=127.0.0.1 -Dserver.port=8085 -jar "$(ls ./{build/libs,target}/ecds-gui.jar | head -1)" cs.Application
+
+JAVA_HOME="$(hnp oracle-jdk-8u101)/jre/" \
+ECDSUI_PREFIX=`pwd`/proto/opt/cs/ecdsui \
+ECDSUI_SYSCONFDIR=`pwd`/proto/etc/opt/cs/ecdsui/default \
+ECDSUI_SHAREDSTATEDIR=`pwd`/proto/var/opt/cs/ecdsui \
+./proto/opt/cs/ecdsui/bin/ecdsui.sh
+----
+
+////
+Test cross ref issue ecds/ecds#1
+////
+
+== verification
+
+----
+old_rpm="$(find /mnt/warehouse/releases/ecds-gui/staging/ -name '*.rpm'  -type f -printf '%M %n %u %g % 12s %TY-%Tm-%TdT%TH:%TM:%TS |%p\n' | grep -v  -- '-SNAPSHOT/' | sort -k6 | sed "s/^[^|]\+|//g" | tail -1)"
+new_rpm="$(ls -tr "$(pwd)"/build/distributions/*.rpm | tail -1)"
+
+declare -p old_rpm new_rpm
+
+vimdiff \
+<(RPMREBUILD_ROOT_DIR=${HOME}/.local/opt/rpmrebuild-2.11-1.noarch/lib/rpmrebuild/ /home/iwana/.local/opt/rpmrebuild-2.11-1.noarch/bin/rpmrebuild -s - -p "${old_rpm}") \
+<(RPMREBUILD_ROOT_DIR=${HOME}/.local/opt/rpmrebuild-2.11-1.noarch/lib/rpmrebuild/ /home/iwana/.local/opt/rpmrebuild-2.11-1.noarch/bin/rpmrebuild -s - -p "${new_rpm}") \
+;
+
+vimdiff \
+<( bsdtar -tvf "${old_rpm}" | sed 's/^\([^ \t]\+[ \t]\+[^ \t]\+[ \t]\+[^ \t]\+[ \t]\+[^ \t]\+[ \t]\+[^ \t]\+[ \t]\+\)\([^ \t]\+[ \t]\+[^ \t]\+[ \t]\+[^ \t]\+[ \t]\+\)\(.*\)$/\1\3/gp' ) \
+<( bsdtar -tvf "${new_rpm}" | sed 's/^\([^ \t]\+[ \t]\+[^ \t]\+[ \t]\+[^ \t]\+[ \t]\+[^ \t]\+[ \t]\+[^ \t]\+[ \t]\+\)\([^ \t]\+[ \t]\+[^ \t]\+[ \t]\+[^ \t]\+[ \t]\+\)\(.*\)$/\1\3/gp' ) \
+;
+
+vimdiff \
+<( bsdtar -xf "${old_rpm}" -O ./opt/cs/ecdsui/libexec/ecds-gui.jar | bsdtar -tvf - | sed 's/^\([^ \t]\+[ \t]\+[^ \t]\+[ \t]\+[^ \t]\+[ \t]\+[^ \t]\+[ \t]\+[^ \t]\+[ \t]\+\)\([^ \t]\+[ \t]\+[^ \t]\+[ \t]\+[^ \t]\+[ \t]\+\)\(.*\)$/\1\3/gp' | sort -k6 ) \
+<( bsdtar -xf "${new_rpm}" -O ./opt/cs/ecdsui/libexec/ecds-gui.jar | bsdtar -tvf - | sed 's/^\([^ \t]\+[ \t]\+[^ \t]\+[ \t]\+[^ \t]\+[ \t]\+[^ \t]\+[ \t]\+[^ \t]\+[ \t]\+\)\([^ \t]\+[ \t]\+[^ \t]\+[ \t]\+[^ \t]\+[ \t]\+\)\(.*\)$/\1\3/gp' | sort -k6 ) \
+;
+----

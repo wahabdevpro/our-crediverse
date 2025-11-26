@@ -1,0 +1,7 @@
+rootProject.name = 'ecds-gui'
+
+include ':RestProtocol'
+include ':FeatureBar'
+
+project(":RestProtocol").projectDir = file("../common/RestProtocol")
+project(":FeatureBar").projectDir = file("../common/featureBar/lib")

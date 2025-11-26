@@ -1,0 +1,31 @@
+# vim: set ft=dosini sts=4 ts=4 sw=4 noexpandtab fo-=t:
+
+# https://www.freedesktop.org/software/systemd/man/systemd.directives.html
+
+# https://www.freedesktop.org/software/systemd/man/systemd.exec.html
+# https://www.freedesktop.org/software/systemd/man/systemd.unit.html
+# https://www.freedesktop.org/software/systemd/man/systemd.service.html
+
+# https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/System_Administrators_Guide/sect-Managing_Services_with_systemd-Unit_Files.html
+
+[Unit]
+Description=Credit4U Service Manager
+After=network.target
+BindsTo=c4u-hostprocess.service
+BindsTo=c4u-guiserver.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/true
+RemainAfterExit=yes
+#Type=simple
+#EnvironmentFile=/etc/sysconfig/c4u-supervisor
+#WorkingDirectory=/var/opt/cs/c4u
+#ExecStart=/bin/bash -c "exec ${JAVA_HOME}/bin/java -d64 -server -jar ${C4U_HOME}/supervisor/lib/Supervisor.jar ${JAVA_HOME}/bin/java"
+#SuccessExitStatus=143
+#Restart=always
+#RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
+WantedBy=c4u.target

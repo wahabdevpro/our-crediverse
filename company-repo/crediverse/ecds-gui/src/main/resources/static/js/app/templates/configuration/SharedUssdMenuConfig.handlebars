@@ -1,0 +1,152 @@
+<div>
+	<script id="sharedUssdConfig">
+		<div id="sharedUssdConfig">
+			{{#if this.modelchanged}}
+				<div class="row">
+					<div class="col-xs-offset-2 col-xs-10">
+						<div class="pull-right">
+							<button class="btn btn-primary menuSaveLayout">{{i18n "global.saveBtn"}}</button>
+						</div>
+					</div>
+				</div>
+			{{/if}}
+
+			<!-- <div class="row">
+				<div class="col-xs-offset-2 col-xs-10">
+					<div class="menu-command">
+						<div class="panel panel-info">
+							<div class="panel-heading item-title">
+								<span class="label label-default">Menu Command</span>
+								<span class="item-type menu-command-value">{{ussdMenuCommand}}</span>
+								{{#hasPerms "Transaction_ConfigUssd"}}
+									<a class="editMenuCommandButton action-button float-right" href="#edit-action-button" role="button">
+					          			<span>
+					          				<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+					          			</span>
+					          		</a>
+					          	{{/hasPerms}}
+				          	</div>
+						</div>
+					</div>
+				</div>
+			</div> -->
+			
+			<div class="row table-row">
+				<div class="col-xs-2 tab-title-list">
+				    <!-- Nav tabs -->
+				    <ul id="menu-tab-container" class="nav nav-tabs tabs-left menu-tabset">
+					    {{#each menus}}
+					    	<li class="" id="menu-tab{{id}}"><a href="#menu{{id}}" data-toggle="tab">{{name}}</a></li>
+				      	{{/each}}
+				    </ul>
+				</div>
+	
+				<div class="col-xs-10 tab-content-area">
+				    <!-- Tab panes -->
+				    <div id="menu-tab-content" class="tab-content table-row">
+				    	{{#each menus}}
+				      		<div class="tab-pane menu-tab-pane" id="menu{{id}}" data-menu-id="{{id}}" data-menu-offset="{{offset}}">
+				      		
+					      		<div class="item menu{{id}}" data-menu-id="{{id}}" data-menu-offset="{{offset}}">
+									<div class="html-content">
+										<h2 class="configHeading">
+											{{name}}
+											{{#hasPerms "Transaction_ConfigUssd"}}
+												<a class="editMenuNameAction action-button" data-menu-offset="{{offset}}" data-menu-id="{{id}}" href="#edit-button-{{id}}" role="button">
+								          			<span>
+								          				<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+								          			</span>
+								          		</a>
+											{{/hasPerms}}
+										</h2>
+										<hr>
+										<ol class="simple_with_animation vertical" data-menu-id="{{offset}}">
+										{{#each buttons}}
+											<li class="" data-button-id="{{id}}">
+											
+												{{#ifCond this.type "!=" "P"}}
+													<div class="panel panel-info">
+												{{else}}
+													{{#if this.disabled}}
+														<div class="panel panel-default">
+													{{else}}
+														<div class="panel panel-info">
+													{{/if}}
+												{{/ifCond}}
+											
+													<div class="panel-heading item-title">
+														<span class="label label-default">{{typeName}}</span>
+													
+														<span class="item-type">
+										              	{{#notIn this.type 'E' }}
+									          				{{text.texts.en}}
+										          		{{else}}
+										          			<!-- No text for me, id {{id}} -->
+										          		{{/notIn}}
+										          		</span>
+										          		{{#hasPerms "Transaction_ConfigUssd"}}
+											          		{{#ifCond this.type "==" "P"}}
+												          		{{#if this.disabled}}
+												          			<a class="enableToggleAction toggle-button float-right switch round off" data-button-id="{{id}}" href="#toggle-button" role="button">
+												          		{{else}}
+													          		<a class="enableToggleAction toggle-button float-right switch round on" data-button-id="{{id}}" href="#toggle-button" role="button">
+													          	{{/if}}
+												          			<span class="toggle"></span>
+												          		</a>
+												          	{{/ifCond}}
+												          	
+												          	<!-- <a class="deleteItemAction delete-button float-right" data-button-id="{{id}}" href="#delete-button-{{id}}" role="button">
+											          			<span>
+											          				<i class="fa fa-trash-o" aria-hidden="true"></i>
+											          			</span>
+											          		</a> -->
+												          		
+												          	<!-- <span class="label label-success">type: {{type}}</span> -->
+												          		
+											          		{{#notIn this.type "!=" "E" }}
+												          		<a class="editItemAction action-button float-right" data-button-id="{{id}}" href="#edit-button-{{id}}" role="button">
+												          			<span>
+												          				<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+												          			</span>
+												          		</a>
+											          		{{/notIn}}
+												          	
+												          	
+												         {{/hasPerms}}
+										          		
+										          		
+										          		{{#ifCond this.nextMenuID ">=" "0"}}
+											          		<a class="menu-navigation-arrow navigate-button float-right destination-{{nextMenuID}}" href="#navigate-{{nextMenuID}}" role="button">
+											          			<span class="label label-success">
+											          				{{this.nextMenuName}}
+											          				<i class="fa fa-chevron-right" aria-hidden="true"></i>
+											          			</span>
+											          		</a>
+											          	{{else}}
+												          	<a class="menu-no-action hidden-navigate-button float-right destination-{{nextMenuID}}" href="#" role="button">
+											          			<span>
+											          				<i class="fa fa-chevron-right" aria-hidden="true"></i>
+											          			</span>
+											          		</a>
+										          		{{/ifCond}}
+										            </div>
+									            </div>
+								          		</li>
+								          	{{/each}}
+										</ol>
+									</div>
+								</div>
+				      		
+				      		
+				      		</div>
+				      	{{/each}}
+				    </div>
+				</div>
+			</div>
+			
+			
+			
+			
+		</div>
+	</script>
+</div>

@@ -1,0 +1,9 @@
+#!/bin/bash
+rm \opt\cs\bin\${APP_NAME}
+
+echo 'Removing existing service'
+svcadm disable svc:/application/${APP_NAME}
+sleep 2
+
+svccfg delete svc:/application/${APP_NAME}
+sleep 1

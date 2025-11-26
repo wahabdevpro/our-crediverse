@@ -1,0 +1,182 @@
+<div>
+	<script id="rolemasterdialog">
+		<div id="roleModal" class="modal fade">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		                <h4 class="modal-title">{{i18n "roleman.addRoleBtn"}}</h4>
+		            </div>
+		            <div class="modal-body">
+		            	<form id="roleModalForm" name="roleModal" class="form-horizontal">
+		            		<div class="row form-group dialog-spacing">
+			            		<label for="rolename" class="col-sm-3 control-label">{{i18n "roleman.name"}}</label>
+				                <div class="col-sm-9">
+				                	<input type="text" class="form-control" name="name" placeholder="Role Name" data-rule-required="true"/>
+				                </div>
+		            		</div>
+		            		<div class="row form-group dialog-spacing">
+			            		<label for="rolename" class="col-sm-3 control-label">{{i18n "roleman.description"}}</label>
+				              	<div class="col-sm-9">
+				                	<textarea class="col-xs-12" rows="3" name="description" placeholder="Description" data-rule-required="true"></textarea>
+				                </div>
+		            		</div>
+		            		<div class="row form-group dialog-spacing" style="margin-bottom:0;">
+			            		<label for="roleType" class="col-sm-3 control-label">{{i18n "roleman.viewTypeLabel"}}</label>
+				              	<div class="col-sm-9">
+									<div style="margin-top:6px;">
+								 	<input id="type-web" name="type" value="W" class="custom-radio-fa" type="radio" {{#ifCond this.type "==" "W"}}checked="checked"{{/ifCond}}/>
+									<label for="type-web">{{i18n "roleman.viewTypeWebLabel"}}</label>
+									</div>
+									<div>
+								 	<input id="type-agent" name="type" value="A" class="custom-radio-fa" type="radio" {{#ifCond this.type "==" "A"}}checked="checked"{{/ifCond}}/>
+									<label for="type-agent">{{i18n "roleman.viewTypeAgentLabel"}}</label>
+									</div>
+								</div>	
+							</div>
+		            	</form>
+		            </div>
+		            <div class="modal-footer">
+			            <div class="form-group">
+				            <div class="col-sm-offset-2 col-sm-10">
+			                	<button type="button" class="btn btn-primary roleCreateButton">{{i18n "global.saveBtn"}}</button>
+				            	<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+				            </div>
+			        	</div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		
+		<div id="permissionModal" class="modal fade">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		                <h4 class="modal-title">{{i18n "global.addRole"}}</h4>
+		            </div>
+		            <div class="modal-body">
+		            	<div class="permissionList"></div>
+		            </div>
+		            <div class="modal-footer">
+			            <div class="form-group">
+				            <div class="col-sm-offset-2 col-sm-10">
+			                	<button type="button" class="btn btn-primary roleCreateButton">{{i18n "global.saveBtn"}}</button>
+				            	<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+				            </div>
+			        	</div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+	</script>
+	
+	<script id="rolemaster">
+		<div class="datatablesview col-xs-12">
+			<div class="box">
+				<div class="box-header">
+					<div class='pull-right'>
+						{{#hasPerms "Role_Download"}}
+							<button class="btn btn-primary exportRolesButton" role="button">{{i18n "global.exportBtn"}}</button>
+						{{/hasPerms}}
+						{{#hasPerms "Role_Add"}}
+							
+								<button class='btn btn-primary createRoleButton'>{{i18n "roleman.addRoleBtn"}}</button>
+							
+						{{/hasPerms}}
+					</div>
+				</div>
+				<div class="box-body">
+					<table class="tableview  table table-bordered table-hover table-striped">
+					</table>
+				</div>
+			</div>
+		</div>
+	</script>
+	
+	<script id="permissionview">
+		<div class="modal-header">
+	    	<button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+	    	<h4 class="modal-title role-modify">  </h4>
+		</div>
+		<div class="modal-body">
+			<form name="perms" class="form-horizontal">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="permissionlist">
+							<table class="permissiontable table table-bordered table-hover table-striped" style="width: 100%"/>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<div class="form-group pull-right">
+			    	<button type="button" class="btn btn-primary saveButton">{{i18n "global.saveBtn"}}</button>
+			    	<button type="button" class="btn btn-default cancelButton" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+			</div>
+		</div>
+	</script>
+	
+	<script id="permissionview2">
+		<div class="modal-header">
+	    	<button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+	    	<h4 class="modal-title role-modify">  </h4>
+		</div>
+		<div class="modal-body">
+			<form name="perms" class="form-horizontal">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="permissionlist">
+						  <div class="row">
+						    <div class="col-md-6" style="padding-bottom:15px;">
+						      <input type="text" class="form-control" id="search" placeholder="{{i18n "roleman.permSearchHint"}}"/>
+						    </div>
+						    <div class="col-md-6" style="padding-bottom:15px;">
+						      <button type="button" role="select-all" class="btn btn-primary">{{i18n "global.selectAllBtn"}}</button>
+						      <button type="button" role="clear-all" class="btn btn-primary">{{i18n "global.clearAllBtn"}}</button>
+						      <button type="button" role="expand-all" class="btn btn-primary">{{i18n "global.expandAllBtn"}}</button>
+						      <button type="button" role="collapse-all" class="btn btn-primary">{{i18n "global.collapseAllBtn"}}</button>
+						    </div>
+						  </div>
+						  <div class="row">
+						  	<div style="display:none;" class="templates">
+						      <div class="group-container">
+						        <div class="group-name-wrap">
+						        <label for="...">
+						          <input id="..." class="group-selector" type="checkbox">
+						          <span></span>
+						        </label>
+						        <a class="group-name" style="font-weight:bold; cursor:pointer; text-decoration:none; color:black;">.</a>
+						        </div>
+								    <div class="permissions" data-visible="0" style="margin-bottom:10px; display:none;">
+								</div>
+						      </div>
+						      <div class="row role-container">
+							  	<div class="selector col-xs-6" style="padding-left:37px;">
+							      <label for="...">
+						   	   		<input id="..." data-role-id="" type="checkbox" class="permission-selector">
+						   	      <span></span>
+						        </label>
+						        <span class="name" style="font-weight:bold;"></span>
+								</div>
+							  <div class="description col-xs-6"></div>
+						    </div>
+							</div>  
+						    <div class="col-md-12 custom-fa" id="permissions-list">
+						    </div>
+						  </div>
+
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<div class="form-group pull-right">
+			    	<button type="button" class="btn btn-primary saveButton">{{i18n "global.saveBtn"}}</button>
+			    	<button type="button" class="btn btn-default cancelButton" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+			</div>
+		</div>
+	</script>
+</div>

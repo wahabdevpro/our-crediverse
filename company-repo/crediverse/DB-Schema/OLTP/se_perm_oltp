@@ -1,0 +1,13 @@
+*************************** 1. row ***************************
+       Table: se_perm
+Create Table: CREATE TABLE `se_perm` (
+  `permissionId` varchar(50) NOT NULL,
+  `category` varchar(50) NOT NULL,
+  `path` varchar(250) NOT NULL,
+  `description` varchar(80) NOT NULL,
+  `implies` varchar(50) NOT NULL,
+  `roles` bigint(20) NOT NULL,
+  `control` int(11) NOT NULL,
+  `ts` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`permissionId`,`category`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

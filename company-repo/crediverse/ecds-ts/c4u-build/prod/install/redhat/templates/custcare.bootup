@@ -1,0 +1,2 @@
+#This starts the custcare service at boot up
+/etc/init.d/custcare start

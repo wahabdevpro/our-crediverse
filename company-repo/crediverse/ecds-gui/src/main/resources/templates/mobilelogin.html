@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/login">	
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+	<meta name="_context_path_header" th:content="${contextPath}"/>
+
+	<script type="text/javascript" th:src="@{'/js/lib/require.min.js'}" th:attr="data-main=@{__${projectLoginVersion}__.js}"></script>
+
+	<title>ECDS Login</title>
+</head>
+<body>
+
+	<div layout:fragment="maincontent" >
+		<form autocomplete="off" onsubmit="return false">
+	
+		
+			<div class="login-box">
+				<div id="content" >
+				</div>
+			</div>
+			
+		</form>		
+	</div>
+
+
+</body>
+</html>
+

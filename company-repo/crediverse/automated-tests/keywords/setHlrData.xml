@@ -1,0 +1,12 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:prot="http://protocol.airsim.services.hxc/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <prot:setHlrData>
+         <msisdn>_msisdn</msisdn>
+         <mobileCountryCode>_mcc</mobileCountryCode>
+         <mobileNetworkCode>_mnc</mobileNetworkCode>
+         <locationAreaCode>_lac</locationAreaCode>
+         <cellIdentity>_cell</cellIdentity>
+      </prot:setHlrData>
+   </soapenv:Body>
+</soapenv:Envelope>

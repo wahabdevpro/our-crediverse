@@ -1,0 +1,88 @@
+<div>
+	
+	<script id="serviceClassDialog">
+		<div class="modal-header">
+          	<button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+          	<h4 class="modal-title">{{{dialogTitle}}}</h4>
+      	</div>
+		
+		<div class="modal-body">
+			<form name="serviceClassForm" class="form-horizontal">
+				{{>modalInput name="name" label="serviceclass.name" hint="serviceclass.nameHint" value=this.name}}
+				{{>modalInput name="description" label="serviceclass.description" hint="serviceclass.descriptionHint" value=this.description}}
+				{{>modalSelect name="state" label="serviceclass.state" data="A:enums.state.active,D:enums.state.deactivated" value=this.state}}
+				{{>modalInputNumber name="maxTransactionAmount" label="serviceclass.maxTransactionAmount" hint="serviceclass.maxTransactionAmountHint" value=this.maxTransactionAmount}}
+				{{>modalInputNumber name="maxDailyCount" label="serviceclass.maxDailyCount" hint="serviceclass.maxDailyCount" value=this.maxDailyCount}}
+				{{>modalInputNumber name="maxDailyAmount" label="serviceclass.maxDailyAmount" hint="serviceclass.maxDailyAmount" value=this.maxDailyAmount}}						
+				{{>modalInputNumber name="maxMonthlyCount" label="serviceclass.maxMonthlyCount" hint="serviceclass.maxMonthlyCount" value=this.maxMonthlyCount}}
+				{{>modalInputNumber name="maxMonthlyAmount" label="serviceclass.maxMonthlyAmount" hint="serviceclass.maxMonthlyAmount" value=this.maxMonthlyAmount}}
+			</form>
+		</div>
+		
+        <div class="modal-footer">
+           	<button type="button" class="btn btn-primary scCreateButton">{{i18n "global.saveBtn"}}</button>
+           	<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+       	</div>		
+	</script>
+	
+	<script id="serviceClassMaster">
+	    <div class="datatablesview col-xs-12">
+	        <div class="box">
+	            <div class="box-header">
+	                <div class='pull-right'>
+	                	{{#hasPerms "Batch_Download"}}
+	                		<button class="btn btn-primary exportScButton" role="button">{{i18n "global.exportBtn"}}</button>
+	                	{{/hasPerms}}
+	                	{{#hasPerms "Batch_Upload"}}
+	                		<a href="#batch" class="btn btn-primary routerlink importScButton" role="button">{{i18n "global.importBtn"}}</a>
+	                	{{/hasPerms}}
+	                	{{#hasPerms "ServiceClass_Add"}}
+	                    	<button class='btn btn-primary createScButton'>{{i18n "serviceclass.createScButton"}}</button>
+	                    {{/hasPerms}}
+	                </div>
+	            </div>
+	            <div class="box-body">
+		            <table class="tableview table table-bordered table-hover table-striped">
+		            </table>
+	            </div>
+	        </div>
+	    </div>
+	</script>
+	<script id="serviceClassView">
+		<div class="row">
+			<div class="col-lg-7 col-centered">
+	        	<div class="panel panel-info">
+		    		<div class="panel-heading">
+		    	    	<h4>{{i18n "serviceclass.viewHeadingPrefix"}}<b>{{this.name}}</b></h4>
+		    		</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-lg-12 text-center">
+								<h4 style="margin-top:5px;">{{this.description}}</h4>
+							</div>
+						</div
+						<div class="row">
+						  
+						  	<div class="col-lg-9">
+						  		<div class="row">
+						  			<div class="col-lg-12 text-center">
+						  				<h5><u><b>{{i18n "serviceclass.transferLimits}}</b></u></h5>
+					  				</div>
+						  		</div>
+						  		<div class="col-lg-6">
+						  			{{>detailsLabel label="serviceclass.maxDailyCountLabel" details=this.maxDailyCount}}
+						  			{{>detailsLabel label="serviceclass.maxDailyAmountLabel" details=this.maxDailyAmount suffix="{{moneySuffix}}"}}
+						  		</div>
+						  		<div class="col-lg-6">
+						  			{{>detailsLabel label="serviceclass.maxMonthlyCountLabel" details=this.maxMonthlyCount}}
+						  			{{>detailsLabel label="serviceclass.maxMonthlyAmountLabel" details=this.maxMonthlyAmount suffix="{{moneySuffix}}"}}
+						  		</div>
+					  		</div>
+					  		
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+</div>

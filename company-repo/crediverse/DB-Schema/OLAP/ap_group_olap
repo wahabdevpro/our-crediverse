@@ -1,0 +1,9 @@
+*************************** 1. row ***************************
+       Table: ap_group
+Create Table: CREATE TABLE `ap_group` (
+  `id` int(11) NOT NULL,
+  `comp_id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ap_group_name` (`comp_id`,`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1

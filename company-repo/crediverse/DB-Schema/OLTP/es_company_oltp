@@ -1,0 +1,14 @@
+*************************** 1. row ***************************
+       Table: es_company
+Create Table: CREATE TABLE `es_company` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `country` varchar(2) NOT NULL,
+  `lm_time` datetime NOT NULL,
+  `lm_userid` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `prefix` varchar(2) NOT NULL,
+  `state` varchar(1) NOT NULL,
+  `version` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_qwjkbmikvb605exes435jur27` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8

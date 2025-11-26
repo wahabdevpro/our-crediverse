@@ -1,0 +1,26 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.connectors.sut.C4UTestConnector")
+   }
+}
+dependencies {
+    implementation project(':CoreInterfaces')
+    implementation project(':TransactionService')
+    implementation project(':HuxProtocol')
+    implementation project(':XmlRpc')
+    implementation project(':HttpServer')
+    implementation project(':Configuration')
+    implementation project(':PinService')
+    implementation project(':LifecycleConnector')
+    implementation 'org.slf4j:slf4j-api'
+}

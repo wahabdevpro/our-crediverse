@@ -1,0 +1,21 @@
+@startuml
+package "Crediverse deployment" {
+() "gRPC \nover \nHTTPS" as IMAS
+() "REST" as ICTS
+() "eHUX" as ISCE
+ICTS -- [Crediverse TS]
+ISCE -- [CoaleSCE]
+IMAS -- [Mobile API Service]
+}
+
+[Mobile API Service] -->  ICTS 
+[Mobile API Service] -->  ISCE 
+
+package "Public Internet"{
+[Crediverse Mobile App]
+}
+[Crediverse Mobile App] --> IMAS
+
+@enduml
+
+

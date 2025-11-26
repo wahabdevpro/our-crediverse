@@ -1,0 +1,88 @@
+<div class="modal fade" id="logConfigModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Log Configuration</h4>
+      </div>
+      <div class="modal-body">
+      	<form id="configModalForm" name="configModalForm">
+			<div id="General" class="model_content">
+				<!-- <div class="row">
+					<div class="col-lg-6 col-md-6 col-xs-6">
+						<label for="userid" class="control-label">Start Date</label>
+						<div class="input-group date form_datetime" data-date-format="yyyy-mm-ddThh:ii:00" data-link-field="dtp_input1">
+            				<input id="startDate" name="startDate" class="form-control" type="text" value="" readonly="true" />
+                			<span class="input-group-addon cleardate"><span class="glyphicon glyphicon-remove"></span></span>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+           				</div>
+           				<span id="startDate_error" class="error_message hide"></span>
+					</div>
+					<div class="col-lg-6 col-md-6 col-xs-6">
+						<label for="fullname" class="control-label">End Date</label>
+						<div class="input-group date form_datetime" data-date-format="yyyy-mm-ddThh:ii:00" data-link-field="dtp_input1">
+            				<input id="endDate" name="endDate" class="form-control" type="text" value="" readonly="true" />
+                			<span class="input-group-addon cleardate"><span class="glyphicon glyphicon-remove"></span></span>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+           				</div>
+           				<span id="endDate_error" class="error_message hide"></span>
+					</div>
+				</div>
+				<br/> -->
+				<div class="row">
+					<div class="col-lg-6 col-md-6 col-xs-6">
+						<label for="isFatal" class="control-label">Severity</label>
+							<div class="checkbox modalcheckbox">
+							  <label class="severityLabel">
+							    <input id="isFatal" name="isFatal" type="checkbox" class="modalInput" checked="true"/>Fatal
+							  </label>
+  							 <label>
+							    <input id="recurring" name="isError" type="checkbox" class="modalInput" checked="true"/>Error
+							  </label>
+							  <br/>
+  							 <label class="severityLabel">
+							    <input id="recurring" name="isWarn" type="checkbox" class="modalInput" checked="true"/>Warning
+							  </label>
+  							 <label>
+							    <input id="recurring" name="isInfo" type="checkbox" class="modalInput" checked="true"/>Information
+							  </label>
+							  <br/>
+  							 <label class="severityLabel">
+							    <input id="recurring" name="isDebug" type="checkbox" class="modalInput" checked="true"/>Debug
+							  </label>
+  							 <label>
+							    <input id="recurring" name="isTrace" type="checkbox" class="modalInput" checked="true"/>Trace
+							  </label>
+							</div>							
+					</div>
+					<div class="col-lg-6 col-md-6 col-xs-6">
+						<label for="onlyNonBlankTID" class="control-label">Non Blank Transaction ID</label>
+						<div class="checkbox modalcheckbox">
+						  <label>
+						    <input id="onlyNonBlankTID" name="onlyNonBlankTID" type="checkbox" class="modalInput" />Display only these records
+						  </label>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-6 col-md-6 col-xs-6">
+						<label for="isFatal" class="control-label">Sorting</label>
+						<div class="checkbox modalcheckbox">
+						  <label>
+						    <input id="latestAtTop" name="latestAtTop" type="checkbox" class="modalInput" checked="true"/>Latest record at top
+						  </label>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		      <div class="modal-footer">
+		      	<img id="waiting" src="/img/cell_wait.gif" class="waiting hide" />
+		        <button id="logModalCancel" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+		        <button id="saveLogConfig" type="button" class="btn btn-primary" >Use</button>
+		      </div>
+      	</form>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

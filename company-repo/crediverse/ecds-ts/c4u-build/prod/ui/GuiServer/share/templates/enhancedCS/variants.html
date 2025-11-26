@@ -1,0 +1,71 @@
+<div>
+	<div id="" th:if="${#arrays.isEmpty(session.variants)}">
+		<p>Currently No variants defined</p>
+	</div>
+</div>
+
+<div>
+	<div id="" th:if="${#lists.isEmpty(session.variants)}">
+		<p>Currently No Service Variants defined</p>
+	</div>
+	<div th:if="${!#lists.isEmpty(session.variants)}" class="row">
+		<table id="var_table" class="table infotable table-hover table-bordered table-striped" style="width: 100%; table-layout: fixed;">
+			<col width="10%" />
+			<col width="20%" />
+			<col width="75px" />
+			<col width="75px" />
+			<col width="10%" />
+			<col width="10%" />
+			<col width="100px" />
+			<col width="120px" />
+			<thead>
+				<tr>
+					<th>Variant ID</th>
+					<th>Name</th>
+					<th>Validity</th>
+					<th>Validity Unit</th>
+					<th th:text="${'Subscribe Charge (' + session.curSymbol + ')'}">-</th>
+					<th th:text="${'Renewal Charge (' + session.curSymbol + ')'}" >-</th>
+					<th>Recurring</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="var,iterStat : ${session.variants}">
+					<td th:text="${ utils.extractField(var, 'variantID') }">-</td>
+					<td th:text="${ utils.extractPhraseField(var, 'name', 'eng') }" th:dir="${directions != null ? directions.length > 0 ? directions[0] : 'ltr' : 'ltr'}">-</td>
+					<td th:text="${ utils.extractField(var, 'validityPeriod') }" style="text-align: center">-</td>
+					<td th:text="${ utils.extractField(var, 'validityPeriodUnit') }" style="text-align: center">-</td>
+					<td style="text-align:right" th:text="${ utils.extractVieldAsCurrency(var, 'subscriptionCharge', session.curDigits) }">-</td>
+					<td style="text-align:right" th:text="${ utils.extractVieldAsCurrency(var, 'renewalCharge', session.curDigits) }">-</td>
+					<td>
+						<center>
+							<span th:if="${ utils.extractField(var, 'recurring') }" class="glyphicon glyphicon-ok-circle isexclusive"></span>
+							<span th:if="${ !utils.extractField(var, 'recurring') }" class="glyphicon glyphicon-remove-circle notexclusive"></span>
+						</center>
+					</td>	
+					<td style="text-align: center">
+						<a th:id="${'variantsview_' + iterStat.index}"  th:onclick="'javascript:showVariants(\'view\',' + ${iterStat.index} + ');return false;'" href="#"><span class="glyphicon glyphicon-eye-open viewbutton" title="view"></span></a> 
+						<span>|</span>
+						<a th:id="${'variantsedit_' + iterStat.index}" th:onclick="'javascript:showVariants(\'edit\',' + ${iterStat.index} + ');return false;'" href="#"><span class="glyphicon glyphicon-pencil editbutton" title="edit"></span></a> 
+						<span>|</span>
+						<a th:id="${'variantsedit_' + iterStat.index}" th:onclick="'javascript:deleteVariants(' + ${iterStat.index} + ',\'' + ${ utils.extractField(var, 'variantID') } + '\');return false;'" href="#"><span class="glyphicon glyphicon-trash deletebutton" title="delete"></span></a> 
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+</div>
+
+<script th:inline="javascript">
+$(document).ready(function() {
+	// <![CDATA[        
+	var variantIDs = /*[[ ${ utils.extractFieldIds(session.variants, 'variantID') } ]]*/;
+    // ]]>
+    try {
+    	hashIDStore.addItem("variantIDs", variantIDs);
+    } catch(err) {
+    }
+});
+</script>

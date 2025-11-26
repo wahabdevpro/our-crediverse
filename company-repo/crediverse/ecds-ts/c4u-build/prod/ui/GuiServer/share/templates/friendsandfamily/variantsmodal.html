@@ -1,0 +1,113 @@
+<!-- Modal Server Info -->
+<div class="modal fade" id="variantsModal" tabindex="-1" role="dialog" aria-labelledby="variantsModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div id="variantsModalHeader" class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="variantsModalTitle">Add New Variant</h4>
+      </div>
+      <div class="modal-body">
+      	<form id="variantsModalForm" name="variantsModalForm">
+      		<ul class="nav nav-tabs">
+			  <li class="active"><a href="#variantsModalConfig" data-toggle="tab">Configuration</a></li>
+			  <li><a href="#variantsModalTexts" data-toggle="tab">Multilingual Text</a></li>
+			</ul>
+			
+			<div class="tab-content">
+				<!-- General Configuration -->
+				<div class="tab-pane modalconent active" id="variantsModalConfig">
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="VariantID" class="control-label">Variant ID</label>
+							<input type="text" class="form-control modalInput" id="VariantID" name="VariantID" placeholder="Variant ID" />
+							<span id="VariantID_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="VariantType" class="control-label">Variant Type</label>
+							<input type="text" class="form-control modalInput" id="VariantType" name="VariantType" placeholder="Variant Type" />
+							<span id="VariantType_error" class="error_message hide"></span>
+						</div>
+					</div>
+				
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="freeMonthlyAdd" class="control-label">Free Monthly Additions</label>
+							<input type="text" class="form-control modalInput" id="freeMonthlyAdd" name="freeMonthlyAdd" placeholder="Number of Free Monthly Additions" />
+							<span id="freeMonthlyAdd_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="freeMonthlyDelete" class="control-label">Free Monthly Deletes</label>
+							<input type="text" class="form-control modalInput" id="freeMonthlyDelete" name="freeMonthlyDelete" placeholder="Number of Free Monthly Deletes" />
+							<span id="freeMonthlyDelete_error" class="error_message hide"></span>
+						</div>
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="maxMonthlyAdd" class="control-label">Maximum Monthly Additions</label>
+							<input type="text" class="form-control modalInput" id="maxMonthlyAdd" name="maxMonthlyAdd" placeholder="Maximum Number of Monthly Additions" />
+							<span id="maxMonthlyAdd_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="maxMonthlyDelete" class="control-label">Maximum Monthly Deletes</label>
+							<input type="text" class="form-control modalInput" id="maxMonthlyDelete" name="maxMonthlyDelete" placeholder="Maximum Number of Monthly Deletes" />
+							<span id="maxMonthlyDelete_error" class="error_message hide"></span>
+						</div>
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="chargeAdd" class="control-label">Add Charge</label>
+							<input type="text" class="form-control currencyfields modalInput" id="chargeAdd" name="chargeAdd" placeholder="Charge to Add a Number" />
+							<span id="chargeAdd_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="chargeDel" class="control-label">Delete Charge</label>
+							<input type="text" class="form-control currencyfields modalInput" id="chargeDel" name="chargeDel" placeholder="Charge to Delete a Number" />
+							<span id="chargeDel_error" class="error_message hide"></span>
+						</div>
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="numberPlanString" class="control-label">Number Plans</label>
+							<input type="text" class="form-control modalInput" id="numberPlanString" name="numberPlanString" placeholder="Number Plans" />
+							<span id="numberPlanString_error" class="error_message hide"></span>
+						</div>
+					</div>
+									
+				</div>
+				
+				<!--  Text Configuration -->
+				 <div class="tab-pane modalconent" id="variantsModalTexts">
+					 <div class="row modalrowcontent">
+						<div class="panel-group modaltexts" id="vr_accordion">
+						
+						<div th:include="advconfig/phraseField :: messagePanel" th:with="label=${'Name'}, field=${'name'}, tab=${'var'}, always=${'1'}, state=${'1'}" class="panel panel-default"/>
+							
+						</div>	
+					 </div>
+				 </div>
+				 
+			</div>
+
+      	</form>
+      	
+		<div id="variantsModalError" class="row alert alert-danger hide">
+				Things went wrong!!
+		</div>
+		<div class="modal-footer">
+			<img id="variantsModalWaiting" src="/img/cell_wait.gif" class="waiting hide" />
+			<button type="button" class="btn btn-default" data-dismiss="modal" >Cancel</button>
+			<button id="variantsModalSave" type="button" class="btn btn-primary savebtn" onclick="saveModalCall()">Save</button>
+		</div>
+			
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<script language="javascript">
+	bindDragable("variantsModal", "variantsModalHeader");
+</script>

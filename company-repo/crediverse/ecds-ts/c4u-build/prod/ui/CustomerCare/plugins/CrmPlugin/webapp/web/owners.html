@@ -1,0 +1,112 @@
+<style>
+	.user_heading {
+		font-size: 22px;
+		font-weight: bold;
+	}
+	.viewbutton {
+		margin-left: 5px;
+		margin-right: 5px;
+		color: #0099FF;		
+	}
+	.viewbutton:hover {
+		color: blue;
+	}
+	.editbutton {
+		margin-left: 5px;
+		margin-right: 5px;
+		color: #00C000;
+	}
+	.editbutton:hover {
+		color: green;
+	}	
+	.deletebutton {
+		margin-left: 5px;
+		margin-right: 5px;
+		color: #FF3366;		
+	}
+	.deletebutton:hover {
+		color: red;
+	}
+	.table-bordered {
+		border: 0px !important;
+		padding-right: 20px !important;
+	}
+	.consumer-label {
+		font-weight: :bold;
+	}
+</style>
+
+
+<!--  Current Owners -->
+<div class="row" style="padding-left:15px; padding-top:10px;">
+	<div class="col-lg-5">
+		<div class="content-header">
+			<h3>
+				<strong>Providers for </strong> <small th:text="${'[' + msisdn + ']'}">[xxxxxx]</small>
+			</h3>
+		</div>
+	</div>
+</div>
+
+
+<div th:each="owner : ${owners}" class="panel panel-default" style="margin:5px 10px;">
+	<div class="panel-heading">
+		<div class="row">
+			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+				<span class="glyphicon glyphicon-phone glyph-space-right"></span><b><span th:text="${owner.msisdn}"></span></b>
+			</div>
+			<div class="col-xs-3 col-xs-offset-5 col-sm-3 col-sm-offset-5 col-md-3 col-md-offset-5 col-lg-3 col-lg-offset-5">
+				<span style="float:right">
+					<button type="button" class="btn btn-danger" 
+						th:onclick="'javascript:removeOwner(\'' + ${msisdn} + '\', \'' + ${owner.serviceId} + '\', \'' + ${owner.variantId} + '\', \'' + ${owner.msisdn}
+						+ '\');return false;'"><span class="glyphicon glyphicon-trash"></span></button>
+				</span>
+			</div>
+		</div>
+	</div>
+  	<div th:id="${'own' + owner.msisdn}" class="panel-body">
+		<div th:if="${ (#lists.isEmpty(owner.quotas)) }" class="row" style="padding-left:15px; margin-top: 5px;">
+			<div class="col-lg-6">
+				<span th:text="${'There are currently no service quotas under beneficiary '}"></span>
+				<span th:text="${owner.msisdn}" style="font-weight:bold;"></span>
+			</div>
+		</div>
+		
+		<div th:if="${ !(#lists.isEmpty(owner.quotas)) }" class="row" style="padding-left:15px; margin-top: 5px;">
+			<div class="row">
+				<div class="col-lg-12" style="padding-left:50px;">
+					<table class="table infotable table-hover table-bordered table-striped" >
+						<thead>
+							<tr>
+								<th>Service</th>
+								<th>Destination</th>
+								<th>Day</th>
+								<th>Time</th>
+								<th>Units</th>									
+								<th>Quantity</th>
+								<th>Balance</th>														
+								<th>Expiry</th>														
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="quota : ${owner.quotas}" >
+								<td th:text="${quota.service}"></td>
+								<td th:text="${quota.destination}"></td>
+								<td th:text="${quota.daysOfWeek}"></td>
+								<td th:text="${quota.timeOfDay}"></td>
+								<td th:text="${quota.units}"></td>
+								<td th:text="${quota.quantity}"></td>
+								<td th:utext="${quota.balance}"></td>
+								<td th:utext="${quota.expDate}"></td>
+								<td style="text-align:center">
+									<button class="btn btn-xs btn-danger"	th:onclick="'javascript:removeQuota(\'' + ${owner.msisdn} + '\', \'' + ${sid} + '\', \'' + ${vid} + '\', \'' + ${msisdn} + '\', \'' + ${quota.quotaID} + '\',\'prov\');return false;'" title="unsubscribe"><span class="glyphicon glyphicon-remove"></span></button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>	
+		</div>
+	</div>
+</div>

@@ -1,0 +1,12 @@
+*************************** 1. row ***************************
+       Table: er_report_schedule_agent_user
+Create Table: CREATE TABLE `er_report_schedule_agent_user` (
+  `report_schedule_id` int(11) NOT NULL,
+  `agent_user_id` int(11) NOT NULL,
+  KEY `er_report_schedule_agent_user_agent_user_id` (`agent_user_id`),
+  KEY `er_report_schedule_agent_user_report_schedule_id` (`report_schedule_id`),
+  CONSTRAINT `FKckc999ego6fqtcstpjvr6hjx8` FOREIGN KEY (`report_schedule_id`) REFERENCES `er_report_schedule` (`id`),
+  CONSTRAINT `FKk5sa8nb4lecgdhyj93tmrlqmv` FOREIGN KEY (`agent_user_id`) REFERENCES `ea_user` (`id`),
+  CONSTRAINT `fk_er_report_schedule_agent_user_agent_user_id` FOREIGN KEY (`agent_user_id`) REFERENCES `ea_user` (`id`),
+  CONSTRAINT `fk_er_report_schedule_agent_user_report_schedule_id` FOREIGN KEY (`report_schedule_id`) REFERENCES `er_report_schedule` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

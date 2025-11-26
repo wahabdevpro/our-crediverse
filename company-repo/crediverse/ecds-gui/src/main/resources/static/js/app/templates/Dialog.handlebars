@@ -1,0 +1,237 @@
+<div>
+	<script id="commondialog">
+		<div id="defaultDialog" class="modal fade">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		            	<button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		                <h4 class="modal-title">Missing title</h4>
+		            </div>
+		            <div class="modal-body">
+		            	<p class="modal-text">Missing Text</p>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		
+		<div id="okDialog" class="modal fade">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+			        <div class="modal-header">
+			        	<button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		                <h4 class="modal-title">Missing title</h4>
+		            </div>
+		            <div class="modal-body">
+		            	<p class="modal-text">Missing Text</p>
+		            </div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-default okButton" data-dismiss="modal">OK</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		
+		<div id="errorDialog" class="modal fade">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+			        <div class="modal-header">
+			        	<button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		                <h4 class="modal-title">Missing title</h4>
+		            </div>
+		            <div class="modal-body">
+		            	<p class="modal-text">Missing Text</p>
+		            </div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-default okButton" data-dismiss="modal">OK</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		
+		<div id="progressDialog" class="modal fade">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+			        <div class="modal-header">
+			        	<button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		                <h4 class="modal-title">Missing title</h4>
+		            </div>
+		            <div class="modal-body">
+		            	<div id="progressBar" class="progress">
+			        		<div class="progress-bar progress-bar-success"></div>
+			    		</div>
+		            </div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-default cancelButton" data-dismiss="modal">Cancel</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		
+		<div id="yesnoDialog" class="modal fade">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+			        <div class="modal-header">
+			        	<button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		                <h4 class="modal-title">Missing title</h4>
+		            </div>
+		            <div class="modal-body">
+		            	<p class="modal-text">Missing Text</p>
+		            </div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-primary yesButton">{{i18n "enums.yesNo.yes"}}</button>
+		                <button type="button" class="btn btn-default noButton" data-dismiss="modal">{{i18n "enums.yesNo.no"}}</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		
+		<div id="deleteDialog" class="modal fade">
+	    	<div class="modal-dialog">
+	        	<div class="modal-content">
+		        	<div class="modal-header">
+		        		<button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		                <h4 class="modal-title">Missing title</h4>
+	        	    </div>
+		            <div class="modal-body">
+		            	<div class="alert alert-danger form-error-panel deleteErrorPanel remove-margins hide" role="alert">
+		            		<span class="form-error-heading">
+		            			Delete operation failed, Item currently in use.
+		            		</span>
+		            	</div>
+	    	        	<p class="modal-text">Missing Text</p>
+	            	</div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-danger actionButton"> --- </button>
+	    	            <button type="button" class="btn btn-default cancelButton" data-dismiss="modal">{{i18n "global.deleteCancel"}}</button>
+	        	    </div>
+		        </div>
+		    </div>
+		</div>
+		
+		<div id="viewDialog" class="modal fade" >
+		    <div class="modal-dialog">
+		    </div>
+		</div>
+		
+		<div id="statusDialog" class="modal fade">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		        <div class="box box-success">
+	            <div class="box-header">
+	              <h3 class="box-title modal-text">Loading state</h3>
+	            </div>
+	            <div class="overlay">
+	              <i class="fa fa-refresh fa-spin"></i>
+	            </div>
+	          </div>
+		        </div>
+		    </div>
+		</div>
+		<div id="quickDeactivateDialog" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content">
+			        <div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+						<h4 class="modal-title">Missing title</h4>
+					</div>
+		            <div class="modal-body">
+						<form name="quickDeactivateAgentFrm" class="form-horizontal">
+							<div class="panel panel-danger form-error-panel failQuickDeactivation" role="alert" style="display:none;">
+								<div class="panel-heading error-panel-heading">
+								<i class="fa fa-exclamation-circle font-error-heading"></i>
+								<span class="txt-error-panel-heading">&nbsp;The following errors prevented Deactivation</span>
+								</div>
+								<div class="panel-body error-panel-body">
+									<pre class="error-code">Unexpected Error<br></pre>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-10">
+									<div class="form-group">
+										<label class="col-xs-2 col-sm-2 control-label" id="quickDeactivateLabel">MSISDN</label>
+										<div class="col-xs-10 col-sm-10">
+											<input id="quickDeactivateMsisdnTxt" type="text"
+												class="form-control" placeholder="Enter MSISDN" value="" />
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<button type="button" class="btn btn-danger quickDeactivateAgentBtn">Deactivate</button>
+									</div>
+								</div>
+							</div>
+						</form>
+		            </div>
+		            <div class="modal-footer">
+		            </div>
+		        </div>
+			</div>
+		</div>
+
+		<div id="AgentsByMSISDNDialog" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content" style="padding: 1em 2em;">
+			        <div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+						<h4 class="modal-title text-center" style="padding:1em 0;">Missing title</h4>
+					</div>
+		            <div class="modal-body">
+						<form name="agentSearchFrm" class="form-horizontal">
+							<div class="panel panel-danger form-error-panel failAgentSearchDialog" role="alert" style="display:none;">
+								<div class="panel-heading error-panel-heading">
+								<i class="fa fa-exclamation-circle font-error-heading"></i>
+								<span class="txt-error-panel-heading">&nbsp;The following errors occurred</span>
+								</div>
+								<div class="panel-body error-panel-body">
+									<pre class="error-message">Unexpected Error<br></pre>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<div>
+											<style>
+											.agent-info-table {
+												border-spacing: 0 1em;
+											}
+											.agent-info-table tr.selected {
+												border: 2px solid #00a65a;
+											}
+											.agent-info-table td {
+												background: lightgray;
+												vertical-align: center;
+											}
+											.agent-info-table td {
+												padding: 1em !important;
+											}
+											.pointer {
+												cursor: pointer;
+											}
+											</style>
+											<table class="table agent-info-table"></table>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-12">
+									<div class="form-group text-right">
+		                				<button type="button" class="btn btn-default cancelButton" style="margin-right:1em" data-dismiss="modal">Cancel</button>
+										<button type="button" class="btn btn-primary getAgentTransactionsBtn">Get Transactions</button>
+									</div>
+								</div>
+							</div>
+						</form>
+		            </div>
+		            <div class="modal-footer">
+		            </div>
+		        </div>
+			</div>
+		</div>
+
+		<div id="warningDialog" class="modal fade" >
+		    <div class="modal-dialog">
+			</div>
+		</div>
+	</script>
+</div>
+

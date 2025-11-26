@@ -1,0 +1,38 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.services.advancedtransfer.AdvancedTransfer")
+   }
+}
+dependencies {
+    implementation project(':CoreInterfaces')
+    implementation project(':Calendar')
+    implementation project(':AirConnector')
+    implementation project(':TransactionService')
+    implementation project(':SoapProtocol')
+    implementation project(':HuxProtocol')
+    implementation project(':HuxConnector')
+    implementation project(':Configuration')
+    implementation project(':Notification')
+    implementation project(':SdpProtocol')
+    implementation project(':ProcessModel')
+    implementation project(':AirSimService')
+    implementation project(':AirProtocol')
+    implementation project(':PinService')
+    implementation project(':StringUtilities')
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'com.sun.xml.ws:jaxws-rt'
+    implementation 'com.sun.xml.ws:rt'
+    implementation 'javax.xml.bind:jaxb-api'
+    implementation 'com.sun.xml.bind:jaxb-core'
+    implementation 'com.sun.xml.bind:jaxb-impl'
+}

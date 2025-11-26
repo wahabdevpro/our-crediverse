@@ -1,0 +1,26 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.connectors.file.FileConnector")
+   }
+}
+dependencies {
+    implementation project(':CoreInterfaces')
+    implementation project(':Configuration')
+    implementation project(':SdpProtocol')
+    implementation project(':Reflection')
+    implementation project(':Instrumentation')
+    implementation project(':CsvParser')
+    implementation project(':FileWatcher')
+    implementation project(':Threads')
+    implementation 'org.slf4j:slf4j-api'
+}

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Taken from: https://github.com/systemd/systemd/blob/v231/src/core/macros.systemd.in
+# RHEL 7.2 uses: https://github.com/systemd/systemd/blob/v219/src/core/macros.systemd.in
+
+if [ $1 -eq 0 ] ; then
+	# Package removal, not upgrade
+	systemctl --no-reload disable --now ecdsapi@*.service > /dev/null 2>&1 || :
+fi

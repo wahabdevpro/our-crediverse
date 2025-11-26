@@ -1,0 +1,83 @@
+<div th:if="${! balancerequestfree}" class="row" style="padding-left:15px; padding-top:10px;">
+	<div class="col-lg-12">
+		<div class="content-header">
+			<h3>
+				<button id="balanceEnquiryBtn" class="btn btn-primary" th:text="#{cc.balanceEnquiryButtonLabel}">Balance Enquiry</button> <small th:text="${'[' + msisdn + ']'}">[xxxxxx]</small> 
+			</h3>
+		</div>
+	</div>
+</div>
+
+<div th:if="${balancerequestfree}"  class="row" style="padding-left:15px; padding-top:10px;">
+	<div class="col-xs-12 col-lg-12 col-sm-12 col-md-12">
+		<div class="content-header">
+			<h3>
+				<strong th:text="#{cc.provbalanceheading}">Your Balances</strong> <small th:text="${'[' + msisdn + ']'}">[xxxxxx]</small>
+				<button id="balanceEnquiryRefreshBtn" type="button" class="btn btn-info btn-xs" th:title="#{cc.balancerefresh}"><span class="glyphicon glyphicon-refresh"></span></button>
+			</h3>
+		</div>
+	</div>
+</div>
+
+<div class="row" style="padding-left:15px; padding-top:10px;">
+	<div id="balanceEnquiryResult" class="col-xs-12 col-lg-12 col-sm-12 col-md-12">
+		<span th:if="${! balancerequestfree}"  th:text="#{cc.clickForBalanceEnquiry}">Click to perform a balance enquiry</span>
+		<div th:if="${balancerequestfree}" >
+			<img src='/img/load.gif' />
+			<span>loading...</span>
+		</div>
+	</div>
+</div>
+
+<div class="row" style="padding-left:15px; padding-top:10px;">
+	<div class="col-xs-12 col-lg-12 col-sm-12 col-md-12">
+		<div class="content-header">
+			<h3>
+				<strong th:text="#{cc.consumersheading}">Your Beneficiaries</strong> <small th:text="${'[' + msisdn + ']'}">[xxxxxx]</small>
+			</h3>
+		</div>
+	</div>
+</div>
+
+<div id="update_msg_config" class="alert hide">
+</div>
+
+<div class="panel panel-default" style="margin: 10px 10px;">
+	<div class="panel-heading">
+		<div class="row">
+			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-3">
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-phone glyph-space"></span>
+					</span> 
+					<input id="newBenMsisdn" type="text" maxlength="15" class="numericfields form-control" placeholder="MSISDN" />
+				</div>
+			</div>
+			
+			<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 hide">
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-user glyph-space"></span>
+					</span> 
+					<input id="newBenMsisdnName" maxlength="35" type="text" class="form-control" placeholder="Name" />
+				</div>
+			</div>
+			
+			<div class="col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">
+					<span style="float:right;">
+						<button id="btnAddBen" type="button" class="btn btn-success disabled"  style="margin-right: 5px;"
+						data-toggle="tooltip" data-placement="top" th:title="#{cc.addconsumer}" data-html="true"
+						th:onclick="'javascript:addBenificiary(\'' + ${msisdn} + '\', \'' + ${sid} + '\', \'' + ${vid} + '\', \'Consumer\');return false;'">
+							<span class="glyphicon glyphicon-plus"></span>
+						</button>
+					</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="membersinfo" th:include="crshr/memberslist" />
+
+<script th:inline="javascript" >
+consumerEvents([[${sid}]], [[${vid}]]);CrmHome.showNavMenu("Group Shared Accounts");
+</script>

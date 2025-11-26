@@ -1,0 +1,70 @@
+project.ext.set("ecdsapi.prefix", "/opt/cs/ecdsapi")
+project.ext.set("ecdsapi.sysconfdir", "/etc/opt/cs/ecdsapi")
+project.ext.set("systemd.servicedir", "/usr/lib/systemd/system")
+project.ext.set("protobase", "proto"+project.property("ecdsapi.prefix"))
+project.ext.set("protobase.servicedir", "proto"+project.property("systemd.servicedir"))
+
+task prepareDockerImage(type: Copy, dependsOn: bootJar) {
+
+	delete "docker_image"
+    mkdir "docker_image"
+    
+    into "docker_image/"
+    
+    from(bootJar.outputs.files) {
+    	into project.property("ecdsapi.prefix")+'/libexec'
+		fileMode 0644
+    }
+
+	from(project.property("protobase")+'/bin/ecdsapi.sh') {
+    	into project.property("ecdsapi.prefix")+'/bin'
+		fileMode 0755
+    }
+
+    from(project.property("protobase")+'/bin/docker-entrypoint.sh') {
+    	into project.property("ecdsapi.prefix")+'/bin'
+		fileMode 0755
+    }
+
+    from(project.property("protobase")+'/share/logback-spring.xml') {
+    	into project.property("ecdsapi.prefix")+'/share'
+		fileMode 0644
+    }
+    
+    from(project.property("protobase")+'/docs/README.md') {
+    	into project.property("ecdsapi.prefix")+'/docs'
+		fileMode 0644
+    }
+    
+    from("${sourceSets.main.output.resourcesDir}/git.properties") {
+    	into project.property("ecdsapi.prefix")+'/docs'
+    	rename { String fileName ->
+			fileName.replace("git.properties", "build.properties")
+		}
+		fileMode 0644
+    }
+    
+    from(project.property("protobase.servicedir")+'/ecdsapi@.service') {
+    	into project.property("systemd.servicedir")
+		fileMode 0644
+    }
+
+    from("${sourceSets.main.output.resourcesDir}/application-prod.properties") {
+		duplicatesStrategy DuplicatesStrategy.EXCLUDE
+    	into project.property("ecdsapi.sysconfdir")+'/default'
+		fileMode 0644
+    }
+
+    from("${sourceSets.main.output.resourcesDir}/logback.xml") {
+		duplicatesStrategy DuplicatesStrategy.EXCLUDE
+    	into project.property("ecdsapi.sysconfdir")+'/default'
+		fileMode 0644
+    }
+
+    from('resources') {
+    	into project.property("ecdsapi.prefix")+'conf'
+    	exclude 'database'
+    	fileMode 0755
+    	
+    }
+}

@@ -1,0 +1,11 @@
+Package: ${APP_NAME}
+Version: ${VERSION}
+Section: java
+Priority: important
+Maintainer: Concurrent Systems <email@address.com>
+Architecture: all
+Depends: 
+Description: This is the description to be edited. This description
+ MUST continue on more than one line or else it is not compliant with
+ the Debian Manual Policy. More description is here. Please give as
+ much detail as possible for the audience to understand the application.

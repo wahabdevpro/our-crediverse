@@ -1,0 +1,114 @@
+<style>
+	.topheading {
+		 font-weight: bold;
+		 font-size: large;
+		 padding-left: 10px;
+	}
+	.mylabel {
+		 font-weight: bold;
+		 font-size: medium;
+		 float:right;
+	}
+	.myinfo {
+		font-size: medium;
+	}
+	.update_details {
+		float:right;
+		padding-right: 10px;
+	}
+	.error_message {
+		color:red;
+	}
+	.waiting {
+		margin-left: -5px;
+		float:left;
+	}	
+	
+	.row {
+		padding-bottom: 5px;
+	}
+</style>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+  	<span class="topheading">License Details</span>
+  </div>
+  <div class="panel-body">
+	<div class="row">
+		<div class="col-md-2">
+			<span class='mylabel'>Issuer</span>
+		</div>
+		<div class="col-md-4">
+			<span th:text="${license.issuer}">issuer</span>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2">
+			<span class='mylabel'>Issue Date</span>
+		</div>
+		<div class="col-md-4">
+			<span th:text="${license.issueDate}">issue date</span>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2">
+			<span class='mylabel'>Max TPS</span>
+		</div>
+		<div class="col-md-4">
+			<span th:text="${license.maxTPS}">max tps</span>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2">
+			<span class='mylabel'>Max Peak TPS</span>
+		</div>
+		<div class="col-md-4">
+			<span th:text="${license.maxPeakTPS}">max peak tps</span>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2">
+			<span class='mylabel'>Max Nodes</span>
+		</div>
+		<div class="col-md-4">
+			<span th:text="${license.maxNodes}">max nodes</span>
+		</div>
+	</div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+  	<span class="topheading">Facilities</span>
+  </div>
+  <div class="panel-body">
+  	<ul class="list-group">
+    	<li class="list-group-item" th:each="facility: ${license.facilities}">
+    		<div class="row">
+				<div class="col-md-2">
+					<span class='mylabel'>Facility ID</span>
+				</div>
+				<div class="col-md-4">
+					<span th:text="${facility.facilityID}">facility id</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-2">
+					<span class='mylabel'>Expiry Date</span>
+				</div>
+				<div class="col-md-4">
+					<span th:text="${facility.expiryDate}">expiryDate</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-2">
+					<span class='mylabel'>Max Subscribers</span>
+				</div>
+				<div class="col-md-4">
+					<span th:text="${facility.maxSubscribers}">expiryDate</span>
+				</div>
+			</div>
+    	</li>
+ 	</ul>
+  </div>
+</div>

@@ -1,0 +1,239 @@
+<div>
+	<script id="profiledialogview">
+		<div class="modal-header">
+    		<button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+    		<h4 class="modal-title">{{{dialogTitle}}}</h4>
+		</div>	
+	
+		<div class="modal-body">
+			<div class="groupdetails">
+				<form name="addUser" class="form-horizontal">    						
+					{{>modalSelect name="title" label="userman.title" data="mr:Mr,miss:Miss,mrs:Mrs,dr:Dr,prof:Prof" hint="userman.title" value=this.title }}
+					
+					{{>modalInput name="firstName" label="userman.firstName" hint="userman.firstNameHint" value=this.firstName }}
+					{{>modalInput name="surname" label="userman.surname" hint="userman.surnameHint" value=this.surname }}
+					{{>modalInput name="initials" label="userman.initials" hint="userman.initialsHint" value=this.initials }}
+
+					{{>modalInput name="email" type="email" label="userman.email" hint="userman.emailHint" value=this.email}}							
+					
+					{{>modalSelect name="language" label="userman.language" 
+						data="en:enums.langType.en,fr:enums.langType.fr" 
+						hint="userman.languageHint" value=this.language
+					}}
+					
+					<div  class="form-group">
+						<label class="col-xs-4 control-label">{{i18n "userman.department"}}</label>
+						<div class="col-xs-5">
+							<select id="departmentID" name="departmentID" class="form-control" value="{{departmentID}}">
+								{{#each availDepartments}}
+									<option value="{{id}}">{{name}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		
+		<div class="modal-footer">
+    		<button type="button" class="btn btn-primary profileUpdateButton">{{i18n "global.saveBtn"}}</button>
+    		<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+		</div>
+	</script>
+	
+	
+	<script id="userdialogview">
+		<div class="modal-header">
+    		<button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+    		<h4 class="modal-title">{{{dialogTitle}}}</h4>
+		</div>	
+	
+		<div class="modal-body">
+			<div class="groupdetails">
+				<form name="addUser" class="form-horizontal">    						
+					{{>modalInput name="accountNumber" label="userman.accountNumber" hint="userman.accountNumberHint" value=this.accountNumber }}
+					{{>modalSelect name="title" label="userman.title" data="mr:Mr,miss:Miss,mrs:Mrs,dr:Dr,prof:Prof" hint="userman.title" value=this.title }}
+					
+					{{>modalInput name="firstName" label="userman.firstName" hint="userman.firstNameHint" value=this.firstName }}
+					{{>modalInput name="surname" label="userman.surname" hint="userman.surnameHint" value=this.surname }}
+					{{>modalInput name="initials" label="userman.initials" hint="userman.initialsHint" value=this.initials }}
+					
+					{{>modalSelect name="authenticationMethod" label="userman.authenticationMethod" data="A:enums.authenticationMethod.password,
+						X:enums.authenticationMethod.external"
+						hint="userman.authenticationMethod" value=this.authenticationMethod}}
+					
+					{{>modalInput name="domainAccountName" label="userman.domainAccountName" hint="userman.domainAccountNameHint" comment="userman.domainAccountNameComment" value=this.domainAccountName}}
+					
+					{{>modalInput name="mobileNumber" label="userman.mobileNumber" hint="userman.mobileNumberHint" value=this.mobileNumber }}
+					
+					{{>modalInput name="email" type="email" label="userman.email" hint="userman.emailHint" value=this.email}}							
+					
+					{{>modalSelect name="language" label="userman.language" 
+						data="en:enums.langType.en,fr:enums.langType.fr" 
+						hint="userman.languageHint" value=this.language
+					}}
+					
+					<div  class="form-group">
+						<label class="col-xs-4 control-label">{{i18n "userman.department"}}</label>
+						<div class="col-xs-5">
+							<select id="departmentID" name="departmentID" class="form-control" value="{{departmentID}}">
+								{{#each availDepartments}}
+									<option value="{{id}}">{{name}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+				
+					{{>modalSelect name="state" label="userman.accountState" 
+						data="A:enums.state.active,S:enums.state.suspended,D:enums.state.deactivated" 
+						hint="userman.accountState" value=this.state
+					}}							
+					
+					<div  class="form-group">
+						<label class="col-xs-4 control-label">{{i18n "userman.role"}}</label>
+						<div class="col-xs-5">
+							<select id="roleID" name="roleID" class="form-control" value="{{roleID}}">
+								{{#each availRoles}}
+									<option value="{{id}}">{{name}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</div>
+				
+					
+				</form>
+			</div>
+		</div>
+		
+		<div class="modal-footer">
+    		<button type="button" class="btn btn-primary userCreateButton">{{i18n "global.saveBtn"}}</button>
+    		<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+		</div>
+	</script>
+	
+	
+	<script id="permanentuserdialogview">
+		<div class="modal-header">
+    		<button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+    		<h4 class="modal-title">{{{dialogTitle}}}</h4>
+		</div>	
+	
+		<div class="modal-body">
+			<div class="groupdetails">
+				<form name="addUser" class="form-horizontal">
+					
+					{{>modalInput name="domainAccountName" label="userman.domainAccountName" hint="userman.domainAccountNameHint" comment="userman.domainAccountNameComment" value=this.domainAccountName}}
+					{{>modalInput name="mobileNumber" label="userman.mobileNumber" hint="userman.mobileNumberHint" value=this.mobileNumber }}
+					
+				</form>
+			</div>
+		</div>
+		
+		<div class="modal-footer">
+    		<button type="button" class="btn btn-primary userCreateButton">{{i18n "global.saveBtn"}}</button>
+    		<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+		</div>
+	</script>
+	
+	<script id="usermasterdialog">
+		<div id="addUserModal" class="modal fade">
+		    <div class="modal-dialog">
+		    
+		    	<div class="modal-content">
+		    
+    				<div class="modal-header">
+    					<button type="button" class="close" data-dismiss="modal"><b class="fa fa-remove"></b> </button>
+    					<h3 class="modal-title">New User</h3>
+    				</div>
+    				
+    				<div class="modal-body">
+    					<form name="addUser" class="form-horizontal">    						
+   							{{>modalInput name="accountNumber" label="userman.accountNumber" hint="userman.accountNumberHint"}}
+							{{>modalSelect name="title" label="userman.title" data="mr:Mr,miss:Miss,mrs:Mrs,dr:Dr,prof:Prof" hint="userman.title"}}
+						
+							{{>modalInput name="firstName" label="userman.firstName" hint="userman.firstNameHint" }}
+							{{>modalInput name="surname" label="userman.surname" hint="userman.surnameHint" }}
+							{{>modalInput name="initials" label="userman.initials" hint="userman.initialsHint" }}
+
+							{{>modalInput name="domainAccountName" label="userman.domainAccountName" hint="userman.domainAccountNameHint" comment="userman.domainAccountNameComment"}}
+							
+							{{>modalInput name="mobileNumber" label="userman.mobileNumber" hint="userman.mobileNumberHint"}}
+							
+							{{>modalInput name="email" type="email" label="userman.email" hint="userman.emailHint"}}							
+							
+							{{>modalSelect name="language" label="userman.language" 
+								data="en:enums.langType.en,fr:enums.langType.fr" 
+								hint="userman.languageHint"
+							}}
+							
+							<div  class="form-group">
+								<label class="col-xs-4 control-label">{{i18n "userman.department"}}</label>
+								<div id="departmentSelect" class="col-xs-5"></div>
+							</div>
+							
+							{{>modalSelect name="state" label="userman.accountState" 
+								data="A:enums.state.active,S:enums.state.suspended,D:enums.state.deactivated" 
+								hint="userman.accountState"
+							}}							
+							
+							<div  class="form-group">
+								<label class="col-xs-4 control-label">{{i18n "userman.role"}}</label>
+								<div id="roleSelect" class="col-xs-5"></div>
+							</div>
+						</form>
+    				</div>
+    				
+		            <div class="modal-footer">
+	                	<button type="button" class="btn btn-primary userCreateButton">{{i18n "global.saveBtn"}}</button>
+	                	<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+	            	</div>
+	            </div>
+				
+		    </div>
+		</div>
+		
+		<div id="editUserRolesModal" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content">
+				
+					<div class="modal-header">
+						<h3 class="modal-title">Set in Object</h3>
+					</div>
+					
+					<div class="modal-body">
+						Vat hom Flaffie!
+					</div>
+						
+		            <div class="modal-footer">
+	                	<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+	                	<button type="button" class="btn btn-primary userCreateButton">Accept</button>
+	            	</div>
+				</div>
+			</div>
+		</div>
+	</script>
+	
+	<script id="usermaster">
+	    <div class="datatablesview col-xs-12">
+	        <div class="box">
+	            <div class="box-header">
+	                <div class='pull-right'>
+	                	{{#hasPerms "Batch_Download"}}
+	                		<button class="btn btn-primary exportUserButton" role="button">{{i18n "global.exportBtn"}}</button>
+	                	{{/hasPerms}}
+	                	{{#hasPerms "Batch_Upload"}}
+	                		<a href="#batch" class="btn btn-primary routerlink" role="button">{{i18n "global.importBtn"}}</a>
+	                	{{/hasPerms}}
+                		{{#hasPerms "WebUser_Add"}}
+	                    	<button class='btn btn-primary createUserButton'>{{i18n "userman.addWebUserBtn"}}</button>
+	                    {{/hasPerms}}
+	                </div>
+	            </div>
+	            <div class="box-body">
+	            <table class="tableview  table table-bordered table-hover table-striped">
+	            </table>
+	            </div>
+	        </div>
+	    </div>
+	</script>	
+</div>

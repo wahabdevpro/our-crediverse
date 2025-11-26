@@ -1,0 +1,25 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.ui.cli.HxC")
+   }
+}
+dependencies {
+    implementation project(':HttpServer')
+    implementation project(':CoreInterfaces')
+    implementation project(':UIConnectorProtocol')
+    implementation project(':HsxProtocol')
+    implementation project(':HuxProtocol')
+    implementation project(':XmlRpc')
+    implementation project(':ProcessModel')
+    implementation 'org.slf4j:slf4j-api'
+}

@@ -1,0 +1,56 @@
+<div class="row">
+	<div class="col-sm-12">
+		<h1 class="page-header config-prop-headings">Properties</h1>
+	</div>
+</div>
+
+<!--  Delete Modal -->
+<div th:include="common :: deleteModal" />
+
+<!--  Config Role List -->
+<div class="row" >
+	<div class="col-xs-11 col-sm-5 col-md-7 user_heading" style="margin-left: 20px;">File Configurations</div>
+	<div class="col-xs-6 col-md-4" style="float:right; margin-right:20px" >
+		<button id="addFileConfiguration" type="button" class="btn btn-success btn-xs" style="float:right;" data-toggle="modal" onclick="showAddConfig();" title="add new file configuration"><span class="glyphicon glyphicon-plus"></span></button>
+	</div>
+</div>
+
+<div id="fileconfigs" th:include="fileconnector/configrecords" />
+
+<div id="configmodal" th:include="fileconnector/configmodal" />
+
+<!-- Update Buttons -->
+<div class="row" style="height: 37px;">
+	<div id="update_msg_config" class="col-sm-10 update_notification">
+	</div>
+</div>
+
+<div id="update_buttons_config" class="row">
+	<div class="col-sm-3"></div>
+	<div class="col-sm-6" th:if="${canSaveUpdatedFields}">
+		<button id="submit_config" type="button" class="btn btn-primary"
+			th:onclick="'javascript:validateAndSave(\'config\', \''+ ${service_uid} +'\', \''+ ${service_version} +'\');return false;'">Update Details</button>
+		<button id="reload_config" type="button" class="btn"
+			th:onclick="'javascript:loadConfigurationContent(\''+ ${service_uid} +'\', \''+ ${service_name} +'\', \'reload\');return false;'">Cancel Changes</button>
+	</div>
+</div>
+
+
+<link type="text/css" href="/css/bootstrap-select.min.css" rel="stylesheet" />
+<script src="/js/min/bootstrap-select.min.js"></script>
+
+
+<script src="/js/moment.min.js"></script>
+<script src="/js/bootstrap-datetimepicker.js"></script>
+<link type="text/css" href="/css/bootstrap-timepicker.min.css" rel="stylesheet" />
+
+<script src="/js/pagejs/mancommon.js"></script>
+<script src="/js/paramtime.js"></script>
+
+<script src="/js/pagejs/filecon.js"></script>
+
+<script>
+$(document).ready(function() {
+	registerInputs();
+});
+</script>

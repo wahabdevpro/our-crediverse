@@ -1,0 +1,56 @@
+before_script:
+  - "uname -n"
+  - "id"
+  - "uptime"
+  - "date +%Y-%m-%dT%H:%M:%S"
+  - "echo \"${GITLAB_URL}\""
+  - "echo processors = $(grep -c '^processor' /proc/cpuinfo)"
+  - "whoami"
+  - "id"
+  - "echo \"CS_PRODUCT_BUILD : ${CS_PRODUCT_BUILD}\""
+  - "echo \"CS_COMMIT_TAG : ${CS_COMMIT_TAG}\""
+  - "echo \"CS_BUILD_ID : ${CS_BUILD_ID}\""
+  - "java --version"
+
+stages:
+ - crediverse-publish-artifacts
+ - crediverse-api-tag
+
+crediverse-tag:
+  stage: crediverse-api-tag
+  rules: # only runs for tags when this is not a product build
+    - if: '$CI_COMMIT_TAG && $CS_PRODUCT_BUILD == null'
+  script:
+    - "./gradlew --info --stacktrace clean"
+    - "./gradlew --info --stacktrace -P 'org.gradle.jvmargs=-XX:+HeapDumpOnOutOfMemoryError' publish"
+    - 'echo "Build Published, performing docker login"'
+    - "docker login -u crediverse -p ${REGISTRY_DEPLOY_TOKEN} registry.gitlab.com"
+    - 'echo "Building Docker image..."'
+    - "docker build -t registry.gitlab.com/csys/products/ecds/ecds-api:${CI_COMMIT_TAG} ."
+    - "docker tag registry.gitlab.com/csys/products/ecds/ecds-api:${CI_COMMIT_TAG} registry.gitlab.com/csys/products/ecds/ecds-api:latest"
+    - 'echo "Publishing the Docker image to registry.gitlab.com..."'
+    - "docker push registry.gitlab.com/csys/products/ecds/ecds-api:${CI_COMMIT_TAG}"
+    - "docker push registry.gitlab.com/csys/products/ecds/ecds-api:latest"
+
+product-api-tag:
+  stage: crediverse-api-tag
+  rules:
+    - if: '$CS_PRODUCT_BUILD == "product"'
+  script:
+    - "./gradlew --info --stacktrace clean"
+    - "./gradlew --info --stacktrace -P 'org.gradle.jvmargs=-XX:+HeapDumpOnOutOfMemoryError' publish"
+    - 'echo "Build Published, performing docker login"'
+    - "docker login -u crediverse -p ${REGISTRY_DEPLOY_TOKEN} registry.gitlab.com"
+    - 'echo "Building Docker image..."'
+    - "docker build -t registry.gitlab.com/csys/products/ecds/ecds-api:${CS_COMMIT_TAG} ."
+    - "docker tag registry.gitlab.com/csys/products/ecds/ecds-api:${CS_COMMIT_TAG} registry.gitlab.com/csys/products/ecds/ecds-api:latest"
+    - 'echo "Publishing the Docker image to registry.gitlab.com..."'
+    - "docker push registry.gitlab.com/csys/products/ecds/ecds-api:${CS_COMMIT_TAG}"
+    - "docker push registry.gitlab.com/csys/products/ecds/ecds-api:latest"
+
+ecds-api-grbuild-manual:
+  stage: crediverse-publish-artifacts
+  script:
+    - "./gradlew --info --stacktrace clean"
+    - "./gradlew --info --stacktrace -P 'org.gradle.jvmargs=-XX:+HeapDumpOnOutOfMemoryError' publish"
+  when: manual

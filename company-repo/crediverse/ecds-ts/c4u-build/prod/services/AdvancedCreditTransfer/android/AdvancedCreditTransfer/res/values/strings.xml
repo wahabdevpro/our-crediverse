@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Advanced Credit Transfer</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="service_name">Advanced Credit Transfer</string>
+    <string name="service_info">This service enables you to instantly send benefits to recipients or periodically or when they need it based on rules and limits you define.</string>
+    <string name="title_activity_subscribe">Subscribe</string>
+    <string name="subscribe_info">Please select the subscription type which matches your requirements:</string>
+    <string name="format_subscribing" formatted="false">Confirm you want to subscribe to the %s service at a cost of %s ?</string>
+    <string name="format_subscribed" formatted="false">You have been subscribed to the %s service at a cost of %s</string>
+    <string name="format_unsubscribing" formatted="false">Do you want to unsubscribe from the %s service at a cost of %s ?</string>
+    <string name="format_unsubscribed" formatted="false">You have been unsubscribed from the %s service at a cost of %s</string>
+    <string name="title_activity_transfer">Transfer</string>
+    <string name="transfer_info">Please select the Type, Amount and Recipient of the Transfer:</string>
+    <string name="format_transferring" formatted="false">Confirm you want to transfer %d %s to %s ?</string>
+    <string name="format_transferred" formatted="false">You have successfully transferred %d %s to %s</string>
+    <string name="format_adding" formatted="false">Confirm you want to automatically transfer %d %s to %s ?</string>
+    <string name="format_added" formatted="false">You have added an automatic transfer of %d %s to %s</string>
+    <string name="error_amount">Invalid Amount Specified</string>
+    <string name="error_number">Invalid Number Specified</string>
+    <string name="error_pin">Invalid PIN Specified</string>
+    <string name="title_activity_recipients">Recipients</string>
+    <string name="title_activity_add_recipient">Add Recipient</string>
+    <string name="add_recipient_info">Please add the Recipient, the Type of Transfer, Amount and Limit per period.</string>
+    <string name="adjust_transfer_info">Please adjust the Amount and Limit per period.</string>
+    <string name="title_activity_recipient">Recipient</string>
+    <string name="title_activity_adjust_transfer">Adjust Transfer</string>
+
+</resources>

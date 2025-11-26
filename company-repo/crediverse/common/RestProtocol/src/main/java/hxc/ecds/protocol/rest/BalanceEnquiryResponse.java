@@ -1,0 +1,47 @@
+package hxc.ecds.protocol.rest;
+
+import java.math.BigDecimal;
+
+public class BalanceEnquiryResponse extends TransactionResponse
+{
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Field
+	//
+	// /////////////////////////////////
+	private BigDecimal balance;
+	
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Properties
+	//
+	// /////////////////////////////////
+	public BigDecimal getBalance()
+	{
+		return balance;
+	}
+
+	public BalanceEnquiryResponse setBalance(BigDecimal balance)
+	{
+		this.balance = balance;
+		return this;
+	}
+	
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Construction
+	//
+	// /////////////////////////////////
+	public BalanceEnquiryResponse()
+	{
+
+	}
+
+
+
+	public BalanceEnquiryResponse(BalanceEnquiryRequest request)
+	{
+		super(request);
+	}
+
+}

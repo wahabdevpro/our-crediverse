@@ -1,0 +1,15 @@
+*************************** 1. row ***************************
+       Table: es_permission
+Create Table: CREATE TABLE `es_permission` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `description` varchar(80) NOT NULL,
+  `grp` varchar(50) NOT NULL,
+  `lm_time` datetime NOT NULL,
+  `lm_userid` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `supplier_only` bit(1) NOT NULL,
+  `version` int(11) NOT NULL,
+  `agent_allowed` bit(1) NOT NULL DEFAULT b'0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `es_permission_group_name` (`grp`,`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=813 DEFAULT CHARSET=utf8

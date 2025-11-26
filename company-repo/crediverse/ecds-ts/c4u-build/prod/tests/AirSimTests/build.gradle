@@ -1,0 +1,43 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.testsuite.RunAllTests")
+   }
+}
+dependencies {
+    implementation project(':AirConnector')
+    implementation project(':AirProtocol')
+    implementation project(':AirSimService')
+    implementation project(':CoreInterfaces')
+    implementation project(':LoggerService')
+    implementation project(':ServiceBus')
+    implementation project(':MySqlConnector')
+    implementation project(':Configuration')
+    implementation project(':Calendar')
+    implementation project(':FileConnector')
+    implementation project(':SdpProtocol')
+    implementation project(':CtrlConnector')
+    implementation project(':NumberPlanService')
+    implementation project(':C4USuTConnector')
+    implementation project(':LifecycleConnector')
+    implementation project(':ReportingService')
+    implementation project(':DataWarehouseConnector')
+    implementation project(':TransactionService')
+    implementation project(':UnitTestUtils')
+    implementation 'junit:junit'
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'com.sun.xml.ws:jaxws-rt'
+    implementation 'com.sun.xml.ws:rt'
+    implementation 'javax.xml.bind:jaxb-api'
+    implementation 'com.sun.xml.bind:jaxb-core'
+    implementation 'com.sun.xml.bind:jaxb-impl'
+}

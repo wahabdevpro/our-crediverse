@@ -1,0 +1,42 @@
+<div>
+	<div id="" th:if="${#arrays.isEmpty(airusagerecords)}">
+		<p>Currently No Configurations Defined</p>
+	</div>
+	
+	<div th:if="${! #arrays.isEmpty(airusagerecords)}" class="row" style="margin-left: 20px; margin-right:20px;">
+		<table id="fileconfigurations" class="table infotable table-hover table-bordered table-striped" style="width: 100%; table-layout: fixed;">
+			<col width="33%" />
+			<col width="33%" />
+			<col width="33%" />
+			<col width="33%" />
+			<col width="33%" />
+			<col width="150px" />
+			<thead>
+				<tr>
+					<th width="20%">MSISDN</th>
+					<th width="20%">Account</th>
+					<th width="20%">Amount</th>
+					<th width="20%">Interval</th>
+					<th width="20%">Std Deviation</th>
+					<th width="20%">Topup</th>
+					<th width="150px;">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="record,iterStat : ${airusagerecords}">
+					<!--  Table Fields -->
+					<td th:text="${record.msisdn}">-</td>
+					<td th:text="${record.account}">-</td>
+					<td th:text="${record.amount}">-</td>
+					<td th:text="${record.interval + ' ' + record.timeUnit}">-</td>
+					<td th:text="${record.standardDeviation}">-</td>
+					<td th:text="${record.topupValue}">-</td>
+					<!-- Table Actions -->
+					<td>
+						<a th:id="${'infodelete_' + iterStat.index}" th:onclick="'javascript:deleteRecordInfo(' + ${iterStat.index} + ',\'' + ${record.msisdn} + '\');return false;'" href="#"><span class="glyphicon glyphicon-trash deletebutton" title="delete"></span></a> 
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

@@ -1,0 +1,9 @@
+*************************** 1. row ***************************
+       Table: ap_analytics
+Create Table: CREATE TABLE `ap_analytics` (
+  `dt` date NOT NULL,
+  `transaction_type` varchar(16) NOT NULL,
+  `data_type` varchar(128) NOT NULL DEFAULT '',
+  `value` bigint(20) NOT NULL,
+  PRIMARY KEY (`dt`,`transaction_type`,`data_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

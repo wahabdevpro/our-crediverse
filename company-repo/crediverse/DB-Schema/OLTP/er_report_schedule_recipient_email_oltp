@@ -1,0 +1,8 @@
+*************************** 1. row ***************************
+       Table: er_report_schedule_recipient_email
+Create Table: CREATE TABLE `er_report_schedule_recipient_email` (
+  `report_schedule_id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  PRIMARY KEY (`report_schedule_id`,`email`),
+  CONSTRAINT `FKcjvlaegpn4128svql3frxg9st` FOREIGN KEY (`report_schedule_id`) REFERENCES `er_report_schedule` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

@@ -1,0 +1,173 @@
+<div>
+	<script id="manageuploads">
+		<div id="manageuploads" class="datatablesview col-xs-12 fuelux">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="wizard" data-initialize="wizard" id="importWizard" ><!-- data-restrict="previous" -->
+					<div class="steps-container">
+						<ul class="steps">
+							<li data-step="1" data-name="campaign" class="active">
+								<span class="badge">1</span>{{i18n "msisdnRecycling.wizardStep1"}}
+								<span class="chevron"></span>
+							</li>
+							<li data-step="2" class="noselect">
+								<span class="badge">2</span>{{i18n "msisdnRecycling.wizardStep2"}}
+								<span class="chevron"></span>
+							</li>
+							<li data-step="3"  class="noselect" data-name="template">
+								<span class="badge">3</span>{{i18n "msisdnRecycling.wizardStep3"}}
+								<span class="chevron"></span>
+							</li>
+							<li data-step="4"  class="noselect" data-name="template">
+								<span class="badge">4</span>{{i18n "msisdnRecycling.wizardStep4"}}
+								<span class="chevron"></span>
+							</li>
+							<li data-step="5" class="noselect" data-name="template">
+								<span class="badge">5</span>{{i18n "msisdnRecycling.wizardStep5"}}
+								<span class="chevron"></span>
+							</li>
+							<li data-step="6" data-name="template">
+							<span class="badge">6</span>{{i18n "msisdnRecycling.wizardStep6"}}
+							<span class="chevron"></span>
+						</li>
+						</ul>
+					</div>
+					<!-- <div class="actions">
+						<button type="button" class="btn btn-default btn-cancel">
+							restart
+						</button>
+						<button type="button" class="btn btn-default btn-prev">
+							<span class="glyphicon glyphicon-arrow-left"></span>Prev</button>
+						<button type="button" class="btn btn-primary btn-next" data-last="Complete">Next
+							<span class="glyphicon glyphicon-arrow-right"></span>
+						</button>
+					</div> -->
+					<div class="step-content">
+						<div class="step-pane active sample-pane" data-step="1">
+							<div class="row">
+								<div class="col-xs-12 form-inline">
+									<div class="form-group pull-right">
+										<span class="btn btn-primary fileinput-button">
+									        <i class="glyphicon glyphicon-plus"></i>
+									        <span>{{i18n "batch.fileInputButtonText"}}</span>
+									        <!-- The file input field used as target for the file upload widget -->
+									        <input id="file-import" name="fileimport" type="file" class="form-control file-import">
+									    </span>
+									</div>
+								</div>
+							</div>
+							
+							<p>
+							This is actually msisdn recycling {{i18n "batch.batchProcessingIntroText"}}
+							</p>
+							
+						
+							{{i18n "batch.batchRfcListIntroText"}}<br /><br />
+								<ul>
+									<li>{{i18n "batch.batchRfcListIntroList1"}}</li>
+	
+									<li>{{i18n "batch.batchRfcListIntroList2"}}</li>
+	
+									<li>{{i18n "batch.batchRfcListIntroList3"}}</li>
+	
+									<li>{{i18n "batch.batchRfcListIntroList4"}}</li>
+	
+									<li>{{i18n "batch.batchRfcListIntroList5"}}</li>
+	
+									<li>{{i18n "batch.batchRfcListIntroList6"}}</li>
+	
+									<li>{{i18n "batch.batchRfcListIntroList7"}}</li>
+	
+									<li>{{i18n "batch.batchRfcListIntroList8"}}</li>
+								</ul>
+						</div>
+						<div class="step-pane sample-pane bg-info" data-step="2">
+							<h4>{{i18n "msisdnRecycling.wizardPaneStep2heading"}}</h4>
+							<div id="uploadProgress" class="progress">
+				        		<div class="progress-bar progress-bar-success"></div>
+				    		</div>
+						</div>
+						<div class="step-pane sample-pane bg-info" data-step="3">
+							<h4>{{i18n "msisdnRecycling.wizardPaneStep3heading"}}</h4>
+							<div id="verifyProgress" class="progress" style="min-width: 2em;">
+				        		<div class="progress-bar progress-bar-success"></div>
+				    		</div>
+				    		<div id="verifyStatus" class="">
+				    		</div>
+						</div>
+						<div id="fileimport" class="step-pane sample-pane" data-step="4">
+							<div class="box box-danger">
+					            <div class="box-header">
+					            	<h4>{{i18n "msisdnRecycling.wizardPaneStep4heading"}}</h4>
+					            </div>
+					            <div class="box-body row">
+						            
+					            
+					            
+					            <div class="col-sm-12">
+					            
+		         				   	<table class="recyclepreviewtable tableview table table-bordered table-hover table-striped">
+		        			    	</table>
+		            
+									<div class="modal-footer">
+					                	<button type="button" class="btn btn-primary msisdnRecycleSubmitButton">{{i18n "msisdnRecycling.submitBtn"}}</button>
+	           					 	</div>
+						          	
+					            </div>
+					            
+					            
+					            </div>
+					        </div>
+						</div>
+						
+						<div class="step-pane sample-pane bg-info" data-step="5">
+						<center><h3>{{i18n "msisdnRecycling.wizardPaneStep5heading"}}</h3></center>
+						<div id="updatingDatabase" class="spinner" style="min-width: 2em;">
+				              Please be patient, for larger files, this can take some time.
+				            <div class="overlay largeSpinner">
+				              <i class="fa fa-refresh fa-spin"></i>
+				            </div>
+			    		</div>
+					</div>
+						
+						<div id="outcomepane" class="step-pane sample-pane bg-info" data-step="6">
+							<div class="box box-solid">
+								<div class="box-header">
+						          <h3 class="box-title">{{{i18n "msisdnRecycling.wizardPaneStep6heading"}}} <span class="status"></span></h3>
+						        </div>
+						        <div class="box-body">
+							        <div id="outcomeJson" class="">
+									</div>
+									
+									<div id="outcomeMessage" class="">
+									</div>
+									<div id="outcomeStatus" class="">
+										<div class="row">
+											<div class="col-xs-2 text-center"><h4>{{i18n "msisdnRecycling.batchOutcomeStatusTableType"}}</h4></div>
+											<div class="col-xs-2 text-center"><h4>{{i18n "msisdnRecycling.batchOutcomeStatusTableTotal"}}</h4></div>
+											<div class="col-xs-2 text-center"><h4>{{i18n "msisdnRecycling.batchOutcomeStatusTableRecycled"}}</h4></div>
+											<div class="col-xs-2 text-center"><h4>{{i18n "msisdnRecycling.batchOutcomeStatusTableFailed"}}</h4></div>
+										</div>
+										<div class="row">
+											<div class="col-xs-2 text-center recordtype">{{i18n "msisdnRecycling.batchOutcomeStatusTableTypeValue"}}</div>
+											<div class="col-xs-2 text-center recordcount"></div>
+											<div class="col-xs-2 text-center recordsuccess"></div>
+											<div class="col-xs-2 text-center recordfailed"></div>
+										</div>
+						    		</div>
+						    		<div id="outcomeIssues" class="" style="margin-top:20px; padding-top:20px; border-top:1px solid #cccccc;">
+										<table class="issuetable  table table-bordered table-hover table-striped">
+										</table>
+									</div>
+									<div id="outcomeErrors" class="">
+									</div>
+						        </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+	</script>
+</div>

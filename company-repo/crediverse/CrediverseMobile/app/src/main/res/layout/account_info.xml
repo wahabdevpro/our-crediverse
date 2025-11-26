@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/account_info_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/faded_background"
+        android:elevation="4dp"
+        android:paddingHorizontal="8dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="24dp">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/account_info"
+                    android:src="@drawable/ic_baseline_close_24"
+                    android:theme="@style/Theme.AppCompat"
+                    app:backgroundTint="@color/dark_gray"
+                    app:backgroundTintMode="src_over"
+                    app:fabCustomSize="42dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:maxImageSize="28dp"
+                    app:tint="@color/white"
+                    tools:ignore="ImageContrastCheck" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/account_info_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="18dp"
+                    android:layout_marginTop="18dp"
+                    android:visibility="visible"
+                    app:cardCornerRadius="9dp"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="visible">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="12dp"
+                        android:minHeight="200dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/account_info_title_wrapper"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:alignItems="center"
+                            app:justifyContent="space_between"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:id="@+id/account_info_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:text="@string/account_information"
+                                android:textAlignment="center"
+                                android:textColor="@color/black"
+                                android:textSize="22sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/account_number_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/account_number"
+                                android:textAlignment="center"
+                                android:textColor="@color/dark_gray"
+                                android:textSize="14sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/account_info_text" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/account_info_listview_wrapper"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="16dp"
+                            android:paddingBottom="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/account_info_title_wrapper">
+
+                            <ProgressBar
+                                android:id="@+id/account_info_progress_bar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="4dp"
+                                android:paddingVertical="8dp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="4dp"
+                                    android:text="@string/personal"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <com.google.android.flexbox.FlexboxLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:paddingHorizontal="8dp"
+                                        android:text="@string/full_name"
+                                        android:textColor="@color/black" />
+
+                                    <TextView
+                                        android:id="@+id/account_name"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:paddingHorizontal="8dp"
+                                        android:text="{name}"
+                                        android:textAlignment="textEnd"
+                                        android:textColor="@color/dark_gray"
+                                        app:layout_flexGrow="1"
+                                        tools:ignore="HardcodedText" />
+
+                                </com.google.android.flexbox.FlexboxLayout>
+
+                                <com.google.android.flexbox.FlexboxLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:paddingHorizontal="8dp"
+                                        android:text="@string/email"
+                                        android:textColor="@color/black"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
+
+                                    <TextView
+                                        android:id="@+id/account_email"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:paddingHorizontal="8dp"
+                                        android:text="{email}"
+                                        android:textAlignment="textEnd"
+                                        android:textColor="@color/dark_gray"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_flexGrow="1"
+                                        tools:ignore="HardcodedText" />
+
+                                </com.google.android.flexbox.FlexboxLayout>
+
+                                <com.google.android.flexbox.FlexboxLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:paddingHorizontal="8dp"
+                                        android:text="@string/language"
+                                        android:textColor="@color/black"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
+
+                                    <TextView
+                                        android:id="@+id/account_language"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:paddingHorizontal="8dp"
+                                        android:text="{language}"
+                                        android:textAlignment="textEnd"
+                                        android:textColor="@color/dark_gray"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_flexGrow="1"
+                                        tools:ignore="HardcodedText,TextContrastCheck" />
+
+                                </com.google.android.flexbox.FlexboxLayout>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="16dp"
+                                    android:padding="4dp"
+                                    android:text="@string/account"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <com.google.android.flexbox.FlexboxLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:paddingHorizontal="8dp"
+                                        android:text="@string/state"
+                                        android:textColor="@color/black"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintWidth_percent="@fraction/account_info_item_left_bias"
+                                        tools:ignore="TextContrastCheck" />
+
+                                    <TextView
+                                        android:id="@+id/account_state"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:paddingHorizontal="8dp"
+                                        android:text="{state}"
+                                        android:textAlignment="textEnd"
+                                        android:textColor="@color/dark_gray"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintWidth_percent="@fraction/account_info_item_right_bias"
+                                        app:layout_flexGrow="1"
+                                        tools:ignore="HardcodedText,TextContrastCheck" />
+
+                                </com.google.android.flexbox.FlexboxLayout>
+
+                                <com.google.android.flexbox.FlexboxLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:paddingHorizontal="8dp"
+                                        android:text="@string/tier_name"
+                                        android:textColor="@color/black"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintWidth_percent="@fraction/account_info_item_left_bias" />
+
+                                    <TextView
+                                        android:id="@+id/account_tier"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:paddingHorizontal="8dp"
+                                        android:text="{tier}"
+                                        android:textAlignment="textEnd"
+                                        android:textColor="@color/dark_gray"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintWidth_percent="@fraction/account_info_item_right_bias"
+                                        app:layout_flexGrow="1"
+                                        tools:ignore="HardcodedText" />
+
+                                </com.google.android.flexbox.FlexboxLayout>
+
+                            </LinearLayout>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/account_info_listview_wrapper"
+                            tools:visibility="visible">
+
+                            <com.google.android.flexbox.FlexboxLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:alignItems="center"
+                                app:justifyContent="space_around">
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/map_locator_icon"
+                                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="16dp"
+                                    android:paddingVertical="16dp"
+                                    android:text="@string/map_location_text"
+                                    android:textColor="@color/black"
+                                    android:textSize="10sp"
+                                    app:icon="@drawable/ic_baseline_map_location_dot_24"
+                                    app:iconGravity="top"
+                                    app:iconSize="32sp"
+                                    app:layout_minWidth="32dp"
+                                    tools:ignore="SmallSp" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/change_pin_button"
+                                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="16dp"
+                                    android:paddingVertical="16dp"
+                                    android:text="@string/change_pin"
+                                    android:textColor="@color/black"
+                                    android:textSize="10sp"
+                                    app:icon="@drawable/ic_baseline_dialpad_24"
+                                    app:iconGravity="top"
+                                    app:iconSize="32sp"
+                                    app:layout_minWidth="32dp"
+                                    tools:ignore="SmallSp" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/update_agent_button"
+                                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="16dp"
+                                    android:paddingVertical="16dp"
+                                    android:text="@string/update_info"
+                                    android:textColor="@color/black"
+                                    android:textSize="10sp"
+                                    app:icon="@drawable/ic_baseline_edit_24"
+                                    app:iconGravity="top"
+                                    app:iconSize="32sp"
+                                    app:layout_minWidth="32dp"
+                                    tools:ignore="SmallSp" />
+
+                            </com.google.android.flexbox.FlexboxLayout>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

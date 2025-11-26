@@ -1,0 +1,60 @@
+<!-- Modal Server Info -->
+<div class="modal fade" id="serverRoleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="serverRoleModalTitle">Add New Server Role</h4>
+      </div>
+      <div class="modal-body">
+      	<form id="serverRoleModalForm" name="serverRoleModalForm">
+			<div id="General" class="model_content">
+				<div class="row">
+					<div class="col-md-5">
+						<label for="roleName" class="control-label">Role Name</label>
+						<input type="text" class="form-control modalInput" id="roleName" name="roleName" placeholder="Role Name" />
+						<span id="roleName_error" class="error_message hide"></span>
+					</div>
+					<div class="col-md-6">
+						<label for="exclusive">Exclusive</label>
+						<div class="checkbox">
+						  <label>
+						    <input id="exclusive" name="exclusive" type="checkbox" class="modalInput" />Restricted to a specific machine
+						  </label>
+						</div>
+					</div>
+				</div>
+				<br/>
+				
+				<div class="row">
+					<div class="col-md-12">
+						<label for="attachCommand" class="control-label">Attach Command</label>
+						<input type="text" class="form-control modalInput" id="attachCommand" name="attachCommand" placeholder="Attach Command" />
+						<span id="attachCommand_error" class="error_message hide"></span>
+					</div>			
+				</div>
+				<br/>
+				
+				<div class="row">
+					<div class="col-md-12">
+						<label for="detachCommand">Detach Command</label>
+						<input type="text" class="form-control modalInput" id="detachCommand" name="detachCommand" placeholder="Detach Command" />
+						<span id="detachCommand_error" class="error_message hide"></span>
+					</div>			
+				</div>				
+			</div>
+			
+			<div id="serverRoleModalError" class="row alert alert-danger hide">
+					Things went wrong!!
+			</div>
+			
+			<div class="modal-footer">
+				<img id="serverRoleWaiting" src="/img/cell_wait.gif" class="waiting hide" />
+				<button id="cancelRole" type="button" class="btn btn-default" data-dismiss="modal" onclick="closeServerRoleModal();">Cancel</button>
+				<button id="saveRole" type="button" class="btn btn-primary" onclick="validateAndSendRole()">Add Role</button>
+			</div>
+      	</form>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

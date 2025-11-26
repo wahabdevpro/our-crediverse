@@ -1,0 +1,424 @@
+// version of protocol buffer used
+syntax = "proto3";
+
+// package name for the buffer will be used later
+package masapi;
+
+option java_package = "systems.concurrent.masapi";
+option java_outer_classname = "MasApi";
+import "google/protobuf/wrappers.proto";
+
+// service which can be executed
+service Mas {
+  rpc getVersionStatus(VersionStatusRequest) returns (VersionStatusResponse);
+
+  rpc login(LoginRequest) returns (LoginResponse);
+  rpc submitOtp(LoginRequest) returns (LoginResponse);
+  rpc updateLoginToken(NoParam) returns (UpdateTokenResponse);
+  rpc getAccountInfo(AgentId) returns (AccountInfo);
+  rpc sellAirtime(SellAirtimeRequest) returns (SellAirtimeResponse);
+  rpc sellAirtimeWholesale(SellAirtimeRequest) returns (SellAirtimeResponse);
+
+  rpc getSalesSummary(SalesSummaryRequest) returns (SalesSummaryResponse);
+  rpc getTeamSalesSummary(SalesSummaryRequest) returns (SalesSummaryResponse);
+  rpc getGlobalSalesSummary(SalesSummaryRequest) returns (SalesSummaryResponse);
+  rpc getGlobalHourlySalesSummary(SalesSummaryRequest) returns (HourlySalesSummaryResponse);
+
+  rpc getStockBalance(GetStockBalanceRequest) returns (StockBalance);
+
+  rpc getTeamStockBalance(NoParam) returns (StockBalance);
+  rpc getTeam(NoParam) returns (Team);
+  rpc getTeamMembership(NoParam) returns (TeamMembership);
+  rpc setTeamMemberSalesTarget(SetTeamMemberSalesTargetRequest) returns (Ok);
+
+  rpc isTeamLead(NoParam) returns (IsTeamLead);
+
+  rpc changePin(ChangePinRequest) returns (Ok);
+  rpc updateProfile(UpdateProfileRequest) returns (Ok);
+  rpc getAgentFeedback(FeedBackRequest) returns (FeedBackResponse);
+  rpc getTransactions(GetTransactionsRequest) returns (Transactions);
+
+  rpc submitAnalytics(AnalyticsRequest) returns (Ok);
+
+  rpc getMobileMoneyBalance(NoParam) returns (MobileMoneyBalance);
+  rpc buyAirtimeWithMobileMoney(BuyWithMobileMoneyRequest) returns (Ok);
+
+  rpc mobileMoneyLogin(MobileMoneyLoginRequest) returns (MobileMoneyLoginResponse);
+  rpc mobileMoneyDeposit(MobileMoneyDepositRequest) returns (MobileMoneyDepositResponse);
+
+  rpc formatMsisdn(Msisdn) returns (Msisdn);
+}
+
+message Msisdn{
+  string msisdn = 1;
+}
+
+message NoParam {}
+message Ok {}
+
+message MobileMoneyBalance {
+  string mobile_money_balance = 1;
+}
+
+message BuyWithMobileMoneyRequest {
+  string mobile_money_amount = 1;
+}
+
+message VersionStatusRequest {
+  uint32 appVersionCode = 1;
+}
+
+message VersionStatusResponse {
+  bool isAppVersionOk = 1;
+  optional uint64 appVersionDeprecationDate = 2;
+  uint32 appVersionCodeLatest = 3;
+  string appVersionNameLatest = 4;
+  optional uint32 appUpdatePriority = 5;
+  optional string appUpdateDownloadUrl = 6;
+}
+
+message TeamMemberSalesSummaryRequest{
+  string msisdn = 1;
+  uint64 startTime = 2;
+  uint64 endTime = 3;
+}
+
+message Team {
+  repeated TeamMember members = 1;
+}
+
+message IsTeamLead {
+  bool isTeamLead = 1;
+}
+
+message TeamMembership {
+  string memberMsisdn = 1;
+  string teamLeadMsisdn = 2;
+  optional SalesTargets salesTargets = 3;
+}
+
+message GetStockBalanceRequest {
+  optional string msisdn = 1;
+}
+
+enum Period {
+  DAY = 0;
+  WEEK = 1;
+  MONTH = 2;
+}
+
+message TeamMember {
+  string msisdn = 1;
+  string firstName = 2;
+  string surname = 3;
+  StockBalance stockBalance = 4;
+  optional SalesTargets salesTargets = 5;
+}
+
+message SalesTargets {
+  optional string dailyAmount = 1;
+  optional string weeklyAmount = 2;
+  optional string monthlyAmount = 3;
+}
+
+message SetTeamMemberSalesTargetRequest {
+  string msisdn = 1;
+  Period period = 2;
+  optional string targetAmount = 3;
+}
+
+message GetTransactionsRequest  {
+  uint32 startPage = 1;
+  uint32 transactionsPerPage = 2;
+}
+
+message SalesSummaryRequest {
+  optional string msisdn = 1;
+  uint64 startTime = 2;
+  uint64 endTime = 3;
+}
+
+message SalesSummaryResponse {
+  uint64 responseTime = 1;
+  uint64 startTime = 2;
+  uint64 endTime = 3;
+  SalesSummaryValue salesSummary = 4;
+}
+
+message SalesSummaryValue {
+  string airtimeSalesValue = 1;
+  uint64 airtimeSalesCount = 2;
+  string airtimeCostOfGoodsSold = 3;
+  uint64 airtimeUnknownCostCount = 4;
+  string bundleSalesValue = 5;
+  uint64 bundleSalesCount = 6;
+  string bundleCostOfGoodsSold = 7;
+  uint64 bundleUnknownCostCount = 8;
+  string tradeBonusValue = 9;
+  string inboundTransfersValue = 10;
+  uint64 inboundTransfersCount = 11;
+}
+
+message HourlySalesSummaryResponse {
+  uint64 responseTime = 1;
+  uint64 startTime = 2;
+  uint64 endTime = 3;
+  repeated HourlySalesSummaryValue salesSummary = 4;
+}
+
+message HourlySalesSummaryValue {
+  uint64 date = 1;
+  uint64 hour = 2;
+  string airtimeSalesValue = 3;
+  uint64 airtimeSalesCount = 4;
+  string bundleSalesValue = 5;
+  uint64 bundleSalesCount = 6;
+}
+
+message UpdateTokenResponse {
+  string loginToken = 1;
+}
+
+message Transactions {
+  repeated Transaction transactions = 1; // a list of transactions
+}
+
+message Transaction {
+  string transactionNo = 1; //
+  string amount = 2; //
+  optional string cost_of_goods_sold = 3;
+  string bonus = 4;
+  TransactionType transactionType = 5; //
+  uint64 transactionStarted = 6; //
+  uint64 transactionEnded = 7;
+  string sourceMsisdn = 8; //
+  string recipientMsisdn = 9; //
+  string balanceBefore = 10;
+  string bonusBalanceBefore = 11;
+  string onHoldBalanceBefore = 12;
+  string balanceAfter = 13; //
+  string bonusBalanceAfter = 14; //
+  string onHoldBalanceAfter = 15;
+  string status = 16; //
+  bool followUpRequired = 17; //
+  bool rolledBack = 18; //
+  repeated string messages = 19;
+  optional string itemDescription = 20;
+  optional string grossSalesAmount = 21;
+  optional string commissionAmount = 22;
+}
+
+enum TransactionType {
+  REPLENISH = 0;
+  TRANSFER = 1;
+  SELL = 2;
+  SELL_BUNDLE = 3;
+  REGISTER_PIN = 4;
+  CHANGE_PIN = 5;
+  BALANCE_ENQUIRY = 6;
+  SELF_TOPUP = 7;
+  TRANSACTION_STATUS_ENQUIRY = 8;
+  LAST_TRANSACTION_ENQUIRY = 9;
+  ADJUST = 10;
+  SALES_QUERY = 11;
+  DEPOSITS_QUERY = 12;
+  REVERSE = 13;
+  REVERSE_PARTIALLY = 14;
+  PROMOTION_REWARD = 15;
+  ADJUDICATE = 16;
+  NON_AIRTIME_DEBIT = 17;
+  NON_AIRTIME_REFUND = 18;
+  UNKNOWN_TYPE = 19;
+}
+
+enum TransactionStatus {
+  SUCCESS = 0;
+  FAILURE = 1;
+
+  /*  Belaw are the states that the TransactionServer can return.  TODO: filter and map these to what is meaningful and applicable to the mobile application.
+      ALREADY_ADJUDICATED
+      ALREADY_REGISTERED
+      ALREADY_REVERSED
+      BUNDLE_SALE_FAILED
+      CO_AUTHORIZE
+      CO_SIGN_ONLY_SESSION
+      DAY_AMOUNT_LIMIT
+      DAY_COUNT_LIMIT
+      FORBIDDEN
+      HISTORIC_PASSWORD
+      IMSI_LOCKOUT
+      INSUFFICIENT_FUNDS
+      INSUFFICIENT_PROVISN
+      INTRATIER_TRANSFER
+      INVALID_AGENT
+      INVALID_AMOUNT
+      INVALID_BUNDLE
+      INVALID_CHANNEL
+      INVALID_PASSWORD
+      INVALID_PIN
+      INVALID_RECIPIENT
+      INVALID_STATE
+      INVALID_TRAN_TYPE
+      INVALID_VALUE
+      MAX_AMOUNT_LIMIT
+      MONTH_AMOUNT_LIMIT
+      MONTH_COUNT_LIMIT
+      NOT_ELIGIBLE
+      NOT_REGISTERED
+      NOT_SELF
+      NOT_WEBUSER_SESSION
+      NO_IMSI
+      NO_LOCATION
+      NO_TRANSFER_RULE
+      OTHER_ERROR
+      PASSWORD_LOCKOUT
+      PIN_LOCKOUT
+      REFILL_BARRED
+      REFILL_DENIED
+      REFILL_FAILED
+      REFILL_NOT_ACCEPTED
+      SESSION_EXPIRED
+      TECHNICAL_PROBLEM
+      TEMPORARY_BLOCKED
+      TIMED_OUT
+      TOO_LARGE
+      TOO_LONG
+      TOO_SHORT
+      TOO_SMALL
+      TX_NOT_FOUND
+      WRONG_LOCATION
+   */
+
+}
+
+message LoginRequest {
+  string msisdn = 1;
+  string username = 2;
+  string password = 3;
+  string pin = 4;
+  string oneTimePin = 5;
+}
+
+enum AuthenticationStatus {
+  AUTHENTICATED = 0;
+  REQUIRE_OTP = 1;
+}
+
+message LoginResponse {
+  string agentId = 2;
+  string agentMsisdn = 3;
+  string loginToken = 4;
+  string refreshToken = 5;
+  AuthenticationStatus authenticationStatus = 6;
+  string message = 7;
+}
+
+message SellAirtimeResponse {
+  bool followUpRequired = 1;
+}
+
+message StockBalance {
+  string balance = 1;
+  string bonusBalance = 2;
+  string onHoldBalance = 3;
+}
+
+message SellAirtimeRequest {
+  string amount = 1;
+  string msisdn = 2;
+  google.protobuf.DoubleValue latitude = 3;
+  google.protobuf.DoubleValue longitude = 4;
+}
+
+message FeedBackRequest {
+  string name = 1;
+  string agentId = 2;
+  string tier = 3;
+  string feedBackRequestMsg = 4;
+}
+
+message FeedBackResponse {}
+
+message TransferRequest {
+  string amount = 1;
+  string msisdn = 2;
+  google.protobuf.DoubleValue  latitude = 3;
+  google.protobuf.DoubleValue  longitude = 4;
+}
+
+
+message AgentId{
+  string agentId = 1;
+}
+
+message AccountInfo {
+  string accountNumber = 1;
+  string msisdn = 2;
+  string title = 3;
+  string firstName = 5;
+  string initials = 6;
+  string surname = 7;
+  string language = 8;
+  string altPhoneNumber = 9;
+  string email = 10;
+  string state = 11;
+  uint32 activationDate = 12;
+  string countryCode = 13;
+  string tier = 14;
+}
+
+message ChangePinRequest{
+  string newPin = 1;
+}
+
+message UpdateProfileRequest{
+  string title = 1;
+  string language = 2;
+  string firstName = 3;
+  string surname = 4;
+  string email = 5;
+  string agentId = 6;
+}
+
+enum MobileMoneyResponseStatus{
+  MM_SUCCESS = 0;
+  MM_FAILED = 1;
+  MM_UNAUTHENTICATED = 2;
+}
+
+message MobileMoneyLoginRequest{
+  string username = 1;
+  string password = 2;
+}
+
+message MobileMoneyLoginResponse{
+  MobileMoneyResponseStatus status = 1;
+  string loginToken = 2;
+}
+
+message MobileMoneyDepositRequest{
+  string amount = 1;
+  string destinationMsisdn = 2;
+}
+
+message MobileMoneyDepositResponse{
+  MobileMoneyResponseStatus status = 1;
+}
+
+enum AnalyticsEventType {
+  CRASH = 0;
+  EXCEPTION = 1;
+  ACTION = 2;
+}
+
+message AnalyticsEvent {
+  uint64 time = 1;
+  AnalyticsEventType type = 2;
+  string content = 3;
+}
+
+message AnalyticsRequest {
+  string appVersion = 1;
+  repeated AnalyticsEvent events = 2;
+}
+

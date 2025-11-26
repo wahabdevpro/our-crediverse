@@ -1,0 +1,174 @@
+body {
+	background-image: url(/img/corner-logo.jpg);
+	background-repeat: no-repeat;
+	background-position: right bottom;
+	background-attachment: fixed;
+}
+
+.con-color {
+	color: #F77100;
+}
+
+.topbar {
+	min-height: 54px;
+}
+
+#doing_stuff {
+	padding-left: 24px;
+	padding-right: 24px;
+}
+
+.logo-brand {
+	padding-top: 12px;
+	padding-right: 0px;
+	margin-right: 10p;
+}
+
+.caret-space {
+	margin-left: 5px;
+}
+
+.glyph-space-right {
+	margin-right: 5px
+}
+
+.glyph-space-left {
+	margin-left: 5px
+}
+
+.container {
+	min-width:1138px;
+}
+
+.content-bordered {
+    background-color: #FFFFFF;
+    border-color: #DDDDDD;
+    border-radius: 4px 4px 0 0;
+    border-width: 1px;
+    box-shadow: none;
+    border-style: solid;
+    margin: 20px 100px 20px 100px;
+    padding: 20px 20px;
+    width: 90%;
+}
+
+	/** Table style **/
+.infotable {
+  border-collapse: separate;
+  border-spacing: 0 5px;
+}
+
+.infotable thead th {
+  background-color: #006DCC !important;
+  color: white;
+}
+
+.infotable tbody td {
+  background-color: #EEEEEE;
+}
+
+.infotable tr td:first-child,
+.infotable tr th:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.infotable tr td:last-child,
+.infotable tr th:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.sub_heading {
+	margin-left: 40px;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.sub_heading_row {
+	margin-top: 20px;
+}
+.user_heading {
+	font-size: 22px;
+	font-weight: bold;
+}
+
+.error_message {
+	color:red;
+}
+.model_content {
+	height: 250px;
+}
+
+.modalcommoncontent {
+	min-height: 50px;
+	margin-bottom: 20px;
+}
+
+.waiting {
+	margin-left: -5px;
+	float:left;
+}
+.roleindent {
+	margin-left: 10px;
+}
+.viewbutton {
+	margin-left: 5px;
+	margin-right: 5px;
+	color: #0099FF;
+	cursor: pointer !important;
+}
+.viewbutton:hover {
+	color: blue;
+}
+.editbutton {
+	margin-left: 5px;
+	margin-right: 5px;
+	color: #00C000;
+	cursor: pointer !important;
+}
+.editbutton:hover {
+	color: green;
+}	
+.deletebutton {
+	margin-left: 5px;
+	margin-right: 5px;
+	color: #FF3366;
+	cursor: pointer !important;
+}
+.deletebutton:hover {
+	color: red;
+}
+.isexclusive {
+	color: green;
+}
+.notexclusive {
+	color: red;
+}
+.bootstrap-datetimepicker-widget {
+	z-index:1151;
+}
+
+table td.hightlightTableError {
+	background-color: #FFFFCC !important;
+}
+
+.panel-default > .panel-error {
+    background-color: #F2DEDE !important;
+    border-color: #EBCCD1 !important;
+    color: #A94442 !important;
+}
+
+@CHARSET "UTF-8";
+.overlay {
+     position: absolute;
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+     background-color: rgba(0, 0, 0, 0.85);
+     z-index: 9999;
+     color: white;
+     display: inline-block;
+ }
+ 

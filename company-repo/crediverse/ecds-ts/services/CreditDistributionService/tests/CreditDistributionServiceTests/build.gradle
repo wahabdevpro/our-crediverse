@@ -1,0 +1,89 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.testsuite.RunAllTests")
+   }
+}
+dependencies {
+    implementation project(':CoreInterfaces')
+    implementation project(':ServiceBus')
+    implementation project(':LoggerService')
+    implementation project(':CreditDistributionService')
+    implementation project(':CtrlConnector')
+    implementation project(':MySqlConnector')
+    implementation project(':SecurityService')
+    implementation project(':RestProtocol')
+    implementation project(':Configuration')
+    implementation project(':Calendar')
+    implementation project(':SmppConnector')
+    implementation project(':SmtpConnector')
+    implementation project(':SnmpConnector')
+    implementation project(':DiagnosticConnector')
+    implementation project(':AirSimService')
+    implementation project(':NumberPlanService')
+    implementation project(':AirConnector')
+    implementation project(':C4USuTConnector')
+    implementation project(':DataWarehouseConnector')
+    implementation project(':LifecycleConnector')
+    implementation project(':ReportingService')
+    implementation project(':TransactionService')
+    implementation project(':HuxConnector')
+    implementation project(':General')
+    implementation project(':SoapConnector')
+    implementation project(':SoapProtocol')
+    implementation project(':KerberosConnector')
+    implementation project(':HmxProtocol')
+    implementation project(':HsxProtocol')
+    implementation project(':XmlRpc')
+    implementation project(':HttpServer')
+    implementation project(':TcpServer')
+    implementation project(':HmxConnector')
+    implementation project(':UnitTestUtils')
+    implementation project(':PccBundleConnector')
+    implementation project(':CaiProtocol')
+    implementation project(':CaiConnector')
+    implementation project(':SoapConnector')
+    implementation project(':EcdsApiRestConnector')
+    implementation 'org.snmp4j:snmp4j'
+    implementation 'org.snmp4j:snmp4j-agent'
+    implementation 'com.sun.mail:jakarta.mail:2.0.1'
+    implementation 'org.glassfish:javax.json'
+    implementation 'javax.ws.rs:javax.ws.rs-api'
+    implementation 'org.glassfish.jersey.core:jersey-client'
+    implementation 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations'
+    implementation 'com.fasterxml.jackson.core:jackson-core'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    implementation 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-base'
+    implementation 'com.fasterxml.jackson.module:jackson-module-jaxb-annotations'
+    implementation 'org.glassfish.jersey.media:jersey-media-jaxb'
+    implementation 'org.glassfish.jersey.media:jersey-media-json-jackson'
+    implementation 'org.glassfish.jersey.core:jersey-common'
+    implementation 'org.lucee:antlr'
+    implementation 'com.mchange:c3p0'
+    implementation 'org.lucee:dom4j'
+    implementation 'org.apache.geronimo.specs:geronimo-jta_1.1_spec'
+    implementation 'org.hibernate:hibernate-c3p0'
+    implementation 'org.hibernate.common:hibernate-commons-annotations'
+    implementation 'org.hibernate:hibernate-core'
+    implementation 'org.hibernate:hibernate-entitymanager'
+    implementation 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api'
+    implementation 'org.jboss:jandex'
+    implementation 'org.javassist:javassist'
+    implementation 'org.jboss.logging:jboss-logging'
+    implementation 'com.mchange:mchange-commons-java'
+    implementation 'mysql:mysql-connector-java'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:2.3.0'
+    implementation 'xml-apis:xml-apis'
+    implementation 'junit:junit'
+}

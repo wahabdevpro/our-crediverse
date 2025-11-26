@@ -1,0 +1,42 @@
+@CHARSET "UTF-8";
+.bottom-div {
+    z-index:999;
+    position:absolute;
+    background:#eee;
+    padding:10px;
+    border:1px solid #ccc;
+}
+
+.my-timepicker-popover {
+    background-clip: padding-box;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
+    float: left;
+    left: 20;
+    margin-top: 1px;
+    min-width: 100px;
+    position: absolute;
+    top: 100%;
+    z-index: 1000;
+    display: block;
+}
+
+.timeparam {
+	width:140px;
+}
+
+.time-number-btn {
+	cursor: pointer;
+}
+.time-number-btn:hover {
+	background-color: #CCCCCC;
+}
+
+.time-separator {
+	font-weight: bolder;
+	font-size: larger;
+	color: #333333;
+	padding-top: 12px !important;
+}

@@ -1,0 +1,117 @@
+<div>
+	<script id="lastTransactionsView">
+	    <div class="datatablesview col-xs-12">
+	        <div class="box">
+	            <div class="box-header">
+	                <h3 class="box-title">{{i18n "dashboard.lastTransactionHeading"}}</h3>
+	                <div class='pull-right'>
+	                </div>
+	            </div>
+	            <div class="box-body">
+		            <table class="tdrstable tableview table table-bordered table-hover table-striped">
+		            </table>
+	            </div>
+	        </div>
+	    </div>
+	</script>	
+	
+	<script id="rootAccountBalanceView">
+		<div class="col-lg-3 col-md-4 col-sm-5 col-xs-12">
+		<div class="small-box bg-aqua">
+            <div class="inner">
+              <h3 id="accountBalance"><small><i style="color:white;" class="fa fa-spinner fa-spin"></i></small></h3>
+
+              <p>{{{i18n "dashboard.accountBalance"}}}</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-sitemap"></i>
+            </div>
+            <span class="small-box-footer" style="background-color:white; padding:10px 0;"><button type="button" class="btn btn-warning replenishButton"><strong>Replenish ...</strong></button></i></span>
+		</div>
+		</div>
+	</script>
+	
+	<script id="replenishView">
+		<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		    <h4 class="modal-title">{{i18n "dashboard.replenishRootAccount"}}</h4>
+		</div>
+		<div class="modal-body">
+			<div class="replenishdetails">
+				<form name="replenish" class="form-horizontal" autocomplete="off">
+					<div class="authorisation-type" class="form-group">
+						<div class="row">
+							<label class="col-xs-3 control-label">{{i18n "dashboard.authorizeType"}}</label>
+							<div class="input-group authorization-buttons">
+								<div class="input-group-btn">
+								  <button type="button" class="immediateBtn btn btn-default active">{{i18n "dashboard.authorizeImmediate"}}</button>
+								  <button type="button" class="requestBtn btn btn-default">{{i18n "dashboard.authorizeRequest"}}</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				
+					<div id="amount" class="form-group">
+						<div class="row">
+							<label class="col-xs-3 control-label">{{i18n "dashboard.amount"}}</label>
+							<div class="col-xs-8">
+								<input id="amount" name="amount" class="form-control amountField" placeholder="{{i18n 'dashboard.amount'}}" value="" type="text">								
+							</div>							
+						</div>						
+					</div>
+
+					<div id="bonusProvisionDiv" class="form-group">
+						<div class="row">
+							<label class="col-xs-3 control-label">{{i18n "dashboard.bonusAmount"}}</label>
+							<div class="col-xs-8">
+								<div class="input-group">
+									<input id="bonusProvision" name="bonusProvision" class="form-control bonusProvision" disabled="disabled" placeholder="{{i18n 'dashboard.bonusAmount'}}" value="" type="text">
+									<div class="input-group-btn">
+										<button class="btn btn-default calcBonusButton" disabled="disabled" type="button">{{i18n "dashboard.calculate"}}</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-3">							
+						</div>
+						<div class="col-sm-8">
+							<div class="form-group">
+								<div class="col-xs-12" style="padding-top:8px;">
+									<input id="allowChangeBonus" name="allowChangeBonus" class="custom-checkbox-fa allowChangeBonus" value="" type="checkbox">
+									<label id="allowChangeBonusLabel" for="allowChangeBonus">{{i18n "dashboard.changeBonusAmount"}}</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="authorisation">
+					</div>
+					
+					<div class="authorisation-request" class="form-group" style="display:none">
+						<div class="row">
+							<label class="col-xs-3 control-label">{{i18n "dashboard.authorizeBy"}}</label>
+							<div class="col-xs-8">
+								<div class="input-group">
+									<select id="authorizedBy" style="width: 100%;" name="authorizedBy" class="form-control">
+										<option value="groupauth" selected="selected">Any Available User</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="modal-footer">
+		    <div class="form-group">
+		        <div class="col-sm-offset-2 col-sm-10">
+		        	<button type="button" class="btn btn-default authorizeBtn" disabled="disabled">{{i18n "dashboard.authorizeBtn"}}</button>
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+		        </div>
+			</div>
+		</div>
+	</script>
+</div>

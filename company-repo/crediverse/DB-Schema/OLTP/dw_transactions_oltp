@@ -1,0 +1,20 @@
+*************************** 1. row ***************************
+       Table: dw_transactions
+Create Table: CREATE TABLE `dw_transactions` (
+  `a_MSISDN` varchar(24) NOT NULL,
+  `b_MSISDN` varchar(24) NOT NULL,
+  `startTime` datetime NOT NULL,
+  `channel` varchar(64) NOT NULL,
+  `requestMode` varchar(16) NOT NULL,
+  `serviceID` varchar(64) NOT NULL,
+  `variantID` varchar(64) NOT NULL,
+  `processID` varchar(64) NOT NULL,
+  `chargeLevied` int(11) NOT NULL,
+  `returnCode` varchar(64) NOT NULL,
+  `rolledBack` bit(1) NOT NULL,
+  `followUp` bit(1) NOT NULL,
+  `param1` varchar(64) NOT NULL,
+  `param2` varchar(64) NOT NULL,
+  `additionalInformation` varchar(64) NOT NULL,
+  `ts` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1

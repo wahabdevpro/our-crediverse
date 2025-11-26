@@ -1,0 +1,27 @@
+<form id="tamperedAgentForm" name="tamperedAgentForm" class="form-horizontal" role="form">
+	
+	<div class="form-group row">
+		<label class="control-label col-sm-2" for="msisdn">Agent's MSISDN:</label>
+		<div class="col-sm-5">
+			<input type="text" class="form-control" id="msisdn" name="msisdn" placeholder="MSISDN" />
+			<span id="msisdn_error" class="error_message hide"></span>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button type="button" class="btn btn-default checkAgent">Check Agent</button>
+			<button type="button" class="btn btn-default resetAgent">Reset Agent</button>
+			<button type="button" class="btn btn-default resetAccount">Reset Account</button>
+		</div>	
+	</div>
+	<div class="form-group hide tamperedAgentCheckReplyDiv">
+		<label class="control-label col-sm-2" for="email">Response:</label>
+		<div class="col-sm-8">
+			<div class="highlight">
+				<pre class="tamperedAgentReply">
+				</pre>
+			</div>
+		</div>
+	</div>
+</form>

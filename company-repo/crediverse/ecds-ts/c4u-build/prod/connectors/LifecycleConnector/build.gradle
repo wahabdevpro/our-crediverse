@@ -1,0 +1,23 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.connectors.lifecycle.LifecycleConnector")
+   }
+}
+dependencies {
+    implementation project(':CoreInterfaces')
+    implementation project(':Configuration')
+    implementation project(':Calendar')
+    implementation project(':SoapProtocol')
+    implementation project(':Threads')
+    implementation 'org.slf4j:slf4j-api'
+}

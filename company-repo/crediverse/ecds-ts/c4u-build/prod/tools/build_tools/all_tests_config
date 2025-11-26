@@ -1,0 +1,15 @@
+#Configuration
+
+basedir=../../../
+
+#Unit Tests
+
+testdir=ecds/services/CreditDistributionService/tests/CreditDistributionServiceTests
+testdir=prod/tests/UnitTests
+testdir=prod/tests/UIConnectorTests
+testdir=prod/tests/CLITests
+testdir=prod/tests/AirSimTests
+#testdir=mtncm/tests/CreditSharingServicesTests
+#testdir=pcc/tests/PccApiServiceTests
+
+#End

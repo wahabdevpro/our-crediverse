@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/nav_icon"
+            android:layout_width="48dp"
+            android:layout_height="34dp"
+            android:fontFamily="@font/fa_solid"
+            android:gravity="center"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp"
+            android:text="@string/fa_chart_pie"
+            android:textAlignment="center"
+            android:textColor="@color/cs_secondary"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/nav_destination"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="4dp"
+            android:paddingBottom="4dp"
+            android:text="{Destination}" />
+
+        <LinearLayout
+            android:id="@+id/nav_active_underline"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginHorizontal="8dp"
+            android:background="@color/cs_secondary"
+            android:orientation="horizontal" />
+
+    </LinearLayout>
+</LinearLayout>

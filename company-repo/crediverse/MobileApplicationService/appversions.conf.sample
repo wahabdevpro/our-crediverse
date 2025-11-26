@@ -1,0 +1,22 @@
+{
+	"schema_version": 1,
+	"configuration_version": 1,
+	"app_versions": [
+		{
+			"version_code": 1,
+			"version_name": "1.0.0",
+			"supported": true,
+			"deprecation_date": "2023-12-31",
+			"priority": 4,
+			"download_url": "https://mysite.com/smartapp-1.0.0.apk"
+		},
+		{
+			"version_code": 2,
+			"version_name": "1.1.0",
+			"supported": true,
+			"deprecation_date": "2024-12-31",
+			"priority": 3,
+			"download_url": "https://mysite.com/smartapp-1.1.0.apk"
+		}
+	]
+}

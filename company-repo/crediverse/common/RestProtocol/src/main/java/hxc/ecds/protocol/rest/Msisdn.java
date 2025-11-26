@@ -1,0 +1,33 @@
+package hxc.ecds.protocol.rest;
+
+public class Msisdn 
+{
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Fields
+	//
+	// /////////////////////////////////
+	protected String msisdn;
+	
+    public Msisdn() {}
+
+	public Msisdn(Msisdn msisdn) {
+        this.msisdn = msisdn.msisdn;
+	}
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Fields
+	//
+	// /////////////////////////////////
+	public String getMsisdn()
+	{
+		return msisdn;
+	}
+
+	public Msisdn setMsisdn(String msisdn)
+	{
+		this.msisdn = msisdn;
+		return this;
+	}
+}

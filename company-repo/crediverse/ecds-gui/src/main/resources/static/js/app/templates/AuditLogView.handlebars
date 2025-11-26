@@ -1,0 +1,288 @@
+<div>
+
+	<script id="auditLogSearchForm" type="partial">
+		<div class="advancedSearchForm" style="display:none">
+			<form id="searchForm" name="searchForm" class="form-horizontal">
+
+				<div class="row">
+
+					<!-- Column 1 -->
+					<div class="col-sm-6">
+						{{>modalInput name="id" label="auditLog.searchEntryId" hint="auditLog.searchEntryId"}}
+						{{>modalInput name="sequenceNo" label="auditLog.searchSequenceNo" hint="auditLog.searchSequenceNo"}}
+						<div class="form-group">
+							<label for="timestamp-from" class="col-xs-6 col-sm-5 col-md-4 control-label">{{i18n "auditLog.searchEntryDate"}}</label>
+							<div class="col-xs-6 col-sm-7 col-md-8">
+								<div class="row">
+									<div class="col-xs-6">
+										<input id="timestamp-from" type="text" name="timestampFrom" class="form-control" title="{{i18n 'auditLog.searchEntryDateFrom'}}" placeholder="YYYY-MM-DD" data-date-format="yyyy-mm-dd"  />
+									</div>	
+									<div class="col-xs-6">
+										<input id="timestamp-to" type="text" name="timestampTo" class="form-control" title="{{i18n 'auditLog.searchEntryDateTo'}}" placeholder="YYYY-MM-DD" data-date-format="yyyy-mm-dd" />
+									</div>	
+								</div>
+							</div>
+						</div>
+	
+						{{>selectInput2 name="action" label="auditLog.searchOperation"}}
+						{{>selectInput2 name="dataType" label="auditLog.searchDataType"}}
+					</div>
+					
+					<!-- column 2 -->
+					<div class="col-sm-6">
+						{{>modalInput name="ipAddress" label="auditLog.searchIPAddress" hint="auditLog.searchIPAddress"}}
+						{{>modalInput name="macAddress" label="auditLog.searchMACAddress" hint="auditLog.searchMACAddress"}}
+						{{>modalInput name="machineName" label="auditLog.searchMachineName" hint="auditLog.searchMachineName"}}
+						{{>modalInput name="domainName" label="auditLog.searchDomainName" hint="auditLog.searchDomainName"}}
+					</div>
+				</div>
+
+				<div style="border-top:1px solid #eaeaea; padding-top:10px; margin-bottom:20px;">
+					<div class="form-group">
+						<div class="col-sm-6">							
+						</div>
+						<div class="col-sm-6">
+							<div id="withcountDiv" class="col-xs-8 col-sm-7 col-md-6 right">
+								<input id="withcount" name="withcount" class="custom-checkbox-fa" value="false" type="checkbox">
+								<label for="withcount" title="{{i18n "global.retrieveRecordCountHint"}}" class="">{{i18n "global.retrieveRecordCount"}}</label>
+				  			</div>
+							<div class="col-xs-4 col-sm-5 col-md-6 right">
+								<button type="submit" class="btn btn-primary searchButton"><i class="fa fa-search"></i> {{i18n "global.searchBtn"}}</button>
+								<button type="button" class="btn btn-default searchResetButton">{{i18n "global.clearBtn"}}</button>
+								<button type="button" class="btn btn-default searchCancelButton">{{i18n "global.hideBtn"}}</button>
+									&nbsp;&nbsp;&nbsp;
+								<div class="pull-right">
+									<div id="error_general_message" class="alert alert-danger" style="padding:6px 15px; margin-right:20px; display:none;"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</form>
+		</div>
+	</script>
+	
+	<script id="auditlogmaster">
+		<div class="datatablesview col-xs-12">
+			<div class="box">
+			
+				<!-- advancedSearchInput -->
+				<div id="dtButtonBarTemplate" style="display:none;">
+					{{#hasPerms "Batch_Download"}}
+        				<button class="btn btn-primary exportAuditLogButton" role="button">{{i18n "global.exportBtn"}}</button>
+        			{{/hasPerms}}
+        		</div>
+				
+        		<div class="box-body">
+        			<div>
+	                	<div class="advancedSearchInput" style="margin-bottom:15px;">
+	        			 	<button type="button" class="btn btn-primary searchExpandButton">{{i18n "global.advancedSearchBtn"}}</button>
+            			</div>
+
+        				{{>auditLogSearchForm}}
+        			</div>
+
+        			<div class="advancedSearchResults">
+	            		<table class="auditlogtable tableview table table-bordered table-hover table-striped"  data-sshash-base='auditLogList'>
+	            		</table>
+            		</div>
+        		</div>
+        		
+			</div>
+		</div>
+	</script>
+	
+	<script id="logmaster">
+	    <div class="datatablesview">
+	        <div class="box">
+				<div id="dtButtonBarTemplate" style="display:none;">
+					<!-- <button class="btn btn-primary viewTdrsButton" role="button">Test</button> -->
+					{{#hasPerms "Batch_Download"}}
+						<button class="btn btn-primary exportTdrsButton" role="button">{{i18n "global.exportBtn"}}</button>
+					{{/hasPerms}}
+	            </div>
+	            <div class="box-body">
+	            
+		            <div class="advancedSearchInput"  style="margin-bottom:15px;">
+		        		<!-- <input id="searchInput" type="text" name="firstName" class="form-control searchInput" placeholder="{{i18n "transactions.searchInputHint"}}" /> -->
+					 	<button type="button" class="btn btn-primary tdrSearchExpandButton">{{i18n "global.advancedSearchBtn"}}</button>
+		        	</div>
+	            
+		            <div class="advancedSearchForm" style="display:none">
+						<form id="searchform" name="searchForm" class="form-horizontal">
+			        		<div>
+			            		<div>
+									<div class="row">
+										<!-- Search Column 1 -->
+										<div class="col-sm-6">
+											<div class="row form-group" style="margin-bottom:15px;">
+												<label for="msisdn-a" class="col-xs-4 control-label pad-right-min">{{i18n "transactions.msisdn"}}</label>
+												<div class="col-xs-4 pad-left-min pad-right-min">
+													<input id="msisdn-a" type="text" name="msisdnA" class="form-control novalidate" placeholder="{{i18n 'transactions.msisdnAHint'}}" />
+												</div>
+												<div class="col-xs-4 pad-left-min">
+													<input id="msisdn-b" type="text" name="msisdnB" class="form-control novalidate" placeholder="{{i18n 'transactions.msisdnBHint'}}" />
+												</div>
+											</div>	
+											<div class="row form-group novalidate" style="margin-bottom:15px;">
+												<label for="groupIDA" class="col-xs-4 control-label pad-right-min">{{i18n "transactions.groupName"}}</label>
+												<div class="col-xs-4 pad-right-min pad-left-min">
+													<select id="group-id-a" style="width: 100%;" name="groupIDA" class="form-control novalidate">
+														<option value="" selected="selected">{{i18n "transactions.searchGroupHintA"}}</option>
+													</select>
+												</div>
+												<div class="col-xs-4 pad-left-min">
+													<select id="group-id-b" style="width: 100%;" name="groupIDB" class="form-control novalidate">
+														<option value="" selected="selected">{{i18n "transactions.searchGroupHintB"}}</option>
+													</select>
+												</div>
+											</div>
+										
+											<div class="row form-group novalidate" style="margin-bottom:15px;">
+												<label for="a_TierID" class="col-xs-4 control-label pad-right-min">{{i18n "transactions.transactionTierGroupName"}}</label>
+												<div class="col-xs-4 pad-right-min pad-left-min">
+													<select id="a_TierID" style="width: 100%;" name="a_TierID" class="form-control novalidate">
+														<option value="" selected="selected">{{i18n "transactions.transactionTierA"}}</option>
+													</select>
+												</div>
+												<div class="col-xs-4 pad-left-min">
+													<select id="b_TierID" style="width: 100%;" name="b_TierID" class="form-control novalidate">
+														<option value="" selected="selected">{{i18n "transactions.transactionTierB"}}</option>
+													</select>
+												</div>
+											</div>
+										
+											<div class="row form-group novalidate" style="margin-bottom:15px;">
+												<label for="a_OwnerID" class="col-xs-4 control-label pad-right-min">{{i18n "transactions.transactionOwnerName"}}</label>
+												<div class="col-xs-4 pad-right-min pad-left-min">
+													<select id="a_OwnerID" style="width: 100%;" name="a_OwnerID" class="form-control novalidate">
+														<option value="" selected="selected">{{i18n "transactions.transactionOwnerA"}}</option>
+													</select>
+												</div>
+												<div class="col-xs-4 pad-left-min">
+													<select id="b_OwnerID" style="width: 100%;" name="b_OwnerID" class="form-control novalidate">
+														<option value="" selected="selected">{{i18n "transactions.transactionOwnerB"}}</option>
+													</select>
+												</div>
+											</div>
+										
+											{{>modalInput name="number" label="transactions.tranactionNumber" hint="transactions.tranactionNumber" className="novalidate" divClassName="pad-left-min" labelClassName="pad-right-min"}}
+										</div>
+										
+										<!-- Seach Column 2 -->
+										<div class="col-sm-6">
+											<div class="row" style="margin-bottom:15px;">
+												<label for="date-from" class="col-xs-4 col-sm-4 control-label pad-right-min">{{i18n "transactions.transactionDate"}}</label>
+												<div class="col-xs-4 col-sm-4 pad-right-min pad-left-min">
+													<div class="row">
+														<div class="col-xs-7" style="padding-right:1px">
+															<input id="date-from" type="text" name="dateFrom" class="form-control novalidate" placeholder="YYYY-MM-DD" data-date-format="yyyy-mm-dd"  />
+														</div>
+														<div class="col-xs-5" style="padding-left:1px;">
+															<div class="input-group clockpicker time-from-picker" data-placement="left" data-align="top" data-autoclose="true">
+														    	<input id="time-from" name="timeFrom" type="text" class="form-control novalidate" placeholder="00:00" value="">
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-xs-4 col-sm-4 pad-left-min">
+													<div class="row">
+														<div class="col-xs-7" style="padding-right:1px;">
+															<input id="date-to" type="text" name="dateTo" class="form-control novalidate" placeholder="YYYY-MM-DD" data-date-format="yyyy-mm-dd" />
+														</div>
+														<div class="col-xs-5" style="padding-left:1px;">
+															<div class="input-group clockpicker time-to-picker" data-placement="left" data-align="top" data-autoclose="true">
+														    	<input id="time-to" name="timeTo" type="text" class="form-control novalidate" placeholder="23:59" value="">
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											
+											<div class="row" style="margin-bottom:15px;">
+												<label for="amount-from" class="col-xs-4 col-sm-4 control-label pad-right-min">{{i18n "transactions.transactionAmount"}}</label>
+												<div class="col-xs-4 col-sm-4 pad-right-min pad-left-min">
+													<input id="amount-from" type="text" name="amountFrom" class="form-control novalidate" placeholder="{{i18n 'transactions.minAmount'}}" data-rule-digits="true"/>
+												</div>	
+												<div class="col-xs-4 col-sm-4 pad-left-min">
+													<input id="amount-to" type="text" name="amountTo" class="form-control novalidate" placeholder="{{i18n 'transactions.maxAmount'}}" data-rule-digits="true"/>
+												</div>	
+											</div>
+											
+											<div class="row" style="margin-bottom:15px;">
+												<label for="bonus-amount-from" class="col-xs-4 col-sm-4 control-label pad-right-min">{{i18n "transactions.transactionBonusAmount"}}</label>
+												<div class="col-xs-4 col-sm-4 pad-right-min pad-left-min">
+													<input id="bonus-amount-from" type="text" name="bonusAmountFrom" class="form-control novalidate" placeholder="{{i18n 'transactions.minBonus'}}" data-rule-digits="true"/>
+												</div>
+												<div class="col-xs-4 col-sm-4 pad-left-min">
+													<input id="bonus-amount-to" type="text" name="bonusAmountTo" class="form-control novalidate" placeholder="{{i18n 'transactions.maxBonus'}}" data-rule-digits="true"/>
+												</div>	
+											</div>	
+										
+											{{>modalSelectTDS name="type" className="novalidate" divClassName="pad-left-min" labelClassName="pad-right-min" label="transactions.transactionType"  data=":enums.transactionType.ALL,
+												RP:enums.transactionType.REPLENISH,
+												TX:enums.transactionType.TRANSFER,
+												SL:enums.transactionType.SELL,
+												ND:enums.transactionType.NON_AIRTIME_DEBIT,
+												NR:enums.transactionType.NON_AIRTIME_REFUND,
+												PR:enums.transactionType.REGISTER_PIN,
+												CP:enums.transactionType.CHANGE_PIN,
+												BE:enums.transactionType.BALANCE_ENQUIRY,
+												ST:enums.transactionType.SELF_TOPUP,
+												TS:enums.transactionType.TRANSACTION_STATUS_ENQUIRY,
+												LT:enums.transactionType.LAST_TRANSACTION_ENQUIRY,
+												AJ:enums.transactionType.ADJUST,
+												SQ:enums.transactionType.SALES_QUERY,
+												DQ:enums.transactionType.DEPOSITS_QUERY,
+												FR:enums.transactionType.REVERSE,
+												PA:enums.transactionType.REVERSE_PARTIALLY,
+												RW:enums.transactionType.PROMOTION_REWARD"
+												hint="transactions.transactionType" 
+											}}
+										
+										
+											{{>modalSelectTDS name="channel" className="novalidate" divClassName="pad-left-min" labelClassName="pad-right-min" label="transactions.channel" 
+												data=":enums.channel.ALL,
+												A:enums.channel.API,
+												B:enums.channel.B,
+												P:enums.channel.MOBILE,
+												S:enums.channel.SMS,
+												U:enums.channel.USSD,
+												W:enums.channel.WEB" 
+												hint="transactions.transactionChannel"
+											}}
+										
+										
+										</div>	<!-- End Column -->
+									</div>	<!-- End Row -->
+			            		</div>
+								<div class="" style="border-top:1px solid #eaeaea; padding-top:10px; margin-bottom:20px;">
+			  			  			<div class="form-group">
+							        	<div class="right">
+				           			 		<button type="submit" class="btn btn-primary tdrSearchButton"><i class="fa fa-search"></i> {{i18n "global.searchBtn"}}</button>
+							           		<button type="button" class="btn btn-default tdrSearchResetButton">{{i18n "global.clearBtn"}}</button>
+							           		<button type="button" class="btn btn-default tdrSearchCancelButton">{{i18n "global.hideBtn"}}</button>
+											&nbsp;&nbsp;&nbsp;
+											<div class="pull-right">
+												<div id="error_general_message" class="alert alert-danger" style="padding:6px 15px; margin-right:20px; display:none;"></div>
+											</div>
+										</div>
+							    	</div>
+								</div>
+			    		    </div>
+						</form>	
+			    	</div> <!-- advancedSearchForm -->
+			    	
+			    	<div class="advancedSearchResults">
+			    		Hello There
+		            	<table class="auditlogtable tableview table table-bordered table-hover table-striped" data-sshash-base='auditLogList'>
+		            	</table>
+		        	</div>
+		        	
+	            </div> <!-- box-body -->
+	        </div>
+	    </div> <!-- datatablesview-->
+	</script>
+	
+</div>

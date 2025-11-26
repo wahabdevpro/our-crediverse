@@ -1,0 +1,105 @@
+<style>
+	.user_heading {
+		font-size: 22px;
+		font-weight: bold;
+	}
+	.viewbutton {
+		margin-left: 5px;
+		margin-right: 5px;
+		color: #0099FF;		
+	}
+	.viewbutton:hover {
+		color: blue;
+	}
+	.editbutton {
+		margin-left: 5px;
+		margin-right: 5px;
+		color: #00C000;
+	}
+	.editbutton:hover {
+		color: green;
+	}	
+	.deletebutton {
+		margin-left: 5px;
+		margin-right: 5px;
+		color: #FF3366;		
+	}
+	.deletebutton:hover {
+		color: red;
+	}
+	.table-bordered {
+		border: 0px !important;
+		padding-right: 20px !important;
+	}
+</style>
+
+<!--  Benificiary Quotas -->
+<div class="row" style="border-bottom: 1px solid #EEEEEE;">
+	<div class="col-xs-10 col-sm-10 col-md-10 user_heading" th:text="#{cc.quotasTitle}">Shared Service Quotas</div>
+	<div class="col-xs-2 col-sm-2 col-md-2">
+		<button id="addquota" type="button" class="btn btn-success btn-xs addquota" style="float:right;" 
+			data-toggle="tooltip" data-placement="top" th:title="#{cc.addQuotabtnTooltip}"
+			th:onclick="'javascript:addQuota(\'' + ${msisdn} + '\', \'' + ${sid} + '\', \'' + ${vid} + '\', \'' + ${benMsisdn} + '\');return false;'" 
+			title="add quota"><span class="glyphicon glyphicon-plus"></span></button>
+	</div>
+</div>
+
+<!-- Table of quotas -->
+<div th:if="${!noquotas}" class="row" style="padding-left:15px; margin-top: 5px;">
+
+	<div class="row">
+		<table class="table infotable table-hover table-bordered table-striped" >
+			<thead>
+				<tr>
+					<th th:text="#{cc.quotasTableHeadingService}">Service</th>
+					<th th:text="#{cc.quotasTableHeadingDestination}">Destination</th>
+					<th th:text="#{cc.quotasTableHeadingDayOfWeek}">Day</th>
+					<th th:text="#{cc.quotasTableHeadingTimeOfDay}">Time</th>
+					<th th:text="#{cc.quotasTableHeadingUnits}">Units</th>									
+					<th th:text="#{cc.quotasTableHeadingQuantity}">Quantity</th>
+					<th th:text="#{cc.quotasTableHeadingBalance}">Balance</th>														
+					<th th:text="#{cc.quotasTableHeadingExpiry}">>Expiry</th>														
+					<th></th>
+					
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="quota,iterStat : ${quotas}" >
+					<td th:text="${quota.service}"></td>
+					<td th:text="${quota.destination}"></td>
+					<td th:text="${quota.daysOfWeek}"></td>
+					<td th:text="${quota.timeOfDay}"></td>
+					<td th:text="${quota.units}"></td>
+					<td th:text="${quota.quantity}"></td>
+					<td th:utext="${quota.balance}"></td>
+					<td th:utext="${quota.expDate}"></td>
+					<td style="text-align:center">
+						<button th:id="${'qta_' + benMsisdn + '_' + iterStat.index}" class="btn btn-xs btn-danger removeQuoata"	
+						data-toggle="tooltip" data-placement="top" th:title="#{cc.removeQuotabtnTooltip}"
+						th:onclick="'javascript:removeQuota(\'' + ${msisdn} + '\', \'' + ${sid} + '\', \'' + ${vid} + '\', \'' + ${benMsisdn} + '\', \'' + ${quota.quotaID} + '\');return false;'">
+							<span class="glyphicon glyphicon-remove"></span>
+						</button>
+						
+						<button th:id="${'upd_' + benMsisdn + '_' + iterStat.index}" class="btn btn-xs btn-info updateQuoata"	
+						data-toggle="tooltip" data-placement="top" th:title="#{cc.updateQuotabtnTooltip}"
+						th:onclick="'javascript:updateQuotaQuantity(\'' + ${msisdn} + '\', \'' + ${sid} + '\', \'' + ${vid} + '\', \'' + ${benMsisdn} + '\', \'' + ${quota.quotaID} + '\', \'' + ${quota.quantity} + '\', \'' + ${quota.units} + '\');return false;'">
+						
+							<span class=" glyphicon glyphicon-plus-sign"></span>
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+<div th:if="${noquotas}" class="row" style="padding-left:15px; margin-top: 5px;">
+	<div class="col-lg-6">
+		<span th:text="#{cc.noquotas(${msisdn})}" ></span>
+	</div>
+</div>
+
+<script th:inline="javascript" >
+updateQuotaEvents();
+</script>

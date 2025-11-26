@@ -1,0 +1,42 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+dependencies {
+    implementation project(':CoreInterfaces')
+    implementation project(':SoapProtocol')
+    implementation project(':AirSimService')
+    implementation project(':GroupSharedAccounts')
+    implementation project(':Configuration')
+    implementation project(':AirConnector')
+    implementation project(':CtrlConnector')
+    implementation project(':DataWarehouseConnector')
+    implementation project(':LoggerService')
+    implementation project(':MySqlConnector')
+    implementation project(':NumberPlanService')
+    implementation project(':ReportingService')
+    implementation project(':LifecycleConnector')
+    implementation project(':SecurityService')
+    implementation project(':ServiceBus')
+    implementation project(':SmppConnector')
+    implementation project(':TransactionService')
+    implementation project(':SoapConnector')
+    implementation project(':FileConnector')
+    implementation project(':C4USuTConnector')
+    implementation project(':PinService')
+    implementation project(':UnitTestUtils')
+    implementation 'junit:junit'
+    implementation 'org.hamcrest:hamcrest-core'
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'com.sun.xml.ws:jaxws-rt'
+    implementation 'com.sun.xml.ws:rt'
+    implementation 'javax.xml.bind:jaxb-api'
+    implementation 'com.sun.xml.bind:jaxb-core'
+    implementation 'com.sun.xml.bind:jaxb-impl'
+}

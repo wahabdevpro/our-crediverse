@@ -1,0 +1,46 @@
+<style>
+	.current-package {
+		border: 1px solid !important;
+	}
+</style>
+
+
+<div class="row" style="padding-left:15px; padding-top:30px;">
+	<div class="col-lg-10">
+		<span th:text="#{cc.serviceListTitle(${msisdn}, ${serviceName})}" style="font-weight: bold"></span>
+	</div>
+</div>
+
+<div class="row" style="padding-left:15px; padding-top:30px;">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<div th:each="service,iterStat : ${services}" >			
+			<div th:class="${'well well-sm ' + ((utils.enumValue(service.state) == 'ACTIVE')? 'current-package' : '')}" style="margin-bottom: 10px !important;">
+				
+				<span th:if="${utils.enumValue(service.state) == 'ACTIVE'}" th:text="#{cc.packageActive(${service.variantName})}"></span>
+				<span th:if="${utils.enumValue(service.state) != 'ACTIVE'}" th:text="#{cc.packageInactive(${service.variantName})}"></span>
+			
+				<button th:id="${'viewsubbtn_'  + service.serviceID + '_' + service.variantID}" th:if="${utils.enumValue(service.state) == 'ACTIVE'}" style="margin-top: -7px !important; margin-right:-5px; float:right;" class="btn btn-primary viewSubscription" 
+					data-toggle="tooltip" data-placement="top" th:title="#{cc.viewSubscription}"
+					th:onclick="'javascript:viewService(\'' + ${service.serviceID} + '\', \'' + ${service.variantID} + '\');return false;'">
+					<span class="glyphicon glyphicon-eye-open"></span>
+				</button>
+				
+				<button th:id="${'unsubcribebtn_' + service.serviceID + '_' + service.variantID}" th:if="${utils.enumValue(service.state) == 'ACTIVE'}" style="margin-top: -7px !important; margin-right:5px; float:right;" class="btn btn-danger unsubscribeMsisdn" 
+					data-toggle="tooltip" data-placement="top" th:title="#{cc.unsubscribe}"
+					th:onclick="'javascript:unsubscribe(\'' + ${msisdn} + '\', \'' + ${service.serviceName} + '\', \'' + ${service.serviceID} + '\', \'' + ${service.variantID} + '\');return false;'">
+					<span class="glyphicon glyphicon-remove"></span>
+				</button>
+			
+				<button th:id="${'subcribebtn_' + service.serviceID + '_' + service.variantID}" th:if="${utils.enumValue(service.state) != 'ACTIVE'}" style="margin-top: -7px !important; margin-right:-5px; float:right;" th:class="${'btn btn-success subscribeMsisdn' + (subscribed? ' disabled' : '')}" 
+					data-toggle="tooltip" data-placement="top" th:title="#{cc.subscribe}"
+					th:onclick="'javascript:subscribeUserToService(\'' + ${msisdn} + '\', \'' + ${service.serviceID} + '\', \'' + ${service.variantID} + '\', \'' + ${service.serviceName} + '\');return false;'">
+					<span class="glyphicon glyphicon-shopping-cart"></span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script th:inline="javascript" >
+updateServiceListJS();
+</script>

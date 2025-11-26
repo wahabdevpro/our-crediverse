@@ -1,0 +1,38 @@
+# vim: set ft=dosini sts=4 ts=4 sw=4 noexpandtab fo-=t:
+
+# https://www.freedesktop.org/software/systemd/man/systemd.directives.html
+
+# https://www.freedesktop.org/software/systemd/man/systemd.exec.html
+# https://www.freedesktop.org/software/systemd/man/systemd.unit.html
+# https://www.freedesktop.org/software/systemd/man/systemd.service.html
+
+# https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/System_Administrators_Guide/sect-Managing_Services_with_systemd-Unit_Files.html
+
+[Unit]
+Description=Credit4U Host Process
+After=network.target
+
+PartOf=c4u-supervisor.service
+
+[Service]
+Type=simple
+#Environment="JavaMinMemory=18000m"
+#Environment="JavaMaxMemory=18000m"
+Environment="NumberOfGCLogFiles=10"
+Environment="GCLogFileSize=100M"
+Environment="CsGcTuningOptions=-XX:G1NewSizePercent=1 -XX:G1MaxNewSizePercent=7"
+EnvironmentFile=/etc/sysconfig/c4u-supervisor
+WorkingDirectory=/var/opt/cs/c4u
+# vimdiff <( cat c4u-hostprocess.service | sed -n 's|^ExecStartPre=-/bin/bash -c "echo ||gp' ) <( cat c4u-hostprocess.service | sed -n 's|^ExecStart=/bin/bash -c "||gp' )
+ExecStartPre=-/bin/bash -c "echo exec ${JAVA_HOME}/bin/java -d64 -server $${JavaMinMemory:+-Xms$${JavaMinMemory}} $${JavaMaxMemory:+-Xmx$${JavaMaxMemory}} -Djava.security.egd=file:/dev/./urandom -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.port=9010 -Dcom.sun.management.jmxremote.rmi.port=9011 -Djava.rmi.server.hostname=localhost -Dcom.sun.management.jmxremote.local.only=true -XX:+UseG1GC ${CsGcTuningOptions} -XX:+PrintGCDateStamps -verbose:gc -XX:+PrintGCApplicationStoppedTime -XX:+PrintGCApplicationConcurrentTime -XX:+PrintTenuringDistribution -Xloggc:/var/opt/cs/c4u/log/java-gc -XX:-UseGCLogFileRotation -XX:NumberOfGCLogFiles=${NumberOfGCLogFiles} -XX:GCLogFileSize=${GCLogFileSize} -cp ${C4U_HOME}/lib/*:${C4U_HOME}/lib:${C4U_HOME}/hostprocess/lib/*:${C4U_HOME}/hostprocess/plugins/* hxc.test.HostObject"
+ExecStart=/bin/bash -c "exec ${JAVA_HOME}/bin/java -d64 -server $${JavaMinMemory:+-Xms$${JavaMinMemory}} $${JavaMaxMemory:+-Xmx$${JavaMaxMemory}} -Djava.security.egd=file:/dev/./urandom -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.port=9010 -Dcom.sun.management.jmxremote.rmi.port=9011 -Djava.rmi.server.hostname=localhost -Dcom.sun.management.jmxremote.local.only=true -XX:+UseG1GC ${CsGcTuningOptions} -XX:+PrintGCDateStamps -verbose:gc -XX:+PrintGCApplicationStoppedTime -XX:+PrintGCApplicationConcurrentTime -XX:+PrintTenuringDistribution -Xloggc:/var/opt/cs/c4u/log/java-gc -XX:-UseGCLogFileRotation -XX:NumberOfGCLogFiles=${NumberOfGCLogFiles} -XX:GCLogFileSize=${GCLogFileSize} -cp ${C4U_HOME}/lib/*:${C4U_HOME}/lib:${C4U_HOME}/hostprocess/lib/*:${C4U_HOME}/hostprocess/plugins/* hxc.test.HostObject"
+
+SuccessExitStatus=143
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
+WantedBy=c4u.target
+
+

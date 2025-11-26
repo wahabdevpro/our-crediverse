@@ -1,0 +1,61 @@
+WARNING!
+========
+
+**Since 2020-Aug-6 we are using only one release notes document for
+Crediverse TS, GUI and API:**
+
+<https://gitlab.com/csys/products/ecds/ecds-ts-doc/-/blob/master/docs/released-artefacts.asciidoc>
+
+**Please do not add any release notes here!**
+
+For now, current document will remain here for historical purposes. A
+reference to it will be added as a comment in the main release notes
+mentioned above.
+
+Release 1.2.2 - 2020-08-04
+--------------------------
+
+-   No changes since 1.2.2-rc-5 - 2020-07-02
+
+Release 1.2.2-rc-5 - 2020-07-02
+-------------------------------
+
+-   Implemented /account/transaction/last
+
+-   Implemented /account/transaction/bundle/sale
+
+-   Fixes in Swagger file.
+
+Release 1.2.1-rc-0 - 2018-07-19
+-------------------------------
+
+### Note
+
+-   Version 1.2.1-rc-0 released to synchronize with changes made to the
+    Crediverse backend server.
+
+Release 1.2.0-rc-0 - 2018-07-19
+-------------------------------
+
+### Note
+
+-   Version 1.2.0-rc-0 released to synchronize with changes made to the
+    Crediverse backend server.
+
+Release 1.1.0-rc-1 - 2018-03-02
+-------------------------------
+
+### Note
+
+-   Version 1.1.0-rc-1 released to synchronize with changes made to the
+    Crediverse backend server.
+
+Initial Release 1.0.0-rc-1 - 2018-03-02
+---------------------------------------
+
+### Features
+
+-   F1661 Crediverse API provides functionality to query account status,
+    account transactions, user and agent profile information and
+    bundles. The API also provides functionality to transfer credit and
+    sell airtime.

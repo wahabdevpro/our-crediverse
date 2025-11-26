@@ -1,0 +1,64 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0">
+	<persistence-unit name="ecds" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>hxc.services.ecds.model.Company</class>
+		<class>hxc.services.ecds.model.Permission</class>
+		<class>hxc.services.ecds.model.Role</class>
+		<class>hxc.services.ecds.model.WebUser</class>
+		<class>hxc.services.ecds.model.Tier</class>
+		<class>hxc.services.ecds.model.AuditEntry</class>
+		<class>hxc.services.ecds.model.Agent</class>
+		<class>hxc.services.ecds.model.Account</class>
+		<class>hxc.services.ecds.model.TransferRule</class>
+		<class>hxc.services.ecds.model.Transaction</class>
+		<class>hxc.services.ecds.model.TransactionExtraData</class>
+		<class>hxc.services.ecds.model.TransactionLocation</class>
+		<class>hxc.services.ecds.model.TransactionNumber</class>
+		<class>hxc.services.ecds.model.Configuration</class>
+		<class>hxc.services.ecds.model.Group</class>
+		<class>hxc.services.ecds.model.ServiceClass</class>
+		<class>hxc.services.ecds.model.State</class>
+		<class>hxc.services.ecds.model.Batch</class>
+		<class>hxc.services.ecds.model.Stage</class>
+		<class>hxc.services.ecds.model.WorkItem</class>
+		<class>hxc.services.ecds.model.Department</class>
+		<class>hxc.services.ecds.model.Area</class>
+		<class>hxc.services.ecds.model.Cell</class>
+		<class>hxc.services.ecds.model.CellGroup</class>
+		<class>hxc.services.ecds.model.Promotion</class>
+		<class>hxc.services.ecds.model.Bundle</class>
+		<class>hxc.services.ecds.model.BundleLanguage</class>
+		<class>hxc.services.ecds.model.AgentUser</class>
+		<class>hxc.services.ecds.model.ClientState</class>
+		<class>hxc.services.ecds.model.ReportSpecification</class>
+		<class>hxc.services.ecds.model.ReportSchedule</class>
+		<class>hxc.services.ecds.model.QualifyingTransaction</class>
+		<class>hxc.services.ecds.model.SmsQueue</class>		
+		<class>hxc.services.ecds.model.MobileNumberFormatMapping</class>
+		<class>hxc.services.ecds.model.MobileNumberFormatConfig</class>
+		<class>hxc.services.ecds.model.non_airtime.NonAirtimeTransactionDetails</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+	</persistence-unit>
+	<persistence-unit name="ecdsap" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>hxc.services.ecds.olapmodel.OlapAnalyticsHistory</class>
+		<class>hxc.services.ecds.olapmodel.OlapAnalyticsLive</class>
+		<class>hxc.services.ecds.olapmodel.OlapTransaction</class>
+		<class>hxc.services.ecds.olapmodel.OlapAgentAccount</class>
+		<class>hxc.services.ecds.olapmodel.OlapGroup</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+	</persistence-unit>
+	<persistence-unit name="ecdsapddl" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>hxc.services.ecds.olapmodel.OlapSchemaData</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+	</persistence-unit>
+	<persistence-unit name="ecdsddl" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>hxc.services.ecds.model.State</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+	</persistence-unit>
+</persistence>

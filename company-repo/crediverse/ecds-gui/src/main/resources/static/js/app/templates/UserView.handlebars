@@ -1,0 +1,324 @@
+<div>
+	<script id="userdetails">
+	    <div class="col-xs-12">
+			<div class="row">
+				<div class="col-lg-3 col-md-4 col-sm-6">
+					<div class="box box-primary">
+        		    	<div class="box-body box-profile">
+              				<!-- <img class="profile-user-img img-responsive img-circle" src="//placehold.it/300x300" alt="User profile picture"> -->
+    		          		<h2 class="profile-username text-center">{{ this.title }} {{ this.firstName }} {{ this.surname }}</h2>
+    		          		<p class="text-muted text-center">{{ this.domainAccountName }}</p>
+            			</div>
+            			<div class="box-footer">
+	            			<div class="row" style="text-align:center; margin-bottom:20px;">
+								<button type="button" class="btn btn-xs btn-danger deleteUserButton" data-user-id="{{ this.id }}">{{i18n "userman.deleteUserButton"}}</button>
+							</div>
+            			</div>
+       				</div>
+				</div>
+				<div class="col-lg-9 col-md-8 col-sm-6">
+					<div class="nav-tabs-custom">
+  						<ul class="nav nav-tabs">
+    						<li class="active"><a href="#profile" data-toggle="tab">Profile</a></li>
+  						</ul>
+  						<div class="tab-content">
+						    <div class="active tab-pane" id="profile" style="margin:8px;">
+							    <div class="row" style="margin-bottom:20px;margin-left: 0;">
+									<button type="button" class="btn btn-primary editUserButton" data-user-id="{{ this.id }}">{{i18n "global.editBtn"}}</button>
+									{{#ifCond this.authenticationMethod "==" "A"}}
+										{{#ifThisUserIsYou this.id}} 
+											<button type="button" class="btn btn-primary changePasswordButton">{{i18n "changePasswordDialog.changePassword"}}</button>
+										{{else}}
+											{{#hasPerms "WebUser_ChangePasswords"}}
+												<button type="button" class="btn btn-primary changePasswordButton">{{i18n "changePasswordDialog.changePassword"}}</button>
+											{{else}}									
+												{{#hasPerms "WebUser_ResetPasswords"}}
+													<button type="button" class="btn btn-primary resetPasswordButton">{{i18n "changePasswordDialog.resetPassword"}}</button>											
+												{{/hasPerms}}
+											{{/hasPerms}}									
+										{{/ifThisUserIsYou}}
+									{{/ifCond}}
+								</div>
+								<div class="row view-fields">
+									<div class="col-md-4 col-sm-6">
+										<div class="view-field">
+											<label>{{i18n "userman.uniqueID"}}</label>
+											<div>{{ this.id }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.accountNumber"}}</label>
+											<div>{{ this.accountNumber }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.title"}}</label>
+											<div>{{#if this.title}}{{ this.title }}{{else}}<span class="no-data">(not available)</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.firstName"}}</label>
+											<div>{{#if this.firstName}}{{ this.firstName }}{{else}}<span class="no-data">(not available)</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.surname"}}</label>
+											<div>{{ this.surname }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.initials"}}</label>
+											<div>{{#if this.initials}}{{ this.initials }}{{else}}<span class="no-data">(not available)</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.authenticationMethod"}}</label>
+											<div>
+											{{#ifCond this.authenticationMethod "==" "A"}}{{ i18n "enums.authenticationMethod.password" }}{{/ifCond}}
+											{{#ifCond this.authenticationMethod "==" "P"}}{{ i18n "enums.authenticationMethod.pin" }}{{/ifCond}}
+											{{#ifCond this.authenticationMethod "==" "X"}}{{ i18n "enums.authenticationMethod.external" }}{{/ifCond}}
+											</div>
+										</div>										
+										<div class="view-field">
+											<label>{{i18n "userman.domainAccountName"}}</label>
+											<div>{{ this.domainAccountName }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.language"}}</label>
+											<div>{{ this.languageName }}</div>
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-6">
+										<div class="view-field">
+											<label>{{i18n "userman.mobileNumber"}}</label>
+											<div>{{#if this.mobileNumber}}{{ this.mobileNumber }}{{else}}<span class="no-data">(not available)</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.email"}}</label>
+											<div>{{#if this.email}}{{ this.email }}{{else}}<span class="no-data">(not available)</span>{{/if}}</div>
+										</div>										
+										<div class="view-field">
+											<label>{{i18n "userman.department"}}</label>
+											<div>{{#if this.departmentName}}{{ this.departmentName }}{{else}}<span class="no-data">(not available)</span>{{/if}}</div>
+										</div>
+										
+										<div class="view-field">
+											<label>{{i18n "global.status"}}</label>
+											<div>
+												{{#ifCond this.state "==" "A"}}<label class="label label-success">{{ i18n "enums.state.active" }}</label>{{/ifCond}}
+												{{#ifCond this.state "==" "S"}}<label class="label label-warning">{{ i18n "enums.state.suspended" }}</label>{{/ifCond}}
+												{{#ifCond this.state "==" "D"}}<label class="label label-danger">{{ i18n "enums.state.deactivated" }}</label>{{/ifCond}}
+												{{#ifCond this.state "==" "P"}}<label class="label label-default">{{ i18n "enums.state.permanent" }}</label>{{/ifCond}}
+											</div>
+										</div>
+
+										<div class="view-field">
+											<label>{{i18n "userman.role"}}</label>
+											<div>{{ this.role.name }}</div>
+										</div>
+									</div>
+								</div>
+    						</div>
+						    <div class="tab-pane" id="transactions">
+   							</div>
+  						</div>
+					</div>				
+				</div>
+			</div>	
+	    </div>
+	</script>
+	
+	<script id="userProfile">
+	    <div id="userProfile" class="col-xs-12">
+			<div class="row">
+				<div class="col-lg-3 col-md-4 col-sm-6">
+					<div class="box box-primary">
+        		    	<div class="box-body box-profile">
+              				<!-- <img class="profile-user-img img-responsive img-circle" src="//placehold.it/300x300" alt="User profile picture"> -->
+    		          		<h2 class="profile-username text-center">{{ this.title }} {{ this.firstName }} {{ this.surname }}</h2>
+    		          		<p class="text-muted text-center">{{ this.domainAccountName }}</p>
+            			</div>
+       				</div>
+				</div>
+				<div class="col-lg-9 col-md-8 col-sm-6">
+					<div class="nav-tabs-custom">
+  						<ul class="nav nav-tabs">
+    						<li class="active"><a href="#profile" data-toggle="tab">Profile</a></li>
+  						</ul>
+  						<div class="tab-content">
+						    <div class="active tab-pane" id="profile" style="margin:8px;">
+						    	<div class="row" style="margin-bottom:20px;margin-left: 0;">
+							    	{{#hasPerms "WebUser_UpdateOwn"}}
+										<button type="button" class="btn btn-primary editProfileButton">{{i18n "global.editBtn"}}</button>
+									{{/hasPerms}}
+									
+									{{#ifCond this.authenticationMethod "==" "A"}}
+										{{#ifThisUserIsYou this.id}} 
+											<button type="button" class="btn btn-primary changePasswordButton">{{i18n "changePasswordDialog.changePassword"}}</button>
+										{{/ifThisUserIsYou}}
+									{{/ifCond}}									
+								</div>
+								<div class="row view-fields">
+									<div class="col-md-4 col-sm-6">
+										<div class="view-field">
+											<label>{{i18n "userman.uniqueID"}}</label>
+											<div>{{ this.id }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.accountNumber"}}</label>
+											<div>{{ this.accountNumber }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.title"}}</label>
+											<div>{{#if this.title}}{{ this.title }}{{else}}<span class="no-data">(not available)</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.firstName"}}</label>
+											<div>{{#if this.firstName}}{{ this.firstName }}{{else}}<span class="no-data">(not available)</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.surname"}}</label>
+											<div>{{ this.surname }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.initials"}}</label>
+											<div>{{#if this.initials}}{{ this.initials }}{{else}}<span class="no-data">(not available)</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.authenticationMethod"}}</label>
+											<div>
+											{{#ifCond this.authenticationMethod "==" "A"}}{{ i18n "enums.authenticationMethod.password" }}{{/ifCond}}
+											{{#ifCond this.authenticationMethod "==" "P"}}{{ i18n "enums.authenticationMethod.pin" }}{{/ifCond}}
+											{{#ifCond this.authenticationMethod "==" "X"}}{{ i18n "enums.authenticationMethod.external" }}{{/ifCond}}
+											</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.domainAccountName"}}</label>
+											<div>{{ this.domainAccountName }}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.language"}}</label>
+											<div>{{ this.languageName }}</div>
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-6">
+										<div class="view-field">
+											<label>{{i18n "userman.mobileNumber"}}</label>
+											<div>{{#if this.mobileNumber}}{{ this.mobileNumber }}{{else}}<span class="no-data">(not available)</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "userman.email"}}</label>
+											<div>{{#if this.email}}{{ this.email }}{{else}}<span class="no-data">(not available)</span>{{/if}}</div>
+										</div>										
+										<div class="view-field">
+											<label>{{i18n "userman.department"}}</label>
+											<div>{{#if this.departmentName}}{{ this.departmentName }}{{else}}<span class="no-data">(not available)</span>{{/if}}</div>
+										</div>
+										
+										<div class="view-field">
+											<label>{{i18n "global.status"}}</label>
+											<div>
+												{{#ifCond this.state "==" "A"}}<label class="label label-success">{{ i18n "enums.state.active" }}</label>{{/ifCond}}
+												{{#ifCond this.state "==" "S"}}<label class="label label-warning">{{ i18n "enums.state.suspended" }}</label>{{/ifCond}}
+												{{#ifCond this.state "==" "D"}}<label class="label label-danger">{{ i18n "enums.state.deactivated" }}</label>{{/ifCond}}
+												{{#ifCond this.state "==" "P"}}<label class="label label-default">{{ i18n "enums.state.permanent" }}</label>{{/ifCond}}
+											</div>
+										</div>
+
+										<div class="view-field">
+											<label>{{i18n "userman.role"}}</label>
+											<div>{{ this.role.name }}</div>
+										</div>
+									</div>
+								</div>
+    						</div>
+						    <div class="tab-pane" id="transactions">
+   							</div>
+  						</div>
+					</div>				
+				</div>
+			</div>	
+	    </div>
+	</script>
+	<script id="changePassword">
+		<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		    <h4 class="modal-title">{{{dialogTitle}}}</h4>
+		</div>
+		<div class="modal-body">
+			<div class="changePassword">
+				<form name="changePassword" class="form-horizontal">
+					<div class="row">
+						<div class="col-sm-12">
+							{{>modalPassword name="currentPassword" label="changePasswordDialog.currentPassword" hint="changePasswordDialog.currentPassword" value=this.currentPassword}}
+							{{>modalPassword name="newPassword" label="changePasswordDialog.newPassword" hint="changePasswordDialog.newPassword" value=this.newPassword}}
+							{{>modalPassword name="repeatPassword" label="changePasswordDialog.repeatPassword" hint="changePasswordDialog.repeatPassword" value=this.repeatPassword}}
+							
+							
+							<label class="password-rules control-label col-xs-4">{{i18n "changePasswordDialog.passwordRulesLabel"}}</label>
+							<div class="col-xs-8">
+								<div class="row lower">
+									<i id="lowerRule" class="fa fa-close"></i>
+									<label class="password-rules control-label">{{i18n "changePasswordDialog.passwordRules1"}}</label>									
+								</div>
+								<div class="row upper">
+									<i id="upperRule" class="fa fa-close"></i>
+									<label class="password-rules control-label">{{i18n "changePasswordDialog.passwordRules2"}}</label>									
+								</div>
+								<div class="row number">
+									<i id="numberRule" class="fa fa-close"></i>
+									<label class="password-rules control-label">{{i18n "changePasswordDialog.passwordRules3"}}</label>									
+								</div>
+								<div class="row special">
+									<i id="specialRule" class="fa fa-close"></i>
+									<label class="password-rules control-label">{{i18n "changePasswordDialog.passwordRules4"}}</label>									
+								</div>
+								<div class="row length">
+									<i id="lengthRule" class="fa fa-close"></i>
+									<label id="minPinLengthLabel" class="password-rules control-label">{{i18n "changePasswordDialog.passwordRules5"}}</label>									
+								</div>
+							</div>
+		        		</div>
+		        	</div>	
+				</form>
+			</div>
+		</div>
+		<div class="modal-footer">
+	       	<button type="button" class="btn btn-primary saveButton">{{i18n "global.saveBtn"}}</button>
+	       	<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+		</div>
+	</script>
+
+	<script id="tableMenuView">
+		<div class="unusedwrapper">
+			<div class="btn-group actionDropdown">
+				<a class="btn btn-primary btn-xs routerlink" style="padding-left:10px; padding-right:10px; margin-right:0;" href="#user/{{ this.rowID }}">{{i18n "global.menuViewBtn"}}</a>
+				<button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right:0;">
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu dropdown-menu-right">
+					{{#hasPerms "WebUser_Update"}}
+						{{>menuButtonTemplate class='editUserButton' icon='fa-pencil' label="global.editBtn"}}
+					{{/hasPerms}}
+					
+					{{#if this.notPermanent}}
+						{{#hasPerms "WebUser_Delete"}}
+							<li role="separator" class="divider"></li>
+							{{>menuButtonTemplate class='deleteUserButton' icon='fa-trash-o' label="global.deleteBtn"}}
+						{{/hasPerms}}
+					{{/if}}
+					
+					{{#ifCond this.authenticationMethod "==" "A"}}
+						<li role="separator" class="divider"></li>
+						{{#if this.canChangePassword}}
+							{{>menuButtonTemplate class='changePasswordButton' icon='fa-key' label="changePasswordDialog.changePassword"}}						
+						{{/if}}
+						{{#if this.canResetPassword}}
+							{{>menuButtonTemplate class='resetPasswordButton' icon='fa-recycle' label="changePasswordDialog.resetPassword"}}						
+						{{/if}}
+					{{/ifCond}}					
+				</ul>
+			</div>
+			<div class="actionButton">
+				<button class="btn btn-primary btn-xs routerlink" href="#user/{{ this.rowID }}">
+					{{i18n "global.viewBtn"}}
+				</button>
+			</div>
+		</div>
+	</script>
+	
+</div>

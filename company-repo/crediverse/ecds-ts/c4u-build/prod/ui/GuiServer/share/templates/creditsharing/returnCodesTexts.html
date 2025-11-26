@@ -1,0 +1,49 @@
+<div th:each="field : ${fields}">
+	<div th:id="${field.fieldName}" th:if="${#strings.endsWith(field.valueType, 'ReturnCodeTexts;')}" class="returncodetexts col-sm-8">
+		<div class="returncodeControl">
+			<div class="row">
+				<label  for="defaults" class="control-label" style="padding-left: 12px; padding-right:10px;">Filter Return codes by</label>
+				<select th:id="${'IGNORERCLAN_' + field.fieldName}">
+					<option th:if="${! #strings.isEmpty(lang.langDesc)}" th:value="${'OPT_' + field.fieldName + '_' + iterStat.count}" th:text="${lang.langDesc}" th:each="lang,iterStat : ${locale}" />
+				</select>
+			</div>
+			
+			<div th:each="lang,iterStat : ${locale}" th:if="${! #strings.isEmpty(lang.langDesc)}" th:id="${'OPT_' + field.fieldName + '_' + iterStat.count}" th:class="${iterStat.count==1? '' : 'hide'}" >
+				<div th:each="rcvalue : ${field.value}" th:id="${field.fieldName + '_' + utils.extractReturnCodeLabel(rcvalue) + '_' + iterStat.count}">
+				
+					<div class="row" style="margin-top: 10px; margin-bottom: 0px;">
+						<div class="col-sm-10"><label for="something" th:text="${utils.splitCamelCaseString(utils.extractReturnCodeLabel(rcvalue))}">label</label></div>
+						<div class="col-sm-1">
+							<button th:id="${'DEL_' + utils.extractReturnCodeLabel(rcvalue)}" type="button" class="btn btn-danger btn-xs removeReturnCodes" style="float: right;"  th:title="${'Remove ' + utils.splitCamelCaseString(utils.extractReturnCodeLabel(rcvalue))}"><span class="glyphicon glyphicon-remove"></span></button>
+						</div>
+					</div>
+				
+					<div class="row">
+						<div class="col-sm-11">
+							<input th:id="${'RC_' + field.fieldName + '_' + utils.extractReturnCodeLabel(rcvalue) + '_' + iterStat.count}" th:name="${'RC_' + field.fieldName + '_' + utils.extractReturnCodeLabel(rcvalue) + '_' + iterStat.count}" type="text" class="form-control" th:value="${utils.extractReturnCodeLanguage(rcvalue, iterStat.count)}" onchange="dataUpdated();"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="addReturnCodeDiv">
+				<div class="row" style="margin-top: 10px; margin-bottom: 0px;">
+					<div class="col-sm-10">
+						<label  for="defaults" >Add Message</label>
+						<select th:id="${'IGNORERCADD_' + field.fieldName}">
+							<option th:each="code : ${utils.returnCodeValues(field.value)}" th:value="${code}" th:text="${utils.splitCamelCaseString(code)}">x</option>
+						</select>
+					</div>
+					<div class="col-sm-1">
+						<button type="button" class="btn btn-success btn-xs addResultCode" style="float: right;"  th:title="${'Add Return Plus'}"><span class="glyphicon glyphicon-plus"></span></button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-11">
+						<input type="text" class="form-control" th:id="${'RCADD_' + field.fieldName}" />
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>

@@ -1,0 +1,777 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.2.4-b01. --><xs:schema xmlns:tns="http://hxc.concurrent.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://hxc.concurrent.com/">
+
+<xs:complexType name="subscribeRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence>
+<xs:element name="serviceID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="subscriberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="variantID" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="requestHeader">
+<xs:sequence>
+<xs:element name="callerID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="channel" type="tns:channels" minOccurs="0"></xs:element>
+<xs:element name="hostName" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="languageID" type="xs:int" minOccurs="0"></xs:element>
+<xs:element name="mode" type="tns:requestModes" minOccurs="0"></xs:element>
+<xs:element name="sessionID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="transactionID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="version" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="number">
+<xs:sequence>
+<xs:element name="addressDigits" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="numberPlan" type="tns:numberPlan" minOccurs="0"></xs:element>
+<xs:element name="numberType" type="tns:numberType" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="subscribeResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence></xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="responseHeader">
+<xs:sequence>
+<xs:element name="chargeLevied" type="xs:long"></xs:element>
+<xs:element name="message" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="returnCode" type="tns:returnCodes" minOccurs="0"></xs:element>
+<xs:element name="sessionId" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="transactionId" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="changeQuotaRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence>
+<xs:element name="memberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="newQuota" type="tns:serviceQuota" minOccurs="0"></xs:element>
+<xs:element name="quota" type="tns:serviceQuota" minOccurs="0"></xs:element>
+<xs:element name="serviceID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="subscriberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="variantID" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="serviceQuota">
+<xs:sequence>
+<xs:element name="daysOfWeek" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="destination" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="name" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="quantity" type="xs:long" minOccurs="0"></xs:element>
+<xs:element name="quotaID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="service" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="timeOfDay" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="units" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="changeQuotaResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence></xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="getServicesRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence>
+<xs:element name="activeOnly" type="xs:boolean"></xs:element>
+<xs:element name="subscriberNumber" type="tns:number" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="getServicesResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence>
+<xs:element name="serviceInfo" type="tns:vasServiceInfo" nillable="true" minOccurs="0" maxOccurs="unbounded"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="vasServiceInfo">
+<xs:sequence>
+<xs:element name="serviceID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="serviceName" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="state" type="tns:subscriptionState" minOccurs="0"></xs:element>
+<xs:element name="variantID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="variantName" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="removeMemberRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence>
+<xs:element name="memberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="serviceID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="subscriberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="variantID" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="removeMemberResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence></xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="pingRequest">
+<xs:sequence>
+<xs:element name="seq" type="xs:int"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="pingResponse">
+<xs:complexContent>
+<xs:extension base="tns:pingRequest">
+<xs:sequence></xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="suspendRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence></xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="suspendResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence></xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="sendSMSRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="sourceAddress" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="subscriberNumber" type="tns:number" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="sendSMSResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence>
+<xs:element name="expiryTime" type="xs:dateTime" minOccurs="0"></xs:element>
+<xs:element name="messageID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="resultMessage" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="scheduleTime" type="xs:dateTime" minOccurs="0"></xs:element>
+<xs:element name="sequenceNumber" type="xs:int" minOccurs="0"></xs:element>
+<xs:element name="sourceAddress" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="subscriberNumber" type="tns:number" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="getHistoryRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence>
+<xs:element name="a_Number" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="b_Number" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="inReverse" type="xs:boolean"></xs:element>
+<xs:element name="rowLimit" type="xs:int"></xs:element>
+<xs:element name="serviceID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="variantID" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="getHistoryResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence>
+<xs:element name="history" type="tns:serviceHistory" nillable="true" minOccurs="0" maxOccurs="unbounded"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="serviceHistory">
+<xs:sequence>
+<xs:element name="a_MSISDN" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="b_MSISDN" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="channel" type="tns:channels" minOccurs="0"></xs:element>
+<xs:element name="chargeLevied" type="xs:int"></xs:element>
+<xs:element name="followUp" type="xs:boolean"></xs:element>
+<xs:element name="processID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="returnCode" type="tns:returnCodes" minOccurs="0"></xs:element>
+<xs:element name="rolledBack" type="xs:boolean"></xs:element>
+<xs:element name="serviceID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="startTime" type="xs:dateTime" minOccurs="0"></xs:element>
+<xs:element name="variantID" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="processRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence>
+<xs:element name="processID" type="xs:int"></xs:element>
+<xs:element name="processParameters" type="xs:anyType" nillable="true" minOccurs="0" maxOccurs="unbounded"></xs:element>
+<xs:element name="serviceID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="variantID" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="processResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence>
+<xs:element name="processResults" type="xs:anyType" nillable="true" minOccurs="0" maxOccurs="unbounded"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="removeMembersRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence>
+<xs:element name="serviceID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="subscriberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="variantID" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="removeMembersResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence></xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="unsuspendRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence></xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="unsuspendResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence></xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="addMemberRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence>
+<xs:element name="memberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="serviceID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="subscriberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="variantID" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="addMemberResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence></xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="processLifecycleEventRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence>
+<xs:element name="beingProcessed" type="xs:boolean"></xs:element>
+<xs:element name="dateTime1" type="xs:dateTime" minOccurs="0"></xs:element>
+<xs:element name="dateTime2" type="xs:dateTime" minOccurs="0"></xs:element>
+<xs:element name="dateTime3" type="xs:dateTime" minOccurs="0"></xs:element>
+<xs:element name="dateTime4" type="xs:dateTime" minOccurs="0"></xs:element>
+<xs:element name="msisdn" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="nextDateTime" type="xs:dateTime" minOccurs="0"></xs:element>
+<xs:element name="serviceID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="state" type="xs:int"></xs:element>
+<xs:element name="variantID" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="processLifecycleEventResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence></xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="changePINRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence>
+<xs:element name="newPIN" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="oldPIN" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="serviceID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="subscriberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="variantID" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="changePINResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence></xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="unsubscribeRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence>
+<xs:element name="serviceID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="subscriberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="variantID" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="unsubscribeResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence></xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="getServiceRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence>
+<xs:element name="activeOnly" type="xs:boolean"></xs:element>
+<xs:element name="serviceID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="subscriberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="variantID" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="getServiceResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence>
+<xs:element name="serviceInfo" type="tns:vasServiceInfo" nillable="true" minOccurs="0" maxOccurs="unbounded"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="resetPINRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence>
+<xs:element name="serviceID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="subscriberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="variantID" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="resetPINResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence></xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="removeQuotaRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence>
+<xs:element name="memberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="quota" type="tns:serviceQuota" minOccurs="0"></xs:element>
+<xs:element name="serviceID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="subscriberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="variantID" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="removeQuotaResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence></xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="getOwnersRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence>
+<xs:element name="memberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="serviceID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="variantID" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="getOwnersResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence>
+<xs:element name="owners" type="tns:number" nillable="true" minOccurs="0" maxOccurs="unbounded"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="getStatusRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence></xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="getStatusResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence></xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="transferRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence>
+<xs:element name="amount" type="xs:int"></xs:element>
+<xs:element name="pin" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="recipientNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="serviceID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="subscriberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="variantID" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="transferResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence></xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="extendRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence></xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="extendResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence></xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="migrateRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence>
+<xs:element name="newServiceID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="newVariantID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="serviceID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="subscriberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="variantID" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="migrateResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence></xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="replaceMemberRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence>
+<xs:element name="newMemberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="oldMemberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="serviceID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="subscriberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="variantID" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="replaceMemberResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence></xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="getQuotasRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence>
+<xs:element name="activeOnly" type="xs:boolean"></xs:element>
+<xs:element name="daysOfWeek" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="destination" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="memberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="service" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="serviceID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="subscriberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="timeOfDay" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="variantID" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="getQuotasResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence>
+<xs:element name="serviceQuotas" type="tns:serviceQuota" nillable="true" minOccurs="0" maxOccurs="unbounded"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="addQuotaRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence>
+<xs:element name="memberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="quota" type="tns:serviceQuota" minOccurs="0"></xs:element>
+<xs:element name="serviceID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="subscriberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="variantID" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="addQuotaResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence>
+<xs:element name="quota" type="tns:serviceQuota" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="getBalancesRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence>
+<xs:element name="requestSMS" type="xs:boolean"></xs:element>
+<xs:element name="serviceID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="subscriberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="variantID" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="getBalancesResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence>
+<xs:element name="balances" type="tns:serviceBalance" nillable="true" minOccurs="0" maxOccurs="unbounded"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="serviceBalance">
+<xs:sequence>
+<xs:element name="expiryDate" type="xs:dateTime" minOccurs="0"></xs:element>
+<xs:element name="name" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="unit" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="value" type="xs:long"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getMembersRequest">
+<xs:complexContent>
+<xs:extension base="tns:requestHeader">
+<xs:sequence>
+<xs:element name="serviceID" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="subscriberNumber" type="tns:number" minOccurs="0"></xs:element>
+<xs:element name="variantID" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="getMembersResponse">
+<xs:complexContent>
+<xs:extension base="tns:responseHeader">
+<xs:sequence>
+<xs:element name="members" type="tns:number" nillable="true" minOccurs="0" maxOccurs="unbounded"></xs:element>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:simpleType name="numberPlan">
+<xs:restriction base="xs:string">
+<xs:enumeration value="UNKNOWN"></xs:enumeration>
+<xs:enumeration value="ISDN"></xs:enumeration>
+<xs:enumeration value="UNUSED2"></xs:enumeration>
+<xs:enumeration value="DATA"></xs:enumeration>
+<xs:enumeration value="TELEX"></xs:enumeration>
+<xs:enumeration value="UNUSED5"></xs:enumeration>
+<xs:enumeration value="UNUSED6"></xs:enumeration>
+<xs:enumeration value="UNUSED7"></xs:enumeration>
+<xs:enumeration value="NATIONAL"></xs:enumeration>
+<xs:enumeration value="PRIVATE"></xs:enumeration>
+<xs:enumeration value="ERMES"></xs:enumeration>
+</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="numberType">
+<xs:restriction base="xs:string">
+<xs:enumeration value="UNKNOWN"></xs:enumeration>
+<xs:enumeration value="INTERNATIONAL"></xs:enumeration>
+<xs:enumeration value="NATIONAL"></xs:enumeration>
+<xs:enumeration value="NETWORKSPECIFIC"></xs:enumeration>
+<xs:enumeration value="SUBSCRIBER"></xs:enumeration>
+<xs:enumeration value="ALPHANUMERIC"></xs:enumeration>
+<xs:enumeration value="ABBREVIATED"></xs:enumeration>
+</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="channels">
+<xs:restriction base="xs:string">
+<xs:enumeration value="USSD"></xs:enumeration>
+<xs:enumeration value="SMS"></xs:enumeration>
+<xs:enumeration value="CRM"></xs:enumeration>
+<xs:enumeration value="BATCH"></xs:enumeration>
+<xs:enumeration value="IVR"></xs:enumeration>
+<xs:enumeration value="WEB"></xs:enumeration>
+<xs:enumeration value="INTERNAL"></xs:enumeration>
+<xs:enumeration value="SMART_APP"></xs:enumeration>
+<xs:enumeration value="THREEPP"></xs:enumeration>
+<xs:enumeration value="OTHER"></xs:enumeration>
+</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="requestModes">
+<xs:restriction base="xs:string">
+<xs:enumeration value="normal"></xs:enumeration>
+<xs:enumeration value="testOnly"></xs:enumeration>
+</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="returnCodes">
+<xs:restriction base="xs:string">
+<xs:enumeration value="success"></xs:enumeration>
+<xs:enumeration value="successfulTest"></xs:enumeration>
+<xs:enumeration value="notSupported"></xs:enumeration>
+<xs:enumeration value="invalidArguments"></xs:enumeration>
+<xs:enumeration value="invalidNumber"></xs:enumeration>
+<xs:enumeration value="insufficientBalance"></xs:enumeration>
+<xs:enumeration value="technicalProblem"></xs:enumeration>
+<xs:enumeration value="temporaryBlocked"></xs:enumeration>
+<xs:enumeration value="cannotBeAdded"></xs:enumeration>
+<xs:enumeration value="alreadyAdded"></xs:enumeration>
+<xs:enumeration value="timedOut"></xs:enumeration>
+<xs:enumeration value="authorizationFailure"></xs:enumeration>
+<xs:enumeration value="notEligible"></xs:enumeration>
+<xs:enumeration value="alreadySubscribed"></xs:enumeration>
+<xs:enumeration value="notSubscribed"></xs:enumeration>
+<xs:enumeration value="incomplete"></xs:enumeration>
+<xs:enumeration value="malformedRequest"></xs:enumeration>
+<xs:enumeration value="notMember"></xs:enumeration>
+<xs:enumeration value="invalidQuota"></xs:enumeration>
+<xs:enumeration value="quotaNotSet"></xs:enumeration>
+<xs:enumeration value="maxMembersExceeded"></xs:enumeration>
+<xs:enumeration value="alreadyMember"></xs:enumeration>
+<xs:enumeration value="alreadyOtherMember"></xs:enumeration>
+<xs:enumeration value="alreadyOwner"></xs:enumeration>
+<xs:enumeration value="cannotAddSelf"></xs:enumeration>
+<xs:enumeration value="invalidPin"></xs:enumeration>
+<xs:enumeration value="invalidVariant"></xs:enumeration>
+<xs:enumeration value="quantityTooSmall"></xs:enumeration>
+<xs:enumeration value="quantityTooBig"></xs:enumeration>
+<xs:enumeration value="serviceBusy"></xs:enumeration>
+<xs:enumeration value="excessiveBalance"></xs:enumeration>
+</xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="subscriptionState">
+<xs:restriction base="xs:string">
+<xs:enumeration value="unknown"></xs:enumeration>
+<xs:enumeration value="notActive"></xs:enumeration>
+<xs:enumeration value="active"></xs:enumeration>
+<xs:enumeration value="suspended"></xs:enumeration>
+<xs:enumeration value="pendingCancellation"></xs:enumeration>
+</xs:restriction>
+</xs:simpleType>
+</xs:schema>

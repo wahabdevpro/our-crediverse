@@ -1,0 +1,93 @@
+version: "2"
+services:
+  mariadb-crediverse:
+    build: ./database/. 
+    #restart: unless-stopped
+    container_name: mariadb-crediverse
+    ports:
+    - "3306:3306"
+    - "4567:4567/udp"
+    - "4567-4568:4567-4568"
+    - "4444:4444"
+    environment:
+      - MYSQL_ROOT_PASSWORD=ussdgw
+    #volumes:
+# - /etc/localtime/:/etc/localtime:ro
+    networks:
+      default:
+        aliases:
+        - mariadb
+
+  ecds-ts-server:
+    # image: ghcr.io/concurrent-systems/crediverse/ecds-ts:latest
+    build: ../../ecds-ts/.
+    command: server
+    #restart: unless-stopped
+    container_name: ecds-ts-server
+    hostname: ecds-ts-server 
+    env_file:
+      - ./etc/ecds-ts/ecds-ts.env
+    ports:
+      - "3300:3300"
+      - "3301:3301"
+      - "8192:8192"
+      - "10101:10101"
+      - "10012:10012"
+      - "14000:14000"
+      - "14100:14100"
+      - "14200:14200"
+      - "14400:14400"
+      - "16100:16100"
+      - "10010:10010"
+      - "10011:10011"
+      - "10000:10000"
+    volumes:
+      - ./etc/ecds-ts/registration.lic:/opt/cs/c4u/1.0/hostprocess/license/registration.lic
+      - ./etc/ecds-ts/MySqlConfig.xml:/var/opt/cs/c4u/MySqlConfig.xml
+      - ./etc/ecds-ts/database-settings-olap.xml:/var/opt/cs/c4u/database-settings-olap.xml
+      - ./etc/ecds-ts/database-settings-oltp.xml:/var/opt/cs/c4u/database-settings-oltp.xml
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      default:
+        aliases:
+        - ecds-ts-server
+    depends_on: 
+      mariadb-crediverse: 
+        condition: service_started
+
+  ecds-ts-gui:
+     build: ../../ecds-ts/.
+     #image: ghcr.io/concurrent-systems/crediverse/ecds-ts:1.13.0-rc.1
+     command: gui serverHost=ecds-ts-server
+     #restart: unless-stopped
+     container_name: ecds-ts-gui
+     ports:
+       - "8082:8082"
+     volumes:
+       - ./etc/ecds-ts/MySqlConfig.xml:/var/opt/cs/c4u/MySqlConfig.xml
+       - ./etc/ecds-ts/database-settings-olap.xml:/var/opt/cs/c4u/database-settings-olap.xml
+       - /etc/localtime:/etc/localtime:ro
+     networks:
+       default:
+         aliases:
+         - ecds-ts-gui
+     depends_on:
+       - ecds-ts-server
+
+
+
+  mobile-application-service-server: 
+    build: ../.
+    ports: 
+      - "5000:5000"
+    environment:
+      - MAS_CREDIVERSE_URL=http://ecds-ts-server:14400
+      - MAS_API_PORT=5000
+    depends_on:
+      ecds-ts-server:
+        condition: service_started
+    networks:
+      default:
+        aliases:
+        - mas-server
+ 

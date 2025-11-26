@@ -1,0 +1,44 @@
+package hxc.ecds.protocol.rest;
+
+public class LastTransactionEnquiryResponse extends TransactionResponse
+{
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Fields
+	//
+	// /////////////////////////////////
+	private String status;
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Properties
+	//
+	// /////////////////////////////////
+
+	public String getStatus()
+	{
+		return status;
+	}
+
+	public LastTransactionEnquiryResponse setStatus(String status)
+	{
+		this.status = status;
+		return this;
+	}
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Construction
+	//
+	// /////////////////////////////////
+	public LastTransactionEnquiryResponse()
+	{
+
+	}
+
+	public LastTransactionEnquiryResponse(LastTransactionEnquiryRequest request)
+	{
+		super(request);
+	}
+
+}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<div>
+	<div class="row">
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+			<div class="input-group">
+				<span class="input-group-addon">
+					<span class="glyphicon glyphicon-phone glyph-space"></span>
+				</span> 
+				<input type="text" id="msisdn" name="msisdn" class="form-control numericfields" placeholder="MSISDN" style="width:100%;"/>
+			</div>
+		</div>
+		<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+			<button type="button" id="retrieve" class="btn btn-default disabled" data-toggle="tooltip" data-placement="top" th:title="#{cc.retrieve}">
+				<span class="glyphicon glyphicon-search"></span>
+			</button>
+			<button type="button" id="searchHistory" class="btn btn-default disabled" data-toggle="tooltip" data-placement="top" th:title="#{cc.searchHistory}">
+				<span class="glyphicon glyphicon-time"></span>
+			</button>
+		</div>
+	</div>
+	
+	<div class="navbarclass">
+		<ol id="custcarenav" class="breadcrumb" >
+			<li><a id="goHome" href="#">&lt; Back to services</a></li>
+			<li id="serviceloc">Somewhere</li>
+		</ol>
+	</div>
+
+
+	<div id="gui_alerts" class="gui-alerts-area" ></div>
+	<div id="subhistory" ></div>
+	<div id="cccontent" class="row"></div>
+	
+	<link type="text/css" href="/css/pagecss/cccss.css" rel="stylesheet" />
+	
+	<script type="text/javascript" th:src="@{/cc/utilities.js}"></script>
+	<script type="text/javascript" th:src="@{/cc/crmhome.js}"></script>
+	<script type="text/javascript" th:src="@{/cc/creditsharing.js}"></script>
+	<script type="text/javascript" th:src="@{/cc/customercare.js}"></script>
+	<script type="text/javascript" th:src="@{/cc/act.js}"></script>
+	
+	<link type="text/css" href="/css/jquery.dataTables.min.css" rel="stylesheet" />
+	<script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+	
+	<script th:inline="javascript" >
+	// <![CDATA[
+	var cctext = {
+		"tablei18n":[[#{cc.tablei18n}]]
+		,"confirmSubscribeTitle":[[#{cc.confirmSubscribeTitle}]]
+		,"confirmSubscribeAction":[[#{cc.confirmSubscribeAction}]]
+		,"confirmSubscribeCancel":[[#{cc.confirmSubscribeCancel}]]
+		,"confirmUnsubscribeTitle":[[#{cc.confirmUnsubscribeTitle}]]
+		,"confirmUnsubscribeAction":[[#{cc.confirmUnsubscribeAction}]]
+		,"confirmUnsubscribeCancel":[[#{cc.confirmUnsubscribeCancel}]]
+		,"confirmRemoveConsumerTitle":[[#{cc.confirmRemoveConsumerTitle}]]
+		,"confirmRemoveConsumerAction":[[#{cc.confirmRemoveConsumerAction}]]
+		,"confirmRemoveConsumerCancel":[[#{cc.confirmRemoveConsumerCancel}]]
+		,"confirmRemoveQuotaTitle":[[#{cc.confirmRemoveQuotaTitle}]]
+		,"confirmRemoveQuotaAction":[[#{cc.confirmRemoveQuotaAction}]]
+		,"confirmRemoveQuotaCancel":[[#{cc.confirmRemoveQuotaCancel}]]
+		,"confirmAddQuotaTitle":[[#{cc.confirmAddQuotaTitle}]]
+		,"confirmRemoveQuotaAction":[[#{cc.confirmRemoveQuotaAction}]]
+		,"confirmRemoveQuotaCancel":[[#{cc.confirmRemoveQuotaCancel}]]
+		,"confirmAddQuotaTitle":[[#{cc.confirmAddQuotaTitle}]]
+		,"confirmAddQuotaAction":[[#{cc.confirmAddQuotaAction}]]
+		,"confirmAddQuotaCancel":[[#{cc.confirmAddQuotaCancel}]]
+		,"busy":[[#{cc.busy}]]
+		,"defaultErrorMessage":[[#{cc.defaultErrorMessage}]]
+		,"success":[[#{cc.success}]]
+		,"fail":[[#{cc.fail}]]
+		,"info":[[#{cc.info}]]
+		,"quotaConsumerLabel":[[#{cc.quotaConsumerLabel}]]
+		,"quotaServiceLabel":[[#{cc.quotaServiceLabel}]]
+		,"quotaDestinationLabel":[[#{cc.quotaDestinationLabel}]]
+		,"quotaDaysofWeekLabel":[[#{cc.quotaDaysofWeekLabel}]]
+		,"quotaTimeofDayLabel":[[#{cc.quotaTimeofDayLabel}]]
+		,"quotaQuantityLabel":[[#{cc.quotaQuantityLabel}]]
+		,"quotaCostLabel":[[#{cc.quotaCostLabel}]]
+		,"subHistoryDateHeading":[[#{cc.subHistoryDateHeading}]]
+		,"subHistoryTimeHeading":[[#{cc.subHistoryTimeHeading}]]
+		,"subHistoryMSISDNAHeading":[[#{cc.subHistoryMSISDNAHeading}]]
+		,"subHistoryMSISDNBHeading":[[#{cc.subHistoryMSISDNBHeading}]]
+		,"subHistoryChannelHeading":[[#{cc.subHistoryChannelHeading}]]
+		,"subHistoryChangeHeading":[[#{cc.subHistoryChangeHeading}]]
+		,"subHistoryProcessHeading":[[#{cc.subHistoryProcessHeading}]]
+		,"subHistorySuccessHeading":[[#{cc.subHistorySuccessHeading}]]
+		,"confirmAddConsumerTitle":[[#{cc.confirmAddConsumerTitle}]]
+		,"confirmAddConsumerAction":[[#{cc.confirmAddConsumerAction}]]
+		,"confirmAddConsumerCancel":[[#{cc.confirmAddConsumerCancel}]]
+		,"updateQuotaQuantityTitle":[[#{cc.updateQuotaQuantityTitle}]]
+		,"updateQuotaQuantityAction":[[#{cc.updateQuotaQuantityAction}]]
+		,"updateQuotaQuantityCancel":[[#{cc.updateQuotaQuantityCancel}]]
+		,"updateQuotaQuantityLabel":[[#{cc.updateQuotaQuantityLabel}]]
+		,"confirmUpdateQuotaQtyTitle":[[#{cc.confirmUpdateQuotaQtyTitle}]]
+		,"confirmUpdateQuotaQtyAction":[[#{cc.confirmUpdateQuotaQtyAction}]]
+		,"confirmUpdateQuotaQtyCancel":[[#{cc.confirmUpdateQuotaQtyCancel}]]
+		,"delconsumerbtn":[[#{cc.delconsumerbtn}]]
+		,"viewconsumerquotas":[[#{cc.viewconsumerquotas}]]
+		,"addQuotaAction":[[#{cc.addQuotaAction}]]
+		,"addQuotaCancel":[[#{cc.addQuotaCancel}]]
+		,"addQuotaTitle":[[#{cc.addQuotaTitle}]]
+		,"balTableHeadingServices":[[#{cc.balTableHeadingServices}]]
+		,"balTableHeadingBalance":[[#{cc.balTableHeadingBalance}]]
+		,"balTableHeadingExpiry":[[#{cc.balTableHeadingExpiry}]]
+	};
+	// ]]>
+	</script>
+</div>

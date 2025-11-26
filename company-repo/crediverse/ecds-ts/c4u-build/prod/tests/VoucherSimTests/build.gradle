@@ -1,0 +1,24 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+dependencies {
+    implementation project(':Configuration')
+    implementation project(':CoreInterfaces')
+    implementation project(':VsipProtocol')
+    implementation project(':XmlRpc')
+    implementation project(':ServiceBus')
+    implementation project(':LoggerService')
+    implementation project(':NumberPlanService')
+    implementation project(':MySqlConnector')
+    implementation project(':VoucherSimService')
+    implementation project(':HttpServer')
+    implementation project(':Calendar')
+    implementation 'junit:junit:4.12'
+}

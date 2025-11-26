@@ -1,0 +1,10 @@
+#!/bin/bash
+set -e
+
+#/etc/init.d/supervisor stop 2> /dev/null
+
+id c4u
+if [ $? -ne 0 ]; then
+	echo "creating user [c4u]"
+	useradd c4u
+fi

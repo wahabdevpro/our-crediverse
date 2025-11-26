@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ -z "$C4U_JAVA_HOME" ]
+then
+	/usr/java/bin/amd64/java -server -Dcom.sun.management.jmxremote.port=9004 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -cp /opt/cs/c4u/0.2/hostprocess/lib:/opt/cs/c4u/0.2/hostprocess/lib/*:/opt/cs/c4u/0.2/hostprocess/lib/*.jar hxc.test.HostObject $@ 2>&1
+else
+	$C4U_JAVA_HOME/bin/java -cp /opt/cs/c4u/0.2/hostprocess/lib:/opt/cs/c4u/0.2/hostprocess/lib/*:/opt/cs/c4u/0.2/hostprocess/lib/*.jar hxc.test.HostObject $@ 2>&1
+fi
+
+

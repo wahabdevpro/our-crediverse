@@ -1,0 +1,34 @@
+{
+    "oltp_db": {
+        "host": "127.0.0.1",
+        "port": 6033,
+        "user": "root",
+        "password": "replaceme",
+        "database": "hxc_ea_agent"
+    },
+    "olap_db": {
+        "host": "127.0.0.1",
+        "port": 63132,
+        "user": "root",
+        "password": "replaceme",
+        "database": "test_ecdsap"
+    },
+    "smsq_db": {
+        "host": "127.0.0.1",
+        "port": 63132,
+        "user": "root",
+        "password": "replaceme",
+        "database": "smsq_test"
+    },
+    "general": {
+        "output_dir": "/root/bundle_sales/output",
+        "batch_size": 100,
+        "delay_seconds": 1,
+        "max_connection_retries": 3,
+        "internationalFormat": "228",
+        "sms_templates": {
+            "en": "Dear agent {msisdn}, your bundle sales commission for {prev_date} is {commission}.",
+            "fr": "Cher agent {msisdn}, votre commission sur les ventes de forfaits pour {prev_date} est {commission}."
+          }
+    }
+}

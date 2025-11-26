@@ -1,0 +1,24 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+compileJava.options.encoding = "UTF-8"
+ compileTestJava.options.encoding = "UTF-8"
+dependencies {
+    implementation 'com.sun.xml.ws:jaxws-rt:3.0.1'
+    implementation 'com.sun.xml.ws:rt'
+    implementation 'javax.xml.bind:jaxb-api'
+    implementation 'com.sun.xml.bind:jaxb-core'
+    implementation 'com.sun.xml.bind:jaxb-impl'
+    implementation 'javax.ws.rs:javax.ws.rs-api:2.0.1'
+    implementation('javax.xml.bind:jaxb-api:2.3.0')
+	implementation('com.sun.xml.ws:rt:2.3.0')
+  //implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.2'
+  implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.3.1'
+}

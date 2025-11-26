@@ -1,0 +1,50 @@
+<div>
+	
+	<script id="managecellgroups">
+		<div class="datatablesview col-xs-12">
+			<div class="row">
+			<div class="coop col-xs-12">
+			</div>
+			</div>
+			<div class="box">
+				<div class="box-header">
+					<div class="pull-right">
+						{{#hasPerms "Batch_Download"}}
+							<button class="btn btn-primary exportCellGroupsButton" role="button">{{i18n "global.exportBtn"}}</button>
+						{{/hasPerms}}
+						{{#hasPerms "Batch_Upload"}}
+							<a href="#batch" class="btn btn-primary routerlink" role="button">{{i18n "global.importBtn"}}</a>
+						{{/hasPerms}}
+						{{#hasPerms "CellGroups_Add"}}
+							<button class='btn btn-primary createCellGroupButton'>{{i18n "cellgroups.addCellGroupBtn"}}</button>
+						{{/hasPerms}}
+					</div>
+				</div>
+				<div class="box-body">
+					<table class="tableview  table table-bordered table-hover table-striped">
+					</table>
+				</div>
+			</div>
+		</div>
+	</script>
+	
+	<script id="singlecellgroupview">
+		<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		    <h4 class="modal-title">{{{dialogTitle}}}</h4>
+		</div>
+		<div class="modal-body">
+			<div class="cellgroupdetails">
+				<form name="addCellGroup" class="form-horizontal">
+					{{>modalInput name="code" label="global.code" hint="cellgroups.cellGroupCodeHint" value=this.code}}
+					{{>modalInput name="name" label="global.name" hint="cellgroups.cellGroupNameHint" value=this.name}}
+				</form>
+			</div>
+		</div>
+		<div class="modal-footer">
+	       	<button type="button" class="btn btn-primary cellGroupSaveButton">{{i18n "global.saveBtn"}}</button>
+	       	<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+		</div>
+	</script>
+	
+</div>

@@ -1,0 +1,75 @@
+name: Build CrediStats On Pushed to main
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'CrediStats/**'
+      - '!CrediStats/**.md'
+concurrency:
+  group: ${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: false
+env:
+  frontend: 'web-client'
+  backend: 'stats-server'
+
+jobs:
+  build-credistats:
+    strategy:
+      matrix:
+        IMAGE_NAME: [$frontend, $backend]
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+      packages: 'write'
+    outputs:
+      version: ${{ steps.version-info.outputs.version }}
+    steps:
+      - name: 'Job Start Time'
+        run: |
+          CS_START_TIME=$(date +"%Y-%m-%dT%H:%M:%S")
+          echo "Start Time => $CS_START_TIME"
+      - name: checkout repo
+        uses: 'actions/checkout@v3'
+      - name: Login to ghcr
+        run: |-
+          echo ${{ github.repository }}
+          echo ${{ github.run_id }}
+          echo ${{ github.run_number }}
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+      - name: Configure Version Information
+        id: version-info
+        run: |-
+          IMAGE_ID=ghcr.io/${{ github.repository }}/${{ matrix.IMAGE_NAME }}
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          if [[ "${{ github.ref }}" == "refs/tags/"* ]] 
+          then
+          VERSION=$(echo $VERSION | sed -e 's/^v//') # Removes the `v` from the start of a version tag
+          echo TAG_VERSION=$VERSION
+          echo "TAG_VERSION=$VERSION" >> $GITHUB_ENV
+          fi
+          # [ "$VERSION" == "main" ] && VERSION=build-${{github.run_number}}
+          VERSION=$VERSION-build-${{github.run_id}}
+          #VERSION=build-${{github.run_id}}
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+          echo GCR_PROJECT_ID=$GCR_PROJECT_ID
+          # Share variables between steps (which each run in a separate process)
+          echo "IMAGE_ID=$IMAGE_ID" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Build Image
+        run: |-
+          IMAGE_NAME=${{ matrix.IMAGE_NAME }}
+          echo "Building $IMAGE_NAME"
+          cd ${{github.workspace}}/CrediStats/$IMAGE_NAME
+          docker build -t ${{ env.IMAGE_ID }}:${{ env.VERSION }} .
+          docker tag ${{ env.IMAGE_ID }}:${{ env.VERSION }} ${{ env.IMAGE_ID }}:latest
+          docker push ${{ env.IMAGE_ID }}:${{ env.VERSION }}
+          docker push ${{ env.IMAGE_ID }}:latest

@@ -1,0 +1,287 @@
+<div>
+        <script id="rulemaster">
+                <div id="transferrules" class="col-xs-12">
+                        <div class="box">
+                                <div class="box-header">
+                                        <div class='pull-right'>
+                                                {{#hasPerms "Batch_Download"}}
+                                                        <button class="btn btn-primary exportRuleButton" role="button">{{i18n "global.exportBtn"}}</button>
+                                                {{/hasPerms}}
+                                                {{#hasPerms "Batch_Upload"}}
+                                                        <a href="#batch" class="btn btn-primary routerlink" role="button">{{i18n "rules.importButton"}}</a>
+                                                {{/hasPerms}}
+                                                {{#hasPerms "TransferRule_Add"}}
+                                                        <button class='btn btn-primary addRuleButton'>{{i18n "rules.addButton"}}</button>
+                                                {{/hasPerms}}
+                                        </div>
+                                </div>
+                                <div class="box-body">
+                                <table class="tableview  table table-bordered table-hover table-striped">
+                                </table>
+                                </div>
+                        </div>
+                </div>
+        </script>
+
+        <script id="singleruleview">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+                    <h4 class="modal-title">{{{dialogTitle}}}</h4>
+                </div>
+                <div class="modal-body">
+                        <div class="ruledetails form-panel">
+                                <form name="addRule" class="form-horizontal">
+                                        <div class="row">
+                                                <div class="col-sm-6">
+                                                        {{>modalInputTransfer name="name" label="rules.ruleNameLabel" hint="rules.ruleNameHint" value=this.name}}
+                                                </div>
+                                                <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                                <div class="col-xs-12" style="padding-top:8px;">
+                                                                        <input id="ruleActive" name="ruleActive" class="custom-checkbox-fa" value="" {{#if ruleActive}}checked="checked"{{/if}} type="checkbox">
+                                                                        <label for="ruleActive">{{i18n "rules.ruleEnabled"}}</label>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </div>        
+
+                                        <h4>{{i18n "rules.ruleTransferApplicabilityHeading"}}</h4>
+
+                                        <div class="row">
+                                                <div class="col-sm-6">
+
+                                                        <h5>{{i18n "rules.ruleSourceAgentHeading"}}</h5>
+
+                                                        <div class="form-group" >
+                                                                <label class="col-xs-4 control-label">{{i18n "rules.ruleSourceTier"}}</label>
+                                                                <div class="col-xs-8">
+                                                                        <select id="sourceTierID" name="sourceTierID" class="form-control">
+                                                                                <option data-down-percent="" data-to="" value="">{{i18n "rules.ruleSourceTierSelectEmpty"}}</option>
+                                                                                {{#each tierList}}
+                                                                                        {{#if mayTransferFrom}}
+                                                                                                <option data-down-percent="{{downStreamPercentage}}" data-to="{{mayTransferToTiersString}}" value="{{id}}">{{name}}</option>
+                                                                                        {{/if}}
+                                                                                {{/each}}
+                                                                        </select>
+                                                                </div>
+                                                        </div>
+
+                                                        <!-- 
+                                                        <div class="form-group">
+                                                                <label class="col-xs-4 control-label">{{i18n "rules.ruleTargetTier"}}</label>
+                                                                <div class="col-xs-8">
+                                                                        <select id="targetTierID" name="targetTierID" class="form-control">
+                                                                                <option data-down-percent="" data-from="" data-bonus="false" value="">{{i18n "rules.ruleTargetTierEmpty"}}</option>
+                                                                                {{#each tierList}}
+                                                                                        {{#if mayTransferTo}}
+                                                                                                <option data-down-percent="{{downStreamPercentage}}" data-from="{{mayTransferFromTiersString}}" data-bonus="{{mayReceiveBuyerTradeBonus}}" value="{{id}}">{{name}}</option>
+                                                                                        {{/if}}
+                                                                                {{/each}}
+                                                                        </select>
+                                                                </div>
+                                                        </div>
+
+        
+
+                                                        -->
+
+                                                        <div class="form-group">
+                                                                <label class="col-xs-4 control-label">{{i18n "rules.ruleGroup"}}</label>
+                                                                <div class="col-xs-8">
+                                                                        <select id="groupID" style="width: 100%;" name="groupID" class="form-control">
+                                                                                <option value="{{groupID}}" selected="selected">{{this.groupName}}</option>
+                                                                        </select>
+                                                                </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                                <label class="col-xs-4 control-label">{{i18n "rules.ruleServiceClass"}}</label>
+                                                                <div class="col-xs-8">
+                                                                        <select id="serviceClassID" style="width: 100%;" name="serviceClassID" class="form-control">
+                                                                                <option value="{{serviceClassID}}" selected="selected">{{this.serviceClassName}}</option>
+                                                                        </select>
+                                                                </div>
+                                                        </div>
+        
+                                                        {{>selectInputRatio1to2 name="areaID" label="rules.ruleArea" valueId=this.areaID valueName=this.areaName }}
+        
+                                                        <h5>{{i18n "rules.ruleTargetAgentHeading"}}</h5>
+        
+                                                        <div class="form-group">
+                                                                <label class="col-xs-4 control-label">{{i18n "rules.ruleTargetTier"}}</label>
+                                                                <div class="col-xs-8">
+                                                                        <select id="targetTierID" name="targetTierID" class="form-control">
+                                                                                <option data-down-percent="" data-from="" data-bonus="false" value="">{{i18n "rules.ruleTargetTierEmpty"}}</option>
+                                                                                {{#each tierList}}
+                                                                                        {{#if mayTransferTo}}
+                                                                                <option data-down-percent="{{downStreamPercentage}}" data-from="{{mayTransferFromTiersString}}" data-bonus="{{mayReceiveBuyerTradeBonus}}" value="{{id}}">{{name}}</option>
+                                                                                        {{/if}}
+                                                                                {{/each}}
+                                                                                </select>
+                                                                </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                                <label class="col-xs-4 control-label">{{i18n "rules.ruleGroup"}}</label>
+                                                                <div class="col-xs-8">
+                                                                <select id="targetGroupID" style="width: 100%;" name="targetGroupID" class="form-control">
+                                                                        <option value="{{targetGroupID}}" selected="selected">{{this.targetGroupName}}</option>
+                                                                </select>
+                                                                </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                                <label class="col-xs-4 control-label">{{i18n "rules.ruleServiceClass"}}</label>
+                                                                <div class="col-xs-8">
+                                                                        <select id="targetServiceClassID" style="width: 100%;" name="targetServiceClassID" class="form-control">
+                                                                                <option value="{{targetServiceClassID}}" selected="selected">{{this.targetServiceClassName}}</option>
+                                                                        </select>
+                                                                </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                                <label class="col-xs-4 control-label checkbox-label">&nbsp;</label>
+                                                                <div class="col-xs-8">
+                                                                        <div class="checkbox">
+                                                                                <input id="strictSupplier" name="strictSupplier" class="custom-checkbox-fa" value="" {{#if strictSupplier}}checked="checked"{{/if}} type="checkbox">
+                                                                                <label for="strictSupplier">{{i18n "rules.ruleStrictSupplier"}}</label>
+                                                                        </div>        
+                                                                        <div class="checkbox">
+                                                                                <input id="strictArea" name="strictArea" class="custom-checkbox-fa" value="" {{#if strictArea}}checked="checked"{{/if}} type="checkbox">
+                                                                                <label for="strictArea">{{i18n "rules.ruleStrictArea"}}</label>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+
+                                                </div>
+                                                <div class="col-sm-6">
+                                                        <h5>{{i18n "rules.ruleTransferAmountHeading"}}</h5>
+        
+                                                        <div id="tr_rule_time" class="form-group">
+                                                                <label class="col-xs-4 control-label">{{i18n "rules.ruleAmountRange"}}</label>
+        
+                                                                <div class="col-xs-8">
+                                                                        <div class="row">
+                                                                                <div class="col-xs-6">
+                                                                                        {{>modalInputFieldNumber name="minimumAmount" label="rules.ruleMinimumAmountLabel" hint="rules.ruleMinimumAmountHint" value=this.minimumAmount}}
+                                                                                </div>
+                                                                                <div class="col-xs-6">
+                                                                                                {{>modalInputFieldNumber name="maximumAmount" label="rules.ruleMaximumAmountLabel" hint="rules.ruleMaximumAmountHint" value=this.maximumAmount}}
+                                                                                </div>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+
+                                                        <h5>{{i18n "rules.ruleDateAndTimeHeading"}}</h5>
+
+                                                        <div id="tr_rule_time" class="form-group">
+                                                                <label class="col-xs-4 control-label">{{i18n "rules.ruleTimeOfDayLabel"}}</label>
+
+                                                                <div class="col-xs-8">
+                                                                        <div class="row">
+                                                                                <div class="col-xs-6">
+                                                                                        {{>modalInputField name="startTimeOfDayString" label="rules.ruleTimeOfDayStartLabel" hint="rules.ruleTimeOfDayStartHint" value=this.startTimeOfDayString}}
+                                                                                </div>
+                                                                                <div class="col-xs-6">
+                                                                                        {{>modalInputField name="endTimeOfDayString" label="rules.ruleTimeOfDayEndLabel" hint="rules.ruleTimeOfDayEndHint" value=this.endTimeOfDayString}}
+                                                                                </div>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+
+                                                        <div id="tr_rule_days" class="form-group">
+                                                                <label class="col-xs-4 control-label">{{i18n "rules.ruleDayOfWeekHeading"}}</label>
+                                                                <div class="col-xs-8">
+                                                                        <div class="row">
+                                                                                <div class="col-sm-6">
+                                                                                        <div class="checkbox">
+                                                                                            <input class="custom-checkbox-fa" id="currentDays_SUNDAY" name="currentDays[]" type="checkbox" value="SUNDAY"></input>
+                                                                                            <label for="currentDays_SUNDAY">{{i18n "rules.ruleDayOfWeekSunday"}}</label>
+                                                                                        </div>
+                                                                                        <div class="checkbox">
+                                                                                            <input class="custom-checkbox-fa" id="currentDays_MONDAY" name="currentDays[]" type="checkbox" value="MONDAY"></input>
+                                                                                            <label for="currentDays_MONDAY">{{i18n "rules.ruleDayOfWeekMonday"}}</label>
+                                                                                        </div>
+                                                                                        <div class="checkbox">
+                                                                                            <input class="custom-checkbox-fa" id="currentDays_TUESDAY" name="currentDays[]" type="checkbox" value="TUESDAY"></input>
+                                                                                            <label for="currentDays_TUESDAY">{{i18n "rules.ruleDayOfWeekTuesday"}}</label>
+                                                                                        </div>
+                                                                                        <div class="checkbox">
+                                                                                            <input class="custom-checkbox-fa" id="currentDays_WEDNESDAY" name="currentDays[]" type="checkbox" value="WEDNESDAY"></input>
+                                                                                            <label for="currentDays_WEDNESDAY">{{i18n "rules.ruleDayOfWeekWednesday"}}</label>
+                                                                                        </div>
+                                                                                        <div class="checkbox">
+                                                                                            <input class="custom-checkbox-fa" id="currentDays_THURSDAY" name="currentDays[]" type="checkbox" value="THURSDAY"></input>
+                                                                                            <label for="currentDays_THURSDAY">{{i18n "rules.ruleDayOfWeekThursday"}}</label>
+                                                                                        </div>
+                                                                                        <div class="checkbox">
+                                                                                            <input class="custom-checkbox-fa" id="currentDays_FRIDAY" name="currentDays[]" type="checkbox" value="FRIDAY"></input>
+                                                                                            <label for="currentDays_FRIDAY">{{i18n "rules.ruleDayOfWeekFriday"}}</label>
+                                                                                        </div>
+                                                                                        <div class="checkbox">
+                                                                                            <input class="custom-checkbox-fa" id="currentDays_SATURDAY" name="currentDays[]" type="checkbox" value="SATURDAY"></input>
+                                                                                            <label for="currentDays_SATURDAY">{{i18n "rules.ruleDayOfWeekSaturday"}}</label>
+                                                                                        </div>
+                                                                                </div>
+                                                                                <div class="col-sm-6" style="line-height:30px;">
+                                                                                        <button type="button" class="btn btn-xs btn-default" role="days-all" style="text-align:left; width:100px;"><i class="fa fa-check-square-o fa-fw"></i> Select all</button><br/>
+                                                                                        <button type="button" class="btn btn-xs btn-default" role="days-none" style="text-align:left; width:100px;"><i class="fa fa-square-o fa-fw"></i> Select none</button><br/>
+                                                                                        <button type="button" class="btn btn-xs btn-default" role="days-invert" style="text-align:left; width:100px;"><i class="fa fa-refresh fa-fw"></i> Invert selection</button><br/>
+                                                                                </div>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                        <div class="row">
+                                                <div class="col-sm-6">
+                                                        <h4 class="">{{i18n "rules.ruleTransferParametersHeading"}}</h4>
+
+                                                        <div class="form-group" id="transfer-bonus-div" class="show-on-bonus">
+
+                                                                <label class="col-xs-5 control-label">{{i18n "rules.ruleBuyerTradeBonusPercentageLabel"}}</label>
+                                                                <div class="col-xs-7">
+                                                                        {{>modalInputField name="buyerTradeBonusPercentageString" label="rules.ruleBuyerTradeBonusPercentageLabel" hint="rules.ruleBuyerTradeBonusPercentageHint" value=this.buyerTradeBonusPercentageString addOnEnd="%"}}
+                                                                </div>
+                                                        </div>
+                        
+                                                        <div class="form-group">
+                                                                <label class="col-xs-5 control-label">{{i18n "rules.ruleCumulativeBonusPercentageLabel"}}</label>
+                                                                <div class="col-xs-7" style="line-height:34px; padding-left:28px;">
+                                                                        <div id="cumulativeTransferBonusPercent"></div>
+                                                                </div>
+                                                        </div>
+
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                        <h4 class="">{{i18n "rules.ruleTransferTargetBonusHeading"}}</h4>
+
+                                                        <div class="form-group" id="transfer-target-bonus-div" class="show-on-bonus">
+                                                                <label class="col-xs-5 control-label">{{i18n "rules.ruleTargetBonusPercentageLabel"}}</label>
+                                                                <div class="col-xs-7">
+                                                                        {{>modalInputField name="targetBonusPercentageString" label="rules.ruleTargetBonusPercentageLabel" hint="rules.ruleTargetBonusPercentageHint" value=this.targetBonusPercentageString addOnEnd="%"}}
+                                                                </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                                <label class="col-xs-5 control-label">{{i18n "rules.ruleTargetBonusProfileLabel"}}</label>
+                                                                <div class="col-xs-7">
+                                                                {{>modalInputField name="targetBonusProfile" label="rules.ruleTargetBonusProfileLabel" hint="rules.ruleTargetBonusProfileHint" value=this.targetBonusProfile}}
+                                                                </div>
+                                                        </div>
+        
+                                                </div>
+                                        </div>
+                                </form>
+                        </div>
+                </div>
+
+                <div class="modal-footer">
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="button" class="btn btn-primary ruleCreateButton">{{i18n "rules.ruleCreateButton"}}</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "rules.ruleCancelButton"}}</button>
+                                </div>
+                        </div>
+                </div>
+        
+        </script>
+</div>
+

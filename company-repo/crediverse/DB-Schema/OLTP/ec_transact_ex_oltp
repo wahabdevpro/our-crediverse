@@ -1,0 +1,10 @@
+*************************** 1. row ***************************
+       Table: ec_transact_ex
+Create Table: CREATE TABLE `ec_transact_ex` (
+  `transaction_id` bigint(20) NOT NULL,
+  `key_type` varchar(50) NOT NULL,
+  `value` longtext NOT NULL,
+  UNIQUE KEY `ec_transact_ex_id` (`transaction_id`,`key_type`),
+  KEY `FK_Transcation` (`transaction_id`),
+  CONSTRAINT `FK_Transcation` FOREIGN KEY (`transaction_id`) REFERENCES `ec_transact` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

@@ -1,0 +1,232 @@
+// Experimental work
+//pluginManagement {
+//    includeBuild './c4u-build'
+//}
+//apply from: new File(settingsDir, 'utility.gradle')
+
+//enableFeaturePreview('VERSION_CATALOGS') // Enable dependency management, do not remove or things will break
+
+rootProject.name = 'ecds-ts'
+logger.lifecycle("ecds-ts/settings.gradle: entry ...")
+
+def c4uPrefix = "c4u-build/"
+
+gradle.ext.c4uProjects = [
+	":AdvancedCreditTransferTests",
+	":AirSimTests",
+	":CLITests",
+	":GroupSharedAccountsTests",
+	":GroupSharedAccountsTests",
+	":GuiServer",
+	":HsxConnector",
+	":HxC",
+	":EcdsTestHost",
+	//":TestHost",
+	":UIConnectorTests",
+	":UnitTests",
+	":UnitTestUtils"
+	//":ClassicServices"
+]
+
+gradle.ext.c4uLibSet = [
+	':AdvancedCreditTransfer',
+	':VoucherSimService',
+	':SubscriptionService',
+	':TransactionService',
+	':AdvancedCreditTransfer',
+	':PinService',
+	':GroupSharedAccounts',
+	':LanguageChange',
+	':LanguageService',
+	':CreditTransferService',
+	':LoggerService',
+	':Calendar',
+	':CtrlConnector',
+	':AirProtocol',
+	':Hsx0Protocol',
+	':HsxProtocol',
+	':HmxProtocol',
+	':SdpProtocol',
+	':VsipProtocol',
+	':ASN.1Parser',
+	':ZTEProtocol',
+	':General',
+	':HuxProtocol',
+	':CsvParser',
+	':Notification',
+	':TcpServer',
+	':Reflection',
+	':Configuration',
+	':StringUtilities',
+	':FileWatcher',
+	':XmlRpc',
+	':Threads',
+	':Registration',
+	':HttpServer',
+	':ProcessModel',
+	':UIConnectorProtocol',
+	':C4UPluginLoader',
+	':SoapProtocol',
+	':Instrumentation',
+	':CoreInterfaces',
+	':ServiceBus',
+	':HostProcess',
+	':RestProtocol',
+//	':FeatureBar',
+	':EcdsEncrypt',
+	':EcdsConfigure',
+	':PCCSuTConnector',
+	':PccConfiguration',
+	':CaiProtocol'
+	]
+
+gradle.ext.ecdsProjects = [
+	//":CreditDistributionServiceTests"
+]
+
+gradle.ext.pluginSet = [
+	':AirConnector',
+	':AirSimService',
+	':ArchivingConnector',
+	':C4USuTConnector',
+	':CaiConnector',
+	':CaiSimService',
+	':CreditDistributionService',
+	':DataWarehouseConnector',
+	':DiagnosticConnector',
+	':FileConnector',
+	':HmxConnector',
+	':HuxConnector',
+	':KerberosConnector',
+	':LifecycleConnector',
+	':MySqlConnector',
+	':NumberPlanService',
+	':PccBundleConnector',
+	':ReportingService',
+	':SecurityService',
+	':SmppConnector',
+	':SmtpConnector',
+	':SnmpConnector',
+	':SoapConnector',
+	':TamperCheckConnector',
+	':EcdsApiRestConnector',
+	':UIConnector'
+	]
+
+
+apply({
+	gradle.c4uProjects.each({
+		include it
+	})
+
+	gradle.ecdsProjects.each({
+		include it
+	})
+
+	gradle.pluginSet.each({
+		include it
+	})
+
+	gradle.c4uLibSet.each({
+		include it
+	})
+})
+
+project(":AdvancedCreditTransfer").projectDir = file("${c4uPrefix}prod/services/AdvancedCreditTransfer/AdvancedCreditTransfer")
+project(":AdvancedCreditTransferTests").projectDir = file("${c4uPrefix}prod/services/AdvancedCreditTransfer/tests/AdvancedCreditTransferTests")
+project(":AirConnector").projectDir = file("${c4uPrefix}prod/connectors/AirConnector")
+project(":AirProtocol").projectDir = file("${c4uPrefix}prod/utils/AirProtocol")
+project(":AirSimService").projectDir = file("${c4uPrefix}prod/services/AirSimService")
+project(":AirSimTests").projectDir = file("${c4uPrefix}prod/tests/AirSimTests")
+project(":ArchivingConnector").projectDir = file("${c4uPrefix}prod/connectors/ArchivingConnector")
+project(":ASN.1Parser").projectDir = file("${c4uPrefix}prod/utils/ASN.1Parser")
+project(":C4UPluginLoader").projectDir = file("${c4uPrefix}prod/utils/C4UPluginLoader")
+project(":C4USuTConnector").projectDir = file("${c4uPrefix}prod/connectors/C4USuTConnector")
+project(":CaiConnector").projectDir = file("${c4uPrefix}prod/connectors/CaiConnector")
+project(":CaiProtocol").projectDir = file("${c4uPrefix}pcc/utils/CaiProtocol")
+project(":CaiSimService").projectDir = file("${c4uPrefix}pcc/services/CaiSimService")
+project(":Calendar").projectDir = file("${c4uPrefix}prod/utils/Calendar")
+project(":CLITests").projectDir = file("${c4uPrefix}prod/tests/CLITests")
+project(":Configuration").projectDir = file("${c4uPrefix}prod/utils/Configuration")
+project(":CoreInterfaces").projectDir = file("${c4uPrefix}prod/core/CoreInterfaces")
+project(":CreditTransferService").projectDir = file("${c4uPrefix}prod/services/CreditTransferService")
+project(":CsvParser").projectDir = file("${c4uPrefix}prod/utils/CsvParser")
+project(":CtrlConnector").projectDir = file("${c4uPrefix}prod/connectors/CtrlConnector")
+project(":DataWarehouseConnector").projectDir = file("${c4uPrefix}prod/connectors/DataWarehouseConnector")
+project(":DiagnosticConnector").projectDir = file("${c4uPrefix}prod/connectors/DiagnosticConnector")
+project(":FileConnector").projectDir = file("${c4uPrefix}prod/connectors/FileConnector")
+project(":FileWatcher").projectDir = file("${c4uPrefix}prod/utils/FileWatcher")
+project(":General").projectDir = file("${c4uPrefix}prod/utils/General")
+project(":GroupSharedAccounts").projectDir = file("${c4uPrefix}prod/services/GroupSharedAccounts/GroupSharedAccounts")
+project(":GroupSharedAccountsTests").projectDir = file("${c4uPrefix}prod/services/GroupSharedAccounts/tests/GroupSharedAccountsTests")
+project(":GuiServer").projectDir = file("${c4uPrefix}prod/ui/GuiServer")
+project(":HmxConnector").projectDir = file("${c4uPrefix}prod/connectors/HmxConnector")
+project(":HmxProtocol").projectDir = file("${c4uPrefix}prod/utils/HmxProtocol")
+project(":HostProcess").projectDir = file("${c4uPrefix}prod/core/HostProcess")
+project(":Hsx0Protocol").projectDir = file("${c4uPrefix}prod/utils/Hsx0Protocol")
+project(":HsxConnector").projectDir = file("${c4uPrefix}prod/connectors/HsxConnector")
+project(":HsxProtocol").projectDir = file("${c4uPrefix}prod/utils/HsxProtocol")
+project(":HttpServer").projectDir = file("${c4uPrefix}prod/utils/HttpServer")
+project(":HuxConnector").projectDir = file("${c4uPrefix}prod/connectors/HuxConnector")
+project(":HuxProtocol").projectDir = file("${c4uPrefix}prod/utils/HuxProtocol")
+project(":HxC").projectDir = file("${c4uPrefix}prod/ui/HxC")
+project(":Instrumentation").projectDir = file("${c4uPrefix}prod/utils/Instrumentation")
+project(":KerberosConnector").projectDir = file("${c4uPrefix}prod/connectors/KerberosConnector")
+project(":LanguageChange").projectDir = file("${c4uPrefix}prod/services/LanguageService/andriod/LanguageChange")
+project(":LanguageService").projectDir = file("${c4uPrefix}prod/services/LanguageService/LanguageService")
+project(":LifecycleConnector").projectDir = file("${c4uPrefix}prod/connectors/LifecycleConnector")
+project(":LoggerService").projectDir = file("${c4uPrefix}prod/services/LoggerService")
+project(":MySqlConnector").projectDir = file("${c4uPrefix}prod/connectors/MySqlConnector")
+project(":Notification").projectDir = file("${c4uPrefix}prod/utils/Notification")
+project(":NumberPlanService").projectDir = file("${c4uPrefix}prod/services/NumberPlanService")
+project(":PccBundleConnector").projectDir = file("${c4uPrefix}prod/connectors/PccBundleConnector")
+project(":PccConfiguration").projectDir = file("${c4uPrefix}pcc/utils/PccConfiguration")
+project(":PCCSuTConnector").projectDir = file("${c4uPrefix}pcc/connectors/PCCSuTConnector")
+project(":PinService").projectDir = file("${c4uPrefix}prod/services/PinService")
+project(":ProcessModel").projectDir = file("${c4uPrefix}prod/utils/ProcessModel")
+project(":Reflection").projectDir = file("${c4uPrefix}prod/utils/Reflection")
+project(":Registration").projectDir = file("${c4uPrefix}prod/utils/Registration")
+project(":ReportingService").projectDir = file("${c4uPrefix}prod/services/ReportingService")
+project(":SdpProtocol").projectDir = file("${c4uPrefix}prod/utils/SdpProtocol")
+project(":SecurityService").projectDir = file("${c4uPrefix}prod/services/SecurityService")
+project(":ServiceBus").projectDir = file("${c4uPrefix}prod/core/ServiceBus")
+project(":SmppConnector").projectDir = file("${c4uPrefix}prod/connectors/SmppConnector")
+project(":SmtpConnector").projectDir = file("${c4uPrefix}prod/connectors/SmtpConnector")
+project(":SnmpConnector").projectDir = file("${c4uPrefix}prod/connectors/SnmpConnector")
+project(":SoapConnector").projectDir = file("${c4uPrefix}prod/connectors/SoapConnector")
+project(":SoapProtocol").projectDir = file("${c4uPrefix}prod/utils/SoapProtocol")
+project(":StringUtilities").projectDir = file("${c4uPrefix}prod/utils/StringUtilities")
+project(":SubscriptionService").projectDir = file("${c4uPrefix}prod/services/SubscriptionService/SubscriptionService")
+project(":TcpServer").projectDir = file("${c4uPrefix}prod/utils/TcpServer")
+project(":EcdsTestHost").projectDir = file("${c4uPrefix}prod/core/EcdsTestHost")
+//project(":TestHost").projectDir = file("${c4uPrefix}prod/core/TestHost")
+project(":Threads").projectDir = file("${c4uPrefix}prod/utils/Threads")
+project(":TransactionService").projectDir = file("${c4uPrefix}prod/services/TransactionService")
+project(":UIConnector").projectDir = file("${c4uPrefix}prod/connectors/UIConnector")
+project(":UIConnectorProtocol").projectDir = file("${c4uPrefix}prod/utils/UIConnectorProtocol")
+project(":UIConnectorTests").projectDir = file("${c4uPrefix}prod/tests/UIConnectorTests")
+project(":UnitTests").projectDir = file("${c4uPrefix}prod/tests/UnitTests")
+project(":UnitTestUtils").projectDir = file("${c4uPrefix}prod/utils/UnitTestUtils")
+project(":VoucherSimService").projectDir = file("${c4uPrefix}prod/services/VoucherSimService")
+project(":VsipProtocol").projectDir = file("${c4uPrefix}prod/utils/VsipProtocol")
+project(":XmlRpc").projectDir = file("${c4uPrefix}prod/utils/XmlRpc")
+project(":ZTEProtocol").projectDir = file("${c4uPrefix}prod/utils/ZTEProtocol")
+//project(":ClassicServices").projectDir = file("${c4uPrefix}classic/services/ClassicServices")
+/*
+project(":ClassicServices").projectDir = file("${c4uPrefix}classic/services/ClassicServices")
+project(":ClassicCMBK").projectDir = file("${c4uPrefix}classic/services/ClassicServices/ClassicCMBK")
+project(":ClassicFAF").projectDir = file("${c4uPrefix}classic/services/ClassicServices/ClassicFAF")
+project(":ClassicM2U").projectDir = file("${c4uPrefix}classic/services/ClassicServices/ClassicM2U")
+project(":ClassicTPM").projectDir = file("${c4uPrefix}classic/services/ClassicServices/ClassicTPM")
+*/
+//////
+project(":RestProtocol").projectDir = file("../common/RestProtocol")
+//project(":FeatureBar").projectDir = file("../common/featureBar/lib")
+project(":EcdsEncrypt").projectDir = file("utils/EcdsEncrypt")
+project(":EcdsConfigure").projectDir = file("utils/EcdsConfigure")
+project(":TamperCheckConnector").projectDir = file("connectors/TamperCheckConnector")
+project(":EcdsApiRestConnector").projectDir = file("connectors/EcdsApiRestConnector")
+project(":CreditDistributionService").projectDir = file("services/CreditDistributionService")
+//project(":CreditDistributionServiceTests").projectDir = file("services/CreditDistributionService/tests/CreditDistributionServiceTests")
+//////
+logger.lifecycle("ecds-ts/settings.gradle: end ...")

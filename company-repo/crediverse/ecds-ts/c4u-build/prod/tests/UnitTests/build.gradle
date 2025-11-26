@@ -1,0 +1,72 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.testsuite.RunAllTests")
+   }
+}
+dependencies {
+    implementation project(':Reflection')
+    implementation project(':XmlRpc')
+    implementation project(':TransactionService')
+    implementation project(':CoreInterfaces')
+    implementation project(':ServiceBus')
+    implementation project(':LoggerService')
+    implementation project(':SecurityService')
+    implementation project(':HsxConnector')
+    implementation project(':HuxConnector')
+    implementation project(':HttpServer')
+    implementation project(':MySqlConnector')
+    implementation project(':Configuration')
+    implementation project(':SoapConnector')
+    implementation project(':AirConnector')
+    implementation project(':SnmpConnector')
+    implementation project(':StringUtilities')
+    implementation project(':CtrlConnector')
+    implementation project(':SmtpConnector')
+    implementation project(':SmppConnector')
+    implementation project(':AirProtocol')
+    implementation project(':HsxProtocol')
+    implementation project(':HuxProtocol')
+    implementation project(':SoapProtocol')
+    implementation project(':Notification')
+    implementation project(':LifecycleConnector')
+    implementation project(':Calendar')
+    implementation project(':AirSimService')
+    implementation project(':LanguageService')
+    implementation project(':DataWarehouseConnector')
+    implementation project(':ProcessModel')
+    implementation project(':NumberPlanService')
+    implementation project(':CreditTransferService')
+    implementation project(':FileConnector')
+    implementation project(':PinService')
+    implementation project(':ReportingService')
+    implementation project(':SdpProtocol')
+    implementation project(':DiagnosticConnector')
+    implementation project(':C4USuTConnector')
+    implementation project(':AdvancedCreditTransferTests')
+    implementation project(':AdvancedCreditTransfer')
+    implementation project(':GroupSharedAccountsTests')
+    implementation project(':UnitTestUtils')
+    implementation 'org.snmp4j:snmp4j'
+    implementation 'org.snmp4j:snmp4j-agent'
+    implementation 'com.cloudhopper:ch-commons-charset'
+    implementation 'com.cloudhopper:ch-commons-util'
+    implementation 'com.fizzed:ch-smpp'
+    implementation 'io.netty:netty'
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'junit:junit'
+    implementation 'com.sun.xml.ws:jaxws-rt'
+    implementation 'com.sun.xml.ws:rt'
+    implementation 'javax.xml.bind:jaxb-api'
+    implementation 'com.sun.xml.bind:jaxb-core'
+    implementation 'com.sun.xml.bind:jaxb-impl'
+}

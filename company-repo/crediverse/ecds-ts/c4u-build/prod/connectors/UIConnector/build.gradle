@@ -1,0 +1,36 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.connectors.ui.UiConnector")
+   }
+}
+dependencies {
+    implementation project(':CoreInterfaces')
+    implementation project(':Reflection')
+    implementation project(':Configuration')
+    implementation project(':UIConnectorProtocol')
+    implementation project(':ProcessModel')
+    implementation project(':SoapProtocol')
+    implementation project(':CsvParser')
+    implementation project(':Calendar')
+    implementation project(':SmtpConnector')
+    implementation project(':LoggerService')
+    implementation 'com.sun.mail:jakarta.mail:2.0.1'
+    implementation 'com.google.guava:guava:23.4-jre'
+    implementation 'org.apache.commons:commons-csv:1.5'
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'com.sun.xml.ws:jaxws-rt'
+    implementation 'com.sun.xml.ws:rt'
+    implementation 'javax.xml.bind:jaxb-api'
+    implementation 'com.sun.xml.bind:jaxb-core'
+    implementation 'com.sun.xml.bind:jaxb-impl'
+}

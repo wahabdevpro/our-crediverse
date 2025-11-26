@@ -1,0 +1,95 @@
+<style>
+	.contactinput {
+		width: 200px !important;
+	}
+	
+	.btn-raised {
+	    box-shadow: 0 3px 0 0 #007299;
+	}
+	
+	.btn-gradient {
+	    background: -moz-linear-gradient(top,  #33a6cc 50%, #0099cc 50%); /* FF3.6+ */
+	    background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#33a6cc), color-stop(50%,#0099cc)); /* Chrome,Safari4+ */
+	    background: -webkit-linear-gradient(top,  #33a6cc 50%,#0099cc 50%); /* Chrome10+,Safari5.1+ */
+	    background: -o-linear-gradient(top,  #33a6cc 50%,#0099cc 50%); /* Opera 11.10+ */
+	    background: -ms-linear-gradient(top,  #33a6cc 50%,#0099cc 50%); /* IE10+ */
+	    background: linear-gradient(to bottom,  #33a6cc 50%,#0099cc 50%); /* W3C */
+	    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33a6cc', endColorstr='#0099cc',GradientType=0 ); /* IE6-9 */
+	}
+	
+	.btn-gradient:hover, .btn-gradient:focus, .btn-gradient:active, .btn-gradient.active, .open > .dropdown-toggle.btn-xs {
+	    background: -moz-linear-gradient(top,  #66b2cc 50%, #33a6cc 50%); /* FF3.6+ */
+	    background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#66b2cc), color-stop(50%,#33a6cc)); /* Chrome,Safari4+ */
+	    background: -webkit-linear-gradient(top,  #66b2cc 50%,#33a6cc 50%); /* Chrome10+,Safari5.1+ */
+	    background: -o-linear-gradient(top,  #66b2cc 50%,#33a6cc 50%); /* Opera 11.10+ */
+	    background: -ms-linear-gradient(top,  #66b2cc 50%,#33a6cc 50%); /* IE10+ */
+	    background: linear-gradient(to bottom,  #66b2cc 50%,#33a6cc 50%); /* W3C */
+	    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#66b2cc', endColorstr='#33a6cc',GradientType=0 ); /* IE6-9 */
+	}
+	
+	.btn-gradient:active, .btn-gradient.active {
+	    background: -moz-linear-gradient(top,  #267c99 50%, #007299 50%); /* FF3.6+ */
+	    background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#267c99), color-stop(50%,#007299)); /* Chrome,Safari4+ */
+	    background: -webkit-linear-gradient(top,  #267c99 50%,#007299 50%); /* Chrome10+,Safari5.1+ */
+	    background: -o-linear-gradient(top,  #267c99 50%,#007299 50%); /* Opera 11.10+ */
+	    background: -ms-linear-gradient(top,  #267c99 50%,#007299 50%); /* IE10+ */
+	    background: linear-gradient(to bottom,  #267c99 50%,#007299 50%); /* W3C */
+	    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#267c99', endColorstr='#007299',GradientType=0 ); /* IE6-9 */
+	}
+
+</style>
+<!--  Beneficiaries -->
+<div th:if="${nobeneficiaries}" class="row" style="padding-left:15px; margin-top: 5px;">
+	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+		<span th:text="#{cc.noconsumers(${msisdn})}" ></span>
+	</div>
+</div>
+
+<div th:each="member,memstat : ${beneficiaries.members}" class="panel panel-default" style="margin:5px 10px;">
+	<div class="panel-heading">
+		<div class="row">
+			<div class="col-xs-9 col-sm-9 col-md-9 col-lg-5">
+				<span style="display:inline-block; vertical-align: middle;">
+					<span class="glyphicon glyphicon-phone glyph-space-right" style="margin-bottom: 4px;"></span>
+					
+					<b><span th:text="${member.addressDigits}" style="margin-right:20px;"></span></b>
+						
+					<button th:id="${'updcontactbtn_' + member.addressDigits}" type="button" class="btn btn-info btn-xs btn-gradient hide" style="margin-bottom: 4px;" 
+						data-toggle="tooltip" data-placement="top" title="Click to edit Contact Name"
+						th:onclick="'javascript:startUpdateContact(\'' + ${msisdn} + '\', \'' + ${sid} + '\', \'' + ${vid} + '\', \'' + ${member.addressDigits}
+						+ '\');return false;'"><span class="glyphicon glyphicon-user"></span></button>
+					
+					<b><span th:id="${'lblcontact_' + member.addressDigits}" th:onclick="'javascript:startUpdateContact(\'' + ${msisdn} + '\', \'' + ${sid} + '\', \'' + ${vid} + '\', \'' + ${member.addressDigits}
+						+ '\');return false;'" th:text=" ${ '' }"></span></b>
+						
+						<!-- (beneficiaries.contactInfo[memstat.index] != null)? beneficiaries.contactInfo[memstat.index].name : '' -->
+
+					<input th:id="${'inpcontact_' + member.addressDigits}" type="text" placeholder="Name" maxlength="35" class="contactinput" style="display:none"/>
+				</span>
+			</div>
+
+			<div class="col-xs-offset-3 col-sm-offset-3 col-md-offset-4 col-lg-offset-4">
+				<span style="float:right; text-align:right; min-width:90px; margin-right:5px;">
+						
+					<button th:id="${'remcons' + member.addressDigits}" type="button" class="btn btn-danger removeconsumer" 
+						data-toggle="tooltip" data-placement="top" th:title="#{cc.delconsumerbtn}"
+						th:onclick="'javascript:removeMember(\'' + ${msisdn} + '\', \'' + ${sid} + '\', \'' + ${vid} + '\', \'' + ${member.addressDigits}
+						+ '\');return false;'"><span class="glyphicon glyphicon-trash"></span></button>
+						
+					<button th:id="${'ben' + member.addressDigits}" type="button" class="btn btn-primary viewconsumer"
+						data-toggle="tooltip" data-placement="top" th:title="#{cc.viewconsumerquotas}"
+						th:onclick="'javascript:expandMember(\'' + ${msisdn} + '\', \'' + ${sid} + '\', \'' + ${vid} + '\', \'' + ${member.addressDigits}
+						+ '\');return false;'"><span th:id="${'benbtn' + member.addressDigits}" class="glyphicon glyphicon-eye-open"></span></button>
+				</span>
+			</div>
+		</div>
+	</div>
+  	<div th:id="${'benbody' + member.addressDigits}" class="panel-body hide">
+  		<span th:id="${'debdetails' + member.addressDigits}">Details...</span>
+	</div>
+</div>
+
+<script th:inline="javascript" >
+updateMemberListEvents();
+Utils.refreshPlaceholders();
+</script>

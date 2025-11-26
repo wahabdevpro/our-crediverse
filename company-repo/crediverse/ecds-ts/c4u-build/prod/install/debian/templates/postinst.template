@@ -1,0 +1,41 @@
+#!/bin/sh
+echo 'installation complete. configuring to run as service'
+
+#log directory
+mkdir -p /var/opt/cs/c4u/log
+chmod 777 /var/opt/cs/c4u/log
+
+#Call data records directory
+mkdir -p /var/opt/cs/c4u/cdr
+chmod 777 /var/opt/cs/c4u/cdr
+
+#Configuration directory
+mkdir -p /var/opt/cs/c4u/etc
+
+#Recommended deployment directory which includes sample scripts
+INSTALL_DIR=/var/opt/cs/c4u/installations
+mkdir -p $INSTALL_DIR
+
+#Create the attach and detach command
+
+#Get the interface
+INTERFACE=`/sbin/ifconfig -a | sed -n '1 p' | awk '{print $1}'`
+NEW_INTERFACE="$INTERFACE:1"
+IP="192.168.0.182"
+
+if [ ! -f $INSTALL_DIR/attach_vip.sh ]; then
+	touch $INSTALL_DIR/attach_vip.sh
+	echo "#!/bin/bash
+	#/sbin/ifconfig $NEW_INTERFACE plumb
+	#/sbin/ifconfig $NEW_INTERFACE $IP netmask 255.255.254.0 up" > $INSTALL_DIR/attach_vip.sh
+	chmod +x $INSTALL_DIR/attach_vip.sh
+fi
+
+if [ ! -f $INSTALL_DIR/detach_vip.sh ]; then
+	touch $INSTALL_DIR/detach_vip.sh
+	echo "#!/bin/bash
+	#/sbin/ifconfig $NEW_INTERFACE unplumb" > $INSTALL_DIR/detach_vip.sh
+	chmod +x $INSTALL_DIR/detach_vip.sh
+fi
+
+echo "completed post installation."

@@ -1,0 +1,690 @@
+<div>
+	<script id="bigSpinner" type="partial">
+		<div class="center-block text-center">
+			<p>{{operation}}</p>
+			<i class="fa fa-spinner fa-spin fa-4x fa-fw"></i>
+			<span class="sr-only">Loading...</span>
+		</div>
+	</script>
+	
+	<script id="requiredNote" type="partial">
+		<div class="config-tip-panel config-tip-info">
+			<p>{{{i18n "global.requiredNote"}}}
+			</p>
+		</div>
+	</script>
+	
+  	<script id="detailsNumericLabel" type="partial">
+		<div class="row">
+			<div class="col-sm-8">
+				<label class="control-label">{{i18n label}}</label>
+			</div>
+			<div class="col-sm-4">
+				{{#if number}}
+					{{formatNumber number}}
+				{{else}}
+					{{i18n "notSet"}}
+				{{/if}}
+				
+			</div>
+		</div>
+	</script>
+	
+	<script id="detailsLabel" type="partial">
+		<div class="row">
+			<div class="col-lg-6">
+				<label class="control-label">{{i18n label}}</label>
+			</div>
+			<div>
+				{{details}} {{i18n suffix}}
+			</div>
+		</div>
+	</script>
+	
+	<script id="modalInput" type="partial">
+		<div class="form-group {{#if required}}required{{/if}}">
+			<label class="col-xs-4 control-label {{labelClassName}}" id="{{name}}Label">{{i18n label}}</label>			
+			<div class="col-xs-8 {{divClassName}}">
+				<input type="{{#if type}}{{type}}{{else}}text{{/if}}" id="{{name}}" name="{{name}}" {{#if toggle}}data-toggle="{{toggle}}"{{/if}} class="form-control {{className}}" placeholder="{{i18n hint}}" value="{{value}}" {{#if disabled}}disabled{{/if}} {{#if title}}title="{{i18n title}}"{{/if}}/>
+				{{#if comment}}
+					<span id="{{name}}Comment" class="dialog-comment">{{i18n comment}}</span>
+				{{/if}}
+			</div>
+		</div>
+	</script>
+	
+	<script id="modalPassword" type="partial">
+		<div class="form-group {{#if required}}required{{/if}}">
+			<label class="col-xs-4 control-label">{{i18n label}}</label>
+			<div class="col-xs-8">
+				<input type="password" id="{{name}}" name="{{name}}" class="form-control {{className}}" placeholder="{{i18nctx hint}}" value="{{value}}" {{#if disabled}}disabled{{/if}}/>
+				{{#if comment}}
+					<span class="dialog-comment">{{i18n comment}}</span>
+				{{/if}}
+			</div>
+		</div>
+	</script>
+	
+	<script id="modalInputNumber" type="partial">
+		<div class="form-group {{#if required}}required{{/if}}">
+			<label class="col-xs-4 control-label">{{i18n label}}</label>
+			<div class="col-xs-8">
+				{{#if addOnEnd}}
+					<div class="input-group">
+						{{>modalInputFieldNumber}}
+						<span class="input-group-addon">{{addOnEnd}}</span>
+					</div>
+				{{else}}
+					{{>modalInputFieldNumber}}
+				{{/if}}
+			</div>
+		</div>
+	</script>
+	
+	<script id="modalInputFieldNumber" type="partial">
+		<div>
+			<input id="{{name}}" type="text" name="{{name}}" class="form-control autonum {{#if currency}}currency{{/if}}" {{#if digits}}data-digits="{{digits}}"{{/if}} placeholder="{{i18n hint}}" value="{{value}}" />
+		</div>
+	</script>
+
+	<script id="modalInputAgents" type="partial">
+		<div class="form-group {{#if required}}required{{/if}}">
+			<label class="col-xs-4 col-sm-5 control-label" id="{{name}}Label">{{i18n label}}</label>
+			<div class="col-xs-8 col-sm-7">
+				<input id="{{name}}" type="{{#if type}}{{type}}{{else}}text{{/if}}" name="{{name}}" {{#if toggle}}data-toggle="{{toggle}}"{{/if}}
+					class="form-control {{#if currency}}autonum currency{{/if}}" placeholder="{{i18n hint}}" value="{{value}}" />
+				{{#if comment}}
+					<span id="{{name}}Comment" class="dialog-comment">{{i18n comment}}</span>
+				{{/if}}
+			</div>
+		</div>
+	</script>
+
+	<script id="modalInputAgentsStretched" type="partial">
+		<div class="form-group {{#if required}}required{{/if}}">
+			<label class="col-xs-4 col-sm-4 control-label" id="{{name}}Label">{{i18n label}}</label>
+			<div class="col-xs-8 col-sm-8">
+				<input id="{{name}}" type="{{#if type}}{{type}}{{else}}text{{/if}}" name="{{name}}" {{#if toggle}}data-toggle="{{toggle}}"{{/if}}
+					class="form-control {{#if currency}}autonum currency{{/if}}" placeholder="{{i18n hint}}" value="{{value}}" />
+				{{#if comment}}
+					<span id="{{name}}Comment" class="dialog-comment">{{i18n comment}}</span>
+				{{/if}}
+			</div>
+		</div>
+	</script>
+	
+	<script id="modalInputTransfer" type="partial">
+		<div class="form-group {{#if required}}required{{/if}}">
+			<label class="col-xs-4 control-label">{{i18n label}}</label>
+			<div class="col-xs-8">
+				{{#if addOnEnd}}
+				<div class="input-group">
+					<input id="{{name}}" type="text" name="{{name}}" class="form-control ignoreme" placeholder="{{i18n hint}}" value="{{value}}" />
+					<span class="input-group-addon">{{addOnEnd}}</span>
+				</div>
+				{{else}}
+					<input id="{{name}}" type="text" name="{{name}}" class="form-control ignoreme" placeholder="{{i18n hint}}" value="{{value}}" />
+				{{/if}}
+			</div>
+		</div>
+	</script>
+	
+	<script id="selectInput" type="partial">
+		<div class="form-group">
+			<label class="col-xs-4 col-sm-5 control-label">{{i18n label}}</label>
+			<div class="col-xs-8 col-sm-7">
+				<select id="{{name}}" style="width: 100%;" name="{{name}}" class="form-control" >
+					<option value="" selected="selected"></option>
+				</select>
+			</div>
+		</div>
+	</script>
+	
+	<script id="selectInput2" type="partial">  
+		<div class="form-group">
+			<label class="col-xs-6 col-sm-5 col-md-4 control-label">{{i18n label}}</label>
+			<div class="col-xs-6 col-sm-7 col-md-8">
+				<select id="{{name}}" style="width: 100%;" name="{{name}}" class="form-control" >
+					<option value="" selected="selected"></option>
+				</select>
+			</div>
+		</div>
+	</script>
+	
+	<script id="selectInputRatio1to2" type="partial">
+		<div class="form-group">
+			<label class="col-xs-4 control-label">{{i18n label}}</label>
+			<div class="col-xs-8">
+				<select id="{{name}}" style="width: 100%;" name="{{name}}" class="form-control" >
+					{{#if valueId}}
+						<option value="{{valueId}}" selected="selected">{{valueName}}</option>
+					{{/if}}
+				</select>
+			</div>
+		</div>
+	</script>
+	
+	<script id=booleanRadioInput type="partial">
+		{{#if heading}}
+			<h5 class="configDialogSectionHeading">{{i18n heading}}</h5>
+		{{/if}}
+		<div class="row form-group dialog-spacing" style="margin-bottom:0;">
+			<label class="col-sm-3 control-label">{{i18n label}}</label>
+			<div class="col-sm-9">
+				<div class="pull-left" style="margin-right:20px;">
+					<input id="{{name}}-yes" name="{{name}}" value="true" class="{{name}}-dumps custom-radio-fa" type="radio" {{#ifCond value "!=" "0"}}checked="checked"{{/ifCond}}/>
+					<label for="{{name}}-yes">{{i18n trueLabel}}</label>
+				</div>
+				<div class="pull-left">
+					<input id="{{name}}-no" name="{{name}}" value="false" class="{{name}}-dumps custom-radio-fa" type="radio" {{#ifCond value "==" "0"}}checked="checked"{{/ifCond}}/>
+					<label for="{{name}}-no">{{i18n falseLabel}}</label>
+				</div>							
+			</div>	
+		</div>
+	</script>
+	
+	<script id=booleanRadioInputWithWarning type="partial">
+		<div class="row form-group dialog-spacing" style="margin-bottom:0;">
+			<label class="col-sm-3 control-label">{{i18n label}}</label>
+			<div class="col-sm-3">
+				<div class="pull-left" style="margin-right:20px;">
+					<input id="{{name}}-yes" name="{{name}}" value="true" class="{{name}}-dumps custom-radio-fa cond-true" type="radio" {{#ifCond value "!=" "0"}}checked="checked"{{/ifCond}}/>
+					<label for="{{name}}-yes">{{i18n trueLabel}}</label>
+				</div>
+				<div class="pull-left">
+					<input id="{{name}}-no" name="{{name}}" value="false" class="{{name}}-dumps custom-radio-fa cond-false" type="radio" {{#ifCond value "==" "0"}}checked="checked"{{/ifCond}}/>
+					<label for="{{name}}-no">{{i18n falseLabel}}</label>
+				</div>							
+			</div>
+			<div class="col-sm-6" id="condWarning" {{#ifCond value "==" "0"}} style="display:none;"{{/ifCond}}>
+					<p style="color:red">{{i18n warning}}</p>
+			</div>	
+		</div>
+	</script>
+
+	<script id="modalSelectNoLabel" type="partial">
+		{{select name data value}}
+	</script>
+	
+	<script id="modalSelect" type="partial">
+		<div class="form-group {{#if required}}required{{/if}}">
+			<label class="col-xs-4 control-label">{{i18n label}}</label>
+			<div class="col-xs-8">
+				{{select name data value}}
+			</div>
+		</div>
+	</script>
+	
+	<script id="modalSelectTDS" type="partial">
+		<div class="form-group {{#if required}}required{{/if}}">
+			<label class="col-xs-6 col-sm-5 col-md-4 control-label {{labelClassName}}">{{i18n label}}</label>
+			<div class="col-xs-6 col-sm-7 col-md-8 {{divClassName}}" data-default="{{i18n def }}">
+				{{select name data def className}}
+			</div>
+		</div>
+	</script>
+	
+	<script id="modalSelectTDSWide" type="partial">
+		<div class="form-group {{#if required}}required{{/if}}">
+			<label class="col-md-1 control-label {{labelClassName}}">{{i18n label}}</label>
+			<div class="col-md-11 {{divClassName}}" data-default="{{i18n def }}">
+				{{select name data def className}}
+			</div>
+		</div>
+	</script>	
+	
+	<script id="modalSelectAgents" type="partial">
+		<div class="form-group {{#if required}}required{{/if}}">
+			<label class="col-xs-4 col-sm-5 control-label">{{i18n label}}</label>
+			<div class="col-xs-8 col-sm-7" data-default="{{i18n def }}">
+				{{select name data def}}
+			</div>
+		</div>
+	</script>
+
+	<script id="modalSelectAgentsStreched" type="partial">
+		<div class="form-group {{#if required}}required{{/if}}">
+			<label class="col-xs-4 col-sm-4 control-label">{{i18n label}}</label>
+			<div class="col-xs-8 col-sm-8" data-default="{{i18n def }}">
+				{{select name data def}}
+			</div>
+		</div>
+	</script>
+	
+	
+	<script id="dashboardLabel" type="partial">
+		<div class="row">
+			<label class="col-xl-1 col-md-2 col-xs-3 control-label">{{i18n label}}</label>
+			<div class="col-xl-11 col-md-10 col-xs-9">{{details}}</div>
+		</div>
+	</script>
+	
+	<script id="modalInputDashboard" type="partial">
+		<div id="{{name}}" class="form-group {{#if required}}required{{/if}}">
+			<label class="col-xs-4 control-label">{{i18n label}}</label>
+			<div class="col-xs-8">
+				<input id="{{name}}" type="text" name="{{name}}" class="form-control {{name}}" placeholder="{{i18n hint}}" value="{{value}}" />
+			</div>
+		</div>
+	</script>
+	
+	<script id="userDetailInfo" type="partial">
+		<div class="list-group-item">
+			<label>{{i18n label}}</label>
+			<h4 class="list-group-item-heading">{{details}}</h4>
+		</div>
+	</script>
+	
+	<script id="modalInputField" type="partial">
+		<div>
+			{{#if addOnEnd}}
+			<div class="input-group">
+				<input id="{{name}}" type="text" name="{{name}}" class="form-control{{#if class}} {{class}}{{/if}}" placeholder="{{i18n hint}}" value="{{value}}" />
+				<span class="input-group-addon">{{addOnEnd}}</span>
+			</div>
+			{{else}}
+				<input id="{{name}}" type="text" name="{{name}}" class="form-control{{#if class}} {{class}}{{/if}}" placeholder="{{i18n hint}}" value="{{value}}" />
+			{{/if}}
+		</div>
+	</script>
+	
+	<script id="modalPercentageInput" type="partial">
+		<div class="form-group" class="show-on-bonus">
+			<label class="col-xs-4 control-label">{{i18n label}}</label>
+			<div class="col-xs-8">
+				{{>modalInputField addOnEnd="%"}}
+			</div>
+		</div>
+	</script>
+	
+	<script id="spinner" type="partial">
+		<div id="loading_incoming" class="row">
+			<div class="col-lg-2 col-centered"> 
+				<img id="{{spinnerId}}" src="img/spinsm.gif"/>
+			</div>
+		</div>
+	</script>
+	
+	<script id="nodata" type="partial">
+		<div class="row hide {{classId}}">
+			<div class="col-lg-2 col-centered"> 
+				<h3>{{i18n "global.noRulesDefined"}}</h2>
+			</div>
+		</div>
+	</script>
+	
+	<script id="configMainHeading" type="partial">
+		<div class="box-header with-border">
+			<h2 class="box-title configHeading">{{i18n heading}}</h2>
+			{{#if permission}}
+				{{#hasPerms this.permission}}
+					{{#if btntext}}
+					<div class="pull-right">
+						<button class="btn btn-primary {{btnclass}}">{{i18n btntext}}</button>
+					</div>
+					{{/if}}
+				{{/hasPerms}}
+			{{else}}
+				{{#if btntext}}
+				<div class="pull-right">
+					<button class="btn btn-primary {{btnclass}}">{{i18n btntext}}</button>
+				</div>
+				{{/if}}
+			{{/if}}
+			<span id="toolbar" class="{{toolbar}}"></span>
+		</div>
+	</script>
+	
+	<script id="configSubHeading" type="partial">
+		<div class="box-subheader with-border">
+			<h3 class="box-title configSubHeading">{{i18n heading}}</h2>						
+		</div>
+	</script>
+	
+	<script id="configLabelVertical" type="partial">
+		<div class="row">
+			<div class="col-xs-4 col-sm-4 col-md-3 col-lg-2">
+				<h4>{{i18n heading}}</h4>
+			</div>
+
+			<div class="col-xs-8 col-sm-8 col-md-9 col-lg-10">
+				<strong>{{i18n label}}</strong>
+				<p>
+					{{colourizeVariables value}}
+				</p>
+				{{#if seperator}}
+				<hr/>
+				{{/if}}
+			</div>
+		</div>
+	</script>
+	
+	<script id="configNotificationLabelVertical" type="partial">
+		{{>configLabelVertical label="global.english" value=notification.en seperator=true}}
+		{{>configLabelVertical heading="" label="global.french" value=notification.fr}}
+		<hr/>
+	</script>
+
+	<script id="configLabel" type="partial">
+		<div class="form-group {{#if class}}class{{/if}} {{#if required}}required{{/if}}">
+			<label for="input" class="col-sm-2 control-label">{{i18n label}}</label>
+			<div class="col-sm-10">
+				<p class="form-control-static config-text">
+					{{colourizeVariables value}}
+					{{#if suffix}}
+						{{suffix}}
+					{{/if}}
+				</p>
+			</div>
+		</div>
+	</script>
+
+	<script id="configLabelWithSuffix" type="partial">
+		<div class="form-group {{#if class}}class{{/if}} {{#if required}}required{{/if}}">
+			<label for="input" class="col-sm-2 control-label">{{i18n label}}</label>
+			<div class="col-sm-10">
+				<p class="form-control-static config-text {{lblClass}}">
+					{{colourizeVariables value}}
+					{{#if suffix}}
+						{{i18n suffix}}
+					{{/if}}
+				</p>
+			</div>
+		</div>
+	</script>
+	
+	<script id="configLabelBoolean" type="partial">
+		<div class="form-group {{#if required}}required{{/if}}">
+			<label for="input" class="col-sm-2 control-label">{{i18n label}}</label>
+			<div class="col-sm-10">
+				{{#ifCond value "==" true}}
+				<p class="form-control-static config-text {{#if trueClasses }}{{trueClasses}}{{/if}}">
+					{{i18n trueValue}}
+				</p>
+				{{else}}
+				<p class="form-control-static config-text {{#if falseClasses }}{{falseClasses}}{{/if}}">
+					{{i18n falseValue}}
+				</p>
+				{{/ifCond}}
+			</div>
+		</div>		
+	</script>
+	
+	<script id="configLanguageLabel" type="partial">
+		<div class="form-group {{#if required}}required{{/if}}">
+			<label for="input" class="col-sm-2 control-label">{{i18n label}}</label>
+			<div class="col-sm-10">
+				<p class="form-control-static">
+					{{expandLanguage value}}
+				</p>
+			</div>
+		</div>
+	</script>
+
+	<script id="configHeading" type="partial">
+		<div class="box-header with-border">
+			<h2 class="box-title configHeading">{{i18n heading}}</h2>
+		</div>
+	</script>
+	
+	<script id="configUpdateButton" type="partial">
+		<div class="row">
+			<div class="col-sm-10 ">
+				<button class="btn btn-primary {{btnclass}}">{{i18n text}}</button>
+			</div>
+		</div>
+	</script>
+	
+	<script id="configSectionHeading" type="partial">
+		<h5 class="configDialogSectionHeading">{{i18n heading}}</h5>
+	</script>
+	
+	<script id="configNotificationLabel" type="partial">
+		{{>configSectionHeading }}
+		{{>configLabel label="global.english" value=notification.en }}
+		{{>configLabel label="global.french" value=notification.fr }}
+		<hr/>
+	</script>
+	
+	<script id="configNotificationLabel2" type="partial">
+		<h6 class="configDialogSectionHeading">{{i18n heading}}</h5>
+		{{>configLabel label="global.english" value=notification.en }}
+		{{>configLabel label="global.french" value=notification.fr }}
+		<hr/>
+	</script>
+	
+	<script id="dbDetail" type="partial">
+		<div class="view-field">
+			<label>{{i18n label}}</label>
+			<div {{#if name}}id="{{name}}"{{/if}}>
+				{{#if numeric}}
+					{{ content }}
+				{{else}}
+					{{#if content}}
+						{{ content }}
+					{{else}}
+						{{#if date}}
+							{{formatDate date}}
+						{{else}}
+							<span class="no-data">{{i18n "notSet"}}</span>
+						{{/if}}
+					{{/if}}	
+				{{/if}}
+			</div>
+		</div>
+	</script>
+
+
+<!-- Configuration Partials -->	
+
+	<script id="configInput" type="partial">
+		<div class="form-group">
+	    	<label for="inputEmail3" class="col-sm-3 control-label">{{i18n label}}</label>
+	      	<div class="col-sm-9">
+				<input id="{{name}}" type="text" name="{{name}}" class="form-control {{#if class}}{{class}}{{/if}}" placeholder="{{i18n hint}}" value="{{value}}" />
+				{{#if comment}}
+					<span class="dialog-comment">{{i18n comment}}</span>
+				{{/if}}
+			</div>
+      	</div>
+	</script>
+	
+	<script id="configSelect" type="partial">
+		<div class="form-group {{#if required}}required{{/if}}">
+			<label class="col-xs-3 control-label">{{i18n label}}</label>
+			<div class="col-xs-5">
+				{{select name data value}}
+			</div>
+		</div>
+	</script>
+	
+	<script id="configSelectWithInput" type="partial">
+		<div class="form-group {{#if required}}required{{/if}}">
+			<label class="col-xs-3 control-label">{{i18n label}}</label>
+			<input id="{{name}}Value" type="text" name="{{name}}Value" class="form-control-decorator col-xs-2" placeholder="{{i18n hint}}" value="{{textvalue}}" />
+			<div class="col-xs-6">
+				
+				{{unsortedselect name data value}}
+			</div>
+		</div>
+	</script>
+	
+	<script id="configLongLabelInput" type="partial">
+		<div class="form-group">
+	    	<label for="inputEmail3" class="col-sm-5 control-label">{{i18n label}}</label>
+	      	<div class="col-sm-7">
+				<input id="{{name}}" type="text" name="{{name}}" class="form-control" placeholder="{{i18n hint}}" value="{{value}}" />
+				{{#if comment}}
+					<span class="dialog-comment">{{i18n comment}}</span>
+				{{/if}}
+			</div>
+      	</div>
+	</script>
+	
+	<script id="configLongLabelTextInput" type="partial">
+		<div class="form-group">
+	    	<label for="{{name}}Label" class="col-sm-5 control-label">{{i18n label}}</label>
+	      	<div class="col-sm-7">
+				<textarea class="col-sm-7 form-control notifyArea not-notification" name="{{name}}" id="{{name}}" placeholder="{{i18n label}}" data-rule-required="true">{{value}}</textarea>
+				{{#if comment}}
+					<span class="dialog-comment">{{i18n comment}}</span>
+				{{/if}}
+			</div>
+      	</div>
+	</script>
+
+	<script id="configNotification" type="partial">
+		<div class="form-group row">
+	    	<label for="inputEmail3" class="col-sm-3 control-label">{{i18n label}}</label>
+			<textarea class="col-sm-9 form-control notifyArea" name="{{name}}" placeholder="{{i18n hint}}" data-rule-required="true">{{value}}</textarea>
+      	</div>
+	</script>
+	
+	<script id="configNotificationInput" type="partial">
+		{{#if heading}}
+			<h5 class="configDialogSectionHeading">{{i18n heading}}</h5>
+		{{/if}}
+		
+		<div class="form-group row">
+	    	<label for="inputEmail3" class="col-sm-3 control-label">{{i18n "english"}}</label>
+			<textarea class="col-sm-9 form-control notifyArea" name="{{name}}[texts][en]" placeholder="{{i18n heading}} ({{i18n "english"}})" data-rule-required="true">{{notification.texts.en}}</textarea>
+      	</div>
+
+		<div class="form-group row">
+	    	<label for="inputEmail3" class="col-sm-3 control-label">{{i18n "french"}}</label>
+			<textarea class="col-sm-9 form-control notifyArea" name="{{name}}[texts][fr]" placeholder="{{i18n heading}} ({{i18n "french"}})" data-rule-required="true">{{notification.texts.fr}}</textarea>
+      	</div>
+		<hr/>
+	</script>
+	
+	<script id="configNotificationLineInput" type="partial">
+		<h5 class="configDialogSectionHeading">{{i18n heading}}</h5>
+		
+		<div class="form-group">
+	    	<label for="inputEmail3" class="col-sm-3 control-label">{{i18n "english"}}</label>
+	      	<div class="col-sm-9">
+				<input type="text" name="{{name}}[texts][en]" class="form-control" placeholder="{{i18n heading}} ({{i18n "english"}})" data-rule-required="true" value="{{notification.texts.en}}" />
+			</div>
+      	</div>
+
+		<div class="form-group">
+	    	<label for="inputEmail3" class="col-sm-3 control-label">{{i18n "french"}}</label>
+	      	<div class="col-sm-9">
+				<input type="text" name="{{name}}[texts][fr]" class="form-control" placeholder="{{i18n heading}} ({{i18n "french"}})" value="{{notification.texts.fr}}" />
+			</div>
+      	</div>
+		<hr/>
+	</script>
+
+	<script id="configErrorInput" type="partial">
+		<h5 class="configDialogSectionHeading">{{i18n heading}}</h5>
+		
+		<div class="form-group row">
+	    	<label for="inputEmail3" class="col-sm-3 control-label">{{i18n "english"}}</label>
+			<textarea class="col-sm-9 form-control notifyArea" name="errorMessages[{{name}}][texts][en]" placeholder="{{i18n heading}} ({{i18n "english"}})" data-rule-required="true">{{errorMessage.texts.en}}</textarea>
+      	</div>
+
+		<div class="form-group row">
+	    	<label for="inputEmail3" class="col-sm-3 control-label">{{i18n "french"}}</label>
+			<textarea class="col-sm-9 form-control notifyArea" name="errorMessages[{{name}}][texts][fr]" placeholder="{{i18n heading}} ({{i18n "french"}})" data-rule-required="true">{{errorMessage.texts.fr}}</textarea>
+      	</div>
+	</script>
+
+	<script id="configMultNameNotificationInput" type="partial">
+		<h5 class="configDialogSectionHeading">{{i18n heading}}</h5>
+		
+		<div class="form-group row">
+	    	<label for="inputEmail3" class="col-sm-3 control-label">{{i18n "english"}}</label>
+			<textarea class="col-sm-9 form-control notifyArea" name="{{name1}}[{{name2}}][texts][en]" placeholder="{{i18n heading}} ({{i18n "english"}})" data-rule-required="true">{{notification.texts.en}}</textarea>
+      	</div>
+
+		<div class="form-group row">
+	    	<label for="inputEmail3" class="col-sm-3 control-label">{{i18n "french"}}</label>
+			<textarea class="col-sm-9 form-control notifyArea" name="{{name1}}[{{name2}}][texts][fr]" placeholder="{{i18n heading}} ({{i18n "french"}})" data-rule-required="true">{{notification.texts.fr}}</textarea>
+      	</div>
+	</script>
+
+	
+	<script id="configEnglishInput" type="partial">
+		<div class="form-group">
+	    	<label for="{{name}}Label" class="col-sm-3 control-label">{{i18n heading}}</label>
+			<textarea class="col-sm-9 form-control notifyArea" name="{{name}}[texts][en]" placeholder="{{i18n heading}} ({{i18n "english"}})" data-rule-required="true">{{notification.texts.en}}</textarea>
+      	</div>
+	</script>
+<!-- vim: set ft=html sts=4 ts=4 sw=4 noexpandtab fo-=t: -->
+<div>
+	
+	<script id="configAddVariableNote" type="partial">
+		<div class="config-tip-panel config-tip-info">
+			<p><strong>{{i18n "config.tip"}}: </strong>{{i18n "config.tipMessage"}}</p>
+		</div>
+	</script>
+	
+	<script id="configModalHeader" type="partial">
+		<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		    <h4 class="modal-title">Update {{i18n heading}}</h4>
+		</div>
+	</script>
+	
+	<script id="configModalFooter" type="partial">
+		<div class="modal-footer">
+		    <div class="form-group">
+		        <div class="col-sm-offset-2 col-sm-10">
+		        	<button type="button" class="btn btn-primary saveButton">{{i18n "global.saveBtn"}}</button>
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "config.cancel"}}</button>
+		        </div>
+			</div>
+		</div>
+	</script>
+	
+	<script id="configSelectLanguage" type="partial">
+		<div class="form-group row">
+	    	<label class="col-sm-3 control-label">{{i18n label}}</label>
+	      	<div class="col-xs-5 col-sm-5 col-md-3">
+				<select id="{{name}}" name="{{name}}" placeholder="{{i18n hint}}" class="form-control">
+					<option {{#ifCond value "==" "en"}} selected="selected" {{/ifCond}} value="en" >{{i18n "english"}}</option>
+					<option {{#ifCond value "==" "fr"}} selected="selected" {{/ifCond}} value="fr" >{{i18n "french"}}</option>
+				</select>
+			</div>
+      	</div>
+	</script>
+	
+	<script id="retrievingContent" type="partial">
+		<div class="retrievingContent center-block text-center">
+			<p th:text="loading">Retrieving Content ...</p>
+			<i class="fa fa-refresh fa-spin fa-4x fa-fw"></i>
+			<span class="sr-only">Loading...</span>
+		</div>
+	</script>
+
+	<script id="viewButtonTemplate" type="partial">
+		<button type="button" class="btn btn-primary {{class}}">{{i18n label}}</button>
+	</script>
+	
+	<script id="menuButtonTemplate" type="partial">
+		<li style='cursor:pointer;'>
+			<a class='{{class}}'>
+				<i class='fa fa-fw {{icon}}'></i>
+				&nbsp;&nbsp;{{i18n label}}
+			</a>
+		</li>
+	</script>
+	
+	<script id="normalButtonTemplate" type="partial">
+		<button id="{{mainButtonId}}" class="btn btn-primary {{mainButtonClass}}" type="button">{{i18n mainButtonCaption}}</button>
+	</script>
+	
+	<script id="normalButtonWithDescriptionTemplate" type="partial">
+		<div id="{{elementId}}" class="form-group">
+			<label for="{{buttonId}}" class="col-sm-5 control-label">{{i18n buttonDescription}}</label>
+			<div class="col-sm-2">
+				<p class="form-control-static config-text">
+					{{>normalButtonTemplate mainButtonId=buttonId mainButtonClass=buttonClass mainButtonCaption=buttonCaption}}
+				</p>
+			</div>
+		</div>
+	</script>
+
+</div>
+</div>

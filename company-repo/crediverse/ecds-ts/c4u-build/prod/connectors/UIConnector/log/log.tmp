@@ -1,0 +1,2 @@
+20131104T144833.387|ERROR|                    |hxc.connectors.ui.UiConnector           |java.lang.NumberFormatException: For input string: "AAA"
+20131104T144833.390|WARN |20131104144833390   |hxc.connectors.ui.UiConnector           |JohnE Logger Service RotationIntervalSeconds 7200 123456

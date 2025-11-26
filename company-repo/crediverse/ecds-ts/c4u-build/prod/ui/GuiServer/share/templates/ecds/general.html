@@ -1,0 +1,78 @@
+<form th:if="${not no_config}" id="configForm" name="configForm" class="form-horizontal" role="form">
+
+	<div class="form-group" th:each="field : ${fields}">
+		<label th:for="${field.fieldName}" class="col-sm-3 control-label" th:text="${utils.splitCamelCaseString(field.fieldName)}">label</label>
+		<div class="col-sm-6">
+		
+			<!--  Enums Type -->
+			<select th:if="${! #arrays.isEmpty(field.possibleValues)}"  th:id="${field.fieldName}" th:name="${field.fieldName}" onchange="dataUpdated();">
+				<option th:each="option : ${field.possibleValues}" th:value="${option}" th:text="${utils.makePretty(option)}" th:selected="${option == utils.stringValue(field.value)}">
+				</option>	
+			</select>
+			
+			<!--  Boolean -->
+			<div th:if="${#strings.endsWith(field.valueType, 'Boolean')}" class="col-sm-3">
+				<input type="checkbox"
+					th:disabled="${field.readOnly}" th:id="${field.fieldName}"
+					th:name="${field.fieldName}" th:checked="${field.value}" 
+					th:onchange="'javascript:dataUpdated();'"
+					/>
+			</div>
+			
+			<!-- Normal -->
+			<input th:if="${(#arrays.isEmpty(field.possibleValues))  and (! #strings.endsWith(field.valueType, 'Boolean')) and  (! #strings.equals('AutoStateSaveIntervalMinutes', field.fieldName)) }" class="form-control" type="text" th:readonly="${field.readOnly}" th:id="${field.fieldName}" th:name="${field.fieldName}" th:value="${field.value}" onchange="dataUpdated();"/>
+			
+			<!-- AutoStateSaveIntervalMinutes -->
+			<select th:if="${#strings.equals('AutoStateSaveIntervalMinutes', field.fieldName)}" th:id="${field.fieldName}" th:name="${field.fieldName}" onchange="dataUpdated();" title="Snapshot time">
+				<option value="" th:selected="${utils.stringEqualsValue(field.value, '')}" >None</option>
+				<option value="5" th:selected="${utils.stringEqualsValue(field.value, '5')}" >5 Minutes</option>
+				<option value="60" th:selected="${utils.stringEqualsValue(field.value, '60')}" >1 hour</option>
+				<option value="360" th:selected="${utils.stringEqualsValue(field.value, '360')}" >6 hours</option>
+				<option value="720" th:selected="${utils.stringEqualsValue(field.value, '720')}" >12 hours</option>
+				<option value="1440" th:selected="${utils.stringEqualsValue(field.value, '1440')}" >1 day</option>
+				<option value="10080" th:selected="${utils.stringEqualsValue(field.value, '1440')}" >1 week</option>
+			</select>
+			<span th:if="${#strings.equals('AutoStateSaveIntervalMinutes', field.fieldName)}"><i>(A snapshot will be taken at this interval)</i></span>
+			
+			<span th:id="${field.fieldName + '_error'}" style="color:red;" class="error_message hide"></span> 	
+		</div>
+  	</div>
+  	
+	<div th:if="${not #lists.isEmpty(methods)}" class="row">
+		<div class="col-sm-12">
+			<h1 class="page-header config-prop-headings">System Calls</h1>
+		</div>
+  	</div> 
+  	
+ 	<div th:if="${not #lists.isEmpty(methods)}" class="form-group" th:each="method : ${methods}">
+		<label for="something" class="col-sm-3 control-label" th:text="${method.description}">label</label>
+		<div class="col-sm-9">
+			<button class="btn btn-info" th:onclick="'javascript:callMethod(\''+ ${service_uid} +'\', \''+${method.methodName}+'\');return false;'">Perform Operation</button>
+		</div>
+  	</div>
+</form>
+
+<!-- Update Buttons -->
+<div class="row" style="height: 37px;">
+	<div id="update_msg_config" class="col-sm-10 update_notification">
+	</div>
+</div>
+
+<div id="update_buttons_config" class="row">
+	<div class="col-sm-3"></div>
+	<div class="col-sm-6" th:if="${canSaveUpdatedFields}">
+		<button id="submit_config" type="button" class="btn btn-primary"
+			th:onclick="'javascript:validateAndSave(\'config\', \''+ ${service_uid} +'\', \''+ ${service_version} +'\');return false;'">Update Details</button>
+		<button id="reload_config" type="button" class="btn"
+			th:onclick="'javascript:loadConfigurationContent(\''+ ${service_uid} +'\', \''+ ${service_name} +'\', \'reload\');return false;'">Cancel Changes</button>
+	</div>
+</div>
+
+<div id="busy_updating_config" class="row hide">
+	<div class="col-sm-12">
+		<div class="well well-lg">
+			<img src="/img/cell_wait.gif" alt="Waiting..." /> Busy performing
+			live system update
+		</div>
+	</div>
+</div>

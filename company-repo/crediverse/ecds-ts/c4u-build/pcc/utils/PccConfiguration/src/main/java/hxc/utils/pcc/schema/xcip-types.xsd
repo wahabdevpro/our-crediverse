@@ -1,0 +1,93 @@
+<xsd:schema
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xhtml="http://www.w3.org/1999/xhtml"
+	xmlns:dcbk="http://docbook.org/ns/docbook"
+	xmlns:xcipt="urn:ericsson:xcip:5.0:1.0:types"
+	dcbk:version="5.0"
+	xml:lang="en"
+	attributeFormDefault="unqualified"
+	elementFormDefault="unqualified"
+	version="5.0.1.0"
+	targetNamespace="urn:ericsson:xcip:5.0:1.0:types"
+	xsi:schemaLocation="
+		http://www.w3.org/2001/XMLSchema-instance http://www.w3.org/2001/XMLSchema-instance
+		http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd
+		http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-strict.xsd
+		http://docbook.org/ns/docbook http://www.docbook.org/xml/5.0/xsd/docbook.xsd
+	">
+
+	<xsd:simpleType name="dedicatedAccountId">
+		<xsd:restriction base="xsd:integer">
+			<xsd:minInclusive value="1"/>
+			<xsd:maxInclusive value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="dedicatedAccountValue">
+		<xsd:restriction base="xsd:integer">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="9223372036854775807"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="dedicatedAccountValueAbsolute">
+		<xsd:restriction base="xcipt:dedicatedAccountValue">
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="dediactedAccountValueRelative">
+		<xsd:restriction base="xsd:integer">
+			<xsd:minInclusive value="-9223372036854775807"/>
+			<xsd:maxInclusive value="9223372036854775807"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="dedicatedAccountUnitType">
+		<xsd:restriction base="xsd:integer">
+			<xsd:enumeration value="0"/>
+			<xsd:enumeration value="1"/>
+			<xsd:enumeration value="2"/>
+			<xsd:enumeration value="3"/>
+			<xsd:enumeration value="4"/>
+			<xsd:enumeration value="5"/>
+			<xsd:enumeration value="6"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="mainAccountValue">
+		<xsd:restriction base="xsd:integer">
+			<xsd:minInclusive value="-999999999999"/>
+			<xsd:maxInclusive value="999999999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="mainAccountValueAbsolute">
+		<xsd:restriction base="xsd:integer">
+			<xsd:minInclusive value="0"/>
+			<xsd:maxInclusive value="999999999999"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="mainAccountValueRelative">
+		<xsd:restriction base="xsd:integer">
+			<xsd:minInclusive value="-9223372036854775807"/>
+			<xsd:maxInclusive value="9223372036854775807"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="offerId">
+		<xsd:restriction base="xsd:integer">
+			<xsd:minInclusive value="1"/>
+			<xsd:maxInclusive value="2147483647"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="externalData">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+			<xsd:maxLength value="128"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+</xsd:schema>

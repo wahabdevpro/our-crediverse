@@ -1,0 +1,31 @@
+
+<link type="text/css" href="/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link type="text/css" href="/css/dataTables.scroller.min.css" rel="stylesheet" />
+
+
+<table id="example" class="display" width="100%" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Extn.</th>
+            <th>Start date</th>
+            <th>Salary</th>
+        </tr>
+    </thead>
+</table>
+
+
+<script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/js/dataTables.scroller.min.js"></script>
+
+<script>
+	$(document).ready(function() {
+	    $('#example').dataTable( {
+	        "ajax": "/testdata",
+	    } );
+	});
+	
+</script>

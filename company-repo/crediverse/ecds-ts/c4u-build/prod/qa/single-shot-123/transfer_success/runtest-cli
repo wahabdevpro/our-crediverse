@@ -1,0 +1,10 @@
+#!/bin/bash 
+#(cs-exec hermes `pwd` transfer_success  loadTest.testrun ) &
+(exec hermes `pwd` transfer_success  loadTest.testrun ) &
+PSID=$!
+sleep 2
+scp ./transfer.cli root@192.168.0.149:/qa
+ssh root@192.168.0.149 'cd /opt/cs/c4u/0.0.1/hxc/bin/;  ./hxc -f < /qa/transfer.cli'
+sleep 5
+kill $PSID
+sleep 3

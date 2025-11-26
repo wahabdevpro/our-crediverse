@@ -1,0 +1,151 @@
+name: Create GA Release
+
+# Controls when the workflow will run
+on:
+  workflow_dispatch:
+    inputs:
+      oldTag:
+        description: 'Docker image old tag'
+        required: true
+      newTag:
+        description: 'Desired Docker image new tag'
+        required: true
+      buildNumber:
+        description: 'Nightly buildNumber'
+        required: true
+      branchName:
+          description: 'Branch Name which needs to be tagged?'
+          required: true  
+      commitSha:
+          description: 'The commit SHA to tag'
+          required: true
+    
+env:
+  IMAGE_ID: 'ghcr.io/${{ github.repository }}'
+jobs:
+  printInputs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: 'actions/checkout@v3'
+        with:
+          ref: ${{inputs.branchName}}
+      - name: 'Job Start Time'
+        run: |
+          CS_START_TIME=$(date +"%Y-%m-%dT%H:%M:%S")
+          echo "Start Time => $CS_START_TIME"
+          echo "oldTag: ${{ inputs.oldTag }}"
+          echo "newTag: ${{ inputs.newTag }}"
+          echo "buildNumber: ${{ inputs.buildNumber }}"
+          echo "RELEASE_DATE=$(date +%Y-%m-%d)" >> $GITHUB_ENV
+      - name: Extract Repository Name in Lower case
+        run: |
+            repo_name=${{ github.repository }}
+            repo_name=${repo_name#*/}
+            repo_name=$(echo "$repo_name" | tr '[:upper:]' '[:lower:]')
+            echo "Repository name is $repo_name"
+            echo "REPO_LOWERCASE=$repo_name" >> $GITHUB_ENV
+      - name: Generate Changelog file
+        run: |-
+          rm -f ${{ github.workspace }}-${{ inputs.newTag }}-CHANGELOG.md
+          echo "Crediverse-${{ inputs.newTag }} " > ${{ github.workspace }}-${{ inputs.newTag }}-CHANGELOG.md
+          echo "Release Date | ${{env.RELEASE_DATE}}" >> ${{ github.workspace }}-${{ inputs.newTag }}-CHANGELOG.md
+          echo "Build Number | ${{ inputs.buildNumber }}" >> ${{ github.workspace }}-${{ inputs.newTag }}-CHANGELOG.md
+      - name: get repository name
+        run: echo "REPOSITORY_NAME=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
+      - name: check release notes file
+        run: >-
+          if [[ -f "${{github.workspace}}/release_notes/${{env.REPO_LOWERCASE}}_release_notes_${{inputs.newTag}}.md" ]]; 
+          then 
+              cat "${{github.workspace}}/release_notes/${{env.REPO_LOWERCASE}}_release_notes_${{inputs.newTag}}.md" >> ${{github.workspace}}-${{ inputs.newTag }}-CHANGELOG.md
+          fi
+      - name: Check Advisory Notes file
+        run: >-
+          if [[ -f "${{github.workspace}}/release_notes/${{env.REPO_LOWERCASE}}_advisory_notes_${{inputs.newTag}}.md" ]]; 
+          then
+            echo "## Internal" >> ${{github.workspace}}-${{ inputs.newTag }}-CHANGELOG.md
+            echo "[Advisory Note](${{github.server_url}}/${{github.repository}}/tree/${{inputs.branchName}}/release_notes/${{env.REPO_LOWERCASE}}_advisory_notes_${{inputs.newTag}}.md) " >> ${{ github.workspace }}-${{ inputs.newTag }}-CHANGELOG.md
+          fi
+      #      - name: edit changelog
+      #        run: |-
+      #          echo "## DOCKER IMAGES" >> ${{ github.workspace }}-CHANGELOG.md
+      #          cat ${{github.workspace}}-CHANGELOG.md
+
+      - name: Create test report links
+        run: >-
+          echo "## Test Report" >> ${{github.workspace}}-${{ inputs.newTag }}-CHANGELOG.md;
+          arr=($(find . -type f -name "${{env.REPO_LOWERCASE}}_test_report_${{ inputs.newTag }}*.pdf"));
+          for i in "${arr[@]}" ; do   echo "$i" ; fname=`basename $i .pdf` ; id=$(echo "$fname" | cut -d'_' -f5); echo $id ; echo "[Test Report $id]($i)" >> ${{github.workspace}}-${{ inputs.newTag }}-CHANGELOG.md ; done
+      - name: Docker image links
+        run: |-
+          echo "## DOCKER IMAGES" >> ${{github.workspace}}-${{ inputs.newTag }}-CHANGELOG.md
+          cat ${{github.workspace}}-${{ inputs.newTag }}-CHANGELOG.md
+
+  retag-docker-images:
+    needs: [ printInputs]
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        IMAGE_NAME: [ecds-ts, ecds-api, ecds-gui,mobileapplicationservice,teamservice]
+    steps:
+      - name: login ghcr
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+      - name: downcase REPO
+        run: |
+          echo "REPO_LOWERCASE=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
+      - name: override env IMAGE_ID
+        run: |
+          echo ${{env.REPO_LOWERCASE}}
+          echo "IMAGE_ID=ghcr.io/${{env.REPO_LOWERCASE }}" >> $GITHUB_ENV
+      - name: run retagging
+        run: |-
+          docker pull ${{env.IMAGE_ID}}/${{matrix.IMAGE_NAME}}:${{inputs.oldTag}} 
+          docker tag ${{env.IMAGE_ID}}/${{matrix.IMAGE_NAME}}:${{inputs.oldTag}}  ${{env.IMAGE_ID}}/${{matrix.IMAGE_NAME}}:${{inputs.newTag}} 
+          docker push ${{env.IMAGE_ID}}/${{matrix.IMAGE_NAME}}:${{inputs.newTag}}
+          echo "- [${{env.IMAGE_ID}}/${{matrix.IMAGE_NAME}}:${{inputs.newTag}}](https://${{env.IMAGE_ID}}/${{matrix.IMAGE_NAME}}:${{inputs.newTag}})" >> ${{github.workspace}}-${{ inputs.newTag }}-CHANGELOG.md
+          cat ${{github.workspace}}-${{ inputs.newTag }}-CHANGELOG.md
+  create-release-page:
+    runs-on: ubuntu-latest
+    permissions: 'write-all'
+    needs: [retag-docker-images, printInputs]
+    if: |
+      always() && needs.printInputs.result == 'success' && needs.retag-docker-images.result == 'success'
+
+    steps:
+      - name: Get Current date
+        id: date
+        run: |-
+          echo "NOW=$(date +%Y-%m-%d)" >> $GITHUB_ENV
+      - name: check outptut
+        run: |-
+          cat ${{github.workspace}}-${{ inputs.newTag }}-CHANGELOG.md  
+      - name: Create tag
+        uses: actions/github-script@v5
+        with:
+            script: |
+              const response = await github.rest.git.createRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: 'refs/tags/${{inputs.newTag}}', // Replace with your tag name
+                sha: '${{inputs.commitSha}}'
+              });
+  
+              console.log(response);
+
+      - name: Create Release
+        id: create_release
+        uses: ncipollo/release-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          commit: ${{inputs.commitSha}}
+          tag: ${{ inputs.newTag }}
+          name: Crediverse-${{ inputs.newTag }}
+          draft: false
+          replacesArtifacts: true
+          removeArtifacts: false
+          allowUpdates: true
+          bodyFile: ${{github.workspace}}-${{ inputs.newTag }}-CHANGELOG.md
+          discussionCategory: 'general'
+          #generateReleaseNotes: true
+          #prerelease: true

@@ -1,0 +1,14 @@
+Installation
+============
+
+In order to install this plugin you will require the Java Development Tools.
+Follow the following steps to install Java Development Tools:
+	
+	1. Go to Help->Install New Software
+	2. On the drop down select The Eclipse Project Updates - http://download.eclipse.org/eclipse/updates/4.3
+	3. Select the Java Development Tools.
+	4. Install.
+	
+Once Java Development Tools is installed, locate the jar file under plugin/plugins directory. 
+Locate the directory that you installed eclipse and find the "dropins" folder. 
+Take the jar and drop it in the "dropins" folder.

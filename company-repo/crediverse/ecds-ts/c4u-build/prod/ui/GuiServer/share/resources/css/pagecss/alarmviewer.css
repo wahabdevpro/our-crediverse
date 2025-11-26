@@ -1,0 +1,135 @@
+@CHARSET "US-ASCII";
+
+.span2 {
+	/* width: 14.52991452991453%; */
+	display: inline-block;
+	padding: 0px 5px;
+}
+
+div#alarm_content {
+	/* text-align: center; */
+	margin: auto;
+}
+
+.alarm-row {
+	/* text-align: center; */
+	position: relative;
+	/* font-family: "Open Sans"; */
+	font-weight: 400;
+}
+
+.alarm-item {
+	position: relative;
+	background: #67C2EF;
+	width: 100%;
+	min-width: 130px;
+	height: 130px;
+	padding-top: 40px;
+	margin-bottom: 28px;
+	text-align: center;
+}
+
+.alarm-item img {
+	max-width: 65%;
+	max-height: 65%;
+}
+
+.alarm-item .header {
+	background: rgba(255,255,255,0.2);
+	color: rgba(0,0,0,0.9);
+	width: 100%; 
+	height: 30px;
+	line-height: 23px;
+	padding: 5px 0px;
+	position: absolute;
+	top: 0px;
+  	white-space: nowrap;
+  	overflow: hidden;
+  	text-overflow: ellipsis;
+}
+
+.alarm-item .footer {
+	background: rgba(0,0,0,0.1);
+	color: rgba(0,0,0,0.9);
+	width: 100%; 
+	height: 20px;
+	line-height: 12px;
+	padding: 5px 0px;
+	position: absolute;
+	bottom: 0px;
+}
+
+.alarm-item .footer .heading {
+	
+}
+
+.alarm-item .footer .text {
+	font-weight: bold;
+}
+
+.alarm-item .caption {
+	font-size: 14px;
+	position: absolute;
+	top:110px; 
+	width: 100%; 
+	left: 0px;
+	text-align: center;
+	color: rgba(255,255,255,0.9);
+}
+
+.alarm-background {
+	background: #FAFAFA !important;
+	border-color: #FAFAFA !important;
+	color: #000000;
+}
+
+a#alarm-button {
+	position: relative;
+	top: 5%;
+}
+
+a#alarm-button:HOVER {
+	cursor: pointer;
+}
+
+div#alarm-modal-content {
+	font-weight: lighter;
+}
+
+span#alarm-modal-name {
+	font-size: 12pt;
+}
+
+span#alarm-modal-severity {
+	font-size: 10pt;
+}
+
+span#alarm-modal-state {
+	font-size: 10pt;
+}
+
+div#alarm-modal-timestamp {
+	font-size: 11pt;
+}
+
+div#alarm-modal-description {
+	font-size: 11pt;
+}
+
+div#alarm-modal-img {
+	text-align: center;
+	vertical-align: middle;
+}
+
+div#alarm-modal-img  img {
+	width: 80%;
+}
+
+span.alarm-modal-heading {
+	font-size: 10pt;
+	font-weight: bold;
+}
+
+div.alarm-modal-description {
+	padding: 10px;
+}

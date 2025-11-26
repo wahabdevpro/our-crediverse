@@ -1,0 +1,112 @@
+<div>
+	<script id="groupdetails">
+	    <div id="groupdetails" class="col-xs-12 common-view">
+			<div class="row">
+				<div class="col-lg-3 col-md-4 col-sm-6">
+					<div class="box box-primary">
+        		    	<div class="box-body box-profile">
+    		          		<h2 class="text-center"><strong>{{ this.name }}</strong></h2>
+    		          		<hr/>
+							<div class="row" style="text-align:center; margin-bottom:20px;">
+								{{#hasPerms "Group_Delete"}}
+									<button type="button" class="btn btn-xs btn-danger deleteGroupButton">{{i18n "groups.groupDeleteButton"}}</button>
+								{{/hasPerms}}
+							</div>
+
+            			</div>
+            			<!-- /.box-body -->
+       				</div>
+				</div>
+				<div class="col-lg-9 col-md-8 col-sm-6">
+					<div class="nav-tabs-custom">
+  						<ul class="nav nav-tabs">
+    						<li class="active"><a href="#profile" data-toggle="tab">Profile</a></li>
+    						<li><a href="#amllimits" data-toggle="tab">{{i18n "groups.viewGroupAmlTab"}}</a></li>
+  						</ul>
+  						<div class="tab-content">
+						    <div class="active tab-pane info-panel" id="profile" style="margin:8px;">
+						    
+						    	{{#hasPerms "Group_Update"}}
+					    		<div class="row availableOperations">
+									<div class="col-lg-12 col-md-12">
+										<div class="btn-group" role="group" aria-label="...">
+											{{>viewButtonTemplate class='editGroupButton' label="groups.groupEditButton"}}
+										</div>
+									</div>
+								</div>
+								{{/hasPerms}}
+						    
+								<div class="row view-fields">
+									<div class="col-md-4 col-sm-6">
+										<h4>{{i18n "groups.general"}}</h4>
+
+										<div style="margin-left:10px;">
+
+											<div class="view-field">
+												<label>{{i18n "global.name"}}</label>
+												<div>{{ this.name }}</div>
+											</div>
+											<div class="view-field">
+												<label>{{i18n "global.description"}}</label>
+												<div>{{#if this.description}}{{ this.description }}{{else}}<span class="no-data">-</span>{{/if}}</div>
+											</div>
+											
+											<div class="view-field">
+												<label>{{i18n "global.tier"}}</label>
+												<div>{{#if this.tierName}}{{ this.tierName }}{{else}}<span class="no-data">-</span>{{/if}}</div>
+											</div>
+											
+											<div class="view-field">
+												<label>{{i18n "global.status"}}</label>
+												<div>
+													{{#ifCond this.state "==" "A"}}<label class="label label-success">{{ i18n "enums.state.active" }}</label>{{/ifCond}}
+													{{#ifCond this.state "==" "S"}}<label class="label label-warning">{{ i18n "enums.state.suspended" }}</label>{{/ifCond}}
+													{{#ifCond this.state "==" "D"}}<label class="label label-danger">{{ i18n "enums.state.deactivated" }}</label>{{/ifCond}}
+													{{#ifCond this.state "==" "P"}}<label class="label label-default">{{ i18n "enums.state.permanent" }}</label>{{/ifCond}}
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+    						</div>
+
+						    <div class="tab-pane info-panel" id="amllimits" style="margin:8px;">
+								<div class="row view-fields">
+									<div class="col-md-4 col-sm-6">
+										<h4>{{i18n "groups.viewAmlLimitHeading"}}</h4>
+
+										<div style="margin-left:10px;">
+										<div class="view-field">
+											<label>{{i18n "groups.viewMaxDailyCountLabel"}}</label>
+											<div>{{#if this.maxTransactionAmount}}{{ this.maxTransactionAmount }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "groups.viewMaxDailyAmountLabel"}}</label>
+											<div>{{#if this.maxDailyCount}}{{ this.maxDailyCount }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "groups.viewMaxTransAmountLabel"}}</label>
+											<div>{{#if this.maxDailyAmount}}{{ this.maxDailyAmount }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "groups.viewMaxMonthlyCountLabel"}}</label>
+											<div>{{#if this.maxMonthlyCount}}{{ this.maxMonthlyCount }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+										</div>
+										<div class="view-field">
+											<label>{{i18n "groups.viewMaxMonthlyAmountLabel"}}</label>
+											<div>{{#if this.maxMonthlyAmount}}{{ this.maxMonthlyAmount }}{{else}}<span class="no-data">{{i18n "notSet"}}</span>{{/if}}</div>
+										</div>
+
+										</div>
+									</div>
+								</div>
+   							</div>
+
+  						</div>
+					</div>				
+				</div>
+			</div>	
+	    </div>
+	</script>	
+</div>

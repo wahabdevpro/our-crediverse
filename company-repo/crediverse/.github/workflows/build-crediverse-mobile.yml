@@ -1,0 +1,90 @@
+name: Build Crediverse Mobile
+
+# Use this workflow for MANUAL runs (disable automatic workflow)
+#on: workflow_dispatch
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches:
+      - main
+      - ki_balance-refresh-button
+    paths:
+      - 'CrediverseMobile/**'
+      - '.github/workflows/**'
+    #tags:
+    #  - "*"
+
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Manual Deployment...'
+        required: true
+        default: 'manual-deployment'
+        type: choice
+        options:
+          - 'manual-deployment'
+concurrency:
+  group: ${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17 for Android SDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'adopt'
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+      - name: Set up JDK 11 for MobileApp
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: 'adopt'  
+      - name: Run Gradle Tests
+        run: |
+          cd CrediverseMobile && time ./gradlew --no-daemon testDebugUnitTest && cd ../
+      - name: Assemble all APKs
+        run: |
+          export BUILD_NUMBER=${{github.run_id}}
+          cd CrediverseMobile && time ./gradlew --no-daemon assemble
+      - name: App Artifacts (CS)
+        uses: actions/upload-artifact@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: Concurrent APKs
+          path: |
+            CrediverseMobile/app/build/outputs/apk/debug_demo_server/*.apk
+            CrediverseMobile/app/build/outputs/apk/sandbox/*.apk
+            #### We don't use a release file just yet
+            # CrediverseMobile/app/build/outputs/apk/release/*.apk
+          retention-days: 5
+          overwrite: true
+      - name: App Artifacts (MovIvy)
+        uses: actions/upload-artifact@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: Moov Ivory Coast APKs
+          path: |
+            CrediverseMobile/app/build/outputs/apk/movivy*/*.apk
+            !CrediverseMobile/app/build/outputs/apk/movivy*/*common*.apk
+          retention-days: 5
+          overwrite: true
+      - name: App Artifact (MovTog)
+        uses: actions/upload-artifact@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: Moov Togo APK
+          path: |
+            CrediverseMobile/app/build/outputs/apk/movtog*/*.apk
+            !CrediverseMobile/app/build/outputs/apk/movivy*/*common*.apk
+          retention-days: 5
+          overwrite: true

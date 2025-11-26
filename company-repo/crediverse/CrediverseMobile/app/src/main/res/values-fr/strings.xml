@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Crediverse</string>
+
+    <!-- Request Permission Reasons -->
+    <string name="permissions_needed">Autorisations nécessaires</string>
+    <string name="location">Localisation</string>
+    <string name="read_sms">Lire SMS</string>
+    <string name="make_phone_calls">Appels téléphoniques</string>
+    <string name="permission_reason_location">Requis pour l\'analyse</string>
+    <string name="permission_reason_read_sms">Afin de remplir automatiquement votre OTP</string>
+    <string name="permission_reason_make_calls">Afin de récupérer l\'IMSI pour plus de sécurité</string>
+
+    <!-- Agent Account Status -->
+    <string name="active">Actif</string>
+    <string name="suspended">Exclu</string>
+    <string name="deactivated">Désactivé</string>
+    <string name="permanent">Permanent</string>
+
+    <!-- Version Info -->
+    <string name="version_string">Version: <![CDATA[<b>%1$s</b>]]></string>
+    <string name="version_deprecation_string">Votre app cessera de fonctionner :</string>
+    <string name="newer_version">Version plus récente disponible :</string>
+    <string name="version_contact_operator">Veuillez contacter votre opérateur réseau pour l\'obtenir !</string>
+    <string name="version_choose_to_install">Choose <![CDATA[<i>%1$s</i>]]> to install it</string>
+    <string name="get_version_error">Impossible d\'obtenir les informations sur la version</string>
+    <string name="app_version_android_url_handling_error">Impossible de déterminer la gestion des URL<![CDATA[<br><br>]]>L\'URL <![CDATA[<b>%1$s</b>]]> a été <![CDATA[<i>copiée</i>]]> dans votre presse-papiers</string>
+
+    <!-- Global -->
+    <string name="image_logo_text">logo d\'entreprise</string>
+    <string name="account_info">Information sur le compte</string>
+    <string name="map_location">Emplacement Cartographie</string>
+    <string name="about_us_dropdown_text">À propos</string>
+    <string name="about_us">application Crediverse Agent ?</string>
+    <string name="build_string">Build: <![CDATA[<b>%1$s</b>]]></string>
+    <string name="logout">Déconnexion</string>
+    <string name="team_dashboard">Tableau de bord d\'équipe</string>
+    <string name="my_dashboard">Mon Tableau de bord</string>
+    <string name="dashboard">Tableau de bord</string>
+    <string name="home">Accueil</string>
+    <string name="sell">Vendre</string>
+    <string name="execu_stats">Exécutif Stats</string>
+    <string name="buy">Acheter</string>
+    <string name="buy_credit">Acheter du crédit</string>
+    <string name="profit">Profit</string>
+    <string name="airtime">Crédit</string>
+    <string name="data">Données internet</string>
+    <string name="sms">SMS</string>
+    <string name="transact">Traiter</string>
+    <string name="transfer">Transfert</string>
+    <string name="recipient">Destinataire</string>
+    <string name="amount">Le montant</string>
+    <string name="status">Statut</string>
+    <string name="bundle">Forfait</string>
+    <string name="bundle_list">Liste des forfaits</string>
+    <string name="history">Histoire</string>
+    <string name="analytics">Analytique</string>
+    <string name="stats">Statistiques</string>
+    <string name="cancel">Annuler</string>
+    <string name="open">Ouvrir</string>
+    <string name="close">Fermer</string>
+    <string name="c_ok">D\'accord</string>
+    <string name="later">Plus tard</string>
+    <string name="ref_prefix">Réf: %s</string>
+    <string name="from_prefix">De - %s</string>
+    <string name="to_prefix">À - %s</string>
+    <string name="go_back">Retourner</string>
+    <string name="back">Arrière</string>
+    <string name="balance">Solde principal</string>
+    <string name="english">Anglaise</string>
+    <string name="french">Français</string>
+    <string name="unknown">Inconnue</string>
+    <string name="unknown_status">Inconnue Statut</string>
+    <string name="personal">Personnel</string>
+    <string name="account">Compte</string>
+    <string name="reference_number">Numéro de réference</string>
+    <string name="source_to_destination">%1$s à %2$s</string>
+    <string name="please_confirm">Veuillez confirmer ?</string>
+    <string name="missing_imsi_permission">Pour utiliser l\'application, nous avons besoin de l\'autorisation \"passer des appels téléphoniques\" afin de vous autoriser auprès de l\'opérateur mobile.\n\nVeuillez accepter la demande d\'autorisation en redémarrant l\'application ou en la réinstallant</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="problem">Problème</string>
+    <string name="date_and_time">Date et heure</string>
+    <string name="invalid_amount_dialog">Veuillez vérifier le montant que vous avez entré, doit être un nombre et supérieur à zéro</string>
+    <string name="more">Plus</string>
+    <string name="busy">Occupé</string>
+    <string name="teams">Équipes</string>
+    <string name="team">Équipe</string>
+    <string name="my_team">Mon équipe</string>
+    <string name="my_stats">Bilan des ventes</string>
+    <string name="team_member">Membre de l\'équipe</string>
+    <string name="team_members">Membres de l\'équipe</string>
+    <string name="member_info">Infos du Membre</string>
+    <string name="agent">Agent</string>
+    <string name="agent_name">Nom d\'agent</string>
+    <string name="gross_retail_total">Ventes au détail brutes Total mondial</string>
+    <string name="already_showing">Déjà affiché</string>
+    <string name="not_applicable">N/D</string>
+    <string name="c_not_set">non défini</string>
+    <string name="err">Err</string>
+    <string name="weekday_abbreviation_monday">Lu</string>
+    <string name="weekday_abbreviation_tuesday">Ma</string>
+    <string name="weekday_abbreviation_wednesday">Me</string>
+    <string name="weekday_abbreviation_thursday">Je</string>
+    <string name="weekday_abbreviation_friday">Ve</string>
+    <string name="weekday_abbreviation_saturday">Sa</string>
+    <string name="weekday_abbreviation_sunday">Di</string>
+    <string name="cannot_be_empty">Ne peux pas être vide</string>
+
+    <!-- Time -->
+    <string name="just_now">à l\'instant</string>
+    <string name="in_a_moment">dans un moment</string>
+    <string name="a_moment_ago">il y a un moment</string>
+    <string name="x_minutes">%d minute(s)</string>
+    <string name="x_hours">%d heure(s)</string>
+    <string name="x_days">%d jour(s)</string>
+    <string name="x_weeks">%d semaine(s)</string>
+    <string name="time_future_tense">en %s</string>
+    <string name="time_past_tense">il y a %s</string>
+
+    <!-- Login Activity -->
+    <string name="login_title">%1$s Connexion</string>
+    <string name="login">Connexion</string>
+    <string name="msisdn_hint">Numéro de téléphone</string>
+    <string name="pin_hint">Code</string>
+    <string name="otp_hint">Code unique</string>
+    <string name="check_sms_for_otp">Veuillez vérifier SMS pour un code horaire</string>
+    <string name="otp_verify_failed">Échec de la vérification de l\'OTP</string>
+    <string name="forced_logout">Votre session a expiré, veuillez vous reconnecter</string>
+    <string name="logout_upgrade_required">Impossible de traiter votre demande. Mise à niveau de l\'application requise</string>
+    <string name="download">Télécharger</string>
+
+    <!-- Navigation Activity -->
+    <string name="navigation_title">Crediverse La navigation</string>
+    <string name="nav_history_limit_reached">Tu ne peux plus revenir en arrière<![CDATA[<b>Appuyez à nouveau pour vous déconnecter</b>]]></string>
+    <string name="cache_fault">Le cache de l\'application est corrompu, veuillez supprimer le cache de l\'application pour continuer</string>
+
+    <!-- Account Info (Navigation Overlay) -->
+    <string name="account_number">Compte # %s</string>
+    <string name="title">Titre</string>
+    <string name="full_name">Nom et prénom</string>
+    <string name="first_name">Prénom</string>
+    <string name="last_name">Nom de famille</string>
+    <string name="email">E-mail</string>
+    <string name="language">Langue</string>
+    <string name="state">Statut</string>
+    <string name="tier_name">Profil EVD</string>
+    <string name="close_account_info_floating_button_description">Fermer les informations du compte</string>
+    <string name="update_account_information">Modifier les informations de compte</string>
+    <string name="update_profile_success">Mise à jour du profil réussie</string>
+    <string name="account_information">Information sur le compte</string>
+    <string name="get_account_info_busy">Toujours occupé à obtenir des informations sur le compte du serveur</string>
+    <string name="get_account_info_failure">Un problème est survenu lors de la récupération des informations de votre compte, veuillez réessayer plus tard</string>
+    <string name="invalid_old_pin">Le vieux code PIN est incorrect</string>
+    <string name="change_pin_success">Modification du code PIN réussie</string>
+    <string name="change_pin_failure">Impossible de changer le PIN. Veuillez vérifier le format du PIN et ne pas réutiliser vos derniers PIN</string>
+    <string name="change_pin_oneline">Changer le PIN</string>
+    <string name="map_location_text">Emplacement\nCartographie</string>
+    <string name="change_pin">Changer\nle PIN</string>
+    <string name="update_info">Mettre\nà jour</string>
+    <string name="update_info_online">Mettre à jour</string>
+    <string name="email_hint">Adresse e-mail</string>
+    <string name="old_pin_hint">Entrez votre ANCIEN PIN</string>
+    <string name="new_pin_hint">Entrez votre NOUVEAU PIN</string>
+    <string name="old_pin">Ancien PIN</string>
+    <string name="new_pin">Nouveau PIN</string>
+    <string name="my_location_text">Ma Position</string>
+    <string name="make_language_change_effective">Pour que le changement de langue soit effectif, vous devrez vous déconnecter.\n\nSe déconnecter maintenant ?</string>
+    <!-- Title Options -->
+    <string name="title_mr">M.</string>
+    <string name="title_mrs">Mme.</string>
+    <string name="title_miss">Mlle</string>
+
+    <!-- Home Fragment -->
+    <string name="hello_prefix">Bonjour %s</string>
+    <string name="total_balance">Solde total principal</string>
+    <string name="on_hold_balance">Solde en attente</string>
+    <string name="bonus_balance">Disposition de bonus commercial</string>
+    <string name="target">Cible</string>
+    <string name="achieved">Avoir atteint</string>
+    <string name="weekly_sales">Ventes hebdo</string>
+    <string name="weekly_target">Cible hebdo</string>
+    <string name="show_balances">Afficher les soldes</string>
+
+    <string name="buy_credit_get_balance_error">Problème d\'obtention du solde de votre Crédit Moov</string>
+    <string name="buy_credit_from_mm_title">Acheter du crédit chez Crédit Moov</string>
+    <string name="buy_credit_amount_hint">Crédit Moov</string>
+    <string name="buy_credit_amount_prefix">Votre solde Crédit Moov: </string>
+    <string name="buy_credit_description">Entrez le montant Crédit Moov en échange d\'un crédit</string>
+    <string name="buy_credit_success">Acheté avec succès\n<![CDATA[<b>%1$s</b>]]></string>
+    <!-- Errors -->
+    <string name="buy_credit_invalid_amount">Crédit Moov Le montant ne peut pas être vide ou négatif</string>
+
+    <!-- Transfer Fragment -->
+    <string name="transfer_credit">Crédit de transfert</string>
+    <string name="transfer_amount_hint">Montant du crédit</string>
+    <string name="transfer_confirm">Vous transférerez un montant de crédit de <![CDATA[<b>%1$s</b>]]> à <![CDATA[<b>%2$s</b>]]>.\nÊtes-vous sûr ?</string>
+    <!-- transfer errors -->
+    <string name="transfer_success_title">Crédit transféré</string>
+    <string name="transfer_success_text">Transfert réussi de <![CDATA[<b>%1$s</b>]]> vers <![CDATA[<b>%2$s</b>]]></string>
+    <string name="transfer_failure_title">Problème de transfert</string>
+    <string name="transfer_error_invalid_channel">Impossible de transférer vers/depuis cette chaîne</string>
+    <string name="transfer_error_no_rule">Vous n\'êtes pas autorisé à effectuer cette transaction</string>
+    <!-- -->
+
+    <!-- transaction types -->
+    <string name="type_transfer">Transfert</string>
+    <string name="type_sell">Vente d\'unités</string>
+    <string name="type_reverse">Renversement</string>
+    <string name="type_partial_reversal">Inversion partielle</string>
+    <string name="type_promo_reward">Récompense promotionnelle</string>
+    <string name="type_self_topup">Auto-rechargement</string>
+    <string name="type_adjudicate">Arbitrage</string>
+    <string name="type_adjust">Ajustement</string>
+    <string name="type_non_airtime_debit">Vente de forfait</string>
+    <string name="type_non_airtime_refund">Remboursement du forfait</string>
+    <!-- generic errors -->
+    <string name="error_follow_up">Erreur technique. La transaction a peut-être échoué, veuillez contacter le support technique</string>
+    <string name="error_refill_failed">Échec de la recharge</string>
+    <string name="error_not_self">Impossible de vous envoyer des fonds</string>
+    <string name="error_insufficient_funds">Pas assez de fonds pour cette vente</string>
+    <string name="error_insufficient_funds_with_balance">Pas assez de fonds pour cette vente, votre solde est de %1$s</string>
+    <string name="error_auth">Un problème d\'authentification est survenu</string>
+    <string name="error_invalid_amount">Le montant saisi n\'est pas valide</string>
+    <string name="error_invalid_email">L\'email que vous avez saisi n\'est pas valide</string>
+    <string name="error_invalid_recipient">Le destinataire n\'est pas valide</string>
+    <string name="error_invalid_channel">Impossible d\'effectuer des transactions sur ce canal</string>
+    <string name="error_balance">0.0 (erreur)</string>
+    <string name="sell_failure_title">Problème de vente</string>
+
+    <!-- Sell Fragment -->
+    <string name="buy_airtime">Acheter du crédit</string>
+    <string name="sell_airtime">Vendre crédit</string>
+    <string name="sell_amount_hint">Le montant</string>
+    <string name="sell_confirm">Vous vendrez un montant de crédit de <![CDATA[<b>%1$s</b>]]> à <![CDATA[<b>%2$s</b>]]>.\nÊtes-vous sûr ?</string>
+    <!-- sell errors -->
+    <string name="sell_success_title">Crédit vendu</string>
+    <string name="sold_airtime">Vendu avec succès <![CDATA[<b>%1$s</b>]]> au <![CDATA[<b>%2$s</b>]]></string>
+    <!-- -->
+
+    <!-- Bundle Fragment -->
+    <string name="sell_bundle">Vendre un forfait</string>
+    <string name="bundle_choose_recipient">Sélectionnez un destinataire</string>
+    <string name="choose_bundle">Sélectionnez un forfait</string>
+    <string name="bundle_sale">Vendre un forfait</string>
+    <string name="bundle_amount_hint">Coût du forfait</string>
+    <string name="bundle_sale_recipient">Destinataire de forfait:<![CDATA[<br><b>%1$s</b>]]></string>
+    <string name="bundle_sale_confirm">Vous vendrez <![CDATA[<b>%1$s</b>]]> à <![CDATA[<b>%2$s</b>.<br />]]>Le coût est de <![CDATA[<b>%3$s</b>.<br />]]>Veuillez confirmer.</string>
+    <!-- bundle errors -->
+    <string name="bundle_list_empty">Aucun colis disponible pour ce destinataire</string>
+    <string name="bundle_listing_failed">Problème lors de la récupération de la liste des bundles, veuillez réessayer plus tard</string>
+    <string name="bundle_provision_failed">Impossible d\'approvisionner le destinataire avec ce bundle</string>
+    <string name="bundle_pin_invalid">Votre code PIN a été modifié. Veuillez vous reconnecter afin de réaliser des ventes de forfaits.</string>
+    <!-- -->
+
+    <!-- Sale History Fragment -->
+    <string name="history_title">Historique des transactions</string>
+    <string name="tx_info">Informations sur les transactions</string>
+    <string name="sale_history_transaction_no">Numéro de transaction</string>
+    <string name="sale_history_transaction_started">Transaction commencée</string>
+    <string name="sale_history_profit">Bénéfice</string>
+    <string name="sale_history_trade_bonus">Prime commerciale</string>
+    <string name="sale_history_trade_bonus_value">%1$s (%2$s%%)</string>
+    <string name="sale_history_commission_amount">Commission</string>
+    <string name="sale_history_balance_after">Mon solde après</string>
+    <string name="sale_history_bonus_after">Mon bonus après</string>
+    <string name="sale_history_follow_up">Suivi requis ?</string>
+    <string name="sale_history_rolled_back">Annulées ?</string>
+    <string name="repeat_sale">Vente répétée</string>
+    <string name="airtime_sold_24h">Vendu- 24h</string>
+    <string name="number_of_sales_24h"># Vente - 24h</string>
+    <string name="tx_list_empty">Aucune transaction trouvée</string>
+    <string name="no_more_transactions">Plus de transactions</string>
+    <string name="last_updated_prefix">Dernière MàJ: %s</string>
+    <string name="item_description">Description</string>
+
+    <!-- Sale History Fragment -->
+    <string name="stats_daily_tab_title">Quotidien</string>
+    <string name="stats_weekly_tab_title">Hebdomadaire</string>
+    <string name="stats_monthly_tab_title">Mensuel</string>
+
+    <!-- Stats Fragment -->
+    <string name="stats_team_description">Voir les stats de l\'équipe</string>
+    <string name="detailed_stats">Stats détaillées</string>
+    <string name="stats_members_description">Voir les stats des membres de l\'équipe</string>
+    <string name="stats_self_description">Voir mes propres statistiques</string>
+    <string name="stats_info_description">Afficher l\'aide pour le contenu de l\'écran</string>
+    <string name="stats_choice_description">Choisissez les statistiques à afficher</string>
+    <string name="stats_execu_description">Ouvrir Exécutif Stats</string>
+    <string name="tabs_description">Onglets de statistiques</string>
+    <string name="total_sales_today">Ventes aujourd\'hui</string>
+    <string name="airtime_sales_title">Vente d\'unités</string>
+    <string name="bundle_sales_title">Ventes de Forfaits</string>
+    <string name="credit_purchased_title">Crédit acheté</string>
+    <string name="prefix_personal">Mon</string>
+    <string name="stock_prefix_individual">Agent</string>
+    <string name="stock_prefix_team">Équipe</string>
+    <string name="stock_title">%1$s Stock</string>
+    <string name="sales_target_amount">Montant cible</string>
+    <string name="sales_target_title">Objectif de vente</string>
+    <string name="total_members_with_sales_target">%1$s/%2$s ONT OBJ</string>
+    <string name="update_weekly_sales_target_for_team_member">Mettre à jour l\'objectif de vente hebdomadaire pour<![CDATA[<br><b>%1$s</b>]]></string>
+    <string name="sales_target_updated_successfully">Objectif de vente mis à jour avec succès</string>
+    <string name="sales_target_removed_for_team_member">Objectif de vente supprimé pour<![CDATA[<br><b>%1$s</b>]]></string>
+    <string name="sales_target_update_failed">Problème lors de la mise à jour de l\'objectif de vente, veuillez réessayer plus tard</string>
+    <string name="transfers_title">Transferts</string>
+    <string name="hourly_stats_error">Une erreur s\'est produite lors de l\'obtention des ventes horaires, veuillez réessayer plus tard</string>
+    <string name="target_clear_hint">NB: Pour supprimer la cible, enlevez la valeur (ne la mettez pas à 0) et soumettez.</string>
+
+    <string name="unknown_profit_suffix_singular">%1$s transaction a un bénéfice inconnu</string>
+    <string name="unknown_profit_suffix_plural">%1$s transactions ont un bénéfice inconnu</string>
+
+    <string name="team_stats">Stats d\'équipe</string>
+    <string name="team_member_stats">Stats des membre de l\'équipe</string>
+    <string name="stats_suffix_agent">Agent, %1$s</string>
+    <string name="team_info">Infos sur l\'équipe</string>
+    <string name="number_of_members">Nombre de membres</string>
+    <string name="global_sales_hourly">Stats mondiales - Horaire</string>
+    <string name="no_hourly_sales_data">Il n\'y a pas de ventes horaires à afficher pour le moment</string>
+    <string name="team_dashboard_load_error">Un problème est survenu lors du chargement du tableau de bord de l\'équipe, veuillez réessayer plus tard</string>
+
+    <string name="legend">Légende</string>
+    <string name="number_of_sales">%1$s ventes</string>
+    <string name="trade_bonus_amount"><![CDATA[<b>%1$s</b>]]> bonus d\'échange</string>
+    <string name="number_of_transfers">%1$s transferts</string>
+
+    <string name="sales_today">Aujourd\'hui</string>
+    <string name="sales_yesterday">Hier</string>
+    <string name="sales_this_week">Cette semaine</string>
+    <string name="sales_last_week">La semaine dernière</string>
+    <string name="sales_this_month">Ce mois-ci</string>
+    <string name="sales_last_month">Le mois dernier</string>
+
+    <string name="load_dashboard_error">Impossible de charger une partie de votre tableau de bord, veuillez réessayer plus tard</string>
+    <string name="weekly_sales_error">Unable to get weekly sales, please try again later</string>
+    <string name="no_weekly_sales">Aucune vente hebdomadaire pour le moment, veuillez réessayer plus tard</string>
+
+    <!-- Agent Feedback Fragment -->
+    <string name="feedback_text">Envoyer des retours</string>
+    <string name="feedback_hint">Entrez votre retour d\'information</string>
+    <string name="invalid_feedback_message">Ne peut pas soumettre de commentaire vide.</string>
+    <string name="feedback_failure_title">Problème de retour d\'information</string>
+    <string name="feedback_success_title">Retour envoyé</string>
+    <string name="feedback_success_text">Le retour a été envoyé avec succès</string>
+    <string name="feedback_description_text">Nous aimerions connaître votre opinion !\nVeuillez nous fournir vos commentaires</string>
+
+    <!-- Mobile Money In/Out  -->
+    <string name="mobile_money_login">Connexion à l\'argent mobile</string>
+    <string name="password_hint">Entrez le PIN/mot de passe</string>
+    <string name="username_hint">Entrez votre e-mail/identifiant</string>
+    <string name="mm_cash_in">MobileMoney Dépôt</string>
+    <string name="mm_cash_in_btn">Dépôt</string>
+    <string name="mm_cash_out">MobileMoney Retirer</string>
+    <string name="mm_msisdn_hint_withdraw">Numéro de téléphone retraitant</string>
+    <string name="mm_msisdn_hint_depositor">Numéro de téléphone déposant</string>
+    <string name="mm_cash_out_btn">Retirer</string>
+    <string name="mm_deposit_amount">Dépôt envoyé</string>
+    <string name="mm_withdraw_amount">Retirer envoyé</string>
+    <string name="mm_withdraw_confirm">Retirez <![CDATA[<b>%1$s</b>]]> à partir du compte Mobile Money du <![CDATA[<b>%2$s</b>]]>. Êtes-vous sûr ?</string>
+    <string name="mm_deposit_confirm">Déposez <![CDATA[<b>%1$s</b>]]> sur le compte Mobile Money au <![CDATA[<b>%2$s</b>]]>. Êtes-vous sûr ?</string>
+    <string name="mm_withdraw_success">Retrait réussi de <![CDATA[<b>%1$s</b>]]> euros depuis le compte <![CDATA[<b>%2$s</b>]]></string>
+    <string name="mm_deposit_success">Dépôt réussi d\'un montant de <![CDATA[<b>%1$s</b>]]> euros sur le compte <![CDATA[<b>%2$s</b>]]></string>
+    <string name="mm_max_limit_error">Le montant est supérieur à la limite quotidienne de <![CDATA[<b>%1$s</b>]]></string>
+    <string name="mm_deposit_processing_notification">En cours de traitement du dépôt vers <![CDATA[<b>%1$s</b>]]></string>
+    <string name="mm_withdraw_processing_notification">En attente d\'autorisation de la part de <![CDATA[<br><b>%1$s</b></br>]]></string>
+    <string name="mm_progress_notification">Cela peut prendre jusqu\'à <![CDATA[<b>%1$s</b>]]> secondes</string>
+    <string name="mm_withdraw_error">J\'ai rencontré un problème en retirant de l\'argent</string>
+    <string name="mm_deposit_error">J\'ai eu un problème pour déposer de l\'argent</string>
+
+    <!-- Uncategorized  -->
+    <string name="balance_text">Solde: </string>
+    <string name="from_history">De l\'histoire</string>
+    <string name="submit_button_text">Soumettre</string>
+
+    <!-- Messages  -->
+    <string name="auth_forbidden">Cette action nécessite une autorisation</string>
+    <string name="auth_permission_denied">Vous n\'avez plus la permission et serez déconnecté</string>
+    <string name="unable_to_authenticate">Cette action nécessite une autorisation</string>
+    <string name="unable_to_connect">Impossible de se connecter au serveur d\'applications</string>
+    <string name="connection_timeout">Le serveur d\'application met trop de temps à répondre, veuillez réessayer plus tard</string>
+    <string name="internal_server_error">Erreur interne du serveur</string>
+    <string name="invalid_time">L\'heure de votre téléphone n\'est pas synchronisée avec le réseau, veuillez mettre à jour votre heure pour continuer</string>
+    <string name="request_error">Problème avec la demande, veuillez contacter le support pour plus d\'assistance. API-CODE-%s</string>
+    <string name="missing_location_permission">Permission de localisation non accordée</string>
+    <string name="location_not_found">Emplacement introuvable</string>
+
+    <!-- Team Service Messages -->
+    <string name="get_team_failed">Impossible d\'obtenir les informations sur l\'équipe, veuillez réessayer plus tard</string>
+    <string name="team_not_found">Aucun membre de l\'équipe trouvé</string>
+    <string name="get_membership_not_found">Aucun membre d\'équipe trouvé pour msisdn</string>
+    <string name="get_membership_failed">Problème d\'obtention des informations d\'appartenance à l\'équipe</string>
+    <string name="target_zero_or_too_large">Doit être supérieur à 0 et inférieur à %s</string>
+    <string name="target_no_change">Pas de changement d\'objectif de vente</string>
+
+    <!-- Sale History Status -->
+    <string name="ALREADY_ADJUDICATED">Déjà jugé</string>
+    <string name="ALREADY_REGISTERED">Déjà enregistré</string>
+    <string name="ALREADY_REVERSED">Déjà inversé</string>
+    <string name="BUNDLE_SALE_FAILED">Échec de la vente du colis</string>
+    <string name="CO_AUTHORIZE">Co autoriser</string>
+    <string name="CO_SIGN_ONLY_SESSION">Session de co-signature uniquement</string>
+    <string name="DAY_AMOUNT_LIMIT">Limite de quantité quotidienne</string>
+    <string name="DAY_COUNT_LIMIT">Limite de comptage quotidien</string>
+    <string name="FORBIDDEN">Interdit</string>
+    <string name="HISTORIC_PASSWORD">Le mot de passe est historique</string>
+    <string name="IMSI_LOCKOUT">L\'IMSI est verrouillé</string>
+    <string name="INSUFFICIENT_FUNDS">Fonds insuffisants</string>
+    <string name="INSUFFICIENT_PROVISN">Prestation insuffisante</string>
+    <string name="INTRATIER_TRANSFER">Transfert intra-niveau</string>
+    <string name="INVALID_AGENT">Agent non valide</string>
+    <string name="INVALID_AMOUNT">Montant invalide</string>
+    <string name="INVALID_BUNDLE">Forfait invalide</string>
+    <string name="INVALID_CHANNEL">Canal non valide</string>
+    <string name="INVALID_PASSWORD">Mot de passe invalide</string>
+    <string name="INVALID_PIN">Pin invalide</string>
+    <string name="INVALID_RECIPIENT">Destinataire non valide</string>
+    <string name="INVALID_STATE">État invalide</string>
+    <string name="INVALID_TRAN_TYPE">Type de transaction non valide</string>
+    <string name="INVALID_VALUE">Valeur invalide</string>
+    <string name="MAX_AMOUNT_LIMIT">Limite de montant maximum</string>
+    <string name="MONTH_AMOUNT_LIMIT">Limite de montant mensuel</string>
+    <string name="MONTH_COUNT_LIMIT">Limite de comptage mensuel</string>
+    <string name="NOT_ELIGIBLE">Non éligible</string>
+    <string name="NOT_REGISTERED">Non enregistré</string>
+    <string name="NOT_SELF">Pas soi</string>
+    <string name="NOT_WEBUSER_SESSION">Pas de session d\'utilisateur Web</string>
+    <string name="NO_IMSI">Aucun IMSI</string>
+    <string name="NO_LOCATION">Aucun emplacement</string>
+    <string name="NO_TRANSFER_RULE">Aucune règle de transfert</string>
+    <string name="OTHER_ERROR">Autre erreur</string>
+    <string name="PASSWORD_LOCKOUT">Le mot de passe est verrouillé</string>
+    <string name="PIN_LOCKOUT">Le code PIN est verrouillé</string>
+    <string name="REFILL_BARRED">Recharge interdite</string>
+    <string name="REFILL_DENIED">Recharge refusée</string>
+    <string name="REFILL_FAILED">Le rechargement a échoué</string>
+    <string name="REFILL_NOT_ACCEPTED">Recharge non acceptée</string>
+    <string name="SESSION_EXPIRED">Session expirée</string>
+    <string name="TECHNICAL_PROBLEM">Problème technique</string>
+    <string name="TEMPORARY_BLOCKED">Bloqué temporairement</string>
+    <string name="TIMED_OUT">Demande expirée</string>
+    <string name="TOO_LARGE">Trop large</string>
+    <string name="TOO_LONG">Trop long</string>
+    <string name="TOO_SHORT">Trop court</string>
+    <string name="TOO_SMALL">Trop petit</string>
+    <string name="TX_NOT_FOUND">Transaction introuvable</string>
+    <string name="WRONG_LOCATION">Emplacement incorrect</string>
+    <string name="SUCCESS">Succès</string>
+
+    <!-- Custom Map Marker Info Layout -->
+    <string name="agent_balance">Solde de l\'agent: %1$s</string>
+    <string name="agent_location_last_updated">Emplacement mis à jour à: %1$s</string>
+    <string name="agent_msisdn">MSISDN de l\'agent: %1$s</string>
+</resources>

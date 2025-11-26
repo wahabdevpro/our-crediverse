@@ -1,0 +1,93 @@
+<!-- Modal Server Info -->
+<div class="modal fade" id="configInfoModal" tabindex="-1" role="dialog" aria-labelledby="configInfoModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div id="configInfoModalHeader" class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="configInfomodalTitle">Add New Host</h4>
+      </div>
+      <div class="modal-body">
+      	<form id="configInfomodalForm" name="configInfomodalForm">
+			<div class="row" style="margin-bottom:10px;">
+				<div class="col-md-5">
+					<label for="msisdna" class="control-label">MSISDN (From)</label>
+					<input type="text" class="form-control modalInput" id="msisdna" name="msisdna" placeholder="From MSISDN Range" />
+					<span id="msisdna_error" class="error_message hide"></span>
+				</div>
+				
+				<div class="col-md-5">
+					<label for="msisdnb" class="control-label">MSISDN (to)</label>
+					<input type="text" class="form-control modalInput" id="msisdnb" name="msisdnb" placeholder="To MSISDN Range" />
+					<span id="msisdnb_error" class="error_message hide"></span>
+				</div>
+			</div>
+
+			<div class="row" style="margin-bottom:10px;">
+				<div class="col-md-5">
+					<label for="account" class="control-label">Account Number</label>
+					<input type="text" class="form-control modalInput" id="account" name="account" placeholder="Account Number (0 for Main)" />
+					<span id="account_error" class="error_message hide"></span>
+				</div>
+				
+				<div class="col-md-5">
+					<label for="amount" class="control-label">Amount</label>
+					<input type="text" class="form-control modalInput" id="amount" name="amount" placeholder="Amount (in lowest denominator)" />
+					<span id="amount_error" class="error_message hide"></span>
+				</div>
+			</div>
+
+			<div class="row" style="margin-bottom:10px;">
+				<div class="col-md-5">
+					<label for="interval" class="control-label">Update Interval</label>
+					<input type="text" class="form-control modalInput" id="interval" name="interval" placeholder="Interval" />
+					<span id="interval_error" class="error_message hide"></span>
+				</div>
+				
+				<div class="col-md-5">
+					<label for="timeUnit" class="control-label">Interval Type</label>
+					<select id="timeUnit" name="timeUnit" class="selectpicker modalInput" >
+						<option value="Seconds">Seconds</option>
+						<option value="Minutes">Minutes</option>
+						<option value="Hours">Hours</option>
+						<option value="Days">Days</option>
+						<option value="Weeks">Weeks</option>
+						<option value="Months">Months</option>
+						<option value="Years">Years</option>
+					</select>
+					<span id="timeUnit_error" class="error_message hide"></span>
+				</div>
+			</div>
+
+			<div class="row" style="margin-bottom:10px;">
+				<div class="col-md-5">
+					<label for="standardDeviation" class="control-label">Standard Deviation</label>
+					<input type="text" class="form-control modalInput" id="standardDeviation" name="standardDeviation" placeholder="Standard Deviation of update" />
+					<span id="standardDeviation_error" class="error_message hide"></span>
+				</div>
+					
+				<div class="col-md-5">
+					<label for="topupValue" class="control-label">Top-up Value</label>
+					<input type="text" class="form-control modalInput" id="topupValue" name="topupValue" placeholder="Leave Blank for no topup"/>
+					<span id="topupValue_error" class="error_message hide"></span>
+				</div>				
+			</div>
+
+			<div id="configInfomodalError" class="row alert alert-danger hide">
+					Things went wrong!!
+			</div>
+			
+			<div class="modal-footer">
+				<img id="updateWaiting" src="/img/cell_wait.gif" class="waiting hide" />
+				<button id="cancelUpdate" type="button" class="btn btn-default" data-dismiss="modal" onclick="closeServerInfoModal();">Cancel</button>
+				<button id="saveConfig" type="button" class="btn btn-primary" title="Add File Record" onclick="addUsageTimer()">Add Usage Timer</button>
+			</div>
+      	</form>
+
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script language="javascript">
+	bindDragable("configInfoModal", "configInfoModalHeader");
+</script>

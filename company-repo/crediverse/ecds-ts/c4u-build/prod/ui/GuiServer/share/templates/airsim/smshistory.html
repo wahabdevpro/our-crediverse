@@ -1,0 +1,31 @@
+<div>
+	<div id="" th:if="${#arrays.isEmpty(smsHistory)}">
+		<p>Currently No SMS's Available</p>
+	</div>
+	
+	<div th:if="${!#arrays.isEmpty(smsHistory)}" class="row">
+		<br/>
+		<table id="smshistory_table" class="table infotable table-hover table-bordered table-striped" style="width: 100%; table-layout: fixed;">
+			<col width="120px" />
+			<col width="120px" />
+			<col width="120px" />
+			<col width="400px" />
+			<thead>
+				<tr>
+					<th>Date</th>
+					<th>From</th>
+					<th>To</th>					
+					<th>Message</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="sms,iterStat : ${smsHistory}">
+					<td th:text="${sms.getTime() == null ? '' : new java.text.SimpleDateFormat('dd MMM yyyy HH:mm:ss').format(sms.getTime()) }">-</td>
+					<td th:text="${#strings.isEmpty(sms.getFromMSISDN())? '' : sms.getFromMSISDN() }">-</td>
+					<td th:text="${#strings.isEmpty(sms.getToMSISDN())? '' : sms.getToMSISDN() }">-</td>
+					<td th:text="${#strings.isEmpty(sms.getText())? '' : sms.getText()}">-</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

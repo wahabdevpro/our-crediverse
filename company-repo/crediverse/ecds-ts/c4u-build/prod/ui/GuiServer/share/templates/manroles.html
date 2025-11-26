@@ -1,0 +1,180 @@
+<style>
+	.user_heading {
+		font-size: 22px;
+		font-weight: bold;
+	}
+	
+	.error_message {
+		color:red;
+	}
+	
+	.model_content {
+		height: 300px;
+	}
+	
+	.waiting {
+		margin-left: -5px;
+		float:left;
+	}
+	
+	.roleindent {
+		margin-left: 10px;
+	}
+	
+	.permissions-panel-heading {
+		padding-top: 3px;
+		padding-bottom: 3px;
+		font-size:14px;
+	}
+		
+	.permissions-panel-title {
+		font-size:14px;	!important
+	}
+</style>
+
+
+<div class="row">
+  <div class="col-xs-12 col-sm-6 col-md-8 user_heading">Current Role List</div>
+  <div th:if="${can_update}" class="col-xs-6 col-md-4">
+  		<button type="button" class="btn btn-success btn-xs" style="float:right;" data-toggle="modal" onclick="showAdd();" title="add new role"><span class="glyphicon glyphicon-plus"></span></button>
+  </div>
+</div>
+
+<div class="row">
+	<table id="manroles" class="table infotable table-hover table-bordered table-striped">
+		<thead>
+			<tr>
+				<th>Role Id</th>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="roleDetail : ${roleDetails}" >
+				<td th:text="${roleDetail.roleId}">-</td>
+				<td th:text="${roleDetail.name}">-</td>
+				<td th:text="${roleDetail.description}">-</td>
+				<td>
+					<a th:id="${roleDetail.roleId}" href="#" onclick="showRoleInfo(this.id, false)" th:if="(${roleDetail.roleId} != 1)"><span class="glyphicon glyphicon-eye-open viewbutton" title="view"></span></a> 
+					<span th:if="(${roleDetail.roleId} != 1) and (${roleDetail.roleId} != 3) and (${can_update})">|</span>
+					<a th:id="${roleDetail.roleId}" href="#" onclick="showRoleInfo(this.id, true)" th:if="(${roleDetail.roleId} != 1) and (${roleDetail.roleId} != 3) and (${can_update})"><span class="glyphicon glyphicon-pencil editbutton" title="edit"></span></a>
+					<span th:if="(${roleDetail.roleId} != 1) and (${roleDetail.roleId} != 2) and (${roleDetail.roleId} != 3)  and (${can_update})">|</span>
+					<a th:id="${roleDetail.roleId}" href="#" onclick="deleteRole(this.id)" th:if="(${roleDetail.roleId} != 1) and (${roleDetail.roleId} != 2) and (${roleDetail.roleId} != 3) and (${can_update})"><span class="glyphicon glyphicon-trash deletebutton" title="delete"></span></a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+
+<!--  Delete Modal -->
+<div th:include="common :: deleteModal" />
+
+<!-- Modal -->
+<div class="modal fade" id="addRoleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Add New Security Role</h4>
+      </div>
+      <div class="modal-body">
+      	<form id="modalform" name="modalform">
+		<div id="General" class="model_content" style="width:550px;">
+			<br/>
+			<div class="row">
+				<div class="col-md-5">
+					<label for="name" class="control-label">Name</label>
+					<input type="text" class="form-control" id="name" name="name" placeholder="Role Name" />
+					<span id="name_error" class="error_message hide"></span>
+				</div>
+			</div>
+			
+			<br/>
+			<div class="row">
+				<div class="col-md-12">
+					<label for="description">Description</label>
+					<input type="text" class="form-control" id="description" name="description" placeholder="Description" />
+					<span id="description_error" class="error_message hide"></span>
+				</div>			
+			</div>
+		</div>
+		<div id="editPermissions" class="hide">
+			<div class="row">
+				<div class="col-md-5">
+					<label for="userid" style="font-size:large;">Permissions</label>
+				</div>
+			</div>
+								
+			<div class="panel-group" id="accordion">
+				<div class="panel panel-default" th:each="permCat : ${permCats}">
+					<div class="panel-heading permissions-panel-heading">
+					    <h4 class="panel-title permissions-panel-title">
+        					<a data-toggle="collapse" data-parent="#accordion" th:href="${'#' + #strings.replace(permCat.description,' ', '')}" th:text="${permCat.description}">Collapsible Group Item #1</a>
+        				</h4>
+					</div>
+					<div th:id="${#strings.replace(permCat.description,' ', '')}" class="panel-collapse collapse">
+						<div class="panel-body">
+							<div th:each="perm : ${permCat.permissions}" class="row checkbox roleindent">
+								<input type="checkbox" id="tl"  th:id="${'perm_' + perm.permPath + '.' + perm.permId}" th:name="${'perm_' + perm.permPath + '.' + perm.permId}" th:text="${perm.description}" th:disabled="${!perm.assignable || !user.canChangePermissions}" 
+									th:onclick="'javascript:checkPermission(\'' + ${perm.permPath + '.' + perm.permId} + '\', \'' + ${perm.implies} + '\', \'' + ${perm.impliedBy} + '\');'"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div th:switch="${permLevel}">
+				<div th:case="'noview'" class="alert alert-danger">You do not have sufficient rights to view permissions.</div>
+				<div th:case="*"></div>
+			</div>
+		</div>
+
+		<div id="viewPermissions" class="hide">
+			<div class="row">
+				<div class="col-md-12">
+					<label for="userid" style="font-size:large;">Real Permissions</label>
+				</div>
+			</div>
+
+			<div class="panel-group" id="accordion">
+				<div class="panel panel-default" th:each="permCat : ${permCats}">
+					<div class="panel-heading permissions-panel-heading">
+					    <h4 class="panel-title permissions-panel-title">
+        					<a data-toggle="collapse" data-parent="#accordion" th:href="${'#' + #strings.replace(permCat.description,' ', '')}" th:text="${permCat.description}">Collapsible Group Item #1</a>
+        				</h4>
+					</div>
+					<div th:id="${#strings.replace(permCat.description,' ', '')}" class="panel-collapse collapse">
+						<div class="panel-body">
+							<div th:each="perm : ${permCat.permissions}" class="row checkbox roleindent">
+								<input type="checkbox" id="tl"  th:id="${'viewperm_' + perm.permPath + '.' + perm.permId}" th:text="${perm.description}" th:disabled="${true}" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>			
+
+			<div th:switch="${permLevel}">
+				<div th:case="'noview'" class="alert alert-danger">You do not have sufficient rights to view permissions.</div>
+				<div th:case="*"></div>
+			</div>
+		</div>
+		
+		<div class="modal-footer">
+			<button id="selectall" type="button" class="btn btn-default hide" style="float:left" onclick="selectAllPermissions()">Select All</button>
+			<button id="unselectall" type="button" class="btn btn-default hide" style="float:left" onclick="unselectAllPermissions()">Unselect All</button>
+			
+			<img id="waiting" src="/img/cell_wait.gif" class="waiting hide" />
+			<button type="button" class="btn btn-default" data-dismiss="modal" onclick="clearModal();">Cancel</button>
+			<button id="nextmodalwindow" type="button" class="btn" onclick="modalSwitch();">Permissions</button>
+			<button id="saveRole" type="button" class="btn btn-primary" onclick="validateAndSend()">Add Role</button>
+		</div>
+      	</form>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script src="/js/pagejs/roleman.js"></script>
+<script src="/js/pagejs/mancommon.js"></script>

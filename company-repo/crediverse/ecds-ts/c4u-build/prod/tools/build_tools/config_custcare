@@ -1,0 +1,16 @@
+#Configuration
+
+basedir=../..
+
+#Build
+
+targetdir=core/TestHost
+targetdir=ui/CustomerCare/CrmWebServer
+targetdir=ui/CustomerCare/plugins/CrmPlugin
+
+#targetdir=ui/wui/GuiWebServer
+#targetdir=ui/wui/plugins/CustomerCareUI
+
+#Unit Tests
+
+#End

@@ -1,0 +1,91 @@
+<div>
+
+	<script id="transferFundsView">
+		<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		    <h4 class="modal-title">{{i18n "operations.transferTitle"}}</h4>
+		</div>
+		<div class="modal-body">
+			
+			<div id="error_message" class="alert alert-danger" style="padding:6px 15px; display:none;"></div>
+		
+			<form name="transferFundsForm" class="form-horizontal enterDetails" autocomplete="off">
+				{{>modalInput name="targetMSISDN" className="msisdnField" label="operations.msisdn" hint="operations.msisdnHint" value=this.targetMSISDN}}
+				{{>modalInput name="amount" className="amountField" label="operations.amount" hint="operations.amountHint" value=this.msisdn}}
+			</form>
+			
+			<div class="performingTransfer hide">
+				{{>bigSpinner operation=(i18n "operations.performTransferSpinText") }}
+			</div>
+
+		</div>
+		<div class="modal-footer">
+		    <div class="form-group">
+		        <div class="col-sm-offset-2 col-sm-10">
+		        	<button type="button" class="btn btn-default transferBtn" disabled="disabled">{{i18n "operations.transferBtn"}}</button>
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+		        </div>
+			</div>
+		</div>
+	</script>
+
+	<script id="selfTopupView">
+		<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		    <h4 class="modal-title">{{i18n "operations.selfTopupTitle"}}</h4>
+		</div>
+		<div class="modal-body">
+				
+			<form name="transferFundsForm" class="form-horizontal enterDetails" autocomplete="off">
+				{{>modalInput name="amount" className="amountField" label="operations.amount" hint="operations.amountHint" value=this.amount}}
+			</form>
+			
+			<div class="performingSelfTopup hide">
+				{{>bigSpinner operation=(i18n "operations.performselfTopupSpinText") }}
+			</div>
+
+		</div>
+		<div class="modal-footer">
+		    <div class="form-group">
+		        <div class="col-sm-offset-2 col-sm-10">
+		        	<button type="button" class="btn btn-default selfTopupBtn" disabled="disabled">{{i18n "operations.selfTopupBtn"}}</button>
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+		        </div>
+			</div>
+		</div>
+	</script>
+	
+	<script id="pinChangeView">
+		<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		    <h4 class="modal-title">{{i18n "operations.newPinTitle"}}</h4>
+		</div>
+		<div class="modal-body">
+				
+				<form name="pinChangeForm" class="form-horizontal enterDetails" autocomplete="off">
+					{{#if pinLengthExact}}
+						{{>modalPassword name="newPin" className="newPin" label="operations.newPin" hint="operations.newPinHintExact" value="" }}	
+					{{else}}
+						{{>modalPassword name="newPin" className="newPin" label="operations.newPin" hint="operations.newPinHint" value="" }}
+					{{/if}}
+					
+					
+					{{>modalPassword name="repeatPin" className="repeatPin" label="operations.repeatPin" hint="operations.repeatHint" value=""}}
+				</form>
+				
+				<div class="performingPinChange hide">
+					{{>bigSpinner operation=(i18n "operations.performPinChangeSpinText") }}
+				</div>
+					
+		</div>
+		<div class="modal-footer">
+		    <div class="form-group">
+		        <div class="col-sm-offset-2 col-sm-10">
+		        	<button type="button" class="btn btn-default changePinBtn" disabled="disabled">{{i18n "operations.changePinBtn"}}</button>
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+		        </div>
+			</div>
+		</div>
+	</script>
+	
+</div>

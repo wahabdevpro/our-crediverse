@@ -1,0 +1,21 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+dependencies {
+    implementation project(':CoreInterfaces')
+    implementation project(':Configuration')
+    implementation project(':StringUtilities')
+    implementation project(':Calendar')
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'org.slf4j:log4j-over-slf4j:1.7.25'
+    implementation 'ch.qos.logback:logback-classic'
+    implementation 'commons-collections:commons-collections:3.2.2'
+    implementation 'org.apache.commons:commons-csv:1.5'
+}

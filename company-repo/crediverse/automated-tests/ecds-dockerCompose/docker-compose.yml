@@ -1,0 +1,117 @@
+version: '2'
+services:
+  ecds-ts-server:
+    image: 'ghcr.io/concurrent-systems/crediverse/ecds-ts:${TAG}'
+    command: server
+    restart: unless-stopped
+    container_name: ecds-ts-server
+    hostname: cspr01-ecds
+    env_file:
+      - /srv/etc/ecds-ts/ecds-ts.env
+    ports:
+      - '3300:3300'
+      - '3301:3301'
+      - '10101:10101'
+      - '10012:10012'
+      - '14000:14000'
+      - '14100:14100'
+      - '14200:14200'
+      - '14400:14400'
+      - '16100:16100'
+      - '10011:10011'
+    volumes:
+      - /srv/etc/ecds-ts/registration.lic:/opt/cs/c4u/1.0/hostprocess/license/registration.lic
+      - /srv/etc/ecds-ts/MySqlConfig.xml:/var/opt/cs/c4u/MySqlConfig.xml
+      - /srv/etc/ecds-ts/database-settings-olap.xml:/var/opt/cs/c4u/database-settings-olap.xml
+      - /srv/etc/ecds-ts/database-settings-oltp.xml:/var/opt/cs/c4u/database-settings-oltp.xml
+      - /srv/logs/ecds-ts-server:/var/opt/cs/c4u/log
+      - /srv/var/ecds-ts-server/airsim:/tmp/C4U/
+      - /srv/edr/ecds-ts-server:/var/opt/cs/ecds/tdr/002
+      - /srv/var/ecds-ts-server/batch:/var/opt/cs/ecds/batch
+      - /srv/var/ecds-ts-server/accdump:/var/opt/cs/ecds/adump/002
+      - /etc/localtime:/etc/localtime:ro
+      - /srv/backup/c4u-db/:/var/opt/cs/c4u/backup/database/
+      - /etc/hostname:/etc/hostname:ro
+    networks:
+      default:
+        aliases:
+          - cspr01-ecds
+
+  ecds-ts-gui:
+    image: 'ghcr.io/concurrent-systems/crediverse/ecds-ts:${TAG}'
+    command: gui serverHost=ecds-ts-server
+    restart: unless-stopped
+    container_name: ecds-ts-gui
+    ports:
+      - '12082:8082'
+    volumes:
+      - /srv/etc/ecds-ts/MySqlConfig.xml:/var/opt/cs/c4u/MySqlConfig.xml
+      - /srv/etc/ecds-ts/database-settings-olap.xml:/var/opt/cs/c4u/database-settings-olap.xml
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/hostname:/etc/hostname:ro
+    networks:
+      default:
+        aliases:
+          - ecds-ts-gui
+
+  ecds-gui-admin:
+    image: 'ghcr.io/concurrent-systems/crediverse/ecds-gui:${TAG}'
+    command: admin
+    restart: unless-stopped
+    container_name: ecds-gui-admin
+    working_dir: /etc/opt/cs/ecdsui/default
+    ports:
+      - '12080:8080'
+    volumes:
+      - /srv/etc/ecds-ts/application-prod.properties.admin:/etc/opt/cs/ecdsui/default/application-prod.properties
+      - /srv/logs/ecds-gui-admin:/var/opt/cs/ecdsui/log
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/hostname:/etc/hostname:ro
+    networks:
+      default:
+        aliases:
+          - ecds-gui-admin
+
+  ecds-gui-portal:
+    image: 'ghcr.io/concurrent-systems/crediverse/ecds-gui:${TAG}'
+    command: portal
+    restart: unless-stopped
+    container_name: ecds-gui-portal
+    working_dir: /etc/opt/cs/ecdsui/portal
+    ports:
+      - '12086:8086'
+    volumes:
+      - /srv/etc/ecds-ts/application-prod.properties.portal:/etc/opt/cs/ecdsui/portal/application-prod.properties
+      - /srv/logs/ecds-gui-portal:/var/opt/cs/ecdsui/log
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/hostname:/etc/hostname:ro
+    networks:
+      default:
+        aliases:
+          - ecds-gui-portal
+
+  ecds-api:
+    image: 'ghcr.io/concurrent-systems/crediverse/ecds-api:${TAG}'
+    restart: unless-stopped
+    container_name: ecds-api
+    working_dir: /etc/opt/cs/ecdsapi/default
+    ports:
+      - '9084:9084'
+    volumes:
+      - /srv/etc/ecds-ts/application-prod.properties.api:/etc/opt/cs/ecdsapi/default/application-prod.properties
+      - /srv/logs/ecds-api:/var/opt/cs/ecdsapi/log
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/hostname:/etc/hostname:ro
+    networks:
+      default:
+        aliases:
+          - ecds-api
+
+volumes:
+  etcd_data:
+    driver: local
+
+networks:
+  default:
+    external:
+      name: legacy

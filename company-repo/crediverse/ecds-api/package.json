@@ -1,0 +1,22 @@
+{
+  "name": "ecds-api",
+  "version": "1.0.0",
+  "description": "ECDS API",
+  "main": "App.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {
+    "urequire": "^0.7.0-beta.33"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "App.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.concurrent.systems:ecds/ecds-api.git"
+  },
+  "author": "",
+  "license": "ISC"
+}

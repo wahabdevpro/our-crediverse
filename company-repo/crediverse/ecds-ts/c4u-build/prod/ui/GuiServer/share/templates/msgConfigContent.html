@@ -1,0 +1,119 @@
+<style type="text/css" media="screen">
+.box {
+    background:gray;
+    height:100px;
+    width:100px;
+    margin:10px;
+}
+
+.typeahead {
+	border: 1px solid gray;
+	overflow: visible;
+	min-height: 50px;
+	padding: 2px;
+	width: 90%;
+	margin: 5px auto;
+ }
+ 
+ .typeaheadsm {
+	border: 1px solid gray;
+	overflow: visible;
+	min-height: 25px;
+	padding: 2px;
+	width: 100%;
+	margin: 5px auto;
+ }
+ 
+.variable-formatting{
+	color:blueviolet;
+}
+
+div.inputor {
+  word-wrap: break-word;      /* IE 5.5-7 */
+  white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
+  white-space: pre-wrap;      /* current browsers */
+}
+.atwho-view{position:absolute;top:0;left:0;display:none;margin-top:18px;background:#fff;border:1px solid #DDD;border-radius:3px;box-shadow:0 0 5px rgba(0,0,0,.1);min-width:120px;z-index:10}.atwho-view .cur{background:#36F;color:#fff}.atwho-view .cur small{color:#fff}.atwho-view strong{color:#36F}.atwho-view .cur strong{color:#fff;font:bold}.atwho-view ul{list-style:none;padding:0;margin:auto}.atwho-view ul li{display:block;padding:5px 10px;border-bottom:1px solid #DDD;cursor:pointer}.atwho-view small{font-size:smaller;color:#777;font-weight:400}
+
+</style>
+
+<div th:if="${no_config}" class="row">
+	<div class="col-sm-12">
+		<center>
+			<div class="well well-lg">		
+				<b>There is currently no configuration available for this component</b>
+			</div>
+		</center>
+	</div>
+</div>
+  	
+<form th:if="not ${no_config}" id="msgForm" name="msgForm" role="form">
+	<div th:each="msg : ${notifications}" class="panel-group" id="accordion">
+  		<div class="panel panel-default">
+		  	<div class="panel-heading">
+		        <h4 class="panel-title">
+			        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" th:href="'#msg_' + ${msg.notificationId}" th:text="${msg.description}">
+			          Default Heading
+			        </a>
+	      		</h4>
+		  	</div>
+			<div th:id="'msg_' + ${msg.notificationId}" class="panel-collapse collapse">
+				<div class="panel-body">
+					<div class="form-group" th:each="text,iterStat : ${msg.text}">
+						<div th:if="${! #strings.isEmpty(locale.get(iterStat.index)) }">
+							  <label for="exampleInputEmail1" th:text="${locale.get(iterStat.index)}"></label>							  
+							  <div contenteditable="true" th:id="${'not_' + msg.notificationId + '_' + iterStat.index}" th:name="${'not_' + msg.notificationId + '_' + iterStat.index}" th:text="${ text }" spellcheck="false" th:dir="${directions.get(iterStat.index)}" class="ui-corner-all typeahead inputor" id="typeahead"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+  	</div>
+  	<div class="msgpanelspacer"></div> 
+	
+	<div class="row">
+  		<div id="update_msg_not" class="col-sm-10 update_notification">
+  		</div>
+  	</div>
+  	  	
+	<div id="update_buttons_msg" th:if="${not #lists.isEmpty(notifications)}" class="row">
+			<div class="col-sm-6">
+		<button id="submit_msg" type="button" class="btn btn-primary"  th:onclick="'javascript:validateAndSave(\'msg\', \''+ ${service_uid} +'\', \''+ ${service_version} +'\');'">Update Details</button>
+		<button id="reload_config" type="button" class="btn" th:onclick="'javascript:loadConfigurationContent(\''+ ${service_uid} +'\', \''+ ${service_name} +'\', \'reload\');'">Cancel Changes</button>
+			</div>
+	</div>
+	
+	<div id="busy_updating_msg" class="row hide" th:include="UpdateBar" />	
+  	
+</form>
+
+<!-- Load message editor library last -->
+
+<script th:inline="javascript">
+	// <![CDATA[
+
+    var myObjs = /*[[${notification_variables}]]*/;
+    msgVariables = new Array();
+    try 
+    {
+        if (myObjs != null)
+       	{
+           for (var i = 0; i < myObjs.length; i++) {
+           		msgVariables[i] = myObjs[i];
+           }
+       	}
+    } 
+    catch(err)
+    {
+    	//Nothing that can be done
+    }
+   // ]]>
+</script>
+
+<script language="javascript">
+	try {
+		initMessaging();
+	} catch(err) {
+		alert("page error: " + err);
+	}
+</script>

@@ -1,0 +1,209 @@
+<wsdl:definitions xmlns:ns1="urn:concurrent-systems:ssim-api:1.0:wsdl:1.0" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://comp.ws.xsim.pcc.platform.concurrent.co.za/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SsimPortCompService" targetNamespace="http://comp.ws.xsim.pcc.platform.concurrent.co.za/">
+  <wsdl:import location="SsimPortCompService_pcc.wsdl" namespace="urn:concurrent-systems:ssim-api:1.0:wsdl:1.0"></wsdl:import>
+  <wsdl:binding name="SsimPortCompServiceSoapBinding" type="ns1:SsimPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"></soap:binding>
+    <wsdl:operation name="purchaseBundle">
+      <soap:operation soapAction="urn:concurrent-systems:ssim-api:1.0:wsdl:1.0:purchaseBundle" style="document"></soap:operation>
+      <wsdl:input name="purchaseBundle">
+        <soap:header message="ns1:purchaseBundle" part="requestHeader" use="literal"></soap:header>
+        <soap:body parts="requestParameters" use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="purchaseBundleResponse">
+        <soap:header message="ns1:purchaseBundleResponse" part="responseHeader" use="literal"></soap:header>
+        <soap:body parts="responseParameters" use="literal"></soap:body>
+      </wsdl:output>
+      <wsdl:fault name="FaultResponse_Exception">
+        <soap:fault name="FaultResponse_Exception" use="literal"></soap:fault>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="extendValidity">
+      <soap:operation soapAction="urn:concurrent-systems:ssim-api:1.0:wsdl:1.0:extendValidity" style="document"></soap:operation>
+      <wsdl:input name="extendValidity">
+        <soap:header message="ns1:extendValidity" part="requestHeader" use="literal"></soap:header>
+        <soap:body parts="requestParameters" use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="extendValidityResponse">
+        <soap:header message="ns1:extendValidityResponse" part="responseHeader" use="literal"></soap:header>
+        <soap:body parts="responseParameters" use="literal"></soap:body>
+      </wsdl:output>
+      <wsdl:fault name="FaultResponse_Exception">
+        <soap:fault name="FaultResponse_Exception" use="literal"></soap:fault>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="topUpBenefits">
+      <soap:operation soapAction="urn:concurrent-systems:ssim-api:1.0:wsdl:1.0:topUpBenefits" style="document"></soap:operation>
+      <wsdl:input name="topUpBenefits">
+        <soap:header message="ns1:topUpBenefits" part="requestHeader" use="literal"></soap:header>
+        <soap:body parts="requestParameters" use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="topUpBenefitsResponse">
+        <soap:header message="ns1:topUpBenefitsResponse" part="responseHeader" use="literal"></soap:header>
+        <soap:body parts="responseParameters" use="literal"></soap:body>
+      </wsdl:output>
+      <wsdl:fault name="FaultResponse_Exception">
+        <soap:fault name="FaultResponse_Exception" use="literal"></soap:fault>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getBundleSuggestions">
+      <soap:operation soapAction="urn:concurrent-systems:ssim-api:1.0:wsdl:1.0:getBundleSuggestions" style="document"></soap:operation>
+      <wsdl:input name="getBundleSuggestions">
+        <soap:header message="ns1:getBundleSuggestions" part="requestHeader" use="literal"></soap:header>
+        <soap:body parts="requestParameters" use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="getBundleSuggestionsResponse">
+        <soap:header message="ns1:getBundleSuggestionsResponse" part="responseHeader" use="literal"></soap:header>
+        <soap:body parts="responseParameters" use="literal"></soap:body>
+      </wsdl:output>
+      <wsdl:fault name="FaultResponse_Exception">
+        <soap:fault name="FaultResponse_Exception" use="literal"></soap:fault>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="activate">
+      <soap:operation soapAction="urn:concurrent-systems:ssim-api:1.0:wsdl:1.0:activate" style="document"></soap:operation>
+      <wsdl:input name="activate">
+        <soap:header message="ns1:activate" part="requestHeader" use="literal"></soap:header>
+        <soap:body parts="requestParameters" use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="activateResponse">
+        <soap:header message="ns1:activateResponse" part="responseHeader" use="literal"></soap:header>
+        <soap:body parts="responseParameters" use="literal"></soap:body>
+      </wsdl:output>
+      <wsdl:fault name="FaultResponse_Exception">
+        <soap:fault name="FaultResponse_Exception" use="literal"></soap:fault>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="customiseBundleSuggestion">
+      <soap:operation soapAction="urn:concurrent-systems:ssim-api:1.0:wsdl:1.0:customiseBundleSuggestion" style="document"></soap:operation>
+      <wsdl:input name="customiseBundleSuggestion">
+        <soap:header message="ns1:customiseBundleSuggestion" part="requestHeader" use="literal"></soap:header>
+        <soap:body parts="requestParameters" use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="customiseBundleSuggestionResponse">
+        <soap:header message="ns1:customiseBundleSuggestionResponse" part="responseHeader" use="literal"></soap:header>
+        <soap:body parts="responseParameters" use="literal"></soap:body>
+      </wsdl:output>
+      <wsdl:fault name="FaultResponse_Exception">
+        <soap:fault name="FaultResponse_Exception" use="literal"></soap:fault>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deactivate">
+      <soap:operation soapAction="urn:concurrent-systems:ssim-api:1.0:wsdl:1.0:deactivate" style="document"></soap:operation>
+      <wsdl:input name="deactivate">
+        <soap:header message="ns1:deactivate" part="requestHeader" use="literal"></soap:header>
+        <soap:body parts="requestParameters" use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="deactivateResponse">
+        <soap:header message="ns1:deactivateResponse" part="responseHeader" use="literal"></soap:header>
+        <soap:body parts="responseParameters" use="literal"></soap:body>
+      </wsdl:output>
+      <wsdl:fault name="FaultResponse_Exception">
+        <soap:fault name="FaultResponse_Exception" use="literal"></soap:fault>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getServiceNames">
+      <soap:operation soapAction="urn:concurrent-systems:ssim-api:1.0:wsdl:1.0:getServiceNames" style="document"></soap:operation>
+      <wsdl:input name="getServiceNames">
+        <soap:header message="ns1:getServiceNames" part="requestHeader" use="literal"></soap:header>
+        <soap:body parts="requestParameters" use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="getServiceNamesResponse">
+        <soap:header message="ns1:getServiceNamesResponse" part="responseHeader" use="literal"></soap:header>
+        <soap:body parts="responseParameters" use="literal"></soap:body>
+      </wsdl:output>
+      <wsdl:fault name="FaultResponse_Exception">
+        <soap:fault name="FaultResponse_Exception" use="literal"></soap:fault>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="migrate">
+      <soap:operation soapAction="urn:concurrent-systems:ssim-api:1.0:wsdl:1.0:migrate" style="document"></soap:operation>
+      <wsdl:input name="migrate">
+        <soap:header message="ns1:migrate" part="requestHeader" use="literal"></soap:header>
+        <soap:body parts="requestParameters" use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="migrateResponse">
+        <soap:header message="ns1:migrateResponse" part="responseHeader" use="literal"></soap:header>
+        <soap:body parts="responseParameters" use="literal"></soap:body>
+      </wsdl:output>
+      <wsdl:fault name="FaultResponse_Exception">
+        <soap:fault name="FaultResponse_Exception" use="literal"></soap:fault>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="unsubscribe">
+      <soap:operation soapAction="urn:concurrent-systems:ssim-api:1.0:wsdl:1.0:unsubscribe" style="document"></soap:operation>
+      <wsdl:input name="unsubscribe">
+        <soap:header message="ns1:unsubscribe" part="requestHeader" use="literal"></soap:header>
+        <soap:body parts="requestParameters" use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="unsubscribeResponse">
+        <soap:header message="ns1:unsubscribeResponse" part="responseHeader" use="literal"></soap:header>
+        <soap:body parts="responseParameters" use="literal"></soap:body>
+      </wsdl:output>
+      <wsdl:fault name="FaultResponse_Exception">
+        <soap:fault name="FaultResponse_Exception" use="literal"></soap:fault>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="stopAutoLifeCycleEvents">
+      <soap:operation soapAction="urn:concurrent-systems:ssim-api:1.0:wsdl:1.0:stopAutoLifeCycleEvents" style="document"></soap:operation>
+      <wsdl:input name="stopAutoLifeCycleEvents">
+        <soap:header message="ns1:stopAutoLifeCycleEvents" part="requestHeader" use="literal"></soap:header>
+        <soap:body parts="requestParameters" use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="stopAutoLifeCycleEventsResponse">
+        <soap:header message="ns1:stopAutoLifeCycleEventsResponse" part="responseHeader" use="literal"></soap:header>
+        <soap:body parts="responseParameters" use="literal"></soap:body>
+      </wsdl:output>
+      <wsdl:fault name="FaultResponse_Exception">
+        <soap:fault name="FaultResponse_Exception" use="literal"></soap:fault>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="startAutoLifeCycleEvents">
+      <soap:operation soapAction="urn:concurrent-systems:ssim-api:1.0:wsdl:1.0:startAutoLifeCycleEvents" style="document"></soap:operation>
+      <wsdl:input name="startAutoLifeCycleEvents">
+        <soap:header message="ns1:startAutoLifeCycleEvents" part="requestHeader" use="literal"></soap:header>
+        <soap:body parts="requestParameters" use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="startAutoLifeCycleEventsResponse">
+        <soap:header message="ns1:startAutoLifeCycleEventsResponse" part="responseHeader" use="literal"></soap:header>
+        <soap:body parts="responseParameters" use="literal"></soap:body>
+      </wsdl:output>
+      <wsdl:fault name="FaultResponse_Exception">
+        <soap:fault name="FaultResponse_Exception" use="literal"></soap:fault>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="subscribe">
+      <soap:operation soapAction="urn:concurrent-systems:ssim-api:1.0:wsdl:1.0:subscribe" style="document"></soap:operation>
+      <wsdl:input name="subscribe">
+        <soap:header message="ns1:subscribe" part="requestHeader" use="literal"></soap:header>
+        <soap:body parts="requestParameters" use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="subscribeResponse">
+        <soap:header message="ns1:subscribeResponse" part="responseHeader" use="literal"></soap:header>
+        <soap:body parts="responseParameters" use="literal"></soap:body>
+      </wsdl:output>
+      <wsdl:fault name="FaultResponse_Exception">
+        <soap:fault name="FaultResponse_Exception" use="literal"></soap:fault>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getServiceInstances">
+      <soap:operation soapAction="urn:concurrent-systems:ssim-api:1.0:wsdl:1.0:getServiceInstances" style="document"></soap:operation>
+      <wsdl:input name="getServiceInstances">
+        <soap:header message="ns1:getServiceInstances" part="requestHeader" use="literal"></soap:header>
+        <soap:body parts="requestParameters" use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="getServiceInstancesResponse">
+        <soap:header message="ns1:getServiceInstancesResponse" part="responseHeader" use="literal"></soap:header>
+        <soap:body parts="responseParameters" use="literal"></soap:body>
+      </wsdl:output>
+      <wsdl:fault name="FaultResponse_Exception">
+        <soap:fault name="FaultResponse_Exception" use="literal"></soap:fault>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <!--
+  <wsdl:service name="SsimPortCompService">
+    <wsdl:port binding="tns:SsimPortCompServiceSoapBinding" name="SsimPortCompPort">
+      <soap:address location="http://172.17.5.72:8181/cxf/HelloWorld"></soap:address>
+    </wsdl:port>
+  </wsdl:service>
+  -->
+</wsdl:definitions>

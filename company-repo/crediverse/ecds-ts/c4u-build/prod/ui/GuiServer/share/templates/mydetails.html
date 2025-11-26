@@ -1,0 +1,170 @@
+<style>
+	.topheading {
+		 font-weight: bold;
+		 font-size: large;
+		 padding-left: 10px;
+	}
+	.mylabel {
+		 font-weight: bold;
+		 font-size: medium;
+		 float:right;
+	}
+	.myinfo {
+		font-size: medium;
+	}
+	.update_details {
+		float:right;
+		padding-right: 10px;
+	}
+	.error_message {
+		color:red;
+	}
+	.waiting {
+		margin-left: -5px;
+		float:left;
+	}	
+</style>
+<div class="panel panel-default">
+  <div class="panel-heading">
+  	<span class="topheading">System Details</span>
+  </div>
+  <div class="panel-body">
+	<div class="row">
+		<div class="col-md-2">
+			<span class='mylabel'>System Version</span>
+		</div>
+		<div class="col-md-4">
+			<span class='myinfo' th:text="${VERSION}">0.0.0</span>
+		</div>
+	</div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+  	<span class="topheading">My Details</span>
+ 	<span class="update_details">
+  		<button id="updateDetailsBtn" type="button" class="btn btn-primary btn-sm">Update Details</button>
+  	</span>
+  </div>
+  <div class="panel-body">
+	<div class="row">
+		<div class="col-md-2">
+			<span class='mylabel'>User Name</span>
+		</div>
+		<div class="col-md-4">
+			<span class='myinfo' th:text="${mydetails.userId}">johne</span>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-2">
+			<span class='mylabel'>Full Name</span>
+		</div>
+		<div class="col-md-4">
+			<span class='myinfo' th:text="${mydetails.name}">00</span>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-2">
+			<span class='mylabel'>Mobile</span>
+		</div>
+		<div class="col-md-4">
+			<span class='myinfo' th:text="${mydetails.mobileNumber}">00</span>
+		</div>
+	</div>	
+	<br/>
+	<div class="row">
+		<div class="col-md-2">
+			<span class='mylabel'>Password</span>
+		</div>
+		<div class="col-md-4">
+			<button id="updatePassword" type="button" class="btn btn-default btn-sm">Change Password</button>
+		</div>
+	</div>	
+  </div>
+</div>
+
+<!-- Password Modal -->
+<div class="modal fade" id="updatePasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Update My Password</h4>
+      </div>
+      <div class="modal-body">
+      	<form id="passwordform" name="passwordform">
+			<div id="passwordDialog" class="model_content">
+				<div class="row">
+					<div class="col-md-5">
+						<label for="oldpassword">Old Password</label>
+						<input type="password" class="form-control" id="oldpassword" name="oldpassword" placeholder="Old Password" />
+						<span id="oldpassword_error" class="error_message hide"></span>
+					</div>
+				</div>
+				<br/>
+				<div class="row">
+					<div class="col-md-5">
+						<label for="userid">Password</label>
+						<input type="password" class="form-control" id="password1" name="password1" placeholder="New Password" />
+						<span id="password1_error" class="error_message hide">passwords do not match</span>
+					</div>
+					<div class="col-md-5">
+						<label for="fullname">Repeat Password</label>
+						<input type="password" class="form-control" id="password2" name="password2" placeholder="Repeat Password" />
+						<span id="password2_error" class="error_message hide">passwords do not match</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				<img id="waitingPassword" src="/img/cell_wait.gif" class="waiting hide" />
+			  	<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				<button id="updateDetails" type="button" class="btn btn-primary" onclick="updatePassword()">Update Password</button>
+			</div>
+      	</form>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- User Details Modal -->
+<div class="modal fade" id="updateDetailsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Update My Details</h4>
+      </div>
+      <div class="modal-body">
+      	<form id="detailsForm" name="detailsForm">
+			<div id="General" class="model_content">
+				<div class="row">
+					<div class="col-md-5">
+						<label for="fullname">Full Name</label>
+						<input type="text" class="form-control" id="fullname" name="fullname" placeholder="Full Name" th:value="${mydetails.name}" />
+						<span id="fullname_error" class="error_message hide"></span>
+					</div>
+					<div class="col-md-5">
+						<label for="userid">Mobile Number</label>
+						<input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile Number" th:value="${mydetails.mobileNumber}" />
+						<span id="mobile_error" class="error_message hide"></span>
+					</div>				
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				<img id="waitingDetails" src="/img/cell_wait.gif" class="waiting hide" />
+			  	<button type="button" class="btn btn-default" data-dismiss="modal" >Cancel</button>
+			  	<button id="saveUser" type="button" class="btn btn-primary" onclick="updateDetails()">Update</button>
+			</div>
+      	</form>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script src="/js/pagejs/mancommon.js"></script>
+<script src="/js/pagejs/mydetails.js"></script>

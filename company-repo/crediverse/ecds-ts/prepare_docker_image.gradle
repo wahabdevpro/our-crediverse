@@ -1,0 +1,219 @@
+import org.apache.tools.ant.filters.*
+
+project.ext.set("ecdsts.os.prefix", "/opt/cs/c4u/1.0")
+project.ext.set("ecdsts.os.share", "/var/opt/cs/c4u/share")
+project.ext.set("ecdsts.start.scripts", "scripts")
+project.ext.set("ecdsts.os.etc", "/etc")
+
+project.ext.set("ecdsts.tls", "tls")
+project.ext.set("ecdsts.build.scripts", "scripts")
+project.ext.set("ecdsts.build.package", "package")
+project.ext.set("ecdsts.build.bin", "build/resources/main/bin")
+project.ext.set("ecdsts.guiserver", project.property("ecdsts.os.prefix") + "/guiserver")
+project.ext.set("ecdsts.hostprocess", project.property("ecdsts.os.prefix") + "/hostprocess")
+project.ext.set("ecdsts.hxc", project.property("ecdsts.os.prefix") + "/hxc")
+project.ext.set("ecdsts.supervisor", project.property("ecdsts.os.prefix") + "/supervisor")
+
+project.ext.set("ecdsts.buildId", project.buildId)
+project.ext.set("buildId", project.buildId)
+
+task prepareDockerImage(type: Copy) {
+
+    delete "docker_image"
+    mkdir "docker_image"
+
+    from(project.property("ecdsts.tls")) {
+        into project.property("ecdsts.tls")
+        fileMode 0644
+    }
+
+    from(project.property("ecdsts.build.scripts") + '/c4u-supervisor.config') {
+        into project.property("ecdsts.os.etc") + "/sysconfig/"
+        fileMode 0644
+        duplicatesStrategy DuplicatesStrategy.EXCLUDE
+        rename { String fileName ->
+            fileName.replace("c4u-supervisor.config", "c4u-supervisor")
+        }
+    }
+
+    def currentSubProject = project(':HostProcess')
+
+    from((currentSubProject.buildDir as String) + "/libs") {
+        into project.property("ecdsts.hostprocess") + "/lib"
+        //fileMode 0644
+        duplicatesStrategy DuplicatesStrategy.EXCLUDE
+        exclude("*sources*")
+        rename '(' + currentSubProject.name + ')-(.+).jar', '$1.jar'
+    }
+
+    from((currentSubProject.buildDir as String) + "/3rd") {
+        into project.property("ecdsts.hostprocess") + "/lib"
+        //fileMode 0644
+        duplicatesStrategy DuplicatesStrategy.EXCLUDE
+        exclude("*sources*")
+        exclude("*GuiServer*")
+    }
+
+    from(project.property("ecdsts.start.scripts") + "/cs-ecds-ts-dbtool.py") {
+        into project.property("ecdsts.hostprocess") + "/bin"
+        fileMode 0755
+        duplicatesStrategy DuplicatesStrategy.EXCLUDE
+    }
+
+    from(project.property("ecdsts.build.scripts") + "/c4u-hostprocess.sh") {
+        into project.property("ecdsts.build.bin")
+        fileMode 0755
+        duplicatesStrategy DuplicatesStrategy.EXCLUDE
+    }
+
+    //logger.lifecycle(project.property("ecdsts.build.scripts")+"/c4u-hostprocess.sh")
+    //logger.lifecycle(project.property("ecdsts.build.bin"))
+
+    currentSubProject = project(':GuiServer')
+
+    from(currentSubProject.projectDir.path + '/install/gradle.run.template') {
+        duplicatesStrategy DuplicatesStrategy.EXCLUDE
+        into project.property("ecdsts.guiserver") + "/bin"
+        filter(ReplaceTokens, tokens: [PATH: project.property("ecdsts.os.prefix")])
+        fileMode 0755
+        duplicatesStrategy DuplicatesStrategy.EXCLUDE
+        rename { String fileName ->
+            fileName.replace("gradle.run.template", "guiserver")
+        }
+    }
+
+    from(currentSubProject.projectDir.path + "/etc") {
+        into project.property("ecdsts.guiserver") + "/etc"
+        //fileMode 0644
+        duplicatesStrategy DuplicatesStrategy.EXCLUDE
+    }
+
+    from(currentSubProject.projectDir.path + "/src/main/resources") {
+        into project.property("ecdsts.guiserver") + "/lib"
+        //fileMode 0644
+        duplicatesStrategy DuplicatesStrategy.EXCLUDE
+    }
+
+    from(currentSubProject.projectDir.path + "/share") {
+        into project.property("ecdsts.guiserver") + "/share"
+        //fileMode 0644
+        duplicatesStrategy DuplicatesStrategy.EXCLUDE
+    }
+
+    from((currentSubProject.buildDir as String) + "/3rd") {
+        into project.property("ecdsts.guiserver") + "/lib"
+        //fileMode 0644
+        duplicatesStrategy DuplicatesStrategy.EXCLUDE
+        exclude("*sources*")
+        //rename '('+currentSubProject.name+')-(.+).jar', '$1.jar'
+    }
+
+    from((currentSubProject.buildDir as String) + "/classes/java/main") {
+        into project.property("ecdsts.guiserver") + "/lib"
+        //fileMode 0644
+        duplicatesStrategy DuplicatesStrategy.EXCLUDE
+    }
+
+    // gradle.pluginSet is defined in settings.gradle
+    gradle.pluginSet.each { String name ->
+        def Project pg = project(name)
+        from((pg.buildDir as String) + "/resources/main") {
+            into project.property("ecdsts.hostprocess") + "/resources"
+            fileMode 0644
+            duplicatesStrategy DuplicatesStrategy.EXCLUDE
+        }
+        from((pg.buildDir as String) + "/libs") {
+            into project.property("ecdsts.hostprocess") + "/plugins"
+            //fileMode 0644
+            duplicatesStrategy DuplicatesStrategy.EXCLUDE
+            exclude("*sources*")
+            rename '(' + pg.name + ')-(.+).jar', '$1.jar'
+        }
+
+        from((pg.buildDir as String) + "/3rd") {
+            into project.property("ecdsts.os.prefix") + "/lib"
+            //fileMode 0644
+            duplicatesStrategy DuplicatesStrategy.EXCLUDE
+            exclude("*sources*")
+            exclude("*META-INF*")
+        }
+
+        from(pg.projectDir.path + "/pkgextra/share-config/sql") {
+            into project.property("ecdsts.os.share") + "/sql"
+            //fileMode 0644
+            include("*.sql", "*.asciidoc")
+            duplicatesStrategy DuplicatesStrategy.EXCLUDE
+        }
+
+        from(pg.projectDir.path + "/pkgextra/share-config/sql-misc") {
+            into project.property("ecdsts.os.share") + "/sql-misc"
+            //fileMode 0644
+            include("*.sql", "*.asciidoc")
+            duplicatesStrategy DuplicatesStrategy.EXCLUDE
+        }
+
+
+        // Can these be removed ???
+        from(pg.projectDir.path + "/reports") {
+            into project.property("ecdsts.hostprocess") + "/reports"
+            //fileMode 0644
+            include("*.jasper")
+            duplicatesStrategy DuplicatesStrategy.EXCLUDE
+        }
+    }
+
+    // gradle.c4uLibSet is defined in settings.gradle
+    gradle.c4uLibSet.each { String name ->
+        def Project pg = project(name)
+        from((pg.buildDir as String) + "/libs") {
+            into project.property("ecdsts.hostprocess") + "/lib"
+            //fileMode 0644
+            duplicatesStrategy DuplicatesStrategy.EXCLUDE
+            exclude("*sources*")
+            exclude("*GuiServer*")
+            rename '(' + pg.name + ')-(.+).jar', '$1.jar'
+        }
+        from((pg.buildDir as String) + "/3rd") {
+            into project.property("ecdsts.os.prefix") + "/lib"
+            //fileMode 0644
+            duplicatesStrategy DuplicatesStrategy.EXCLUDE
+            exclude("*sources*")
+            exclude("*META-INF*")
+        }
+        from((pg.buildDir as String) + "/resources/main") {
+            into project.property("ecdsts.hostprocess") + "/lib"
+            fileMode 0644
+            duplicatesStrategy DuplicatesStrategy.EXCLUDE
+        }
+    }
+
+    into "docker_image/"
+    from(project.property("ecdsts.start.scripts") + '/c4u-hostprocess.service') {
+        fileMode 0644
+        duplicatesStrategy DuplicatesStrategy.EXCLUDE
+    }
+    from(project.property("ecdsts.start.scripts") + '/c4u-guiserver.service') {
+        fileMode 0644
+        duplicatesStrategy DuplicatesStrategy.EXCLUDE
+    }
+    from(project.property("ecdsts.start.scripts") + '/c4u-supervisor.service') {
+        fileMode 0644
+        duplicatesStrategy DuplicatesStrategy.EXCLUDE
+    }
+    from((project.buildDir as String) + "/resources/main/libs") {
+        into project.property("ecdsts.os.prefix") + "/lib"
+        fileMode 0644
+        duplicatesStrategy DuplicatesStrategy.EXCLUDE
+        exclude { it.file.name.contains('GuiServer') }
+    }
+    from((project.buildDir as String) + "/resources/main/ecds-ts.properties") {
+        into project.property("ecdsts.os.prefix") + "/lib"
+        fileMode 0644
+    }
+    /*from((project.buildDir as String) + "/resources/main/") {
+        into project.property("ecdsts.os.prefix") + "/lib"
+        fileMode 0644
+        duplicatesStrategy DuplicatesStrategy.EXCLUDE
+        exclude("*META-INF*")
+    }*/
+}

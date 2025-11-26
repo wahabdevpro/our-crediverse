@@ -1,0 +1,6 @@
+supplier
+ussd -f 923075000112 -t localhost *111*923075000111*
+1
+1
+00
+exit

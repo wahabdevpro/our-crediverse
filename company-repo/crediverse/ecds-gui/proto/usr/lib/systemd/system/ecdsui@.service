@@ -1,0 +1,27 @@
+# vim: set ft=dosini sts=4 ts=4 sw=4 noexpandtab fo-=t:
+# https://www.freedesktop.org/software/systemd/man/systemd.directives.html
+# https://www.freedesktop.org/software/systemd/man/systemd.exec.html
+# https://www.freedesktop.org/software/systemd/man/systemd.unit.html
+# https://www.freedesktop.org/software/systemd/man/systemd.service.html
+# https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/System_Administrators_Guide/sect-Managing_Services_with_systemd-Unit_Files.html
+
+[Unit]
+Description=ECDS-GUI Service Manager (instance=%i)
+After=systemd-journald.service
+After=systemd-networkd.service
+
+[Service]
+Type=simple
+Environment="ECDSUI_PROFILES=" "ECDSUI_INSTANCE=%i" "ECDSUI_SYSCONFDIR=/etc/opt/cs/ecdsui/%i" "JAVA_HOME=" "ECDSUI_PREFIX=/opt/cs/ecdsui"
+EnvironmentFile=-/etc/opt/cs/ecdsui/%i/sysconfig
+WorkingDirectory=/etc/opt/cs/ecdsui/%i
+ExecStart=/opt/cs/ecdsui/bin/ecdsui.sh
+SuccessExitStatus=143
+Restart=always
+RestartSec=30
+User=cs
+Group=cs
+
+[Install]
+WantedBy=multi-user.target
+DefaultInstance=default

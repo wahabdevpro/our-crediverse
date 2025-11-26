@@ -1,0 +1,1448 @@
+<!-- vim: set ft=html sts=4 ts=4 sw=4 noexpandtab fo-=t: -->
+<div>
+
+	
+	
+<!-- Adjustment screens -->
+	<script id="adjustmentsConfig">
+		<div class="box">
+
+			{{>configMainHeading heading="config.adjustmentsHeading" btnclass="showAdjustmentDialog" btntext="global.editBtn" permission="Transaction_ConfigAdjust"}}
+			
+            <form class="form-horizontal">
+            	<div class="box-body">
+            	
+            		{{>configNotificationLabel heading="config.notification" notification=this.notification.texts }}
+            		{{>configNotificationLabel heading="config.agentNotification" notification=this.agentNotification.texts }}
+            		{{>configNotificationLabel heading="config.batchNotification" notification=this.batchNotification.texts }}
+            		
+            	</div>
+			</form>
+			
+		</div>
+	</script>
+	
+	<script id="adjustmentsConfigModal">
+		{{>configModalHeader heading="config.adjustmentsHeading"}}
+		<div class="modal-body">
+			<div class="ruledetails">
+				<form name="adjustmentConfigForm" class="form-horizontal adjustmentsConfigForm">
+				
+					{{>configAddVariableNote head="config.tip"}}
+				
+					{{>configNotificationInput name="notification" heading="config.notification" notification=this.notification}}
+					{{>configNotificationInput name="agentNotification" heading="config.agentNotification" notification=this.agentNotification}}
+					{{>configNotificationInput name="batchNotification" heading="config.batchNotification" notification=this.batchNotification}}
+					
+				</form>
+			</div>
+		</div>
+		{{>configModalFooter }}
+	</script>
+	
+	<!-- Balance Enquiries -->
+
+	<script id="balanceEnquiriesConfig">
+		<div class="box">
+
+			{{>configMainHeading heading="config.balanceEnqHeading" btnclass="showBalanceEnquiriesConfigDialog" btntext="global.editBtn" permission="Transaction_ConfigBalEnquiry"}}
+			
+            <form class="form-horizontal">
+	        	<div class="box-body">
+	        	{{>configSubHeading heading="config.ownBalanceEnqHeading"}}
+
+	        	{{>configSectionHeading heading="config.generalSettings"}}
+	        	{{>configLabel label="config.ussdCommand" value=this.ussdCommand.texts.en forceDisplay=true }}
+	        	<hr/>
+
+	        	<!--
+				{{>configLabel label="Charge" value=this.charge forceDisplay=true}}
+				-->
+				{{>configNotificationLabel heading="config.smsCommand" notification=this.smsCommand.texts}}
+				{{>configNotificationLabel heading="config.notification" notification=this.notification.texts}}
+				
+				{{>configSubHeading heading="config.agentBalanceEnqHeading"}}
+				{{>configSectionHeading heading="config.generalSettings"}}
+				{{>configLabelBoolean name="onlyOwnersMayQueryRetailers" label="config.onlyOwnersMayQueryRetailers" value=this.onlyOwnersMayQueryRetailers trueValue="config.yes" falseValue="config.no" }}
+				{{>configLabel label="config.ussdCommand" value=this.ussdForOthersCommand.texts.en forceDisplay=true }}
+	        	<hr/>
+				{{>configNotificationLabel heading="config.smsCommand" notification=this.smsForOthersCommand.texts}}
+				{{>configNotificationLabel heading="config.notification" notification=this.notificationForOther.texts}}
+	        	<hr/>
+	        	</div>
+			</form>
+			
+		</div>
+	</script>
+	
+	<script id="balanceEnquiriesConfigModal">
+		{{>configModalHeader heading="config.balanceEnqHeading"}}
+		<div class="modal-body">
+			<div class="ruledetails">
+				<form name="adjustmentConfigForm" class="form-horizontal balanceEnquiriesConfigForm">
+					{{>configAddVariableNote}}
+					
+					{{>configSubHeading heading="config.ownBalanceEnqHeading"}}
+					<h5 class="configDialogSectionHeading">{{i18n "config.generalSettings"}}</h5>
+					{{>configEnglishInput name="ussdCommand" heading="config.ussdCommand" notification=this.ussdCommand}}
+					
+					<!--
+	      			{{>configInput name="charge" label="Charge" hint="Charge" value=this.charge}}
+					-->
+				
+					{{>configNotificationInput name="smsCommand" heading="config.smsCommand" notification=this.smsCommand}}
+					
+					
+					
+					{{>configNotificationInput name="notification" heading="config.notification" notification=this.notification}}
+					
+					
+					
+					{{>configSubHeading heading="config.agentBalanceEnqHeading"}}
+					<h5 class="configDialogSectionHeading">{{i18n "config.generalSettings"}}</h5>
+					{{>booleanRadioInput name="onlyOwnersMayQueryRetailers" label="config.onlyOwnersMayQueryRetailers" trueLabel="config.yes" falseLabel="config.no" value=this.onlyOwnersMayQueryRetailers}}
+					
+					{{>configEnglishInput name="ussdForOthersCommand" heading="config.ussdCommand" notification=this.ussdForOthersCommand}}
+					{{>configNotificationInput name="smsForOthersCommand" heading="config.smsCommand" notification=this.smsForOthersCommand}}
+					{{>configNotificationInput name="notificationForOther" heading="config.notification" notification=this.notificationForOther}}
+					
+				</form>
+			</div>
+		</div>
+		{{>configModalFooter }}
+	</script>
+	
+	<!-- Batch Configuration -->
+	<script id="batchConfig">
+		<div class="box">
+
+			{{>configMainHeading heading="config.batchHeading" btnclass="showBatchConfigDialog" btntext="global.editBtn" permission="Transaction_ConfigBatch"}}
+	
+            <form class="form-horizontal">
+	        	<div class="box-body">
+
+					{{>configSectionHeading heading="config.generalSettings"}}
+					{{>configLabel label="config.batchArchiveFolder" value=this.batchArchiveFolder forceDisplay=true}}
+					{{>configLabel label="config.batchEntriesRetentionDays" value=this.batchEntriesRetentionDays forceDisplay=true}}
+					{{>configLabel label="config.batchDownloadChunkSize" value=this.batchDownloadChunkSize forceDisplay=true}}
+					<hr/>
+
+	        	</div>
+			</form>
+			
+		</div>
+	</script>
+	
+	<script id="batchConfigModal">
+		{{>configModalHeader heading="config.batchHeading"}}
+		<div class="modal-body">
+			<div class="ruledetails">
+				<form name="adjustmentConfigForm" class="form-horizontal batchConfigForm">
+
+					<h5 class="configDialogSectionHeading">{{i18n "config.generalSettings"}}</h5>
+	      			{{>configInput name="batchArchiveFolder" label="config.batchArchiveFolder" hint="config.batchArchiveFolderHint" value=this.batchArchiveFolder}}
+	      			{{>configInput name="batchEntriesRetentionDays" label="config.batchEntriesRetentionDays" hint="config.batchEntriesRetentionDays" value=this.batchEntriesRetentionDays}}
+	      			{{>configInput name="batchDownloadChunkSize" label="config.batchDownloadChunkSize" hint="config.batchDownloadChunkSize" value=this.batchDownloadChunkSize}}
+				
+				</form>
+			</div>
+		</div>
+		{{>configModalFooter }}
+	</script>
+	
+	<!-- Change PIN Configuration -->
+	<script id="changePinsConfig">
+		<div class="box">
+
+			{{>configMainHeading heading="config.changePinHeading" btnclass="showChangePinsConfigDialog" btntext="global.editBtn" permission="Transaction_ConfigPinChange"}}
+
+			<form class="form-horizontal">
+	        	<div class="box-body">
+
+	        	{{>configSectionHeading heading="config.generalSettings"}}
+	        	{{>configLabel label="config.ussdCommand" value=this.ussdCommand.texts.en forceDisplay=true }}
+	        	
+	        	<!--
+				{{>configLabel name="charge" label="Charge" hint="Charge" value=this.charge forceDisplay=true}}
+				<hr/>
+				-->
+
+				<hr/>
+				{{>configNotificationLabel heading="config.smsCommand" notification=this.smsCommand.texts}}
+				{{>configNotificationLabel heading="config.notification" notification=this.notification.texts}}
+				
+	        	</div>
+			</form>
+			
+		</div>
+	</script>
+
+	<script id="changePinsConfigModal">
+		{{>configModalHeader heading="config.changePinHeading"}}
+		<div class="modal-body">
+			<div class="ruledetails">
+				<form name="adjustmentConfigForm" class="form-horizontal changePinsConfigForm">
+					{{>configAddVariableNote}}
+					
+					<h5 class="configDialogSectionHeading">{{i18n "config.generalSettings"}}</h5>
+					{{>configEnglishInput name="ussdCommand" heading="config.ussdCommand" notification=this.ussdCommand}}
+					
+					<!--
+	      			{{>configInput name="charge" label="Charge" hint="Charge" value=this.charge}}
+					-->
+					{{>configNotificationInput name="smsCommand" heading="config.smsCommand" notification=this.smsCommand}}					
+					{{>configNotificationInput name="notification" heading="config.notification" notification=this.notification}}
+				</form>
+			</div>
+		</div>
+		{{>configModalFooter }}
+	</script>
+	
+	<!-- Deposits Query -->
+	<script id="depositsQueryConfig">
+		<div class="box">
+
+			{{>configMainHeading heading="config.depositHeading" btnclass="showDepositsQueryDialog" btntext="global.editBtn" permission="Transaction_ConfigDepQry"}}
+			
+            <form class="form-horizontal">
+	        	<div class="box-body">
+	        	
+	        		{{>configSectionHeading heading="config.generalSettings"}}
+	        		{{>configLabel label="config.ussdCommand" value=this.ussdCommand.texts.en forceDisplay=true }}
+	        		
+	        		<!--
+					{{>configLabel name="charge" label="Charge" hint="Charge" value=this.charge forceDisplay=true}}
+					<hr/>
+					-->
+					<hr/>
+					{{>configNotificationLabel heading="config.smsCommand" notification=this.smsCommand.texts}}
+					{{>configNotificationLabel heading="config.notification" notification=this.notification.texts}}				
+					{{>configNotificationLabel heading="config.response" notification=this.response.texts}}				
+	        	</div>
+			</form>
+			
+		</div>
+	</script>
+	
+	<script id="depositsQueryConfigModal">
+		{{>configModalHeader heading="config.depositHeading"}}
+		<div class="modal-body">
+			<div class="ruledetails">
+				<form name="adjustmentConfigForm" class="form-horizontal depositsQueryForm">
+					{{>configAddVariableNote}}
+					
+					<h5 class="configDialogSectionHeading">{{i18n "config.generalSettings"}}</h5>
+					{{>configEnglishInput name="ussdCommand" heading="config.ussdCommand" notification=this.ussdCommand}}
+					
+					<!--
+	      			{{>configInput name="charge" label="Charge" hint="Charge" value=this.charge}}
+					-->
+					{{>configNotificationInput name="smsCommand" heading="config.smsCommand" notification=this.smsCommand}}
+					{{>configNotificationInput name="notification" heading="config.notification" notification=this.notification}}
+					{{>configNotificationInput name="response" heading="config.response" notification=this.response}}
+				</form>
+			</div>
+		</div>
+		{{>configModalFooter }}
+	</script>
+
+	<!-- General Config -->
+	<script id="generalConfig">
+		<div class="box">
+			{{>configMainHeading heading="config.generalSettings" btnclass="showGeneralSettingsDialog" btntext="global.editBtn" permission="General_GeneralConfig"}}
+			
+            <form class="form-horizontal">
+	        	<div class="box-body">
+	        	
+	        		{{>configSectionHeading heading="config.generalEmailSettings"}}
+	        		{{>configLabel name="smtpRetries" label="config.smtpRetries" value=this.smtpRetries forceDisplay=true }}	
+	        	</div>
+			</form>
+			
+		</div>
+	</script>
+	
+	<script id="generalConfigModal">
+		{{>configModalHeader heading="config.generalConfigHeading"}}
+		<div class="modal-body">
+			<div class="ruledetails">
+				<form name="generalConfigForm" class="form-horizontal generalConfigForm">
+					{{>configAddVariableNote}}
+					<h5 class="configDialogSectionHeading">{{i18n "config.generalEmailSettings"}}</h5>
+					{{>configInput name="smtpRetries" label="config.smtpRetries" hint="config.smtpRetries" value=this.smtpRetries}}
+				</form>
+			</div>
+		</div>
+		{{>configModalFooter }}
+	</script>
+	
+	<!-- Mobile Number Format Config -->
+	<script id="mobileNumberFormat">
+		<div class="box">
+			{{>configMainHeading heading="config.msisdnTransformation.pageTitle" permission="General_GeneralConfig"}}
+			
+			<div class="nav-tabs-custom">
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active">
+						<a href="#mapping" aria-controls="mapping" role="tab" data-toggle="tab">{{i18n "Config-Mapping"}}</a>
+					</li>
+					<li role="presentation">
+						<a href="#msisdn-transformation-tool-tab" aria-controls="config" role="tab" data-toggle="tab">{{i18n "Tool"}}</a>
+					</li>
+				</ul>
+			
+			<!-- Tab panes -->
+				<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active" id="mapping">
+						<form class="form-horizontal">
+						<div class="box-body">
+		        			<div class="msisdn-transformation">	        	
+				        		{{>configSectionHeading heading="MSISDN Transformation Rule"}}
+								<table class="table table-bordered table-hover table-striped dataTable dtr-inline" style="margin: 0px !important;">
+									<thead>
+										<tr role="row">
+											<th id="oprcodes">Operator code(s)</th>
+											<th class="col-md-1" id="prepend">Prepend</th>
+											<th id="btn" style="text-align: center">Action</th>
+										</tr>
+									</thead>
+									<tbody id="mappingTable">
+										<tr role="row" class="mapping-row">
+											<td ><input class="mapping-old-codes" type="text" value="{{this.value}}"></td>
+											<td class="col-md-1"><input class="mapping-new-prefix" type="text" value="{{this.key}}"></td>
+										</tr>
+									</tbody>
+									<tfoot>
+    									<tr role="row">
+    										<td id="oprcodes">&nbsp;</td>
+    										<td class="col-md-1" id="prepend">&nbsp;</td>
+    										<td class="col-md-1" id="btn" style="text-align: center">
+    											<button type="button" id="addMappingButton" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-plus"></span> Add</button>
+											</td>
+    									</tr>
+    								</tfoot>
+								</table>
+								
+								<div class="box-body">
+					        		<div class="form-group">
+					        			<label class="col-sm-2 control-label">{{i18n "config.msisdnTransformation.oldNumbersLengthLabel"}}</label>
+										<input id="oldMobileNumberLengthId" type="text" class="col-sm-1">
+			        				</div>
+			        				
+			        				<h5 class="configDialogSectionHeading">{{i18n "config.msisdnTransformation.wrongNumberFormatMessages"}}</h5>
+									<div class="form-group">
+										<label class="col-sm-2 control-label">English</label>
+										<div>
+											<textarea id="wrongFormatEnMessageId" style="width: 365px; height: 87px;"></textarea>
+										</div>
+										
+										<label class="col-sm-2 control-label">French</label>
+										<div>
+											<textarea id="wrongFormatFrMessageId" style="width: 365px; height: 87px;"></textarea>
+										</div>
+									</div>
+			        			</div>
+			        			
+								<div class="pull-right">
+									<button type="button" class="btn btn-primary" id="save-config-button-id">Save</button>
+				        		</div>
+			        		</div>
+			        	</div>
+					</form>
+				</div>
+				
+				<div role="tabpanel" class="tab-pane" id="msisdn-transformation-tool-tab">
+					<form class="form-horizontal">
+						<div id="tool-main-div-id" class="box-body">
+							{{>configSectionHeading heading="config.msisdnTransformation.toolHeadline"}}
+						
+							{{>normalButtonWithDescriptionTemplate elementId="msisdn-transformation-run-wrapper-id"
+										buttonId="msisdn-transformation-run-button-id"
+										buttonCaption="config.msisdnTransformation.runButtonCaption"
+										buttonDescription="config.msisdnTransformation.runButtonDescription" }}
+										
+							<textarea id="mobile-transformation-console-id"
+								readonly="readonly"
+								style="margin: 0px; height: 180px; width: 1050px;"></textarea>
+						
+							{{>normalButtonWithDescriptionTemplate elementId="msisdn-transformation-dual-phase-wrapper-id"
+										buttonId="msisdn-transformation-dual-phase-button-id"
+										buttonCaption="config.msisdnTransformation.dualPhasButtonCaption"
+										buttonDescription="config.msisdnTransformation.dualPhasButtonDescription" }}
+						</div>
+					</form>
+				</div>
+
+				</div>
+				
+			</div>
+		</div>
+	</script>
+
+	<!-- Last Transaction Enquiries -->
+	<script id="lastTransactionEnquiriesConfig">
+		<div class="box">
+
+			{{>configMainHeading heading="config.lastTransQryHeading" btnclass="showLastTransactionEnquiriesConfigDialog" btntext="global.editBtn" permission="Transaction_ConfigTransEnq"}}
+	
+			<div class="nav-tabs-custom">
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active">
+						<a href="#lastTransactionGeneral" aria-controls="lastTransactionGeneral" role="tab" data-toggle="tab">{{i18n "config.lastTransactionGeneralTab"}}</a>
+					</li>
+			    	<li role="presentation">
+			    		<a href="#lastTransactionMultipleResults" aria-controls="lastTransactionMultipleResults" role="tab" data-toggle="tab">{{i18n "config.lastTransactionMultiResultsTab"}}</a>
+			    	</li>
+				</ul>
+		
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane active" id="lastTransactionGeneral">
+			            <form class="form-horizontal">
+				        	<div class="box-body">
+				        		{{>configSectionHeading heading="config.generalSettings"}}
+				        		{{>configLabel label="config.ussdCommand" value=this.ussdCommand.texts.en forceDisplay=true }}
+				        		
+								<!--
+								{{>configLabel name="charge" label="Charge" hint="Charge" value=this.charge forceDisplay=true}}
+								<hr/>
+								-->
+				
+								<hr/>
+								{{>configNotificationLabel heading="config.smsCommand" notification=this.smsCommand.texts}}
+								{{>configNotificationLabel heading="config.notification" notification=this.notification.texts}}				
+							
+				        	</div>
+						</form>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="lastTransactionMultipleResults">
+						<form class="form-horizontal">
+		        			<div class="box-body">
+		        				{{>configSectionHeading heading="config.generalSettings"}}
+		        				{{>configLabel label="config.maxTransactions" value=this.maxTransactions forceDisplay=true}}
+		        				{{#ifCond this.ordering "==" "N+"}}
+		        					{{>configLabel label="config.transactionOrder" value=(i18n "enums.transactionOrdering.number") forceDisplay=true}}
+		        				{{/ifCond}}
+		        				{{#ifCond this.ordering "==" "T+"}}
+		        					{{>configLabel label="config.transactionOrder" value=(i18n "enums.transactionOrdering.time") forceDisplay=true}}
+		        				{{/ifCond}}
+		        				{{#ifCond this.ordering "==" "S+"}}
+		        					{{>configLabel label="config.transactionOrder" value=(i18n "enums.transactionOrdering.status") forceDisplay=true}}
+		        				{{/ifCond}}
+		        				
+		        				<hr/>
+		        				{{>configNotificationLabel heading="config.listNotification" notification=this.listNotification.texts}}
+		        				{{>configNotificationLabel heading="config.transactionLine" notification=this.transactionLine.texts}}
+		        				
+		        				{{>configNotificationLabel heading="config.tagSuccessfulLabel" notification=this.successful.texts}}
+		        				{{>configNotificationLabel heading="config.tagFailedLabel" notification=this.failed.texts}}
+		        				{{>configNotificationLabel heading="config.tagPendingLabel" notification=this.pending.texts}}		        				
+		        			</div>
+		        		</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>	
+	
+	<script id="lastTransactionEnquiriesConfigModal">
+		{{>configModalHeader heading="config.lastTransQryHeading"}}
+		<div class="modal-body">
+			<div class="ruledetails">
+				<form name="adjustmentConfigForm" class="form-horizontal lastTransactionEnquiriesConfigForm">
+					{{>configAddVariableNote}}
+					
+					<div class="nav-tabs-custom">
+						<ul class="nav nav-tabs" role="tablist">
+							<li role="presentation" class="active">
+								<a href="#transactionGeneralModal" aria-controls="transactionGeneralModal" role="tab" data-toggle="tab">{{i18n "config.generalTransactionTab"}}</a>
+							</li>
+							<li role="presentation">
+								<a href="#lastTransactionMultipleResultsModal" aria-controls="lastTransactionMultipleResultsModal" role="tab" data-toggle="tab">{{i18n "config.lastTransactionMultiResultsTab"}}</a>
+							</li>
+						</ul>
+						<!-- Tab panes -->
+						<div class="tab-content">
+							<div role="tabpanel" class="tab-pane active" id="transactionGeneralModal">
+							
+								<h5 class="configDialogSectionHeading">{{i18n "config.generalSettings"}}</h5>
+								{{>configEnglishInput name="ussdCommand" heading="config.ussdCommand" notification=this.ussdCommand}}
+								
+								<!--
+				      			{{>configInput name="charge" label="Charge" hint="Charge" value=this.charge}}
+				      			-->
+				      			
+								{{>configNotificationInput name="smsCommand" heading="config.smsCommand" notification=this.smsCommand}}
+								{{>configNotificationInput name="notification" heading="config.notification" notification=this.notification}}
+							</div>
+							<div role="tabpanel" class="tab-pane" id="lastTransactionMultipleResultsModal">			
+								<h5 class="configDialogSectionHeading">{{i18n "config.generalSettings"}}</h5>
+								{{>configInput name="maxTransactions" label="config.maxTransactions" hint="config.maxTransactions" value=this.maxTransactions}}
+								{{>configSelect name="ordering" label="config.transactionOrder" data="N+:enums.transactionOrdering.number,T+:enums.transactionOrdering.time,S+:enums.transactionOrdering.status" value=this.ordering }}
+								<hr/>
+								{{>configNotificationInput name="listNotification" heading="config.listNotification" notification=this.listNotification}}
+								{{>configNotificationInput name="transactionLine" heading="config.transactionLine" notification=this.transactionLine}}
+								
+								{{>configNotificationInput name="successful" heading="config.tagSuccessfulLabel" notification=this.successful}}
+								{{>configNotificationInput name="failed" heading="config.tagFailedLabel" notification=this.failed}}
+								{{>configNotificationInput name="pending" heading="config.tagPendingLabel" notification=this.pending}}
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		{{>configModalFooter }}
+	</script>	
+	
+	<!-- Register PIN -->
+	<script id="registerPinsConfig">
+		<div class="box">
+
+			{{>configMainHeading heading="config.regPinHeading" btnclass="showRegisterPinsConfigDialog" btntext="global.editBtn" permission="Transaction_ConfigPinReg"}}
+		
+            <form class="form-horizontal">
+	        	<div class="box-body">
+
+	        		{{>configSectionHeading heading="config.generalSettings"}}
+	        		{{>configLabel label="config.ussdCommand" value=this.ussdCommand.texts.en forceDisplay=true }}
+	        		
+	        		<!--
+					{{>configLabel name="charge" label="Charge" hint="Charge" value=this.charge forceDisplay=true}}
+					<hr/>
+					-->
+					<hr/>
+	
+					{{>configNotificationLabel heading="config.smsCommand" notification=this.smsCommand.texts}}
+					{{>configNotificationLabel heading="config.notification" notification=this.notification.texts}}				
+					
+	        	</div>
+			</form>
+			
+		</div>
+	</script>
+	
+	<script id="registerPinsConfigModal">
+		{{>configModalHeader heading="config.regPinHeading"}}
+		<div class="modal-body">
+			<div class="ruledetails">
+				<form name="adjustmentConfigForm" class="form-horizontal registerPinsConfigForm">
+					{{>configAddVariableNote}}
+					
+					<h5 class="configDialogSectionHeading">{{i18n "config.generalSettings"}}</h5>
+					{{>configEnglishInput name="ussdCommand" heading="config.ussdCommand" notification=this.ussdCommand}}
+					<!--
+					
+	      			{{>configInput name="charge" label="Charge" hint="Charge" value=this.charge}}
+					-->
+					
+					{{>configNotificationInput name="smsCommand" heading="config.smsCommand" notification=this.smsCommand}}
+					{{>configNotificationInput name="notification" heading="config.notification" notification=this.notification}}
+				</form>
+			</div>
+		</div>
+		{{>configModalFooter }}
+	</script>
+
+	<!-- Replenish -->
+	<script id="replenishConfig">
+		<div class="box">
+
+			{{>configMainHeading heading="config.replenishHeading" btnclass="showReplenishConfigDialog" btntext="global.editBtn" permission="Transaction_ConfigReplenish"}}
+			
+            <form class="form-horizontal">
+	        	<div class="box-body">
+
+					{{>configNotificationLabel heading="config.notification" notification=this.notification.texts}}
+					
+	        	</div>
+			</form>
+			
+		</div>
+	</script>
+
+	<script id="replenishConfigModal">
+		{{>configModalHeader heading="config.replenishHeading"}}
+		<div class="modal-body">
+			<div class="ruledetails">
+				<form name="adjustmentConfigForm" class="form-horizontal replenishConfigForm">
+					{{>configAddVariableNote}}
+				
+					{{>configNotificationInput name="notification" heading="config.notification" notification=this.notification}}
+				</form>
+			</div>
+		</div>
+		{{>configModalFooter }}
+	</script>
+	
+	<!-- Analytics Configuration -->
+	<script id="analyticsConfig">
+		<div class="box">
+			{{>configMainHeading heading="config.analytics.heading" btnclass="showAnalyticsConfigDialog" btntext="global.editBtn" permission="Analytics_Configure"}}
+			
+			<div class="nav-tabs-custom">
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active">
+						<a href="#analyticsGeneralConfig" aria-controls="analyticsGeneralConfig" role="tab" data-toggle="tab">{{i18n "config.generalConfigTab"}}</a>
+					</li>
+				</ul>
+			
+			
+				<!-- Tab panes -->
+				<div class="tab-content">				
+					<!-- General Tab -->
+					<div role="tabpanel" class="tab-pane active" id="analyticsGeneralConfig">
+			            <form class="form-horizontal">
+			            
+				        	<div class="box-body">
+			
+				        	{{>configSectionHeading heading="config.generalSettings"}}
+				        	{{>configLabelBoolean name="enableAnalytics" label="config.analytics.enableAnalytics" value=this.enableAnalytics trueValue="config.yes" falseValue="config.no" }}
+				        	{{>configLabel label="config.analytics.scheduledHistoryGenerationTimeOfDay" forceDisplay=true value=this.scheduledHistoryGenerationTimeOfDayString}}
+				        	
+				        	</div>
+						</form>
+					</div>
+				</div>	
+			</div>
+		</div>
+	</script>
+		
+	<script id="analyticsConfigModal">
+		{{>configModalHeader heading="config.analytics.heading"}}
+		<div class="modal-body">
+			<div class="ruledetails">
+				<div class="nav-tabs-custom">
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active">
+							<a href="#analyticsGeneralConfig" aria-controls="analyticsGeneralConfig" role="tab" data-toggle="tab">{{i18n "config.generalConfigTab"}}</a>
+						</li>
+					</ul>
+					<!-- Tab panes -->
+					<div class="tab-content">				
+						<!-- General Tab -->
+						<div role="tabpanel" class="tab-pane active" id="analyticsGeneralConfig">
+			
+							<form name="adjustmentConfigForm" class="form-horizontal agentConfigForm">
+								<!-- {{>configAddVariableNote}} // no need for variable notes (YET?) -->
+													
+								{{>configSectionHeading heading="config.generalSettings"}}
+								
+								{{>booleanRadioInput name="enableAnalytics" label="config.analytics.enableAnalytics" trueLabel="config.yes" falseLabel="config.no" value=this.enableAnalytics}}
+								{{>configInput name="scheduledHistoryGenerationTimeOfDayString" label="config.analytics.scheduledHistoryGenerationTimeOfDay" hint="config.analytics.scheduledHistoryGenerationTimeOfDay" value=this.scheduledHistoryGenerationTimeOfDayString}}
+								
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{{>configModalFooter }}
+	</script>
+	
+	<!-- Reversal Configuration -->
+	<script id="reversalConfig">
+		<div class="box">
+
+			{{>configMainHeading heading="config.reversalHeading" btnclass="showReversalConfigDialog" btntext="global.editBtn" permission="Transaction_ConfigReversal"}}
+	
+            <form class="form-horizontal">
+	        	<div class="box-body">
+    	    		{{>configLabelBoolean name="enableCoAuthReversal" label="config.reversal.enableCoAuthReversal" value=this.enableCoAuthReversal trueValue="config.yes" falseValue="config.no" }}
+    	    		{{>configLabelBoolean name="enableDedicatedAccountReversal" label="config.reversal.enableDedicatedAccountReversal" value=this.enableDedicatedAccountReversal trueValue="config.yes" falseValue="config.no" }}
+					{{>configSectionHeading heading="config.externalDataSettings"}}
+					{{>configLabel label="config.externalData1" value=this.ubadExternalData1.texts.en forceDisplay=true }}
+					{{>configLabel label="config.externalData2" value=this.ubadExternalData2.texts.en forceDisplay=true }}
+					<hr/>
+	        		{{>configNotificationLabel heading="config.requesterNotification" notification=this.requesterNotification.texts}}
+					{{>configNotificationLabel heading="config.recipientNotification" notification=this.recipientNotification.texts}}
+					{{>configNotificationLabel heading="config.senderNotification" notification=this.senderNotification.texts}}
+					
+	        	</div>
+			</form>
+			
+		</div>
+	</script>
+	
+	<script id="reversalConfigModal">
+		{{>configModalHeader heading="config.reversalHeading"}}
+		<div class="modal-body">
+			<div class="ruledetails">
+				<form name="adjustmentConfigForm" class="form-horizontal reversalConfigForm">
+					{{>configAddVariableNote}}
+					{{>booleanRadioInput name="enableCoAuthReversal" label="config.reversal.enableCoAuthReversal" trueLabel="config.yes" falseLabel="config.no" value=this.enableCoAuthReversal}}
+					{{>booleanRadioInput name="enableDedicatedAccountReversal" label="config.reversal.enableDedicatedAccountReversal" trueLabel="config.yes" falseLabel="config.no" value=this.enableDedicatedAccountReversal}}
+
+					<h5 class="configDialogSectionHeading">{{i18n "config.externalDataSettings"}}</h5>
+					{{>configEnglishInput name="ubadExternalData1" heading="config.externalData1" notification=this.ubadExternalData1}}
+					{{>configEnglishInput name="ubadExternalData2" heading="config.externalData2" notification=this.ubadExternalData2}}
+					<hr/>
+					{{>configNotificationInput name="requesterNotification" heading="config.requesterNotification" notification=this.requesterNotification}}
+					{{>configNotificationInput name="recipientNotification" heading="config.recipientNotification" notification=this.recipientNotification}}
+					{{>configNotificationInput name="senderNotification" heading="config.senderNotification" notification=this.senderNotification}}
+				</form>
+			</div>
+		</div>
+		{{>configModalFooter }}
+	</script>
+	
+	<!-- Workflow -->
+	<script id="workflowConfig">
+		<div class="box">
+
+			{{>configMainHeading heading="config.workflowHeading" btnclass="showWorkflowConfigDialog" btntext="global.editBtn" permission="WorkItem_Configure"}}
+			
+			<div class="nav-tabs-custom">
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist">
+					
+					<li role="presentation" class="active">
+						<a href="#workflowGeneral" aria-controls="workflowGeneral" role="tab" data-toggle="tab">{{i18n "config.generalConfigTab"}}</a>
+					</li>
+	    			
+					<li role="presentation">
+    					<a href="#workflowActionConfig" aria-controls="workflowActionConfig" role="tab" data-toggle="tab">{{i18n "config.actionConfigTab"}}</a>
+    				</li>
+
+		   			<li role="presentation">
+						<a href="#workflowTypesConfig" aria-controls="workflowTypesConfig" role="tab" data-toggle="tab">{{i18n "config.typesConfigTab"}}</a>
+					</li>
+	    			
+		   			<li role="presentation">
+						<a href="#workflowForPermissionConfig" aria-controls="workflowForPermissionConfig" role="tab" data-toggle="tab">{{i18n "config.forPermission"}}</a>
+					</li>
+					
+				</ul>
+				
+				<!-- Tab panes -->
+				<div class="tab-content">
+					
+					<!-- General Tab -->
+					<div role="tabpanel" class="tab-pane active" id="workflowGeneral">
+						<form class="form-horizontal">
+		        			<div class="box-body">
+		        			
+								{{>configSectionHeading heading="config.generalSettings"}}
+								{{>configLabel label="config.workItemRetentionDays" value=this.workItemRetentionDays forceDisplay=true}}
+								{{>configLabel label="config.actorOtpExpiry" value=this.actorOtpExpiry forceDisplay=true}}
+								<hr/>
+	
+								{{>configNotificationLabel heading="config.actorNotification" notification=this.actorNotification.texts}}	
+								{{>configNotificationLabel heading="config.actorOtpNotification" notification=this.actorOtpNotification.texts}}
+								{{>configNotificationLabel heading="config.ownerNotification" notification=this.ownerNotification.texts}}
+								{{>configNotificationLabel heading="config.recipientNotification" notification=this.recipientNotification.texts}}
+								
+							</div>
+						</form>
+					</div>
+					
+					<!-- Actions Tab -->
+					<div role="tabpanel" class="tab-pane" id="workflowActionConfig">
+						<form class="form-horizontal">
+		        			<div class="box-body">
+		        			
+		        				{{>configNotificationLabel heading="config.declinedAction" notification=this.actions.D.texts}}
+		        				{{>configNotificationLabel heading="config.failedAction" notification=this.actions.F.texts}}
+		        				{{>configNotificationLabel heading="config.completedAction" notification=this.actions.C.texts}}
+		        				{{>configNotificationLabel heading="config.createdAction" notification=this.actions.N.texts}}
+		        				{{>configNotificationLabel heading="config.onHoldAction" notification=this.actions.O.texts}}
+		        				{{>configNotificationLabel heading="config.cancelledAction" notification=this.actions.X.texts}}
+		        				{{>configNotificationLabel heading="config.inProgressAction" notification=this.actions.I.texts}}
+		        				
+							</div>
+						</form>
+					</div>
+					
+					<!-- Types Tab -->
+					<div role="tabpanel" class="tab-pane" id="workflowTypesConfig">
+						<form class="form-horizontal">
+		        			<div class="box-body">
+		        			
+		        				{{>configNotificationLabel heading="config.transactionType" notification=this.types.E.texts}}
+		        				{{>configNotificationLabel heading="config.approvalType" notification=this.types.A.texts}}
+	    	    				{{>configNotificationLabel heading="config.reportType" notification=this.types.S.texts}}
+	        					{{>configNotificationLabel heading="config.reversalType" notification=this.types.R.texts}}
+	        					
+							</div>
+						</form>
+					</div>
+					
+					<!-- For Permission Tab -->
+					<div role="tabpanel" class="tab-pane" id="workflowForPermissionConfig">
+						<form class="form-horizontal">
+	        				<div class="box-body">
+	        			
+		        				{{>configNotificationLabel heading="config.forPermission" notification=this.forPermission.texts}}
+		        				
+							</div>
+						</form>
+					</div>
+					
+				</div>
+			
+		</div>
+	</script>
+	
+	<script id="workflowConfigModal">
+		{{>configModalHeader heading="config.workflowHeading"}}
+		<div class="modal-body">
+			<div class="ruledetails">
+				<form name="adjustmentConfigForm" class="form-horizontal salesConfigForm">
+					{{>configAddVariableNote}}
+					
+					<div class="nav-tabs-custom">
+						<!-- Nav tabs -->
+						<ul class="nav nav-tabs" role="tablist">
+							
+							<li role="presentation" class="active">
+								<a href="#workflowGeneralModal" aria-controls="workflowGeneralModal" role="tab" data-toggle="tab">{{i18n "config.generalConfigTab"}}</a>
+							</li>
+			    			
+							<li role="presentation">
+		    					<a href="#workflowActionConfigModal" aria-controls="workflowActionConfigModal" role="tab" data-toggle="tab">{{i18n "config.actionConfigTab"}}</a>
+		    				</li>
+	
+				   			<li role="presentation">
+								<a href="#workflowTypesConfigModal" aria-controls="workflowTypesConfigModal" role="tab" data-toggle="tab">{{i18n "config.typesConfigTab"}}</a>
+							</li>
+			    			
+				   			<li role="presentation">
+								<a href="#workflowForPermissionsConfigModal" aria-controls="workflowForPermissionsConfigModal" role="tab" data-toggle="tab">{{i18n "config.forPermission"}}</a>
+							</li>
+							
+						</ul>
+					
+						<!-- Tab panes -->
+						<div class="tab-content">
+							<div role="tabpanel" class="tab-pane active" id="workflowGeneralModal">
+								<h5 class="configDialogSectionHeading">{{i18n "config.generalSettings"}}</h5>
+								{{>configInput name="workItemRetentionDays" label="config.workItemRetentionDays" hint="config.workItemRetentionDays" value=this.workItemRetentionDays}}
+								{{>configInput name="actorOtpExpiry" label="config.actorOtpExpiry" hint="config.actorOtpExpiry" value=this.actorOtpExpiry}}
+								
+								{{>configNotificationInput name="actorNotification" heading="config.actorNotification" notification=this.actorNotification}}
+								{{>configNotificationInput name="actorOtpNotification" heading="config.actorOtpNotification" notification=this.actorOtpNotification}}
+								{{>configNotificationInput name="ownerNotification" heading="config.ownerNotification" notification=this.ownerNotification}}
+								{{>configNotificationInput name="recipientNotification" heading="config.recipientNotification" notification=this.recipientNotification}}
+								
+							</div>
+							
+							<div role="tabpanel" class="tab-pane" id="workflowActionConfigModal">
+							
+								{{>configMultNameNotificationInput name1="actions" name2="D" heading="config.declinedAction" notification=this.actions.D}}
+								{{>configMultNameNotificationInput name1="actions" name2="F" heading="config.failedAction" notification=this.actions.F}}
+								{{>configMultNameNotificationInput name1="actions" name2="C" heading="config.completedAction" notification=this.actions.C}}
+								{{>configMultNameNotificationInput name1="actions" name2="N" heading="config.createdAction" notification=this.actions.N}}
+								{{>configMultNameNotificationInput name1="actions" name2="O" heading="config.onHoldAction" notification=this.actions.O}}
+								{{>configMultNameNotificationInput name1="actions" name2="X" heading="config.cancelledAction" notification=this.actions.X}}
+								{{>configMultNameNotificationInput name1="actions" name2="I" heading="config.inProgressAction" notification=this.actions.I}}
+								
+							</div>
+							
+							<div role="tabpanel" class="tab-pane" id="workflowTypesConfigModal">
+							
+								{{>configMultNameNotificationInput name1="types" name2="E" heading="config.transactionType" notification=this.types.E}}
+								{{>configMultNameNotificationInput name1="types" name2="A" heading="config.approvalType" notification=this.types.A}}
+								{{>configMultNameNotificationInput name1="types" name2="S" heading="config.reportType" notification=this.types.S}}
+								{{>configMultNameNotificationInput name1="types" name2="R" heading="config.reversalType" notification=this.types.R}}
+								
+							</div>
+							
+							<div role="tabpanel" class="tab-pane" id="workflowForPermissionsConfigModal">
+							
+								{{>configNotificationInput name="forPermission" heading="config.forPermission" notification=this.forPermission}}
+							
+							</div>
+							
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		{{>configModalFooter }}
+	</script>
+	
+	<!-- Sales Query -->
+	<script id="salesQueryConfig">
+		<div class="box">
+
+			{{>configMainHeading heading="config.salesQueryHeading" btnclass="showSalesQueryConfigDialog" btntext="global.editBtn" permission="Transaction_ConfigSaleQry"}}
+			
+            <form class="form-horizontal">
+	        	<div class="box-body">
+	        	
+	        		{{>configSectionHeading heading="config.generalSettings"}}
+	        		{{>configLabel label="config.ussdCommand" value=this.ussdCommand.texts.en forceDisplay=true }}
+	        		<hr/>
+	        		
+	        		<!--
+					{{>configLabel name="charge" label="Charge" hint="Charge" value=this.charge forceDisplay=true}}
+					-->
+	
+					{{>configNotificationLabel heading="config.smsCommand" notification=this.smsCommand.texts}}
+					{{>configNotificationLabel heading="config.notification" notification=this.notification.texts}}				
+					{{>configNotificationLabel heading="config.response" notification=this.response.texts}}				
+	        	</div>
+			</form>
+			
+		</div>
+	</script>
+	
+	<script id="salesQueryConfigModal">
+		{{>configModalHeader heading="config.salesQueryHeading"}}
+		<div class="modal-body">
+			<div class="ruledetails">
+				<form name="adjustmentConfigForm" class="form-horizontal salesQueryConfigForm">
+					{{>configAddVariableNote}}
+					
+					<h5 class="configDialogSectionHeading">{{i18n "config.generalSettings"}}</h5>
+					{{>configEnglishInput name="ussdCommand" heading="config.ussdCommand" notification=this.ussdCommand}}
+					
+					<!--
+	  				{{>configInput name="charge" label="Charge" hint="Charge" value=this.charge}}
+					-->
+	  				
+					{{>configNotificationInput name="smsCommand" heading="config.smsCommand" notification=this.smsCommand}}
+					{{>configNotificationInput name="notification" heading="config.notification" notification=this.notification}}
+					{{>configNotificationInput name="response" heading="config.response" notification=this.response}}
+				</form>
+			</div>
+		</div>
+		{{>configModalFooter }}
+	</script>
+	
+	<!-- Transaction Status Enquiry -->
+	<script id="transactionStatusEnquiriesConfig">
+		<div class="box">
+
+			{{>configMainHeading heading="config.transStatEnqHeading" btnclass="showTransactionStatusEnquiriesConfigDialog" btntext="global.editBtn" permission="Transaction_ConfigTransStatEnq"}}
+			
+            <form class="form-horizontal">
+	        	<div class="box-body">
+
+	        	{{>configSectionHeading heading="config.generalSettings"}}
+	        	{{>configLabel label="config.ussdCommand" value=this.ussdCommand.texts.en forceDisplay=true }}
+	        	<hr/>
+	        	
+	        	<!--
+				{{>configLabel name="charge" label="Charge" hint="Charge" value=this.charge forceDisplay=true}}
+				<hr/>
+				-->
+
+				{{>configNotificationLabel heading="config.smsCommand" notification=this.smsCommand.texts}}
+				{{>configNotificationLabel heading="config.notification" notification=this.notification.texts}}
+	        	</div>
+			</form>
+			
+		</div>
+	</script>	
+	
+	
+	<script id="transactionStatusEnquiriesConfigModal">
+		{{>configModalHeader heading="config.transStatEnqHeading"}}
+		<div class="modal-body">
+			<div class="ruledetails">
+				<form name="adjustmentConfigForm" class="form-horizontal transactionStatusEnquiriesConfigForm">
+					{{>configAddVariableNote}}
+					
+					<h5 class="configDialogSectionHeading">{{i18n "config.generalSettings"}}</h5>
+					{{>configEnglishInput name="ussdCommand" heading="config.ussdCommand" notification=this.ussdCommand}}
+					
+					<!--
+	      			{{>configInput name="charge" label="Charge" hint="Charge" value=this.charge}}
+	      			-->
+				
+					{{>configNotificationInput name="smsCommand" heading="config.smsCommand" notification=this.smsCommand}}
+					{{>configNotificationInput name="notification" heading="config.notification" notification=this.notification}}
+				</form>
+			</div>
+		</div>
+		{{>configModalFooter }}
+	</script>
+	
+	<!-- Web Users Configuration -->
+	<script id="webUsersConfig">
+		<div class="box">
+
+			{{>configMainHeading heading="config.webUsersHeading" btnclass="showWebUsersDialog" btntext="global.editBtn" permission="Webui_ConfigWebUi"}}
+			
+			<div class="nav-tabs-custom">
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active">
+						<a href="#webUserGeneralConfig" aria-controls="webUserGeneralConfig" role="tab" data-toggle="tab">{{i18n "config.generalConfigTab"}}</a>
+					</li>
+					<li role="presentation">
+						<a href="#webUserEmailConfig" aria-controls="webUserEmailConfig" role="tab" data-toggle="tab">{{i18n "config.emailConfigTab"}}</a>
+					</li>					
+				</ul>
+				
+				<!-- Tab panes -->
+				<div class="tab-content">				
+					<!-- General Tab -->
+					<div role="tabpanel" class="tab-pane active" id="webUserGeneralConfig">
+			            <form class="form-horizontal">
+				        	<div class="box-body">
+			
+							{{>configSectionHeading heading="config.generalSettings"}}
+							{{>configLabel label="config.minPinLength" value=this.minPinLength forceDisplay=true}}
+							{{>configLabel label="config.maxPinLength" forceDisplay=true value=this.maxPinLength}}
+							{{>configLabel label="config.minPasswordLength" value=this.minPasswordLength forceDisplay=true}}
+							{{>configLabel label="config.maxPasswordLength" forceDisplay=true value=this.maxPasswordLength}}
+							{{>configLabel label="config.maxPinRetriesBeforeLockout" forceDisplay=true value=this.maxPinRetriesBeforeLockout}}
+							{{>configLabel label="config.otpExpiry" forceDisplay=true value=this.otpExpiry}}
+							<hr/>
+							{{>configSectionHeading heading="config.auditSettings"}}
+							{{>configLabel label="config.auditEntriesRetentionDays" value=this.auditEntriesRetentionDays forceDisplay=true}}
+							<hr/>
+							{{>configNotificationLabel heading="config.newPinNotification" notification=this.newPinNotification.texts }}
+							</div>
+						</form>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="webUserEmailConfig">
+			            <form class="form-horizontal">
+				        	<div class="box-body">
+				        	{{>configSectionHeading heading="config.generalSettings"}}
+							{{>configLabel label="config.fromEmailAddress" value=this.fromEmailAddress forceDisplay=true }}
+							<hr/>
+							{{>configNotificationLabel heading="config.welcomePasswordUserEmailSubject" notification=this.welcomePasswordUserEmailSubject.texts }}
+							{{>configNotificationLabel heading="config.welcomePasswordUserEmailBody" notification=this.welcomePasswordUserEmailBody.texts }}
+							{{>configNotificationLabel heading="config.welcomeDomainAccUserEmailSubject" notification=this.welcomeDomainAccUserEmailSubject.texts }}
+							{{>configNotificationLabel heading="config.welcomeDomainAccUserEmailBody" notification=this.welcomeDomainAccUserEmailBody.texts }}
+							{{>configNotificationLabel heading="config.passwordChangeEmailSubject" notification=this.passwordChangeEmailSubject.texts }}
+							{{>configNotificationLabel heading="config.passwordChangeEmailBody" notification=this.passwordChangeEmailBody.texts }}
+							{{>configNotificationLabel heading="config.passwordResetEmailSubject" notification=this.passwordResetEmailSubject.texts }}
+							{{>configNotificationLabel heading="config.passwordResetEmailBody" notification=this.passwordResetEmailBody.texts }}
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+		
+	<script id="webUsersConfigModal">
+		{{>configModalHeader heading="config.webUsersHeading"}}
+		<div class="modal-body">
+			<div class="ruledetails">
+				<form name="adjustmentConfigForm" class="form-horizontal webUsersConfigForm">
+					{{>configAddVariableNote}}
+					
+					<div class="nav-tabs-custom">
+						<!-- Nav tabs -->
+						<ul class="nav nav-tabs" role="tablist">
+							<li role="presentation" class="active">
+								<a href="#webUserGeneralConfigModal" aria-controls="webUserGeneralConfigModal" role="tab" data-toggle="tab">{{i18n "config.generalConfigTab"}}</a>
+							</li>
+							<li role="presentation">
+								<a href="#webUserEmailConfigModal" aria-controls="webUserEmailConfigModal" role="tab" data-toggle="tab">{{i18n "config.emailConfigTab"}}</a>
+							</li>					
+						</ul>
+						
+						<!-- Tab panes -->
+						<div class="tab-content">				
+							<!-- General Tab -->
+							<div role="tabpanel" class="tab-pane active" id="webUserGeneralConfigModal">
+							
+								<h5 class="configDialogSectionHeading">{{i18n "config.generalSettings"}}</h5>
+				      			{{>configInput name="minPinLength" label="config.minPinLength" hint="config.minPinLength" value=this.minPinLength}}
+								{{>configInput name="maxPinLength" label="config.maxPinLength" hint="config.maxPinLength" value=this.maxPinLength}}
+								{{>configInput name="minPasswordLength" label="config.minPasswordLength" hint="config.minPasswordLength" value=this.minPasswordLength}}
+								{{>configInput name="maxPasswordLength" label="config.maxPasswordLength" hint="config.maxPasswordLength" value=this.maxPasswordLength}}
+								{{>configInput name="maxPinRetriesBeforeLockout" label="config.maxPinRetriesBeforeLockout" value=this.maxPinRetriesBeforeLockout}}
+								{{>configInput name="otpExpiry" label="config.otpExpiry" hint="config.otpExpiry" value=this.otpExpiry}}
+								<h5 class="configDialogSectionHeading">{{i18n "config.auditSettings"}}</h5>
+				      			{{>configInput name="auditEntriesRetentionDays" label="config.auditEntriesRetentionDays" hint="config.auditEntriesRetentionDays" value=this.auditEntriesRetentionDays}}
+								
+								{{>configNotificationInput name="newPinNotification" heading="config.newPinNotification" notification=this.newPinNotification}}
+							</div>
+							<div role="tabpanel" class="tab-pane" id="webUserEmailConfigModal">
+								<h5 class="configDialogSectionHeading">{{i18n "config.generalSettings"}}</h5>
+								{{>configInput name="fromEmailAddress" label="config.fromEmailAddress" hint="config.fromEmailAddress" value=this.fromEmailAddress}}
+								{{>configNotificationInput name="welcomePasswordUserEmailSubject" heading="config.welcomePasswordUserEmailSubject" notification=this.welcomePasswordUserEmailSubject}}
+								{{>configNotificationInput name="welcomePasswordUserEmailBody" heading="config.welcomePasswordUserEmailBody" notification=this.welcomePasswordUserEmailBody}}
+								{{>configNotificationInput name="welcomeDomainAccUserEmailSubject" heading="config.welcomeDomainAccUserEmailSubject" notification=this.welcomeDomainAccUserEmailSubject}}
+								{{>configNotificationInput name="welcomeDomainAccUserEmailBody" heading="config.welcomeDomainAccUserEmailBody" notification=this.welcomeDomainAccUserEmailBody}}
+								{{>configNotificationInput name="passwordChangeEmailSubject" heading="config.passwordChangeEmailSubject" notification=this.passwordChangeEmailSubject}}
+								{{>configNotificationInput name="passwordChangeEmailBody" heading="config.passwordChangeEmailBody" notification=this.passwordChangeEmailBody}}
+								{{>configNotificationInput name="passwordResetEmailSubject" heading="config.passwordResetEmailSubject" notification=this.passwordResetEmailSubject}}
+								{{>configNotificationInput name="passwordResetEmailBody" heading="config.passwordResetEmailBody" notification=this.passwordResetEmailBody}}
+							</div>
+						</div>
+					</div>					
+				</form>
+			</div>
+		</div>
+		{{>configModalFooter }}
+	</script>
+	
+	<!-- Rewards screens -->
+	<script id="rewardsConfig">
+		<div class="box">
+		
+			{{>configMainHeading heading="config.rewardsHeading" btnclass="showRewardsDialog" btntext="global.editBtn" permission="Transaction_ConfigAdjust"}}
+
+            <form class="form-horizontal">
+            	<div class="box-body">
+	    	    	{{>configSectionHeading heading="config.generalSettings"}}
+					{{>configLabelBoolean name="enableRewardProcessing" label="config.enableRewardProcessing" value=this.enableRewardProcessing trueValue="config.enabled" falseValue="config.disabled" }}    	    	
+    	    		{{>configLabel label="config.rewardProcessingIntervalMinutes" value=this.rewardProcessingIntervalMinutes forceDisplay=true }}
+    	    		{{>configLabel label="config.rewardProcessingStartTimeOfDayString" forceDisplay=true value=this.rewardProcessingStartTimeOfDayString}}
+    	    		{{>configLabel label="config.smsStartTimeOfDayString" forceDisplay=true value=this.smsStartTimeOfDayString}}
+    	    		{{>configLabel label="config.smsEndTimeOfDayString" forceDisplay=true value=this.smsEndTimeOfDayString}}
+    	    		{{>configLabelBoolean name="failTransactionsUponFailureToLocate" label="config.failTransactionsUponFailureToLocate" value=this.failTransactionsUponFailureToLocate trueValue="config.promotionAreaUponFailureToLocateReject" falseValue="config.promotionAreaUponFailureToLocateIgnore" }}
+        			<hr/>
+            	
+            		{{>configNotificationLabel heading="config.agentNotification" notification=this.agentNotification.texts }}
+            	</div>
+			</form>
+			
+		</div>
+	</script>
+	
+	<script id="rewardsConfigModal">
+		{{>configModalHeader heading="config.rewardsHeading"}}
+		<div class="modal-body">
+			<div class="rewardsdetails">
+				<form name="rewardsConfigForm" class="form-horizontal rewardsConfigForm">
+				
+					{{>configAddVariableNote head="config.tip"}}
+					
+					<h5 class="configDialogSectionHeading">{{i18n "config.generalSettings"}}</h5>
+					{{>booleanRadioInput name="enableRewardProcessing" label="config.enableRewardProcessing" trueLabel="config.enabled" falseLabel="config.disabled" value=this.enableRewardProcessing}}	
+					{{>configInput name="rewardProcessingIntervalMinutes" label="config.rewardProcessingIntervalMinutes" hint="config.rewardProcessingIntervalMinutes" value=this.rewardProcessingIntervalMinutes}}
+
+					{{>configInput name="rewardProcessingStartTimeOfDayString" label="config.rewardProcessingStartTimeOfDayString" hint="config.rewardProcessingStartTimeOfDayString" value=this.rewardProcessingStartTimeOfDayString}}
+					{{>configInput name="smsStartTimeOfDayString" label="config.smsStartTimeOfDayString" hint="config.smsStartTimeOfDayString" value=this.smsStartTimeOfDayString}}
+					{{>configInput name="smsEndTimeOfDayString" label="config.smsEndTimeOfDayString" hint="config.smsEndTimeOfDayString" value=this.smsEndTimeOfDayString}}
+					{{>booleanRadioInput name="failTransactionsUponFailureToLocate" label="config.failTransactionsUponFailureToLocate" trueLabel="config.promotionAreaUponFailureToLocateReject" falseLabel="config.promotionAreaUponFailureToLocateIgnore" value=this.failTransactionsUponFailureToLocate}}
+					
+					{{>configNotificationInput name="agentNotification" heading="config.agentNotification" notification=this.agentNotification}}
+					
+				</form>
+			</div>
+		</div>
+		{{>configModalFooter }}
+	</script>
+	
+	<!-- Viewing Reporting Configuration -->
+	<script id="reportingConfig">
+		<div class="box">
+
+			{{>configMainHeading heading="config.reportingHeading" btnclass="showReportingConfigDialog" btntext="global.editBtn" permission="Transaction_ConfigReporting"}}
+			
+			<div class="nav-tabs-custom">
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active">
+						<a href="#reportsSmsConfig" aria-controls="reportsSmsConfig" role="tab" data-toggle="tab">{{i18n "config.reportsSalesSummaryConfigTab"}}</a>
+					</li>
+					<li role="presentation">
+						<a href="#reportsEmailConfig" aria-controls="reportsEmailConfig" role="tab" data-toggle="tab">{{i18n "config.reportsEmailConfigTab"}}</a>
+					</li>
+					<li role="presentation">
+						<a href="#reportsEmailParamsConfig" aria-controls="reportsEmailParamsConfig" role="tab" data-toggle="tab">{{i18n "config.reportsEmailParamsConfig"}}</a>
+					</li>
+					<li role="presentation">
+						<a href="#reportsCompressionConfig" aria-controls="reportsCompressionConfig" role="tab" data-toggle="tab">{{i18n "config.reportsCompressionConfig"}}</a>
+					</li>
+					<li role="presentation">
+						<a href="#reportsMiscellaneousConfig" aria-controls="reportsMiscellaneousConfig" role="tab" data-toggle="tab">{{i18n "config.reportsMiscellaneousConfig"}}</a>
+					</li>
+				</ul>
+				
+				<!-- Tab panes -->
+				<div class="tab-content">
+					
+					<!-- General Tab // Sales Summary -->
+					<div role="tabpanel" class="tab-pane active" id="reportsSmsConfig">
+						<form class="form-horizontal">
+		        			<div class="box-body">
+	       					 	{{>configLabel label="config.smsSourceAddress" value=this.smsSourceAddress forceDisplay=true }}
+
+								{{#ifCond this.smsConfigurationFeature "==" "enabled"}}
+								<hr/>
+								<h5 class="configDialogSectionHeading">{{ i18n "config.smsConfiguration" }}</h5>
+								{{>configLabelBoolean label="config.smsConfiguration" value=this.smsConfigurationEnabled trueValue="config.enabled" falseValue="config.usingSystemDefaultsParenthesis" trueClasses="" falseClasses="no-data" }}
+
+								{{#ifCond this.smsConfigurationEnabled "==" true}}
+								{{>configLabel label="config.smsCurrencySymbol" value=this.smsCurrency forceDisplay=true }}
+								{{>configLabel label="config.smsThousandSeparator" value=this.smsThousandSeparator forceDisplay=true }}
+								{{>configLabel label="config.smsDecimalSeparator" value=this.smsDecimalSeparator forceDisplay=true }}
+								{{/ifCond}}
+								{{/ifCond}}
+		        				
+								<hr/>
+								{{>configNotificationLabel heading="config.reportSalesSummaryNotification" notification=this.salesSummaryReportNotification.texts}}
+								 
+								{{#ifCond this.mobileMoneyNotificationFeature "==" "enabled"}}
+								{{>configNotificationLabel heading="config.reportMobileMoneyNotification" notification=this.mobileMoneyReportNotification.texts}}
+								{{/ifCond}}
+
+								{{>configNotificationLabel heading="config.reportSalesSummaryEmailSubject" notification=this.salesSummaryReportEmailSubject.texts}}
+								{{>configNotificationLabel heading="config.reportSalesSummaryEmailBody" notification=this.salesSummaryReportEmailBody.texts}}
+							</div>
+						</form>
+					</div>
+					
+					<!-- Actions Tab -->
+					<div role="tabpanel" class="tab-pane" id="reportsEmailConfig">
+						<form class="form-horizontal">
+		        			<div class="box-body">
+	        					{{>configLabel label="config.fromEmailAddress" value=this.fromEmailAddress forceDisplay=true }}
+								<hr/>
+								{{>configNotificationLabel heading="config.reportEmailSubject" notification=this.reportEmailSubject.texts}}				
+								{{>configNotificationLabel heading="config.reportEmailBody" notification=this.reportEmailBody.texts}}				
+							</div>
+						</form>
+					</div>
+					
+					<!-- Types Tab -->
+					<div role="tabpanel" class="tab-pane" id="reportsEmailParamsConfig">
+						<form class="form-horizontal">
+		        			<div class="box-body">
+								{{>configNotificationLabel heading="config.intervalPreviousDayDescription" notification=this.intervalPreviousDayDescription.texts}}				
+								{{>configNotificationLabel heading="config.intervalCurrentDayDescription" notification=this.intervalCurrentDayDescription.texts}}				
+								{{>configNotificationLabel heading="config.intervalPreviousWeekDescription" notification=this.intervalPreviousWeekDescription.texts}}				
+								{{>configNotificationLabel heading="config.intervalCurrentWeekDescription" notification=this.intervalCurrentWeekDescription.texts}}				
+								{{>configNotificationLabel heading="config.intervalPrevious30DaysDescription" notification=this.intervalPrevious30DaysDescription.texts}}				
+								{{>configNotificationLabel heading="config.intervalPreviousMonthDescription" notification=this.intervalPreviousMonthDescription.texts}}				
+								{{>configNotificationLabel heading="config.intervalCurrentMonthDescription" notification=this.intervalCurrentMonthDescription.texts}}				
+								{{>configNotificationLabel heading="config.intervalPreviousYearDescription" notification=this.intervalPreviousYearDescription.texts}}				
+								{{>configNotificationLabel heading="config.intervalCurrentYearDescription" notification=this.intervalCurrentYearDescription.texts}}				
+								{{>configNotificationLabel heading="config.intervalPreviousHourDescription" notification=this.intervalPreviousHourDescription.texts}}				
+								{{>configNotificationLabel heading="config.intervalCurrentHourDescription" notification=this.intervalCurrentHourDescription.texts}}				
+								{{>configNotificationLabel heading="config.intervalFixedDescription" notification=this.intervalFixedDescription.texts}}				
+								
+								{{>configNotificationLabel heading="config.schedulePeriodHourDescription" notification=this.schedulePeriodHourDescription.texts}}				
+								{{>configNotificationLabel heading="config.schedulePeriodDayDescription" notification=this.schedulePeriodDayDescription.texts}}				
+								{{>configNotificationLabel heading="config.schedulePeriodWeekDescription" notification=this.schedulePeriodWeekDescription.texts}}				
+								{{>configNotificationLabel heading="config.schedulePeriodMonthDescription" notification=this.schedulePeriodMonthDescription.texts}}				
+								{{>configNotificationLabel heading="config.schedulePeriodMinuteDescription" notification=this.schedulePeriodMinuteDescription.texts}}				
+							</div>
+						</form>
+					</div>
+
+					<!-- Compression Tab -->
+					<div role="tabpanel" class="tab-pane" id="reportsCompressionConfig">
+						<form class="form-horizontal">
+		        			<div class="box-body">
+		        				{{#ifCond this.compressionLevel "==" "-1"}}{{>configLabel label="config.compressionLevel" value=(i18n "config.compressionLevelDefault") forceDisplay=true}}{{/ifCond}}
+		        				{{#ifCond this.compressionLevel "==" "0"}}{{>configLabel label="config.compressionLevel" value=(i18n "config.compressionLevelNone") forceDisplay=true}}{{/ifCond}}
+		        				{{#ifCond this.compressionLevel "==" "1"}}{{>configLabel label="config.compressionLevel" value=(i18n "config.compressionLevel1") forceDisplay=true}}{{/ifCond}}
+		        				{{#ifCond this.compressionLevel "==" "2"}}{{>configLabel label="config.compressionLevel" value=(i18n "config.compressionLevel2") forceDisplay=true}}{{/ifCond}}
+		        				{{#ifCond this.compressionLevel "==" "3"}}{{>configLabel label="config.compressionLevel" value=(i18n "config.compressionLevel3") forceDisplay=true}}{{/ifCond}}
+		        				{{#ifCond this.compressionLevel "==" "4"}}{{>configLabel label="config.compressionLevel" value=(i18n "config.compressionLevel4") forceDisplay=true}}{{/ifCond}}
+		        				{{#ifCond this.compressionLevel "==" "5"}}{{>configLabel label="config.compressionLevel" value=(i18n "config.compressionLevel5") forceDisplay=true}}{{/ifCond}}
+		        				{{#ifCond this.compressionLevel "==" "6"}}{{>configLabel label="config.compressionLevel" value=(i18n "config.compressionLevel6") forceDisplay=true}}{{/ifCond}}
+		        				{{#ifCond this.compressionLevel "==" "7"}}{{>configLabel label="config.compressionLevel" value=(i18n "config.compressionLevel7") forceDisplay=true}}{{/ifCond}}
+		        				{{#ifCond this.compressionLevel "==" "8"}}{{>configLabel label="config.compressionLevel" value=(i18n "config.compressionLevel8") forceDisplay=true}}{{/ifCond}}
+		        				{{#ifCond this.compressionLevel "==" "9"}}{{>configLabel label="config.compressionLevel" value=(i18n "config.compressionLevel9") forceDisplay=true}}{{/ifCond}}
+				
+								{{>configLabelBoolean name="compressRetailerPerformanceReportEmail" label="config.compressRetailerPerformanceReportEmail" value=this.compressRetailerPerformanceReportEmail trueValue="config.yes" falseValue="config.no" }}
+								{{>configLabelBoolean name="compressWholesalerPerformanceReportEmail" label="config.compressWholesalerPerformanceReportEmail" value=this.compressWholesalerPerformanceReportEmail trueValue="config.yes" falseValue="config.no" }}
+								{{>configLabelBoolean name="compressSalesSummaryReportEmail" label="config.compressSalesSummaryReportEmail" value=this.compressSalesSummaryReportEmail trueValue="config.yes" falseValue="config.no" }}
+								{{>configLabelBoolean name="compressDailyGroupSalesReportEmail" label="config.compressDailyGroupSalesReportEmail" value=this.compressDailyGroupSalesReportEmail trueValue="config.yes" falseValue="config.no" }}
+								{{>configLabelBoolean name="compressMonthlySalesPerformanceReportEmail" label="config.compressMonthlySalesPerformanceReportEmail" value=this.compressMonthlySalesPerformanceReportEmail trueValue="config.yes" falseValue="config.no" }}
+								{{>configLabelBoolean name="compressAccountBalanceSummaryReportEmail" label="config.compressAccountBalanceSummaryReportEmail" value=this.compressAccountBalanceSummaryReportEmail trueValue="config.yes" falseValue="config.no" }}
+							</div>
+						</form>
+					</div>
+					
+					<!-- Miscellaneous Tab -->
+					<div role="tabpanel" class="tab-pane" id="reportsMiscellaneousConfig">
+						<form class="form-horizontal">
+		        			<div class="box-body">
+	       					 	{{>configLabel label="config.agentReportCountLimit" value=this.agentReportCountLimit forceDisplay=true }}
+	       					 	{{>configLabel label="config.agentReportDailyScheduleLimit" value=this.agentReportDailyScheduleLimit forceDisplay=true }}
+	       					 	<!--Aggregated Reports
+	       					 	{{>configLabelBoolean name="usePreaggregatedRetailerReportData" label="config.retailerReportMode" value=this.usePreaggregatedRetailerReportData trueValue="config.preaggregatedMode" falseValue="config.queryMode" }}
+	       					 	{{>configLabelBoolean name="usePreaggregatedWholesalerReportData" label="config.wholesalerReportMode" value=this.usePreaggregatedWholesalerReportData trueValue="config.preaggregatedMode" falseValue="config.queryMode" }}
+	       					 	{{>configLabelBoolean name="usePreaggregatedDailySalesSummaryReportData" label="config.dailySalesSummaryReportMode" value=this.usePreaggregatedDailySalesSummaryReportData trueValue="config.preaggregatedMode" falseValue="config.queryMode" }}
+	       					 	{{>configLabelBoolean name="usePreaggregatedDailyGroupSalesReportData" label="config.dailyGroupSalesReportMode" value=this.usePreaggregatedDailyGroupSalesReportData trueValue="config.preaggregatedMode" falseValue="config.queryMode" }}
+	       					 	{{>configLabelBoolean name="usePreaggregatedMonthlySalesPerformanceReportData" label="config.monthlySalesReportMode" value=this.usePreaggregatedMonthlySalesPerformanceReportData trueValue="config.preaggregatedMode" falseValue="config.queryMode" }}
+	       					 	{{>configLabelBoolean name="usePreaggregatedAccountBalanceSummaryReportData" label="config.accountBalanceSummaryReportMode" value=this.usePreaggregatedAccountBalanceSummaryReportData trueValue="config.preaggregatedMode" falseValue="config.queryMode" }}
+	       					 	-->
+							</div>
+						</form>
+					</div>
+					
+					
+				</div>
+			</div>	
+		</div>
+	</script>
+
+	<!-- Editing Reporting Config -->
+	<script id="reportingConfigModal">
+		{{>configModalHeader heading="config.reportingHeading"}}
+		<div class="modal-body">
+			<div class="reportingdetails">
+				<form name="adjustmentConfigForm" class="form-horizontal rewardsConfigForm">
+				
+					{{>configAddVariableNote head="config.tip"}}
+			
+					<div class="nav-tabs-custom">
+						<!-- Nav tabs -->
+						<ul class="nav nav-tabs" role="tablist">
+							<li role="presentation" class="active">
+								<a href="#reportsSmsConfigModal" aria-controls="reportsSmsConfigModal" role="tab" data-toggle="tab">{{i18n "config.reportsSalesSummaryConfigTab"}}</a>
+							</li>
+							<li role="presentation">
+								<a href="#reportsEmailConfigModal" aria-controls="reportsEmailConfigModal" role="tab" data-toggle="tab">{{i18n "config.reportsEmailConfigTab"}}</a>
+							</li>
+							<li role="presentation">
+								<a href="#reportsEmailParamsConfigModal" aria-controls="reportsEmailParamsConfigModal" role="tab" data-toggle="tab">{{i18n "config.reportsEmailParamsConfig"}}</a>
+							</li>
+							<li role="presentation">
+								<a href="#reportsCompressionConfigModal" aria-controls="reportsCompressionConfigModal" role="tab" data-toggle="tab">{{i18n "config.reportsCompressionConfig"}}</a>
+							</li>
+							<li role="presentation">
+								<a href="#reportsMiscellaneousConfigModal" aria-controls="reportsMiscellaneousConfigModal" role="tab" data-toggle="tab">{{i18n "config.reportsMiscellaneousConfig"}}</a>
+							</li>
+						</ul>
+						
+						<!-- Tab panes -->
+						<div class="tab-content">
+							
+							<!-- General Tab // Sales Summary -->
+							<div role="tabpanel" class="tab-pane active" id="reportsSmsConfigModal">
+				       			<div class="box-body">
+									{{>configInput name="smsSourceAddress" label="config.smsSourceAddress" hint="config.smsSourceAddress" value=this.smsSourceAddress}}
+
+									{{#ifCond this.smsConfigurationFeature "==" "enabled"}}
+									<hr/>
+									{{>booleanRadioInput name="smsConfigurationEnabled" heading="config.smsConfiguration" label="" trueLabel="config.enabled" falseLabel="config.disabled" value=this.smsConfigurationEnabled }}
+									<div id="sms-configuration-enabled">
+										{{>configInput name="smsCurrency" label="config.smsCurrencySymbol" hint="config.smsCurrencySymbol" value=this.smsCurrency}}
+										{{>configInput name="smsThousandSeparator" label="config.smsThousandSeparator" hint="config.smsThousandSeparator" value=this.smsThousandSeparator}}
+										{{>configInput name="smsDecimalSeparator" label="config.smsDecimalSeparator" hint="config.smsDecimalSeparator" value=this.smsDecimalSeparator}}
+									</div>
+									{{/ifCond}}
+									<hr/>
+									{{>configNotificationInput name="salesSummaryReportNotification" heading="config.reportSalesSummaryNotification" notification=this.salesSummaryReportNotification}}
+
+									{{#ifCond this.mobileMoneyNotificationFeature "==" "enabled"}}
+									{{>configNotificationInput name="mobileMoneyReportNotification" heading="config.reportMobileMoneyNotification" notification=this.mobileMoneyReportNotification}}
+									{{/ifCond}}
+
+									{{>configNotificationInput name="salesSummaryReportEmailSubject" heading="config.reportSalesSummaryEmailSubject" notification=this.salesSummaryReportEmailSubject}}
+									{{>configNotificationInput name="salesSummaryReportEmailBody" heading="config.reportSalesSummaryEmailBody" notification=this.salesSummaryReportEmailBody}}				
+								</div>
+							</div>
+							
+							<!-- Actions Tab -->
+							<div role="tabpanel" class="tab-pane" id="reportsEmailConfigModal">
+				       			<div class="box-body">
+									{{>configInput name="fromEmailAddress" label="config.fromEmailAddress" hint="config.fromEmailAddress" value=this.fromEmailAddress}}
+									<hr/>
+									{{>configNotificationInput name="reportEmailSubject" heading="config.reportEmailSubject" notification=this.reportEmailSubject}}
+									{{>configNotificationInput name="reportEmailBody" heading="config.reportEmailBody" notification=this.reportEmailBody}}
+								</div>
+							</div>
+							
+							<!-- Types Tab -->
+							<div role="tabpanel" class="tab-pane" id="reportsEmailParamsConfigModal">
+				        			<div class="box-body">
+									{{>configNotificationLineInput name="intervalPreviousDayDescription" heading="config.intervalPreviousDayDescription" notification=this.intervalPreviousDayDescription}}
+									{{>configNotificationLineInput name="intervalCurrentDayDescription" heading="config.intervalCurrentDayDescription" notification=this.intervalCurrentDayDescription}}
+									{{>configNotificationLineInput name="intervalPreviousWeekDescription" heading="config.intervalPreviousWeekDescription" notification=this.intervalPreviousWeekDescription}}
+									{{>configNotificationLineInput name="intervalCurrentWeekDescription" heading="config.intervalCurrentWeekDescription" notification=this.intervalCurrentWeekDescription}}
+									{{>configNotificationLineInput name="intervalPrevious30DaysDescription" heading="config.intervalPrevious30DaysDescription" notification=this.intervalPrevious30DaysDescription}}
+									{{>configNotificationLineInput name="intervalPreviousMonthDescription" heading="config.intervalPreviousMonthDescription" notification=this.intervalPreviousMonthDescription}}
+									{{>configNotificationLineInput name="intervalCurrentMonthDescription" heading="config.intervalCurrentMonthDescription" notification=this.intervalCurrentMonthDescription}}
+									{{>configNotificationLineInput name="intervalPreviousYearDescription" heading="config.intervalPreviousYearDescription" notification=this.intervalPreviousYearDescription}}
+									{{>configNotificationLineInput name="intervalCurrentYearDescription" heading="config.intervalCurrentYearDescription" notification=this.intervalCurrentYearDescription}}
+									{{>configNotificationLineInput name="intervalPreviousHourDescription" heading="config.intervalPreviousHourDescription" notification=this.intervalPreviousHourDescription}}
+									{{>configNotificationLineInput name="intervalCurrentHourDescription" heading="config.intervalCurrentHourDescription" notification=this.intervalCurrentHourDescription}}
+									{{>configNotificationLineInput name="intervalFixedDescription" heading="config.intervalFixedDescription" notification=this.intervalFixedDescription}}					
+									{{>configNotificationLineInput name="schedulePeriodHourDescription" heading="config.schedulePeriodHourDescription" notification=this.schedulePeriodHourDescription}}
+									{{>configNotificationLineInput name="schedulePeriodDayDescription" heading="config.schedulePeriodDayDescription" notification=this.schedulePeriodDayDescription}}
+									{{>configNotificationLineInput name="schedulePeriodWeekDescription" heading="config.schedulePeriodWeekDescription" notification=this.schedulePeriodWeekDescription}}
+									{{>configNotificationLineInput name="schedulePeriodMonthDescription" heading="config.schedulePeriodMonthDescription" notification=this.schedulePeriodMonthDescription}}
+									{{>configNotificationLineInput name="schedulePeriodMinuteDescription" heading="config.schedulePeriodMinuteDescription" notification=this.schedulePeriodMinuteDescription}}
+								</div>
+							</div>
+
+							<!-- Types Tab -->
+							<div role="tabpanel" class="tab-pane" id="reportsCompressionConfigModal">
+				       			<div class="box-body">
+								
+									{{>configSelect name="compressionLevel" label="config.compressionLevel" data="-1:config.compressionLevelDefault,0:config.compressionLevelNone,1:config.compressionLevel1,2:config.compressionLevel2,3:config.compressionLevel3,4:config.compressionLevel4,5:config.compressionLevel5,6:config.compressionLevel6,7:config.compressionLevel7,8:config.compressionLevel8,9:config.compressionLevel9" value=this.compressionLevel }}
+					
+									{{>booleanRadioInput name="compressRetailerPerformanceReportEmail" label="config.compressRetailerPerformanceReportEmail" trueLabel="config.yes" falseLabel="config.no" value=this.compressRetailerPerformanceReportEmail}}
+									{{>booleanRadioInput name="compressWholesalerPerformanceReportEmail" label="config.compressWholesalerPerformanceReportEmail" trueLabel="config.yes" falseLabel="config.no" value=this.compressWholesalerPerformanceReportEmail}}
+									{{>booleanRadioInput name="compressSalesSummaryReportEmail" label="config.compressSalesSummaryReportEmail" trueLabel="config.yes" falseLabel="config.no" value=this.compressSalesSummaryReportEmail}}
+									{{>booleanRadioInput name="compressDailyGroupSalesReportEmail" label="config.compressDailyGroupSalesReportEmail" trueLabel="config.yes" falseLabel="config.no" value=this.compressDailyGroupSalesReportEmail}}
+									{{>booleanRadioInput name="compressMonthlySalesPerformanceReportEmail" label="config.compressMonthlySalesPerformanceReportEmail" trueLabel="config.yes" falseLabel="config.no" value=this.compressMonthlySalesPerformanceReportEmail}}
+									{{>booleanRadioInput name="compressAccountBalanceSummaryReportEmail" label="config.compressAccountBalanceSummaryReportEmail" trueLabel="config.yes" falseLabel="config.no" value=this.compressAccountBalanceSummaryReportEmail}}
+								</div>
+							</div>		
+							
+							<!-- Miscellaneous Tab -->
+							<div role="tabpanel" class="tab-pane" id="reportsMiscellaneousConfigModal">
+				       			<div class="box-body">
+									{{>configInput name="agentReportCountLimit" label="config.agentReportCountLimit" hint="config.agentReportCountLimit" value=this.agentReportCountLimit}}
+									{{>configInput name="agentReportDailyScheduleLimit" label="config.agentReportDailyScheduleLimit" hint="config.agentReportDailyScheduleLimit" value=this.agentReportDailyScheduleLimit}}
+									<!--Aggregated Reports
+									{{>booleanRadioInput name="usePreaggregatedRetailerReportData" label="config.retailerReportMode" value=this.usePreaggregatedRetailerReportData trueLabel="config.preaggregatedMode" falseLabel="config.queryMode" }}
+									{{>booleanRadioInput name="usePreaggregatedWholesalerReportData" label="config.wholesalerReportMode" value=this.usePreaggregatedWholesalerReportData trueLabel="config.preaggregatedMode" falseLabel="config.queryMode" }}
+									{{>booleanRadioInput name="usePreaggregatedDailySalesSummaryReportData" label="config.dailySalesSummaryReportMode" value=this.usePreaggregatedDailySalesSummaryReportData trueLabel="config.preaggregatedMode" falseLabel="config.queryMode" }}
+									{{>booleanRadioInput name="usePreaggregatedDailyGroupSalesReportData" label="config.dailyGroupSalesReportMode" value=this.usePreaggregatedDailyGroupSalesReportData trueLabel="config.preaggregatedMode" falseLabel="config.queryMode" }}
+									{{>booleanRadioInput name="usePreaggregatedMonthlySalesPerformanceReportData" label="config.monthlySalesReportMode" value=this.usePreaggregatedMonthlySalesPerformanceReportData trueLabel="config.preaggregatedMode" falseLabel="config.queryMode" }}
+									{{>booleanRadioInput name="usePreaggregatedAccountBalanceSummaryReportData" label="config.accountBalanceSummaryReportMode" value=this.usePreaggregatedAccountBalanceSummaryReportData trueLabel="config.preaggregatedMode" falseLabel="config.queryMode" }}
+									-->
+								</div>
+							</div>
+							
+						</div>
+					</div>	
+				</form>
+			</div>
+		</div>
+		{{>configModalFooter }}
+	</script>
+	
+	<!-- Adjudication Configuration -->
+	<script id="adjudicationConfig">
+		<div class="box">
+
+			{{>configMainHeading heading="config.adjudicationHeading" btnclass="showAdjudicationConfigDialog" btntext="global.editBtn" permission="Transaction_ConfigAdjudicate"}}
+	
+            <form class="form-horizontal">
+	        	<div class="box-body">
+
+	        		{{>configNotificationLabel heading="config.requesterSuccessNotification" notification=this.requesterSuccessNotification.texts}}
+	        		{{>configNotificationLabel heading="config.requesterFailureNotification" notification=this.requesterFailureNotification.texts}}
+					{{>configNotificationLabel heading="config.agentSuccessNotification" notification=this.agentSuccessNotification.texts}}
+					{{>configNotificationLabel heading="config.agentFailureNotification" notification=this.agentFailureNotification.texts}}
+					{{>configNotificationLabel heading="config.subscriberSuccessNotification" notification=this.subscriberSuccessNotification.texts}}
+					{{>configNotificationLabel heading="config.subscriberFailureNotification" notification=this.subscriberFailureNotification.texts}}
+					
+	        	</div>
+			</form>
+			
+		</div>
+	</script>
+	
+	<script id="adjudicationConfigModal">
+		{{>configModalHeader heading="config.adjudicationHeading"}}
+		<div class="modal-body">
+			<div class="ruledetails">
+				<form name="adjustmentConfigForm" class="form-horizontal adjudicationConfigForm">
+					{{>configAddVariableNote}}
+
+					{{>configNotificationInput name="requesterSuccessNotification" heading="config.requesterSuccessNotification" notification=this.requesterSuccessNotification}}
+					{{>configNotificationInput name="requesterFailureNotification" heading="config.requesterFailureNotification" notification=this.requesterFailureNotification}}
+					{{>configNotificationInput name="agentSuccessNotification" heading="config.agentSuccessNotification" notification=this.agentSuccessNotification}}
+					{{>configNotificationInput name="agentFailureNotification" heading="config.agentFailureNotification" notification=this.agentFailureNotification}}
+					{{>configNotificationInput name="subscriberSuccessNotification" heading="config.subscriberSuccessNotification" notification=this.subscriberSuccessNotification}}
+					{{>configNotificationInput name="subscriberFailureNotification" heading="config.subscriberFailureNotification" notification=this.subscriberFailureNotification}}
+				</form>
+			</div>
+		</div>
+		{{>configModalFooter }}
+	</script>
+	
+</div>

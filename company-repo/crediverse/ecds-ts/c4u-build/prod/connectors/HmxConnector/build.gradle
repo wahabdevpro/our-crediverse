@@ -1,0 +1,25 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.connectors.hmx.HmxConnector")
+   }
+}
+dependencies {
+    implementation project(':CoreInterfaces')
+    implementation project(':HmxProtocol')
+    implementation project(':Notification')
+    implementation project(':Configuration')
+    implementation project(':HsxProtocol')
+    implementation project(':HttpServer')
+    implementation project(':XmlRpc')
+    implementation 'org.slf4j:slf4j-api'
+}

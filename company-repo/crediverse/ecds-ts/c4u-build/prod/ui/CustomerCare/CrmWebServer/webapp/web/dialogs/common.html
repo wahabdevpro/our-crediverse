@@ -1,0 +1,23 @@
+<!-- Delete Modal -->
+<div th:fragment="deleteModal" >
+	<div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="toRemoveLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="toRemoveLabel">Confirm Removal</h4>
+				</div>
+				<div class="modal-body">
+					<div id="toRemoveMessage">Are you sure you wish to remove xyz</div>
+					<div id="delErrorMessage" class="alert alert-danger hide">Something went wrong!</div>
+					<div class="modal-footer">
+						<img id="delwaiting" src="/img/cell_wait.gif" class="waiting hide" />
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+						<button id="modalDelete" type="button" class="btn btn-danger" onclick="validateAndDelete()">Delete</button>
+					</div>      
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

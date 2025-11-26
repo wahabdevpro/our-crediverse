@@ -1,0 +1,68 @@
+	<div th:if="${no_config}" class="row">
+		<div class="col-sm-12">
+			<center>
+				<div class="well well-lg">		
+					<b>There is currently no configuration available for this component</b>
+				</div>
+			</center>
+		</div>
+  	</div>
+  	
+<form th:if="${not no_config}" id="configForm" name="configForm" class="form-horizontal" role="form">
+
+	<div th:if="${not #lists.isEmpty(fields)}" class="row">
+		<div class="col-sm-12">
+			<h1 class="page-header config-prop-headings">Properties</h1>
+		</div>
+  	</div>
+  	
+	<div class="form-group" th:each="field : ${fields}">
+		<label th:for="${field.fieldName}" class="col-sm-3 control-label" th:text="${utils.writeFieldLabel(field)}">label</label>
+		<div class="col-sm-9">
+			<!--  Enums Type -->
+			<select th:if="${! #arrays.isEmpty(field.possibleValues)}"  th:id="${field.fieldName}" th:name="${field.fieldName}" onchange="dataUpdated();">
+				<option th:each="option : ${field.possibleValues}" th:value="${option}" th:text="${utils.makePretty(option)}" th:selected="${option == utils.stringValue(field.value)}">
+				</option>	
+			</select>
+			
+			<!--  Boolean -->
+			<div th:if="${#strings.endsWith(field.valueType, 'Boolean')}" class="col-sm-9" style="padding-left:0px;">
+				<input type="checkbox" style="margin-top:11px;"
+					th:disabled="${field.readOnly}" th:id="${field.fieldName}"
+					th:name="${field.fieldName}" th:checked="${field.value}" 
+					th:onchange="'javascript:dataUpdated();'"
+				/>
+				<br th:if="${#strings.endsWith(field.valueType, 'Boolean') and (! #strings.isEmpty(field.comment)) }" />
+				<span th:if="${#strings.endsWith(field.valueType, 'Boolean') and (! #strings.isEmpty(field.comment)) }" class="field-comment" th:text="${utils.writeFieldComment(field)}">comment</span>
+			</div>
+			<!-- Normal -->
+			<input th:if="${(#arrays.isEmpty(field.possibleValues))  and (! #strings.endsWith(field.valueType, 'Boolean')) }" class="form-control" type="text" th:readonly="${field.readOnly}" th:id="${field.fieldName}" th:name="${field.fieldName}" th:value="${field.value}" onchange="dataUpdated();"/>
+			<span th:if="${(#arrays.isEmpty(field.possibleValues))  and (! #strings.endsWith(field.valueType, 'Boolean')) and (! #strings.isEmpty(field.comment)) }" class="field-comment" th:text="${utils.writeFieldComment(field)}">comment</span>
+			
+			<span th:id="${field.fieldName + '_error'}" style="color:red;" class="error_message hide"></span> 	
+		</div>
+  	</div>
+  	
+	<div th:if="${not #lists.isEmpty(methods)}" class="row">
+		<div class="col-sm-12">
+			<h1 class="page-header config-prop-headings">System Calls</h1>
+		</div>
+  	</div> 
+  	
+ 	<div th:if="${not #lists.isEmpty(methods)}" class="form-group" th:each="method : ${methods}">
+		<label for="something" class="col-sm-3 control-label" th:text="${method.description}">label</label>
+		<div class="col-sm-9">
+			<button class="btn btn-info" th:onclick="'javascript:callMethod(\''+ ${service_uid} +'\', \''+${method.methodName}+'\');return false;'">Perform Operation</button>
+		</div>
+  	</div>
+  	 
+<!-- Update Buttons -->
+<div th:include="common :: updateAndNotify" th:with="std=${'true'}"/>
+  	
+</form>
+
+<script>
+$(document).ready(function() {
+	registerInputs();
+});
+</script>

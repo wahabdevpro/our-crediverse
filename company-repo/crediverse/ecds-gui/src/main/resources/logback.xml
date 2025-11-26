@@ -1,0 +1,58 @@
+<configuration debug="false" scan="true" scanPeriod="300 seconds">
+
+	<property name="FINAL_LOG_DIR" value="${LOG_DIR:-/var/opt/cs/ecdsui/log}"/>    <!-- Use default if the property is not defined -->
+	<property name="FINAL_APP_NAME" value="${APP_NAME:-crediverse-gui}"/>
+	<property name="TIME_FORMAT" value="%d{yyyy-MM-dd'T'HH:mm:ss.SSS}"/>
+    <property name="FINAL_HOST_HOSTNAME" value="${HOST_HOSTNAME:-${HOSTNAME}}"/>
+
+	<!-- %-5level means the level of the logging event should be left justified to a width of five characters. -->
+	<property name="PATTERN" value="${TIME_FORMAT} | %-5level | %X{transid} | %logger{36} | %thread | %msg%n"/>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="ROLLINGSIZE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${FINAL_LOG_DIR}/${FINAL_APP_NAME}-${FINAL_HOST_HOSTNAME}.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${FINAL_LOG_DIR}/${FINAL_APP_NAME}-${FINAL_HOST_HOSTNAME}-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+			<maxFileSize>500MB</maxFileSize>
+			<maxHistory>180</maxHistory>
+			<totalSizeCap>3GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="ERRORS_ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+		<file>${FINAL_LOG_DIR}/errors-${FINAL_APP_NAME}-${FINAL_HOST_HOSTNAME}.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${FINAL_LOG_DIR}/errors-${FINAL_APP_NAME}-${FINAL_HOST_HOSTNAME}-%d{yyyy-MM-dd}.%i.log.gz
+			</fileNamePattern>
+			<maxFileSize>100MB</maxFileSize>
+			<maxHistory>180</maxHistory>
+			<totalSizeCap>1GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="org.hibernate" level="INFO"/>
+	<logger name="com.mchange" level="INFO"/>
+	<logger name="hxc.connectors.smpp" level="INFO"/>
+
+	<root level="INFO">
+		<appender-ref ref="ROLLINGSIZE"/>
+		<appender-ref ref="STDOUT"/>
+		<appender-ref ref="ERRORS_ROLLING"/>
+	</root>
+</configuration>

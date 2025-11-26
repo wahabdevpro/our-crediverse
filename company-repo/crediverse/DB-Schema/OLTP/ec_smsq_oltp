@@ -1,0 +1,18 @@
+*************************** 1. row ***************************
+       Table: ec_smsq
+Create Table: CREATE TABLE `ec_smsq` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `attempts_left` int(11) NOT NULL,
+  `start_second` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `end_second` int(11) NOT NULL,
+  `expiry_time` datetime DEFAULT NULL,
+  `lang3` varchar(3) NOT NULL,
+  `lm_time` datetime NOT NULL,
+  `lm_userid` int(11) NOT NULL,
+  `msisdn` varchar(30) NOT NULL,
+  `notification` text NOT NULL,
+  `version` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ec_smsq_ix1` (`company_id`,`start_second`,`end_second`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

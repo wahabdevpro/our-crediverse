@@ -1,0 +1,59 @@
+<!-- CSS Import -->
+
+<link type="text/css" rel="stylesheet" href="/css/pagecss/alarmviewer.css" />
+<link type="text/css" href="/css/datetime/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<link type="text/css" href="/css/bootstrap-select.min.css" rel="stylesheet" />
+
+<!-- Title for the Page -->
+
+<div class="row">
+	<div class="text-center">
+		<div class="user_heading">
+			<img src="/img/alarms/alarm_viewer.png" width="43" height="25" />
+			Alarm Viewer <img src="/img/alarms/alarm_viewer.png" width="43"
+				height="25" />
+		</div>
+	</div>
+</div>
+<br/>
+
+<!-- Alarm Panel -->
+
+<div id="alarm_panel" class="panel panel-default">
+	<div class="panel-heading">
+		<div class="row">
+			<div class="col-lg-2 col-md-2 col-xs-2">
+				<form>
+					<!-- Select control for the hosts -->
+					<select id="hosts" name="hosts" class="form-control">
+					</select>
+				</form>
+			</div>
+			<div style="text-align: right;" class="col-lg-10 col-md-10 col-xs-10">
+				<!-- Button to sort alphabetically -->
+				<button id="sort-alpha" type="button" class="btn btn-large btn-default" data-toggle="tooltip" data-placement="top" title="Sort Alphabetically"><span class="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true"></span></button>
+				<!-- Button to sort priority -->
+				<button id="sort-prior" type="button" class="btn btn-large btn-default" data-toggle="tooltip" data-placement="top" title="Sort According to Severity"><span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span></button>
+				<!-- Button to sort in natural order -->
+				<button id="sort-natur" type="button" class="btn btn-large btn-default" data-toggle="tooltip" data-placement="top" title="Sort in Natural Order"><span class="glyphicon glyphicon-sort" aria-hidden="true"></span></button>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Alarms content -->
+	<div class="panel-body">		
+		<div class="col-lg-12 col-md-12 col-xs-12">
+			<div id="alarm_content" class="row-fluid alarm-row">
+				Waiting for alarm information...
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- A modal for each alarm -->
+<div th:include="alarmviewer/alarmmodal"></div>
+
+<!-- Javascript Import -->
+
+<script type="text/javascript" src="/js/alarm/alarmviewer.js"></script>
+<script type="text/javascript" src="/js/min/bootstrap-select.min.js"></script>

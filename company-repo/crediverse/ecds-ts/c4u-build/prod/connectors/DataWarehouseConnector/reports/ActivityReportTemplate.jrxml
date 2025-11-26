@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 5.6.1.final using JasperReports Library version 5.6.1  -->
+<!-- 2014-11-11T07:39:09 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ActivityReportTemplate" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b9262bad-ebe2-479b-a6ef-6c69ded5ffea">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="HxC Database"/>
+	<style name="Headings" forecolor="#000000" backcolor="#E0E0E0" fontSize="11" isBold="true"/>
+	<parameter name="name" class="java.lang.String"/>
+	<parameter name="startDate" class="java.util.Date"/>
+	<parameter name="stopDate" class="java.util.Date"/>
+	<parameter name="currency" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["UNKNOWN"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="currencyDecimalDigits" class="java.lang.Integer">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[2]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateFormat" class="java.lang.String">
+		<defaultValueExpression><![CDATA["dd-MMM-yyyy"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[]]>
+	</queryString>
+	<field name="serviceID" class="java.lang.String">
+		<fieldDescription><![CDATA[serviceID]]></fieldDescription>
+	</field>
+	<field name="variantID" class="java.lang.String">
+		<fieldDescription><![CDATA[variantID]]></fieldDescription>
+	</field>
+	<field name="processID" class="java.lang.String">
+		<fieldDescription><![CDATA[processID]]></fieldDescription>
+	</field>
+	<field name="channel" class="java.lang.String">
+		<fieldDescription><![CDATA[channel]]></fieldDescription>
+	</field>
+	<field name="succeeded" class="java.lang.Long">
+		<fieldDescription><![CDATA[succeeded]]></fieldDescription>
+	</field>
+	<field name="failed" class="java.lang.Long">
+		<fieldDescription><![CDATA[failed]]></fieldDescription>
+	</field>
+	<field name="chargeLevied" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[chargeLevied]]></fieldDescription>
+	</field>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<variable name="totalSucceededPerVariant" class="java.lang.Integer" resetType="Group" resetGroup="Group2" calculation="Sum">
+		<variableExpression><![CDATA[$F{succeeded}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="totalFailedPerVariant" class="java.lang.Integer" resetType="Group" resetGroup="Group2" calculation="Sum">
+		<variableExpression><![CDATA[$F{failed}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="totalChargeLeviedPerVariant" class="java.lang.Float" resetType="Group" resetGroup="Group2" calculation="Sum">
+		<variableExpression><![CDATA[$F{chargeLevied}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0F]]></initialValueExpression>
+	</variable>
+	<variable name="totalSucceededPerService" class="java.lang.Integer" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{succeeded}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="totalFailedPerService" class="java.lang.Integer" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{failed}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="totalChargeLeviedPerService" class="java.lang.Float" resetType="Group" resetGroup="Group1" calculation="Sum">
+		<variableExpression><![CDATA[$F{chargeLevied}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0F]]></initialValueExpression>
+	</variable>
+	<variable name="totalSucceeded" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{succeeded}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="totalFailed" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{failed}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="totalChargeLevied" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{chargeLevied}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0F]]></initialValueExpression>
+	</variable>
+	<group name="Group1" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{serviceID}]]></groupExpression>
+		<groupHeader>
+			<band height="33">
+				<property name="local_mesure_unitheight" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="100" height="32" forecolor="#666666" backcolor="#E6E6E6" uuid="63325f40-708e-4b2c-a9a8-764d73604df0"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="16" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Service ID:]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="100" y="0" width="455" height="32" forecolor="#000000" backcolor="#E6E6E6" uuid="3d8bacde-8fdf-410b-973e-d7a69ac19671"/>
+					<textElement verticalAlignment="Middle">
+						<font size="18" isBold="true"/>
+						<paragraph leftIndent="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{serviceID}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="32" width="555" height="1" forecolor="#666666" uuid="303661a7-cb34-4b26-bed8-d4dbc4f0b473">
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="33">
+				<property name="local_mesure_unitheight" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="555" height="32" backcolor="#F2F2F2" uuid="e69c58ed-5f3b-41ee-9a22-f854dce8b12c"/>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="0" y="0" width="110" height="32" forecolor="#666666" backcolor="#E6E6E6" uuid="b2ce35d2-acd3-408d-8c27-305608699ee7"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Service Total: ]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="360" y="0" width="60" height="32" uuid="b6d7db6c-7f88-48dc-aed1-b8ff3fc23ece"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalSucceededPerService}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="420" y="0" width="60" height="32" uuid="898645b4-7d4d-4c2f-9c97-7b02d6455a0e"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalFailedPerService}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="480" y="0" width="75" height="32" uuid="a0931363-80cc-4149-9340-615befb0146b"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+						<paragraph rightIndent="0"/>
+					</textElement>
+					<textFieldExpression><![CDATA[String.format("%." + $P{currencyDecimalDigits} + "f", $V{totalChargeLeviedPerService})]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="32" width="555" height="1" forecolor="#666666" uuid="077c2efa-e0bf-444c-8e07-0cf17dcae75e">
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Group2" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{variantID}]]></groupExpression>
+		<groupHeader>
+			<band height="33">
+				<property name="local_mesure_unitheight" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<textField isBlankWhenNull="true">
+					<reportElement x="160" y="0" width="395" height="32" forecolor="#000000" uuid="172146f2-ce44-4fcf-8579-5d6c938f7682"/>
+					<textElement verticalAlignment="Middle">
+						<font size="16" isBold="true"/>
+						<paragraph leftIndent="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{variantID}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="160" height="32" forecolor="#666666" uuid="3dc9b7c6-7fb3-4ef5-b283-06646bee07e5"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Variant ID:]]></text>
+				</staticText>
+				<line>
+					<reportElement x="80" y="32" width="475" height="1" forecolor="#666666" uuid="6d5a3721-914f-46c9-93d0-4f26cea04dac">
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="21">
+				<property name="local_mesure_unitheight" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<staticText>
+					<reportElement mode="Opaque" x="80" y="0" width="475" height="20" backcolor="#FAFAFA" uuid="bb7ca79e-f040-4ac1-b155-32284d661ecf"/>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="0" width="160" height="20" forecolor="#666666" uuid="fa6e4004-613c-4930-8aeb-f8059c18d639"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Sub-Total:]]></text>
+				</staticText>
+				<line>
+					<reportElement positionType="FixRelativeToBottom" x="80" y="20" width="475" height="1" uuid="241ca510-febc-4362-a792-846227bd4044">
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+				</line>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="360" y="0" width="60" height="20" uuid="52591fb6-110c-474c-9ae9-47ed67c11ea7"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalSucceededPerVariant}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="420" y="0" width="60" height="20" uuid="8f04d144-63ca-4bd4-b606-9dea52d75792"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalFailedPerVariant}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement x="480" y="0" width="75" height="20" uuid="e0b36947-6099-461d-baf3-1231f4a204a6"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+						<paragraph rightIndent="0"/>
+					</textElement>
+					<textFieldExpression><![CDATA[String.format("%." + $P{currencyDecimalDigits} + "f", $V{totalChargeLeviedPerVariant})]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#000000" uuid="02a93c0f-9871-4a42-b179-f01b82bb1ce9"/>
+				<textField>
+					<reportElement mode="Transparent" x="20" y="20" width="553" height="43" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="c9347970-2522-4090-bea8-0867df06aa2b"/>
+					<box padding="0" topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="29" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{name}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="20" y="64" width="555" height="20" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="4863feee-26a0-4065-bfd6-9e2029e211e8"/>
+					<box padding="0" topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+					</textElement>
+					<textFieldExpression><![CDATA["From " + new java.text.SimpleDateFormat($P{dateFormat}).format($P{startDate}) + " until " + new java.text.SimpleDateFormat($P{dateFormat}).format($P{stopDate})]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="37">
+			<line>
+				<reportElement x="0" y="36" width="555" height="1" forecolor="#666666" uuid="99c572b3-4a71-46df-aa38-39703776822a"/>
+			</line>
+			<staticText>
+				<reportElement style="Headings" mode="Opaque" x="160" y="0" width="120" height="36" forecolor="#000000" backcolor="#E6E6E6" uuid="4c86ad67-43a1-4992-a570-12fb5a71192c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ProcessID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="280" y="0" width="80" height="36" forecolor="#000000" backcolor="#E6E6E6" uuid="2ed46734-1a33-4097-8983-0b23b1da7139"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Channel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="360" y="0" width="60" height="36" forecolor="#000000" backcolor="#E6E6E6" uuid="a278e073-2fe1-4fea-a42d-28a9c3bfb5db"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Succeeded]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="420" y="0" width="60" height="36" forecolor="#000000" backcolor="#E6E6E6" uuid="07adfcb3-64f9-42a3-963a-00349ab20e66"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Failed]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="480" y="0" width="75" height="36" forecolor="#000000" backcolor="#E6E6E6" uuid="3931b443-8805-48b5-9ea8-a39be6f7fa2a"/>
+				<box padding="0" topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Revenue (" + $P{currency} + ")"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="161" height="36" backcolor="#E6E6E6" uuid="5199c071-412a-419a-93b3-4736113aaddc"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="160" y="20" width="395" height="1" uuid="2e81ac8d-578a-45de-b776-0456ff6e2f29">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="160" y="0" width="120" height="20" uuid="d772107b-1847-47cb-a593-04f33c89edaf"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{processID}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="280" y="0" width="80" height="20" uuid="441d7e2e-51bb-45f9-84de-6ee3f0e1dbd2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{channel}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="360" y="0" width="60" height="20" uuid="02442cd3-e3c5-433c-b3a3-0c488b812fd4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{succeeded}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="420" y="0" width="60" height="20" uuid="600812e8-424f-4fe5-9ab5-82fec3285581"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{failed}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="480" y="0" width="75" height="20" uuid="24272478-2185-4087-af4f-b120030dc1da"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph rightIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.format("%." + $P{currencyDecimalDigits} + "f", $F{chargeLevied})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="26">
+			<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="26" forecolor="rgba(0, 0, 0, 0.0)" backcolor="#000000" uuid="87f3b07b-5007-4f09-bba3-eb956ab729bf"/>
+			</rectangle>
+			<textField>
+				<reportElement mode="Transparent" x="0" y="0" width="530" height="26" forecolor="#FFFFFF" backcolor="#E6E6E6" uuid="cb5d26a1-cf55-4f1c-84c5-cc3ecc43617b">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Transparent" x="530" y="0" width="25" height="26" forecolor="#FFFFFF" backcolor="#E6E6E6" uuid="9ef4ff70-7162-4ee2-ac4d-8846cc8e30a2">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="83" y="7" width="227" height="13" forecolor="#FFFFFF" uuid="d5bbec3a-913b-4fb1-94d0-703143565997"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat($P{dateFormat}).format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="10" y="7" width="70" height="13" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="bb480514-a6e5-44e1-9296-15a7009ae90e"/>
+				<box padding="0" topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<text><![CDATA[Generated on]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="63">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="32" forecolor="rgba(0, 0, 0, 0.0)" backcolor="#000000" uuid="399299ac-a1b2-4e3f-9a18-199a1a957580"/>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="0" width="110" height="32" forecolor="#F0F0F0" backcolor="#E6E6E6" uuid="0a049d9a-e952-40e6-b411-c69196f1208b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Grand Total: ]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="360" y="0" width="60" height="32" forecolor="#FFFFFF" uuid="58ca3967-1a65-4f71-b1d6-f04b83778edf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalSucceeded}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="420" y="0" width="60" height="32" forecolor="#FFFFFF" uuid="0497e670-ac67-4c15-b8ed-aa54b2d9df0b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalFailed}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="480" y="0" width="75" height="32" forecolor="#FFFFFF" uuid="bbfb021a-b626-4eb6-bc09-45cfee6ff0d4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.format("%." + $P{currencyDecimalDigits} + "f", $V{totalChargeLevied})]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="35" width="555" height="26" forecolor="rgba(0, 0, 0, 0.0)" backcolor="#000000" uuid="459a3a50-b512-40ce-bcd9-2045beee7908"/>
+			</rectangle>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="83" y="42" width="237" height="13" forecolor="#FFFFFF" uuid="280138e9-aba4-4857-844b-15f4295d0789"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat($P{dateFormat}).format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="10" y="42" width="70" height="13" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="c7c38c25-98f8-4632-99ab-011273131735"/>
+				<box padding="0" topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="9" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<text><![CDATA[Generated on]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="0" y="35" width="530" height="26" forecolor="#FFFFFF" backcolor="#E6E6E6" uuid="f6589e8d-9641-4efb-8af6-084e6bc272ce">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Transparent" x="530" y="35" width="25" height="26" forecolor="#FFFFFF" backcolor="#E6E6E6" uuid="14982227-0462-4b0c-ba1e-f8f95ba625e2">
+					<printWhenExpression><![CDATA[!$P{IS_IGNORE_PAGINATION}]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band/>
+	</summary>
+	<noData>
+		<band height="130">
+			<staticText>
+				<reportElement x="0" y="100" width="555" height="30" uuid="0446452d-065d-42ee-b702-05a880a87938"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[No activities recorded during that time.]]></text>
+			</staticText>
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="0" width="595" height="92" backcolor="#000000" uuid="7704834b-2f4d-453d-9f60-ee59bb240b0a"/>
+				<textField>
+					<reportElement mode="Transparent" x="20" y="20" width="553" height="43" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="773af8c4-43f2-45fe-86b3-75f30816fc16"/>
+					<box padding="0" topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="29" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{name}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Transparent" x="20" y="64" width="555" height="20" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="0d7b8403-b8a3-4aa9-be84-e1199238ff83"/>
+					<box padding="0" topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+					</textElement>
+					<textFieldExpression><![CDATA["From " + new java.text.SimpleDateFormat($P{dateFormat}).format($P{startDate}) + " until " + new java.text.SimpleDateFormat($P{dateFormat}).format($P{stopDate})]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</noData>
+</jasperReport>

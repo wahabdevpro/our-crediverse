@@ -1,0 +1,22 @@
+@CHARSET "UTF-8";
+
+.wrappedtext17{
+	width: 17%;
+    white-space: nowrap;  
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.wrappedtext15{
+	width: 15%;
+    white-space: nowrap;  
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.wrappedtext12{
+	width: 12%;
+    white-space: nowrap;  
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

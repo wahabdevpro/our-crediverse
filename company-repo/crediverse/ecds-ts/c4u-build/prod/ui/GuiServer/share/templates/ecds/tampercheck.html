@@ -1,0 +1,91 @@
+<div class="row">
+	<div class="col-sm-12">
+		<h1 class="page-header config-prop-headings">ECDS Tamper Check</h1>
+	</div>
+</div>
+
+
+<!-- Tabbed Content -->
+<ul class="nav nav-tabs">	 
+	 <!--<li><a href="#general" data-toggle="tab">General</a></li>-->
+	 <li class="active"><a href="#agenttab" data-toggle="tab">Agents</a></li>	 
+	 <li class="refreshTamperedAuditEntries"><a href="#auditentrytab" data-toggle="tab">Audit Entries</a></li>
+	 <li class="refreshTamperedBatches"><a href="#batchtab" data-toggle="tab">Batch</a></li>
+</ul>
+
+<div class="tab-content">
+	
+	<!-- General Tab -->
+	<div class="tab-pane tabcontent" id="general">
+		<div class="row" style="margin-top:20px;border-bottom: 1px solid #EEEEEE;">
+			<div class="col-xs-11 col-sm-5 col-md-7 user_heading" style="margin-left: 20px;">General Configuration</div>
+		</div>	
+		<form th:if="${not no_config}" id="configForm" name="configForm" class="form-horizontal" role="form">
+			<div th:include="ecds/general" />
+		</form>
+	</div>
+	 
+	<!--  Agent Tampering Table (with Reset)-->
+	<div class="tab-pane tabcontent active" id="agenttab">
+		<div class="row" style="border-bottom: 1px solid #EEEEEE;">
+			<div class="col-xs-12 col-sm-6 col-md-8 user_heading">Tampered Agents</div>
+				<div class="col-xs-6 col-md-4">
+				<button type="button" class="btn btn-danger btn-small resetTamperedAccounts" style="float:right;" data-toggle="modal" title="Reset Account Tampering">Reset Accounts</button>
+				<button type="button" class="btn btn-danger btn-small resetTamperedAgents" style="float:right;" data-toggle="modal" title="Reset Agent Tampering">Reset Agents</button>
+				
+			</div>
+		</div>
+		<div id="tamperedagents" th:include="ecds/tamperedagents" />
+	</div>
+	
+	<!--  Audit Entry Tampering Table (with Reset)-->
+	<div class="tab-pane tabcontent refreshTamperedAuditEntries" id="auditentrytab">
+		<div class="row" style="border-bottom: 1px solid #EEEEEE;">
+			<div class="col-xs-12 col-sm-6 col-md-8 user_heading">Tampered Audit Entries</div>
+				<div class="col-xs-6 col-md-4">
+				<button type="button" class="btn btn-danger btn-small resetTamperedAuditEntries" style="float:right;" data-toggle="modal" title="Reset Audit Tampering">Reset</button>
+				<button type="button" class="btn btn-success btn-small refreshTamperedAuditEntries" style="float:right;" data-toggle="modal" title="Refresh Tampered Audit Entries">
+					<span class=" glyphicon glyphicon-refresh" aria-hidden="true"></span>
+				</button>				
+			</div>
+		</div>
+		<div id="tamperedauditentries" th:include="ecds/tamperedauditentries" />
+	</div>
+	
+	<!--  Batch Tampering Table (with Reset)-->
+	<div class="tab-pane tabcontent refreshTamperedBatches" id="batchtab">
+		<div class="row" style="border-bottom: 1px solid #EEEEEE;">
+			<div class="col-xs-12 col-sm-6 col-md-8 user_heading">Tampered Batches</div>
+				<div class="col-xs-6 col-md-4">
+				<button type="button" class="btn btn-danger btn-small resetTamperedBatches" style="float:right;" data-toggle="modal" title="Reset Audit Tampering">Reset</button>
+				<button type="button" class="btn btn-success btn-small refreshTamperedBatches" style="float:right;" data-toggle="modal" title="Refresh Tampered Batch Entries">
+					<span class=" glyphicon glyphicon-refresh" aria-hidden="true"></span>
+				</button>				
+			</div>
+		</div>
+		<div id="tamperedbatches" th:include="ecds/tamperedbatches" />
+	</div>
+	
+<!--  Delete Modal -->
+<div th:include="common :: deleteModal" />
+	
+</div>
+
+<link type="text/css" href="/css/bootstrap-select.min.css" rel="stylesheet" />
+<script src="/js/min/bootstrap-select.min.js"></script>
+
+<script src="/js/moment.min.js"></script>
+<script src="/js/bootstrap-datetimepicker.js"></script>
+<link type="text/css" href="/css/bootstrap-timepicker.min.css" rel="stylesheet" />
+
+<script src="/js/pagejs/mancommon.js"></script>
+<script src="/js/paramtime.js"></script>
+
+<script src="/js/pagejs/ctrlservice.js"></script>
+<script src="/js/pagejs/tampercheck.js"></script>
+
+<script>
+$(document).ready(function() {	
+	registerInputs();	
+});
+</script>

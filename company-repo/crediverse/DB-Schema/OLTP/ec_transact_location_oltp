@@ -1,0 +1,10 @@
+
+*************************** 1. row ***************************
+       Table: ec_transact
+Create Table: CREATE TABLE `ec_transact_location` (
+  `transaction_id` bigint(20) NOT NULL,
+  `latitude` double(11,8) NOT NULL,
+  `longitude` double(11,8) NOT NULL,
+  KEY `FK_Location_Transaction` (`transaction_id`),
+  CONSTRAINT `FK_Location_Transaction` FOREIGN KEY (`transaction_id`) REFERENCES `ec_transact` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

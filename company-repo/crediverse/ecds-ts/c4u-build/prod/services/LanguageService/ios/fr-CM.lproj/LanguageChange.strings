@@ -1,0 +1,12 @@
+
+/* Class = "UINavigationItem"; title = "Language Change Service"; ObjectID = "8gc-gj-dQH"; */
+"8gc-gj-dQH.title" = "Language Change Service";
+
+/* Class = "UILabel"; text = "This service allows you to change the language globally for all of the available services"; ObjectID = "Jm5-qE-2EQ"; */
+"Jm5-qE-2EQ.text" = "Ce service vous permet de changer la langue à l'échelle mondiale pour l'ensemble des services disponibles";
+
+/* Class = "UILabel"; text = "Select the language to migrate to:"; ObjectID = "RFc-gy-sKJ"; */
+"RFc-gy-sKJ.text" = "Sélectionnez la langue de migrer vers:";
+
+/* Class = "UILabel"; text = "Language:"; ObjectID = "ndY-qH-YYP"; */
+"ndY-qH-YYP.text" = "Langue:";

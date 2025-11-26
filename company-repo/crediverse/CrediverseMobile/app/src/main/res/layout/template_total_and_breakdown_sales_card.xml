@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="4dp"
+    app:cardCornerRadius="9dp"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true">
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="48dp"
+        android:visibility="gone" />
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/total_and_breakdown_sales_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="12dp"
+        android:orientation="vertical"
+        app:alignItems="center"
+        app:flexDirection="column"
+        app:justifyContent="center">
+
+        <TextView
+            android:id="@+id/sales_today_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/total_sales_today"
+            android:textAlignment="center"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/total_sales_today"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginTop="-3dp"
+            android:layout_marginBottom="-3dp"
+            android:text="@string/error_balance"
+            android:textAlignment="center"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            tools:text="100" />
+
+        <TextView
+            android:id="@+id/number_of_total_sales"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/number_of_sales"
+            android:textAlignment="center"
+            android:textSize="12sp"
+            tools:text="(40 sales)" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp">
+
+            <LinearLayout
+                android:id="@+id/sales_amounts_underline"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/medium_gray"
+                android:orientation="horizontal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:paddingVertical="2dp">
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:paddingHorizontal="8dp"
+                app:alignItems="center"
+                app:flexDirection="column"
+                app:justifyContent="center"
+                app:layout_flexGrow="1">
+
+                <TextView
+                    android:id="@+id/airtime_sales_today_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/airtime_sales_title"
+                    android:textAlignment="center"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/airtime_sales_today"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-3dp"
+                    android:layout_marginBottom="-3dp"
+                    android:text="@string/error_balance"
+                    android:textAlignment="center"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    tools:text="50" />
+
+                <TextView
+                    android:id="@+id/number_of_airtime_sales"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/number_of_sales"
+                    android:textAlignment="center"
+                    android:textSize="12sp"
+                    tools:text="(99 sales)" />
+
+            </com.google.android.flexbox.FlexboxLayout>
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:paddingHorizontal="8dp"
+                app:alignItems="center"
+                app:flexDirection="column"
+                app:justifyContent="center"
+                app:layout_flexGrow="1">
+
+                <TextView
+                    android:id="@+id/bundle_sales_today_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bundle_sales_title"
+                    android:textAlignment="center"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/bundles_sales_today"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-3dp"
+                    android:layout_marginBottom="-3dp"
+                    android:text="@string/error_balance"
+                    android:textAlignment="center"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    tools:text="50" />
+
+                <TextView
+                    android:id="@+id/number_of_bundle_sales"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/number_of_sales"
+                    android:textAlignment="center"
+                    android:textSize="12sp"
+                    tools:text="(40 sales)" />
+
+
+            </com.google.android.flexbox.FlexboxLayout>
+
+        </LinearLayout>
+
+    </com.google.android.flexbox.FlexboxLayout>
+
+</androidx.cardview.widget.CardView>

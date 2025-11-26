@@ -1,0 +1,39 @@
+<!--  Server Roles List -->
+<div th:if="${#arrays.isEmpty(serverroles)}">
+	<p>Currently No Server Roles Defined</p>
+</div>
+
+<div th:if="${!#arrays.isEmpty(serverroles)}" class="row">
+	<table id="serverroles_table"
+		class="table infotable table-hover table-bordered table-striped">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Attach Command</th>
+				<th>Detach Command</th>
+				<th>Exclusive</th>
+				<th width="150px;">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="role,iterStat : ${serverroles}">
+				<td th:text="${role.serverRoleName}">-</td>		
+				<td th:text="${#strings.isEmpty(role.attachCommand)? '' : ((#strings.length(role.attachCommand) > 20)? (#strings.substring(role.attachCommand,0, 20) + '...') : role.attachCommand)}">-</td>
+				<td th:text="${#strings.isEmpty(role.detachCommand)? '' : ((#strings.length(role.detachCommand) > 20)? (#strings.substring(role.detachCommand,0, 20) + '...') : role.detachCommand)}">-</td>
+				<td>
+					<center>
+						<span th:if="${role.exclusive}" class="glyphicon glyphicon-ok-circle isexclusive"></span>
+						<span th:if="${!role.exclusive}" class="glyphicon glyphicon-remove-circle notexclusive"></span>
+					</center>
+				</td>
+				<td>
+					<a th:id="${'roleview_' + iterStat.index}"  th:onclick="'javascript:showServerRole(\'view\',' + ${iterStat.index} + ');return false;'" href="#"><span class="glyphicon glyphicon-eye-open viewbutton" title="view"></span></a> 
+					<span>|</span>
+					<a th:id="${'roleedit_' + iterStat.index}" th:onclick="'javascript:showServerRole(\'edit\',' + ${iterStat.index} + ');return false;'" href="#"><span class="glyphicon glyphicon-pencil editbutton" title="edit"></span></a> 
+					<span>|</span>
+					<a th:id="${'roledelete_' + iterStat.index}" th:onclick="'javascript:deleteServerRole(' + ${iterStat.index} + ',\'' + ${role.serverRoleName} + '\');return false;'" href="#"><span class="glyphicon glyphicon-trash deletebutton" title="delete"></span></a> 				
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

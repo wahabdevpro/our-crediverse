@@ -1,0 +1,336 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.6'
+		id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+		id "com.github.node-gradle.node" version "3.1.1"
+		id 'java'
+		id 'maven-publish'
+		id 'eclipse'
+		id 'idea'
+}
+
+apply plugin: 'java'
+apply plugin: 'io.spring.dependency-management'
+
+version = System.getenv("CI_COMMIT_TAG") ?: System.getenv("CS_COMMIT_TAG") ?: new Date().format("ddMMyyyyHHmmss")
+project.ext.buildId = System.getenv("CS_BUILD_ID") ?: 'rc-'+new Date().format("ddMMyyyyHHmmss")
+project.ext.commitSha = System.getenv("CI_COMMIT_SHA") ?: 'sha_'+new Date().format("ddMMyyyyHHmmss")
+
+project.sourceCompatibility = "1.11"
+project.targetCompatibility = "1.11"
+
+println "CI_GITHUB_TAG: " + System.getenv("CI_GITHUB_TAG")
+println "CI_DOCKER_TAG: " + System.getenv("CI_DOCKER_TAG")
+println "CI_BRANCH_NAME: " + System.getenv("CI_BRANCH_NAME")
+println "CI_BUILD_NUMBER: " + System.getenv("CI_BUILD_NUMBER")
+println "CI_BUILD_DATETIME: " + System.getenv("CI_BUILD_DATETIME")
+println "CI_COMMIT_REF: " + System.getenv("CI_COMMIT_REF")
+
+project.ext.githubTag = System.getenv("CI_GITHUB_TAG") ?: System.getenv("CI_GITHUB_TAG") ?: 'dev_' + new Date().format("ddMMyyyyHHmmss")
+project.ext.dockerTag = System.getenv("CI_DOCKER_TAG") ?: System.getenv("CI_DOCKER_TAG") ?: 'local_' + new Date().format("ddMMyyyyHHmmss")
+project.ext.branchName = System.getenv("CI_BRANCH_NAME") ?: System.getenv("CI_BRANCH_NAME") ?: 'localbranch_' + new Date().format("ddMMyyyyHHmmss")
+project.ext.buildNumber = System.getenv("CI_BUILD_NUMBER") ?: System.getenv("CI_BUILD_NUMBER") ?: 'buildNumber_'+new Date().format("ddMMyyyyHHmmss")
+project.ext.buildDateTime = System.getenv("CI_BUILD_DATETIME") ?: System.getenv("CI_BUILD_DATETIME") ?:'buildDateTime_'+new Date().format("ddMMyyyyHHmmss")
+project.ext.commitRef = System.getenv("CI_COMMIT_REF") ?: System.getenv("CI_COMMIT_REF") ?: 'sha_'+new Date().format("ddMMyyyyHHmmss")
+
+task generateBuildInfo {
+    doLast {
+		println('generateBuildInfo running')
+        File outputDir = new File('src/main/java/cs/config')
+        //outputDir.mkdirs()
+        File buildInfo = new File(outputDir, 'BuildInfo.java')
+        buildInfo.text = """
+			package cs.config;
+            public final class BuildInfo {
+                public static final String GITHUB_TAG = "${githubTag}";
+                public static final String DOCKER_TAG = "${dockerTag}";
+                public static final String BRANCH_NAME = "${branchName}";
+                public static final String BUILD_NUMBER = "${buildNumber}";
+                public static final String BUILD_DATE_TIME = "${buildDateTime}";
+                public static final String BUILD_COMMIT_REF = "${commitRef}";
+            }
+        """.stripIndent()
+    }
+}
+repositories {
+	mavenCentral()
+		//maven { url = "https://repo.maven.apache.org/maven2"
+		//        allowInsecureProtocol = true
+		//}
+		/*maven {
+		  url "https://gitlab.com/api/v4/projects/12085055/packages/maven"
+		//url "https://gitlab.com/api/v4/groups/5104906/-/packages/maven"
+		//url "https://gitlab.com/api/v4/packages/maven"
+		allowInsecureProtocol = true
+		name "GitLab"
+		credentials(HttpHeaderCredentials) {
+		name = 'Deploy-Token'
+		value = project.property('csys.crediverse.deploy.token')
+		//value = findProperty('csys.crediverse.deploy.token') ?: System.getenv('REGISTRY_DEPLOY_TOKEN')
+		}
+		authentication {
+		header(HttpHeaderAuthentication)
+		}
+		metadataSources {
+		artifact()
+		}
+		}*/
+}
+
+/*version = System.getenv("CI_COMMIT_TAG") ?: System.getenv("CS_COMMIT_TAG") ?: new Date().format("ddMMyyyyHHmmss")
+  project.ext.buildId = System.getenv("CS_BUILD_ID") ?: 'rc-'+new Date().format("ddMMyyyyHHmmss")
+  project.ext.commitSha = System.getenv("CI_COMMIT_SHA") ?: 'sha_'+new Date().format("ddMMyyyyHHmmss")
+
+  project.ext.set("project.buildId", project.buildId)
+  project.ext.set("project.version", version)
+  project.ext.set("project.commitSha", project.commitSha)*/
+
+dependencies {
+	// CS built dependencies
+	//implementation('ga.csys.c4u:RestProtocol:1.11.9-rc-20')
+
+	implementation project(':RestProtocol')
+	implementation project(':FeatureBar')
+
+		// Lombok Start
+		//compileOnly('org.projectlombok:lombok:1.18.22')
+		//annotationProcessor('org.projectlombok:lombok:1.18.22')
+		// Lombok End
+
+		// Spring starters
+
+
+		implementation('org.springframework.boot:spring-boot-starter-security')
+		implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+		implementation('org.springframework.boot:spring-boot-starter-web')
+		implementation('org.thymeleaf.extras:thymeleaf-extras-springsecurity5')
+		compileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+		implementation('org.springframework.boot:spring-boot-starter-data-rest')
+		implementation('org.springframework.boot:spring-boot-starter-aop')
+		implementation('org.springframework.boot:spring-boot-starter-actuator')
+
+		implementation('org.springframework.boot:spring-boot-properties-migrator') // Remove once all errors have been dealt with.
+		implementation('org.springframework.boot:spring-boot-devtools')
+		//implementation("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.3.0")
+		implementation("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.0.5")
+
+		implementation("javax.ws.rs:javax.ws.rs-api:2.1.1")
+		implementation 'com.google.guava:guava:30.1.1-jre'
+		//implementation("com.google.guava:guava:19.0")
+		implementation("org.pcap4j:pcap4j-core:1.6.4")
+		implementation("org.pcap4j:pcap4j-packetfactory-static:1.6.4")
+
+		implementation('org.apache.commons:commons-csv:1.3')
+		implementation('org.apache.httpcomponents:httpclient')
+
+		implementation('com.fasterxml.jackson.dataformat:jackson-dataformat-csv')
+		implementation('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.8')
+		//implementation('org.projectlombok:lombok:1.16.16')
+		implementation('org.bouncycastle:bcprov-jdk15on:1.54')
+		implementation('org.bouncycastle:bcpkix-jdk15on:1.54')
+
+		implementation group: 'org.slf4j', name: 'slf4j-simple', version: '2.0.0'
+
+		//implementation('org.thymeleaf.extras:thymeleaf-extras-springsecurity4')
+
+		testImplementation('junit:junit')
+		testImplementation('org.springframework.boot:spring-boot-starter-test')
+		testImplementation('org.springframework:spring-test')
+		testImplementation('com.jayway.jsonpath:json-path')
+		testImplementation('com.jayway.jsonpath:json-path-assert')
+		implementation('commons-cli:commons-cli:1.4')
+		implementation('javax.xml.bind:jaxb-api')
+
+		//deployerJars'org.apache.maven.wagon:wagon-ssh:2.9'
+
+		//antClasspath'ant:ant-javamail:1.6.5'
+		//antClasspath'javax.activation:activation:1.1.1'
+		//antClasspath'javax.mail:mail:1.4.7'
+
+		testImplementation('org.springframework.boot:spring-boot-starter-test')
+		testImplementation 'org.springframework.security:spring-security-test'
+		testImplementation('org.springframework:spring-test')
+		// Lombok Start
+		testCompileOnly 'org.projectlombok:lombok'
+		testAnnotationProcessor 'org.projectlombok:lombok'
+		//testCompileOnly('org.projectlombok:lombok:1.18.22')
+		//testAnnotationProcessor('org.projectlombok:lombok:1.18.22')
+		// Lombok End
+}
+
+sourceSets {
+	main {
+		resources {
+			srcDirs = [	"src/main/resources" ]
+				exclude '**/.*.sw?'
+				exclude '**/.sw?'
+		}
+	}
+}
+
+/*
+   This is what we actually use:
+
+   project.version
+   project.name
+   project.artifactId
+   project.ciBuildId
+
+   When copying resources, we will replace @project.version@ with the value etc.
+ */
+project.ext.mavenProjectProperties = [
+	"project.version": version,
+	"project.name": project.prettyName,
+	"project.artifactId": project.name,
+	"project.groupId": project.group,
+	"project.description": project.description,
+	"project.ciBuildId": '2.0.0'
+]
+
+import org.apache.tools.ant.filters.ReplaceTokens
+processResources {
+
+	filesMatching( [
+			'**/*.properties',
+			'**/*.build.js',
+			'**/*.build.gradle.js',
+			'**/version.txt'
+	] ){
+		filter( ReplaceTokens, beginToken: '@', endToken : '@', tokens: project.mavenProjectProperties )
+	}
+}
+
+bootJar {
+	archiveFileName = 'ecds-gui.jar'
+		manifest {
+			attributes (
+					'Start-Class': 'cs.Application',
+					"Class-Path": "/var/opt/cs/config/:/var/opt/cs/config:/var/opt/cs/config/*"
+				   )
+		}
+}
+
+task generateProperties() {
+	doFirst {
+		println("Generating ecds-gui.properties")
+			def dir = new File(project.buildDir, 'resources/main')
+			dir.mkdirs()
+			ant.propertyfile(
+					file: new File(dir, 'ecds-gui.properties')) {
+				entry( key: "major.version", value: project.property("version"))
+					entry( key: "build.number", value: project.ext.buildId)
+					entry( key: "commit.sha", value: project.ext.commitSha)
+
+			}
+	}
+}
+
+task requirejsAdminguiLogin(type: NodeTask, dependsOn: processResources) {
+	script = file("${sourceSets.main.output.resourcesDir}/static/js/lib/r.js")
+		args = ["-o", "${sourceSets.main.output.resourcesDir}/static/js/adminlogin.build.js",
+		     "baseUrl=${sourceSets.main.output.resourcesDir}/static/js/login",
+		]
+}
+
+/** Separate task to minify JavaScript, as r.js doesn't support minification of ecma15+ */
+task minifyAdminguiLogin(type: NodeTask, dependsOn: processResources) {
+	script = file("${sourceSets.main.output.resourcesDir}/static/js/lib/uglifyjs/bin/uglifyjs")
+		args = ["${sourceSets.main.output.resourcesDir}/static/js/adlogin-${project.version}.js","-o", 
+		"${sourceSets.main.output.resourcesDir}/static/js/adlogin-${project.version}.js",
+		     "-c", "-m"
+		]
+}
+
+minifyAdminguiLogin.dependsOn(project.tasks.requirejsAdminguiLogin)
+
+task requirejsAdmingui(type: NodeTask, dependsOn: processResources) {
+	script = file("${sourceSets.main.output.resourcesDir}/static/js/lib/r.js")
+		args = ["-o", "${sourceSets.main.output.resourcesDir}/static/js/app.build.js",
+		     "baseUrl=${sourceSets.main.output.resourcesDir}/static/js/app",
+		]
+}
+
+/** Separate task to minify JavaScript, as r.js doesn't support minification of ecma15+ */
+task minifyAdminGUI(type: NodeTask, dependsOn: processResources) {
+	script = file("${sourceSets.main.output.resourcesDir}/static/js/lib/uglifyjs/bin/uglifyjs")
+		args = ["${sourceSets.main.output.resourcesDir}/static/js/main-${project.version}.js","-o", 
+		"${sourceSets.main.output.resourcesDir}/static/js/main-${project.version}.js",
+		     "-c", "-m"
+		]
+}
+
+minifyAdminGUI.dependsOn(project.tasks.requirejsAdmingui)
+
+task requirejsPortalLogin(type: NodeTask, dependsOn: processResources) {
+	script = file("${sourceSets.main.output.resourcesDir}/static/js/lib/r.js")
+		args = ["-o", "${sourceSets.main.output.resourcesDir}/static/js/portallogin.build.js",
+		     "baseUrl=${sourceSets.main.output.resourcesDir}/static/js/login",
+		]
+}
+
+/** Separate task to minify JavaScript, as r.js doesn't support minification of ecma15+ */
+task minifyPortalLogin(type: NodeTask, dependsOn: processResources) {
+	script = file("${sourceSets.main.output.resourcesDir}/static/js/lib/uglifyjs/bin/uglifyjs")
+		args = ["${sourceSets.main.output.resourcesDir}/static/js/ptlogin-${project.version}.js","-o", 
+		"${sourceSets.main.output.resourcesDir}/static/js/ptlogin-${project.version}.js",
+		     "-c", "-m"
+		]
+}
+
+minifyPortalLogin.dependsOn(project.tasks.requirejsPortalLogin)
+
+task requirejsPortal(type: NodeTask, dependsOn: processResources) {
+	script = file("${sourceSets.main.output.resourcesDir}/static/js/lib/r.js")
+		args = ["-o", "${sourceSets.main.output.resourcesDir}/static/js/portal.build.js",
+		     "baseUrl=${sourceSets.main.output.resourcesDir}/static/js/portal",
+		]
+}
+
+/** Separate task to minify JavaScript, as r.js doesn't support minification of ecma15+ */
+task minifyPortal(type: NodeTask, dependsOn: processResources) {
+	script = file("${sourceSets.main.output.resourcesDir}/static/js/lib/uglifyjs/bin/uglifyjs")
+		args = ["${sourceSets.main.output.resourcesDir}/static/js/portal-${project.version}.js","-o", 
+		"${sourceSets.main.output.resourcesDir}/static/js/portal-${project.version}.js",
+		     "-c", "-m"
+		]
+}
+
+minifyPortal.dependsOn(project.tasks.requirejsPortal)
+
+task packJavascript() {
+	group = "build"
+		description = "require.js processing of javascript"
+		doLast {
+			println 'Completed packing javascript'
+		}
+}
+
+packJavascript.dependsOn {
+	tasks.findAll { task -> task.name.startsWith('minify') }
+}
+
+apply from: 'prepare_docker_image.gradle'
+
+task runAdminGui(type:JavaExec) {
+	//def Project pg = project(':EcdsTestHost')
+	println("Executing "+project.name)
+		main = 'cs.Application'
+		classpath = project.sourceSets.main.runtimeClasspath
+		//workingDir = './c4u-build/prod/core/EcdsTestHost'
+		systemProperty 'server.port', '8084'
+}
+
+task runPortalGui(type:JavaExec) {
+	//def Project pg = project(':EcdsTestHost')
+	println("Executing "+project.name)
+		main = 'cs.Application'
+		classpath = project.sourceSets.main.runtimeClasspath
+		systemProperty 'spring.profiles.active', 'portal'
+		systemProperty 'server.port', '8085'
+}
+	project.tasks.compileJava.dependsOn(project.tasks.generateBuildInfo)
+	project.tasks.bootJar.dependsOn(project.tasks.packJavascript)
+	project.tasks.prepareDockerImage.dependsOn(project.tasks.bootJar)
+	project.tasks.prepareDockerImage.dependsOn project.tasks.generateProperties
+	publish.dependsOn project.tasks.prepareDockerImage
+

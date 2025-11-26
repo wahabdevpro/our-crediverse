@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<systems.concurrent.crediversemobile.utils.InterceptedFragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/execu_stats_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.ExecuStatsFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ScrollView
+            android:id="@+id/root_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                app:alignItems="center"
+                app:flexDirection="column"
+                app:justifyContent="center">
+
+                <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/execu_stats_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:alignItems="center"
+                    app:flexDirection="row"
+                    app:flexWrap="wrap"
+                    app:justifyContent="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="9dp"
+                        app:cardElevation="5dp"
+                        app:cardUseCompatPadding="true">
+
+                        <com.google.android.flexbox.FlexboxLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:layout_marginVertical="8dp"
+                            android:orientation="vertical"
+                            app:alignItems="center"
+                            app:flexDirection="column"
+                            app:justifyContent="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingVertical="4dp"
+                                android:text="@string/sales_today"
+                                android:textAlignment="center"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/gross_retail_label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/gross_retail_total"
+                                android:textAlignment="center"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/gross_retail_total"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="4dp"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="8dp"
+                                android:text="@string/error_balance"
+                                android:textAlignment="center"
+                                android:textSize="22sp"
+                                android:textStyle="bold"
+                                tools:text="100.00 CFA" />
+
+                        </com.google.android.flexbox.FlexboxLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </com.google.android.flexbox.FlexboxLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="9dp"
+                    app:cardElevation="5dp"
+                    app:cardUseCompatPadding="true">
+
+                    <com.google.android.flexbox.FlexboxLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        app:alignItems="center"
+                        app:flexDirection="column"
+                        app:justifyContent="center">
+
+                        <TextView
+                            android:id="@+id/global_sales_hourly_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:text="@string/global_sales_hourly"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.flexbox.FlexboxLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingVertical="8dp"
+                            app:alignItems="flex_end"
+                            app:flexDirection="column"
+                            app:justifyContent="flex_end">
+
+                            <com.google.android.flexbox.FlexboxLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:alignItems="center"
+                                app:justifyContent="center">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingHorizontal="8dp"
+                                    android:text="Today &gt; Yesterday"
+                                    tools:ignore="HardcodedText" />
+
+                                <LinearLayout
+                                    android:layout_width="16dp"
+                                    android:layout_height="16dp"
+                                    android:background="@color/green" />
+
+                            </com.google.android.flexbox.FlexboxLayout>
+
+                            <com.google.android.flexbox.FlexboxLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:alignItems="center"
+                                app:justifyContent="center">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingHorizontal="8dp"
+                                    android:text="Today &lt; Yesterday"
+                                    tools:ignore="HardcodedText" />
+
+                                <LinearLayout
+                                    android:layout_width="16dp"
+                                    android:layout_height="16dp"
+                                    android:background="@color/red" />
+
+                            </com.google.android.flexbox.FlexboxLayout>
+
+                            <com.google.android.flexbox.FlexboxLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:alignItems="center"
+                                app:justifyContent="center">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingHorizontal="8dp"
+                                    android:text="Current Hour"
+                                    tools:ignore="HardcodedText" />
+
+                                <LinearLayout
+                                    android:layout_width="16dp"
+                                    android:layout_height="16dp"
+                                    android:background="@color/orange" />
+
+                            </com.google.android.flexbox.FlexboxLayout>
+
+                            <com.google.android.flexbox.FlexboxLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:alignItems="center"
+                                app:justifyContent="center">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingHorizontal="8dp"
+                                    android:text="Yesterday"
+                                    tools:ignore="HardcodedText" />
+
+                                <LinearLayout
+                                    android:layout_width="16dp"
+                                    android:layout_height="16dp"
+                                    android:background="@color/gray" />
+
+                            </com.google.android.flexbox.FlexboxLayout>
+
+                        </com.google.android.flexbox.FlexboxLayout>
+
+                        <TextView
+                            android:id="@+id/hourly_chart_error"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:padding="32dp"
+                            android:text="@string/hourly_stats_error"
+                            android:textAlignment="center"
+                            android:textColor="@color/danger"
+                            android:textSize="18sp"
+                            android:visibility="gone" />
+
+                        <com.google.android.flexbox.FlexboxLayout
+                            android:id="@+id/hourly_charts"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:alignItems="center"
+                            app:flexDirection="column"
+                            app:justifyContent="center">
+
+                            <lecho.lib.hellocharts.view.ColumnChartView
+                                android:id="@+id/chart"
+                                android:layout_width="match_parent"
+                                android:layout_height="350dp"
+                                android:layout_weight="1"
+                                android:paddingTop="32dp"
+                                android:paddingStart="48dp" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="2dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:background="@android:color/darker_gray" />
+
+                            <lecho.lib.hellocharts.view.PreviewColumnChartView
+                                android:id="@+id/chart_preview"
+                                android:layout_width="match_parent"
+                                android:layout_height="120dp"
+                                android:layout_weight="1"
+                                android:paddingTop="24dp"
+                                android:paddingStart="48dp" />
+
+                        </com.google.android.flexbox.FlexboxLayout>
+
+                    </com.google.android.flexbox.FlexboxLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <LinearLayout
+                    android:id="@+id/spacer"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:orientation="vertical" />
+
+            </com.google.android.flexbox.FlexboxLayout>
+        </ScrollView>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:elevation="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</systems.concurrent.crediversemobile.utils.InterceptedFragment>

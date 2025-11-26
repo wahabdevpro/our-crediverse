@@ -1,0 +1,4 @@
+supplier
+ $$4u
+ussd -f 923075000112 -t localhost *123*923085000112*100#
+exit

@@ -1,0 +1,11 @@
+#!/bin/bash 
+#(cs-exec hermes `pwd` transfer_success  loadTest.testrun ) &
+#(exec hermes `pwd` transfer_success  loadTest.testrun) &
+(cs-exec -i za/concurrent/hermes/qa hermes `pwd` transfer_success  loadTest.testrun) &
+PSID=$!
+sleep 2
+ssh cs@192.168.0.142 'hlrsim -b /var/cs/installations/countries/za/plmns/cs/products/hlrsim/instances/test -j -m 923075000112 -s '*123*923085000112*100#''
+#ssh cs@192.168.0.142 'hlrsim -b /var/cs/installations/countries/za/plmns/cs/products/hlrsim/instances/test -j -m 923070000001 -s '*123*923070000002*100#''
+sleep 5
+kill $PSID
+sleep 3

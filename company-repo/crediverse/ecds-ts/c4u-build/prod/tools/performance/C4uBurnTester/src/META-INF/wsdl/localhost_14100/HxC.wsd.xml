@@ -1,0 +1,26 @@
+<html>
+<head><title>
+Web Services
+</title></head>
+<body>
+<h1>Web Services</h1>
+<table width='100%' border='1'>
+<tr>
+<td>
+Endpoint
+</td>
+<td>
+Information
+</td>
+</tr>
+<tr>
+<td>
+<table border="0"><tr><td>Service Name:</td><td>{http://soap.connectors.hxc/}HxCService</td></tr><tr><td>Port Name:</td><td>{http://soap.connectors.hxc/}HxCPort</td></tr></table>
+</td>
+<td>
+<table border="0"><tr><td>Address:</td><td>http://localhost:14100/HxC</td></tr><tr><td>WSDL:</td><td><a href="http://localhost:14100/HxC?wsdl">http://localhost:14100/HxC?wsdl</a></td></tr><tr><td>Implementation class:</td><td>hxc.connectors.soap.HxC</td></tr></table>
+</td>
+</tr>
+</table>
+</body>
+</html>

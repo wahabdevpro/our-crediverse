@@ -1,0 +1,109 @@
+# runs tests for push-events, for pull requests and using cron schedule:
+name: Run Robot Framework Tests BASE
+on:
+  workflow_call:
+    inputs:
+      DOCKER_TAG:
+        required: true
+        type: string
+        default: 'latest'
+    secrets:
+      db_pass:
+        required: true
+env:
+  db_host: '127.0.0.1'
+  db_user: 'root'
+  database_name: 'hxc'
+jobs:
+  run_tests:
+    runs-on: [test, qa]
+    steps:
+      - uses: actions/checkout@v3
+      # run Robot Framework tests inside Docker container
+      - name: checking DB dump file
+        run: |-
+          cd ${{github.workspace}}/automated-tests/db_dump/
+          db_dump=$(ls ${{github.workspace}}/automated-tests/db_dump/ | grep -i "crediverse")
+          bzip2 -d $db_dump
+          db_dump_final=$(ls ${{github.workspace}}/automated-tests/db_dump/ | grep -i "crediverse")
+          echo "db_dump_final=$db_dump_final" >> $GITHUB_ENV
+      - name: Start Mariadb
+        run: |-
+          PASSWORD=${{secrets.db_pass}} docker-compose -f ${{github.workspace}}/automated-tests/ecds-dockerCompose/docker-compose-mariadb.yml down
+          PASSWORD=${{secrets.db_pass}} docker-compose -f ${{github.workspace}}/automated-tests/ecds-dockerCompose/docker-compose-mariadb.yml up -d
+          sleep 120
+      - name: Load mysql file
+        run: |
+          cd ${{github.workspace}}/automated-tests/db_dump/
+          mysql -u${{env.db_user}} -h${{env.db_host}} -p${{secrets.db_pass}} -e 'DROP DATABASE IF EXISTS ${{env.database_name}};'
+          mysql -u${{env.db_user}} -h${{env.db_host}} -p${{secrets.db_pass}} -e 'CREATE DATABASE ${{env.database_name}};'
+          mysql -u${{env.db_user}} -h${{env.db_host}} -p${{secrets.db_pass}} ${{env.database_name}} < ${{env.db_dump_final}}
+      - name: Run Robot Framework Tests
+        # container used here is ppodgorsek/robot-framework:latest
+        # it is strongly recommended to use versioned image (ie. not the tag latest like here) to maintain dependencies
+        # see container documentation for usage: https://hub.docker.com/r/ppodgorsek/robot-framework/dockerfile
+        # it is required that GitHub repository contains folder "reports". Commit some file inside "reports" to create it
+        # place tests in folder tests or change docker run command accordingly
+        # configure -e ROBOT_OPTIONS according to yout tests, or remove it if no special configuration is needed
+        run: |
+          echo 'running tests'
+          echo ${{inputs.DOCKER_TAG}}
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+          TAG=${{inputs.DOCKER_TAG}} docker-compose -f ${{github.workspace}}/automated-tests/ecds-dockerCompose/docker-compose.yml down          
+          TAG=${{inputs.DOCKER_TAG}} docker-compose -f ${{github.workspace}}/automated-tests/ecds-dockerCompose/docker-compose.yml pull
+          TAG=${{inputs.DOCKER_TAG}} docker-compose -f ${{github.workspace}}/automated-tests/ecds-dockerCompose/docker-compose.yml up -d
+          sleep 180
+          chmod -R 777 ${{github.workspace}}/automated-tests/reports
+          REPO_HOST_PATH=${{github.workspace}} docker-compose -f ${{github.workspace}}/automated-tests/docker-compose.yml up
+          REPO_HOST_PATH=${{github.workspace}} docker-compose -f ${{github.workspace}}/automated-tests/docker-compose.yml down
+          chmod -R 777 ${{github.workspace}}/automated-tests/reports
+
+      # upload test reports as a zip file
+      - name: Upload reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: auto-regression-report
+          # set path to Robot Framework results reports. Exclude dummy file that is needed because of ppodgorsek image priviledges.
+          path: ${{github.workspace}}/automated-tests/reports
+          overwrite: true
+
+  generate_report:
+    #if: ${{false}}
+    #if: always()
+    needs: [run_tests]
+    runs-on: [test, qa]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download reports
+        uses: actions/download-artifact@v4
+        with:
+          name: auto-regression-report
+          path: ${{github.workspace}}/automated-tests/reports
+
+      - name:
+          Send report to commit
+          #uses: joonvena/robotframework-reporter-action@v2.1
+          #with:
+          #  #report_path: reports
+          #  gh_access_token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          REPORT_PATH=${{github.workspace}}/automated-tests/reports
+          echo $REPORT_PATH
+          echo ${{ github.event.number }}
+          echo ${{github.event.issue.number}}
+          docker run \
+            -e GH_ACCESS_TOKEN=${{ secrets.GITHUB_TOKEN }} \
+            -e REPO_OWNER="$(echo "${{ github.repository }}" | awk -F / '{print $1}' | sed -e "s/:refs//")" \
+            -e REPOSITORY="$(echo "${{ github.repository }}" | awk -F / '{print $2}' | sed -e "s/:refs//")" \
+            -e COMMIT_SHA="${{ github.sha }}" \
+            -e PR_ID="${{ github.event.number }}" \
+            -e REPORT_PATH=$REPORT_PATH \
+            -e SUMMARY="true" \
+            -e GITHUB_STEP_SUMMARY=$GITHUB_STEP_SUMMARY \
+            -e ONLY_SUMMARY="false" \
+            -e SHOW_PASSED_TESTS="true" \
+            -v $GITHUB_STEP_SUMMARY:/$GITHUB_STEP_SUMMARY:Z \
+            -v $REPORT_PATH:/$REPORT_PATH:Z \
+            --user $(id -u):$(id -g) \
+            joonvena/robot-reporter:v2.1

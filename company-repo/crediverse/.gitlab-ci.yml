@@ -1,0 +1,211 @@
+# vim: set sts=2 ts=2 sw=2 filetype=yaml expandtab:
+# see https://docs.gitlab.com/ce/ci/yaml/README.html for syntax
+# verify with lint here https://gitlab.com/csys/products/ecds/ecds-ts/-/ci/lint
+
+# Added variables for dealing with submodules, see https://docs.gitlab.com/ce/ci/git_submodules.html
+variables:
+  CS_SSH_DIR: "~/.ssh"
+  CS_SSH_CONFIG: "${CS_SSH_DIR}/config"
+  CS_SSH_CONFIG_BACKUP: "/tmp/sshconfig.bak"
+  CS_CREDIVERSE_KEY: "${CS_SSH_DIR}/id_rsa.crediverse"
+  CS_GITHUB_ALIAS: "github.com-crediverse"
+  CS_GITHUB_URL: "git@${CS_GITHUB_ALIAS}:Concurrent-Systems/Crediverse.git"
+  CS_GITHIB_REMOTE_NAME: "togithub"
+before_script:
+  - "uname -n"
+  - "id"
+  - "uptime"
+  - "date +%Y-%m-%dT%H:%M:%S"
+  - 'echo "${GITLAB_URL}"'
+  - "echo processors = $(grep -c '^processor' /proc/cpuinfo)"
+  - "whoami"
+  - "id"
+  - 'echo "CS_PRODUCT_BUILD : ${CS_PRODUCT_BUILD}"'
+  - 'echo "CS_COMMIT_TAG : ${CS_COMMIT_TAG}"'
+  - 'echo "CS_BUILD_ID : ${CS_BUILD_ID}"'
+  - "java --version"
+  - "CS_BASEDIR=`pwd`" # If you remove this, everything will fail.
+  - 'echo "CS_BASEDIR : ${CS_BASEDIR}"'
+  - "CS_DOCKER_REPOSITORY=registry.gitlab.com/csys/products/crediverse"
+  - 'echo "CS_NIGHTLY_BUILD : ${CS_NIGHTLY_BUILD}"'
+  - "CS_BUILD_NO=b${CI_PIPELINE_IID}"
+  - 'echo "CS_BUILD_NO : ${CS_BUILD_NO}"'
+  - env # for debugging
+
+stages:
+  - tagged-ts-build # This allows the 3 builds below to run in parallel
+  - tagged-gui-build # This allows the 3 builds below to run in parallel
+  - tagged-api-build # This allows the 3 builds below to run in parallel
+  - nightly-ts-build
+  - nightly-gui-build
+  - nightly-api-build
+  - github-sync
+
+.common-build: &common_build
+  - 'echo ".common-build Running"'
+  - "cd ${CS_BASEDIR}/${IMAGE_NAME}"
+  - 'echo "${CS_BASEDIR}/${IMAGE_NAME}"'
+  - echo `pwd`
+  - "./gradlew --info --stacktrace clean"
+  - "./gradlew --info --stacktrace publish"
+  # Add build properties
+  - 'BUILD_PROPERTIES="docker_image/etc/build.properties"'
+  - "touch ${BUILD_PROPERTIES}"
+  - 'echo "commit.sha: ${CI_COMMIT_SHA}" >> ${BUILD_PROPERTIES}'
+  - 'echo "pipeline.id: ${CI_PIPELINE_ID}" >> ${BUILD_PROPERTIES}'
+  - 'echo "job.id: ${CI_BUILD_ID}" >> ${BUILD_PROPERTIES}'
+  - 'echo "timestamp: ${CI_COMMIT_TIMESTAMP}" >> ${BUILD_PROPERTIES}'
+
+  - "docker login -u crediverse -p ${REGISTRY_ACCESS_TOKEN} registry.gitlab.com"
+  - "docker build -t ${CS_DOCKER_REPOSITORY}/${IMAGE_NAME}:${CS_BUILD_NO} ."
+  - "docker tag ${CS_DOCKER_REPOSITORY}/${IMAGE_NAME}:${CS_BUILD_NO} ${CS_DOCKER_REPOSITORY}/${IMAGE_NAME}:latest"
+  - "docker push ${CS_DOCKER_REPOSITORY}/${IMAGE_NAME}:${CS_BUILD_NO}"
+  - "docker push ${CS_DOCKER_REPOSITORY}/${IMAGE_NAME}:latest"
+
+.nightly-build-rules:
+  rules: # only runs for nightly build
+    - if: "$CI_PIPELINE_SOURCE == 'schedule'"
+
+.release-build-rules:
+  rules: # only runs for tagged releases
+    - if: "$CI_COMMIT_TAG"
+
+github-sync:
+  stage: github-sync
+  tags:
+    - jdk11
+  rules: # only runs when code merged into main
+    - if: "$CI_PIPELINE_SOURCE != 'schedule' && $CI_COMMIT_BRANCH && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+  script:
+    - echo "Updating Github with latest changes"
+    - mkdir -p ${CS_SSH_DIR}
+    - if [ -f "${CS_SSH_CONFIG_BACKUP}" ]; then
+    - rm -f ${CS_SSH_CONFIG_BACKUP} # remove any old backup
+    - fi
+    - if [ -f "${CS_SSH_CONFIG}" ]; then
+    - cp -f ${CS_SSH_CONFIG} ${CS_SSH_CONFIG_BACKUP}
+    - fi
+    - echo "Host ${CS_GITHUB_ALIAS}" > ${CS_SSH_CONFIG}
+    - echo "        Hostname github.com" >> ${CS_SSH_CONFIG}
+    - echo "        IdentityFile=${CS_CREDIVERSE_KEY}" >> ${CS_SSH_CONFIG}
+    - echo "        StrictHostKeyChecking no" >> ${CS_SSH_CONFIG}
+    - echo "        UserKnownHostsFile=/dev/null" >> ${CS_SSH_CONFIG}
+    - echo "-----BEGIN OPENSSH PRIVATE KEY-----" > ${CS_CREDIVERSE_KEY}
+    - echo "${SSH_GITHUB_PUSH_KEY}" | sed 's/\S\{70\}/&\n/g' >> ${CS_CREDIVERSE_KEY}
+    - echo "-----END OPENSSH PRIVATE KEY-----" >> ${CS_CREDIVERSE_KEY}
+    - chmod 0700 ${CS_SSH_DIR}
+    - chmod 0600 ${CS_CREDIVERSE_KEY}
+    - git config --global user.email "${GITLAB_USER_EMAIL}"
+    - git config --global user.name "${GITLAB_USER_NAME}"
+    - git remote | grep ${CS_GITHIB_REMOTE_NAME}
+    - if [ $? -ne 0 ]; then
+    - git remote add ${CS_GITHIB_REMOTE_NAME} ${CS_GITHUB_URL}
+    - fi
+    - git remote show ${CS_GITHIB_REMOTE_NAME}
+    - git pull ${CS_GITHIB_REMOTE_NAME} HEAD:${CI_COMMIT_BRANCH}
+    - git push ${CS_GITHIB_REMOTE_NAME} HEAD:${CI_COMMIT_BRANCH}
+    - if [ -f "${CS_CREDIVERSE_KEY}" ]; then
+    - rm -f ${CS_CREDIVERSE_KEY}
+    - fi
+    - if [ -f "${CS_SSH_CONFIG_BACKUP}" ]; then
+    - cp -f ${CS_SSH_CONFIG_BACKUP} ${CS_SSH_CONFIG}
+    - rm -f ${CS_SSH_CONFIG_BACKUP}
+    - fi
+  allow_failure: true
+
+nightly-ts-build:
+  stage: nightly-ts-build
+  tags:
+    - jdk11
+  extends: .nightly-build-rules
+  script:
+    - *common_build
+  variables:
+    IMAGE_NAME: "ecds-ts"
+
+nightly-gui-build:
+  stage: nightly-gui-build
+  tags:
+    - jdk11
+  extends: .nightly-build-rules
+  script:
+    - *common_build
+  variables:
+    IMAGE_NAME: "ecds-gui"
+
+nightly-api-build:
+  stage: nightly-api-build
+  tags:
+    - jdk11
+  extends: .nightly-build-rules
+  script:
+    - *common_build
+  variables:
+    IMAGE_NAME: "ecds-api"
+
+# Code below here is for tagged builds only. This will be removed once we have the new staging server running.
+crediverse-build-ts:
+  stage: tagged-ts-build
+  tags:
+    - jdk11
+  extends: .release-build-rules
+  script:
+    - "docker logout"
+    - "docker login -u crediverse -p ${REGISTRY_ACCESS_TOKEN} registry.gitlab.com"
+    - "IMAGE_NAME=ecds-ts"
+    - "cd ${CS_BASEDIR}/${IMAGE_NAME}"
+    - 'echo "${CS_BASEDIR}/${IMAGE_NAME}"'
+    - "./gradlew --info --stacktrace clean"
+    - "./gradlew --info --stacktrace publish"
+    - "docker build -t ${CS_DOCKER_REPOSITORY}/${IMAGE_NAME}:${CI_COMMIT_TAG} ."
+    - "docker tag ${CS_DOCKER_REPOSITORY}/${IMAGE_NAME}:${CI_COMMIT_TAG} ${CS_DOCKER_REPOSITORY}/${IMAGE_NAME}:latest"
+    - "docker push ${CS_DOCKER_REPOSITORY}/${IMAGE_NAME}:${CI_COMMIT_TAG}"
+    - "docker push ${CS_DOCKER_REPOSITORY}/${IMAGE_NAME}:latest"
+
+crediverse-build-gui:
+  stage: tagged-ts-build
+  tags:
+    - jdk11
+  extends: .release-build-rules
+  script:
+    - "docker logout"
+    - "docker login -u crediverse -p ${REGISTRY_ACCESS_TOKEN} registry.gitlab.com"
+    - "IMAGE_NAME=ecds-gui"
+    - "cd ${CS_BASEDIR}/${IMAGE_NAME}"
+    - 'echo "${CS_BASEDIR}/${IMAGE_NAME}"'
+    - "./gradlew --info --stacktrace clean"
+    - "./gradlew --info --stacktrace publish"
+    - "docker build -t ${CS_DOCKER_REPOSITORY}/${IMAGE_NAME}:${CI_COMMIT_TAG} ."
+    - "docker tag ${CS_DOCKER_REPOSITORY}/${IMAGE_NAME}:${CI_COMMIT_TAG} ${CS_DOCKER_REPOSITORY}/${IMAGE_NAME}:latest"
+    - "docker push ${CS_DOCKER_REPOSITORY}/${IMAGE_NAME}:${CI_COMMIT_TAG}"
+    - "docker push ${CS_DOCKER_REPOSITORY}/${IMAGE_NAME}:latest"
+
+crediverse-build-api:
+  stage: tagged-ts-build
+  tags:
+    - jdk11
+  extends: .release-build-rules
+  script:
+    - "docker logout"
+    - "docker login -u crediverse -p ${REGISTRY_ACCESS_TOKEN} registry.gitlab.com"
+    - "IMAGE_NAME=ecds-api"
+    - "cd ${CS_BASEDIR}/${IMAGE_NAME}"
+    - 'echo "${CS_BASEDIR}/${IMAGE_NAME}"'
+    - "./gradlew --info --stacktrace clean"
+    - "./gradlew --info --stacktrace publish"
+    - "docker build -t ${CS_DOCKER_REPOSITORY}/${IMAGE_NAME}:${CI_COMMIT_TAG} ."
+    - "docker tag ${CS_DOCKER_REPOSITORY}/${IMAGE_NAME}:${CI_COMMIT_TAG} ${CS_DOCKER_REPOSITORY}/${IMAGE_NAME}:latest"
+    - "docker push ${CS_DOCKER_REPOSITORY}/${IMAGE_NAME}:${CI_COMMIT_TAG}"
+    - "docker push ${CS_DOCKER_REPOSITORY}/${IMAGE_NAME}:latest"
+# publish-artifacts:
+#   stage: crediverse-publish-artifacts
+#   rules:
+#     - if: '$CI_COMMIT_BRANCH == "master"'
+#   script:
+#     - "./gradlew --info --stacktrace clean"
+#     - "./gradlew --info --stacktrace publish"
+
+# Commenting out the Andries tests until I can figure out what has broken them.
+#    - "./gradlew --info --stacktrace -P 'org.gradle.jvmargs=-XX:+HeapDumpOnOutOfMemoryError' uploadAndNotify -x test -x check" # use uploadAndNotify to ensure notifications go out
+#    - "./gradlew --info --stacktrace -P 'org.gradle.jvmargs=-XX:+HeapDumpOnOutOfMemoryError' test 2>&1 | tee /var/opt/cs/c4u/log/ecds-c4u-build-testing-$(date +%Y%m%d%H%M%S).log"
+

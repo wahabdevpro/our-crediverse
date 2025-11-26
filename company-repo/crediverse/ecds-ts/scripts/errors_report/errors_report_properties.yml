@@ -1,0 +1,7 @@
+log_dir: "/var/opt/cs/c4u/log"          # Directory containing the errors log files.
+run_at: "03:00"                         # At what time to run the report script every day. If you change that you have to restart the script.
+sender_email: "trayan.momkov@concurrent.systems"
+smtp_server: "localhost"
+smtp_port: 25
+recipients:                             # To whom the report will be sent.
+  - trayan.momkov@concurrent.systems

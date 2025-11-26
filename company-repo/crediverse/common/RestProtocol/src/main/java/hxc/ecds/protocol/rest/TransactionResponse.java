@@ -1,0 +1,63 @@
+package hxc.ecds.protocol.rest;
+
+import java.math.BigDecimal;
+
+public abstract class TransactionResponse extends ResponseHeader
+{
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Properties
+	//
+	// /////////////////////////////////
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Fields
+	//
+	// /////////////////////////////////
+	private BigDecimal charge = BigDecimal.ZERO;
+	private String response;
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Properties
+	//
+	// /////////////////////////////////
+	public BigDecimal getCharge()
+	{
+		return charge;
+	}
+
+	public TransactionResponse setCharge(BigDecimal charge)
+	{
+		this.charge = charge;
+		return this;
+	}
+
+	public String getResponse()
+	{
+		return response;
+	}
+
+	public TransactionResponse setResponse(String response)
+	{
+		this.response = response;
+		return this;
+	}
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Construction
+	//
+	// /////////////////////////////////
+	public TransactionResponse()
+	{
+
+	}
+
+	public TransactionResponse(TransactionRequest request)
+	{
+		super(request);
+	}
+
+}

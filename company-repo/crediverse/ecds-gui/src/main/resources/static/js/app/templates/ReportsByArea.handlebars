@@ -1,0 +1,98 @@
+<div>
+	<!-- DAILY SALES BY AREA REPORT -->
+
+	<script id="dailysalesbyarealist">
+	    <div class="datatablesview">
+	        <div class="box">
+				<div id="dtButtonBarListTemplate" style="display:none;">
+					{{#hasPerms "Reports_Add"}}
+						<a class="btn btn-primary routerlink" href="#dailySalesByAreaReport">{{i18n "reports.dailySalesByAreaList.buttonNewReport"}}</a>
+					{{/hasPerms}}
+	            </div>
+	            <div class="box-body">
+					<div class="advancedSearchResults">
+					    <table class="dailysalesbyarealisttable tableview table table-bordered" data-sshash-base='dailySalesByAreaReportList'>
+		       	    	</table>
+		        	</div>
+	            </div>
+	        </div>
+	    </div>
+	</script>
+
+	<script id="dailysalesbyarea">
+	    <div class="datatablesview">
+	        <div class="box">
+				<div id="dtButtonBarTemplate" style="display:none;">
+					{{!-- {{#hasPerms "Batch_Download"}} --}}
+						<!-- <button class="btn btn-primary exportReportButton" role="button">{{i18n "global.exportBtn"}}</button> -->
+					{{!-- {{/hasPerms}} --}}
+	            </div>
+	            <div class="box-body">
+		            <div class="advancedSearchForm">
+						<form id="searchform" name="searchform" class="form-horizontal">
+						<div>
+							<div>
+								<!--div class="row" style="border-bottom:1px solid #e0e0e0; margin-bottom:15px;"-->
+								<div class="row" style="margin-bottom:15px;" >
+									<div class="col-sm-6">
+										{{>modalInput name="name" label="reports.saveName" hint="reports.saveNameHint" className="name" value=this.name}}
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.saveDescription"}}</label>
+											<div class="col-xs-8 col-sm-8">
+												<textarea id="description" type="text" name="description" rows="2" class="form-control" placeholder='{{i18n "reports.saveDescriptionHint"}}'>{{this.description}}</textarea>
+											</div>
+										</div>								
+									</div>
+								</div>
+								{{#ifCond this.viewReportsByAreaFeature "==" "enabled"}}
+								<div class="row">
+									<div class="col-sm-6">
+									<div class="form-group">
+									<label class="col-xs-4 col-sm-4 control-label">{{i18n "reports.searchPeriod"}}</label>
+									<div class="col-xs-8 col-sm-8">
+											<select id="period" name="period" style="width: 100%;" class="form-control">
+											<option value="">{{i18n "reports.searchPeriodHint"}}</option>
+											<option value="CURRENT_DAY">{{i18n "reports.period.today"}}</option>
+											<option value="CURRENT_WEEK">{{i18n "reports.period.thisWeek"}}</option>
+											<option value="CURRENT_MONTH">{{i18n "reports.period.thisMonth"}}</option>
+										</select>
+									</div>
+								</div>
+								{{/ifCond}}
+							</div>
+							</div>
+							<div class="" style="border-top:1px solid #eaeaea; padding-top:10px; margin-bottom:20px;">
+								<div class="form-group">
+									<div class="pull-right">
+										<!--button type="submit" class="btn btn-primary viewReportButton">{{i18n "global.previewBtn"}}</button-->
+										{{#hasPerms "Reports_Update"}}
+										<button type="button" class="btn btn-primary saveReportButton">{{i18n "global.saveBtn"}}</button>
+										{{/hasPerms}}
+										<!-- <button type="button" class="btn btn-primary scheduleReportButton">{{i18n "global.scheduleBtn"}}</button> -->
+										<!--button type="button" class="btn btn-primary exportReportButton">{{i18n "global.exportBtn"}}</button-->
+										<button type="button" class="btn btn-primary editReportButton">{{i18n "global.editBtn"}}</button>
+										<button type="button" class="btn btn-default resetReportButton">{{i18n "global.clearBtn"}}</button>
+										<button type="button" class="btn btn-default cancelReportButton">{{i18n "global.cancelBtn"}}</button>
+										&nbsp;&nbsp;&nbsp;
+									</div>
+									<div id="report-error-message" class="pull-right" style="display:none;">
+										<div id="error_general_message" class="alert alert-danger" style="padding:6px 15px; margin-right:20px;">{{i18n "reports.messageSaveFailed"}}</div>
+									</div>
+									<div id="report-saved-message" class="label label-success pull-right" style="margin-right:20px; padding:10px; font-size:14px; display:none;">{{i18n "reports.messageSaveSuccess"}}</div>
+								</div>
+							</div>
+						</div>
+						</form>	
+					</div>
+					<!--div class="advancedSearchResults">
+						<table class="dailysalesbyareatable tableview table table-bordered table-hover table-striped" data-sshash-base='dailySalesByAreaReport/{{this.id}}'>
+						</table>
+					</div-->
+	            </div>
+	        </div>
+	    </div>
+	</script>
+
+</div>

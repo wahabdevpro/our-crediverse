@@ -1,0 +1,9 @@
+#!/bin/sh -x
+echo 'installation complete. configuring to run as service'
+
+echo "create link"
+ln -s  ${INSTALL_DIR}/libexec/${APP_NAME}.sh ${APP_NAME}
+mv ${APP_NAME} /opt/cs/bin/
+
+echo 'importing service manifest'
+svccfg import ${INSTALL_DIR}/libexec/${APP_NAME}.xml

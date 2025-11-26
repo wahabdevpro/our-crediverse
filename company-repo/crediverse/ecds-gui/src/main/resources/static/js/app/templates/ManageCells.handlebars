@@ -1,0 +1,159 @@
+<div>
+
+	<script id="managecells">
+		<div class="datatablesview col-xs-12">
+			<div class="row">
+			<div class="coop col-xs-12">
+			</div>
+			</div>
+			<div class="box">
+				<div class="box-header">
+					<div class="pull-right">
+						{{#hasPerms "Batch_Download"}}
+							<button class="btn btn-primary exportCellsButton" role="button">{{i18n "global.exportBtn"}}</button>
+						{{/hasPerms}}
+						{{#hasPerms "Batch_Upload"}}
+							<a href="#batch" class="btn btn-primary routerlink" role="button">{{i18n "global.importBtn"}}</a>
+						{{/hasPerms}}
+						{{#hasPerms "Cell_Add"}}
+							<button class='btn btn-primary createCellButton'>{{i18n "cells.addCellBtn"}}</button>
+						{{/hasPerms}}
+					</div>
+				</div>
+				<div class="box-body">
+		            <div class="advancedSearchInput"  style="margin-bottom:15px;">		        		
+					 	<button type="button" class="btn btn-primary cellSearchExpandButton">{{i18n "global.advancedSearchBtn"}}</button>
+		        	</div>
+		        	<div class="advancedSearchForm" style="display:none">
+						<form id="searchform" name="searchForm" class="form-horizontal">
+				        <div>
+				            <div>
+								<div class="row">
+									<div class="col-sm-6">
+									
+										{{>modalInput name="mobileCountryCode" label="cells.mobileCountryCode" hint="cells.mobileCountryCode" className="novalidate" divClassName="pad-left-min" labelClassName="pad-right-min"}}
+										{{>modalInput name="mobileNetworkCode" label="cells.mobileNetworkCode" hint="cells.mobileNetworkCode" className="novalidate" divClassName="pad-left-min" labelClassName="pad-right-min"}}
+										{{>modalInput name="localAreaCode" label="cells.localAreaCode" hint="cells.localAreaCode" className="novalidate" divClassName="pad-left-min" labelClassName="pad-right-min"}}
+										{{>modalInput name="cellID" label="cells.cellID" hint="cells.cellID" className="novalidate" divClassName="pad-left-min" labelClassName="pad-right-min"}}
+									</div>
+									<div class="col-sm-6">
+										<div class="row form-group novalidate" style="margin-bottom:15px;">
+											<label for="searchArea" class="col-xs-4 control-label pad-right-min">{{i18n "cells.areas"}}</label>
+											<div class="col-xs-8 pad-left-min">
+												<select id="searchArea" style="width: 100%;" name="areaID" class="form-control novalidate">
+												</select>
+												<div style="padding-top:6px;">
+													<input id="recursive" name="recursive" class="custom-checkbox-fa form-control novalidate" value="" type="checkbox">
+													<label for="recursive">{{i18n "cells.recursive"}}</label>
+												</div>
+											</div>											
+										</div>
+										<div class="row form-group novalidate" style="margin-bottom:15px;">
+											<label for="searchCellGroup" class="col-xs-4 control-label pad-right-min">{{i18n "cells.cellGroups"}}</label>
+											<div class="col-xs-8 pad-left-min">
+												<select id="searchCellGroup" style="width: 100%;" name="cellGroupID" class="form-control novalidate" multiple="multiple">
+												</select>
+											</div>											
+										</div>
+									</div>
+								</div>
+				            </div>
+							<div class="" style="border-top:1px solid #eaeaea; padding-top:10px; margin-bottom:20px;">
+				  			  	<div class="form-group">
+						        	<div class="right">
+			           			 		<button type="submit" class="btn btn-primary cellSearchButton"><i class="fa fa-search"></i> {{i18n "global.searchBtn"}}</button>
+						           		<button type="button" class="btn btn-default cellSearchResetButton">{{i18n "global.clearBtn"}}</button>
+						           		<button type="button" class="btn btn-default cellSearchCancelButton">{{i18n "global.hideBtn"}}</button>
+										&nbsp;&nbsp;&nbsp;
+										<div class="pull-right">
+											<div id="error_general_message" class="alert alert-danger" style="padding:6px 15px; margin-right:20px; display:none;"></div>
+										</div>
+									</div>
+						    	</div>
+							</div>
+				        </div>
+						</form>	
+				    </div>
+					<table class="tableview  table table-bordered table-hover table-striped">
+					</table>
+				</div>
+			</div>
+		</div>
+	</script>
+	
+	<script id="singlecellview">
+		<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		    <h4 class="modal-title">{{{dialogTitle}}}</h4>
+		</div>
+		<div class="modal-body">
+			<div class="celldetails">
+				<form name="addCell" class="form-horizontal">
+					<div class="form-group">
+						<label class="col-xs-4 control-label">{{i18n "cells.mobileCountryCode"}}</label>
+						<div class="col-xs-8">							
+							<input id="mobileCountryCode" type="text" name="mobileCountryCode" class="form-control autonum" placeholder="{{i18n "cells.mobileCountryCodeHint"}}" value="{{this.mobileCountryCode}}" data-v-min="0" data-v-max="999"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-4 control-label">{{i18n "cells.mobileNetworkCode"}}</label>
+						<div class="col-xs-8">							
+							<input id="mobileNetworkCode" type="text" name="mobileNetworkCode" class="form-control autonum" placeholder="{{i18n "cells.mobileNetworkCodeHint"}}" value="{{this.mobileNetworkCode}}" data-v-min="0" data-v-max="999"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-4 control-label">{{i18n "cells.localAreaCode"}}</label>
+						<div class="col-xs-8">							
+							<input id="localAreaCode" type="text" name="localAreaCode" class="form-control autonum" placeholder="{{i18n "cells.localAreaCodeHint"}}" value="{{this.localAreaCode}}" data-v-min="0" data-v-max="99999" data-a-sep=""/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-4 control-label">{{i18n "cells.cellID"}}</label>
+						<div class="col-xs-8">							
+							<input id="cellID" type="text" name="cellID" class="form-control autonum" placeholder="{{i18n "cells.cellIDHint"}}" value="{{this.cellID}}" data-v-min="0" data-v-max="999999999" data-a-sep=""/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-4 control-label">{{i18n "cells.latitude"}}</label>
+						<div class="col-xs-8">							
+							<input id="latitude" type="text" name="latitude" class="form-control autonum" placeholder="{{i18n "cells.latitudeHint"}}" value="{{this.latitude}}" data-v-min="-99" data-v-max="99" data-m-dec="10" data-a-pad="false"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-4 control-label">{{i18n "cells.longitude"}}</label>
+						<div class="col-xs-8">
+							<div>
+								<input id="longitude" type="text" name="longitude" class="form-control autonum" placeholder="{{i18n "cells.longitudeHint"}}" value="{{this.longitude}}" data-v-min="-999" data-v-max="999" data-m-dec="10" data-a-pad="false"/>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-4 control-label">{{i18n "cells.areas"}}</label>
+						<div class="col-xs-8">
+							<select id="areas" name="areas" style="width: 100%;">
+								{{#each this.areas}}
+									<option value="{{id}}" selected="selected">{{name}}</option>
+								{{/each}}								
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-4 control-label">{{i18n "cells.cellGroups"}}</label>
+						<div class="col-xs-8">
+							<select id="cellGroups" name="cellGroups" style="width: 100%;" multiple="multiple">
+								{{#each this.cellGroups}}
+									<option value="{{id}}" selected="selected">{{name}}</option>
+								{{/each}}								
+							</select>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="modal-footer">
+	       	<button type="button" class="btn btn-primary cellSaveButton">{{i18n "global.saveBtn"}}</button>
+	       	<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+		</div>
+	</script>
+	
+</div>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="dataIcon"
+            type="String" />
+
+        <variable
+            name="dataText"
+            type="String" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="8dp"
+        android:scaleX="1"
+        android:scaleY="1">
+
+        <TextView
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/fa_solid"
+            android:paddingVertical="4dp"
+            android:text="@{dataIcon}"
+            android:textAlignment="center"
+            android:textColor="@color/dark_gray"
+            android:textSize="24sp"
+            tools:text="@string/fa_retro_mobile" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="8dp"
+            android:text="@{dataText}"
+            android:textSize="24sp"
+            tools:text="{Text Here}" />
+
+    </LinearLayout>
+</layout>

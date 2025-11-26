@@ -1,0 +1,103 @@
+<div>
+	<script id="auditlogsearch">
+		<div class="col-xs-12 auditLogSearchForm">
+		</div>
+		<div class="col-xs-12 auditLogSearchResult">
+		</div>
+	</script>
+	
+	<script id="auditlogsearchresult">
+	    <div class="datatablesview col-xs-12">
+	        <div class="box">
+	            <div class="box-header">
+	                <h3 class="box-title">{{i18n "auditLog.searchResultHeading"}}</h3>
+	                <div class='pull-right'>
+	                </div>
+	            </div>
+	            <div class="box-body">
+		            <table class="auditlogtable tableview table table-bordered table-hover table-striped" data-sshash-base='auditLogSearch'>
+		            </table>
+	            </div>
+	        </div>
+	    </div>
+	</script>
+
+	<script id="auditlogsearchform">
+	    <div class="col-xs-12">
+			<form id="searchform" name="searchForm" class="form-horizontal">
+	        <div class="box">
+	            <div class="box-header">
+	            </div>
+	            <div class="box-body">
+						<div class="row">
+							<div class="col-sm-6">
+								{{>modalInput name="id" label="auditLog.searchEntryId" hint="auditLog.searchEntryId"}}
+								{{>modalInput name="sequenceNo" label="auditLog.searchSequenceNo" hint="auditLog.searchSequenceNo"}}
+								<div class="form-group">
+									<label for="timestamp-from" class="col-xs-6 col-sm-5 col-md-4 control-label">{{i18n "auditLog.searchEntryDate"}}</label>
+									<div class="col-xs-6 col-sm-7 col-md-8">
+										<div class="row">
+											<div class="col-xs-6">
+												<input id="timestamp-from" type="text" name="timestampFrom" class="form-control" title="{{i18n 'auditLog.searchEntryDateFrom'}}" placeholder="YYYY-MM-DD" data-date-format="yyyy-mm-dd"  />
+											</div>	
+											<div class="col-xs-6">
+												<input id="timestamp-to" type="text" name="timestampTo" class="form-control" title="{{i18n 'auditLog.searchEntryDateTo'}}" placeholder="YYYY-MM-DD" data-date-format="yyyy-mm-dd" />
+											</div>	
+										</div>
+									</div>
+								</div>	
+								<!--
+								<div class="form-group">
+									<label class="col-xs-6 col-sm-5 col-md-4 control-label">Web User</label>
+									<div class="col-xs-6 col-sm-7 col-md-8">
+										 <select id="userID" name="userID" class="form-control" placeholder="(any web user)" value="{{this.webUserID}}">
+											{{#each webUserList}}
+										    	<option value="{{id}}">{{firstName}} {{surname}}</option>
+										  	{{/each}}
+										</select>
+									</div>
+								</div>
+								-->
+								{{>modalSelectTDS name="action" label="auditLog.searchOperation" 
+									data=":enums.action.all,C:enums.action.create,U:enums.action.update,D:enums.action.delete" hint="auditLog.searchOperation" }}
+								
+								{{>modalSelectTDS name="dataType" label="auditLog.searchDataType" 
+									data=":enums.dataType.all,Agent:enums.dataType.agent,AuditEntry:enums.dataType.auditEntry,Batch:enums.dataType.batch,Configuration:enums.dataType.configuration,Group:enums.dataType.group,Permission:enums.dataType.permission,Role:enums.dataType.role,ServiceClass:enums.dataType.serviceClass,Tier:enums.dataType.tier,TransferRule:enums.dataType.transferRule,WebUser:enums.dataType.webUser" hint="auditLog.searchDataType"}}
+								
+							</div>
+							<div class="col-sm-6">
+								{{>modalInput name="ipAddress" label="auditLog.searchIPAddress" hint="auditLog.searchIPAddress"}}
+								{{>modalInput name="domainName" label="auditLog.searchDomainName" hint="auditLog.searchDomainName"}}
+							</div>
+						</div>
+	            </div>
+				<div class="box-footer">
+	  			  	<div class="form-group">
+			        	<div class="col-xs-12 right">
+           			 		<button type="submit" class="btn btn-primary auditLogSearchButton pull-right"><i class="fa fa-search"></i> {{i18n "global.searchBtn"}}</button>
+							&nbsp;&nbsp;&nbsp;
+							<div class="pull-right">
+								<div id="error_general_message" class="alert alert-danger" style="padding:6px 15px; margin-right:20px; display:none;"></div>
+							</div>
+						</div>
+			    	</div>
+				</div>
+	        </div>
+			</form>	
+	    </div>
+	</script>
+			
+	<script id="auditlogmaster">
+	    <div class="datatablesview col-xs-12">
+	        <div class="box">
+	            <div class="box-header">
+	            </div>
+	            <div class="box-body">
+		            <table class="auditlogtable tableview table table-bordered table-hover table-striped" data-sshash-base='auditLogList'>
+		            </table>
+	            </div>
+	        </div>
+	    </div>
+	</script>	
+	
+</div>

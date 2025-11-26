@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<systems.concurrent.crediversemobile.utils.InterceptedFragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/team_member_stats_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.TeamMemberStatsFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="6dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone" />
+
+        <ScrollView
+            android:id="@+id/root_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:visibility="visible">
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="4dp"
+                android:paddingVertical="8dp"
+                app:alignItems="center"
+                app:flexDirection="column"
+                app:justifyContent="center">
+
+                <include
+                    android:id="@+id/stock_balance_card"
+                    layout="@layout/template_stock_balance_card" />
+
+                <include
+                    android:id="@+id/total_and_breakdown_sales_card"
+                    layout="@layout/template_total_and_breakdown_sales_card" />
+
+                <include
+                    android:id="@+id/sales_target_chart_card"
+                    layout="@layout/template_sales_target_chart_card" />
+
+                <TextView
+                    android:id="@+id/weekly_sales_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingHorizontal="32dp"
+                    android:paddingVertical="48dp"
+                    android:text="@string/weekly_sales_error"
+                    android:textAlignment="center"
+                    android:textColor="@color/danger"
+                    android:textSize="22sp"
+                    android:visibility="gone"
+                    tools:visibility="gone" />
+
+                <include
+                    android:id="@+id/weekly_sales_bar_chart"
+                    layout="@layout/template_weekly_sales_bar_chart" />
+
+                <com.google.android.flexbox.FlexboxLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="8dp"
+                    app:alignItems="center"
+                    app:justifyContent="center">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/detailed_stats_button"
+                        style="@style/PaddedOutlineButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detailed_stats"
+                        app:icon="@drawable/ic_baseline_query_stats_24"
+                        app:iconPadding="8dp" />
+
+                </com.google.android.flexbox.FlexboxLayout>
+
+            </com.google.android.flexbox.FlexboxLayout>
+
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/page_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="64dp"
+            android:gravity="center"
+            android:paddingHorizontal="32dp"
+            android:text="@string/load_dashboard_error"
+            android:textAlignment="center"
+            android:textColor="@color/danger"
+            android:textSize="24sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:padding="16dp"
+            app:alignItems="center"
+            app:justifyContent="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/close_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="2dp"
+                android:contentDescription="@string/stats_choice_description"
+                android:src="@drawable/ic_baseline_close_24"
+                android:theme="@style/Theme.AppCompat"
+                app:backgroundTint="@color/medium_gray"
+                app:backgroundTintMode="src_over"
+                app:fabCustomSize="56dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:maxImageSize="26dp"
+                app:tint="@color/white"
+                tools:ignore="ImageContrastCheck" />
+        </com.google.android.flexbox.FlexboxLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</systems.concurrent.crediversemobile.utils.InterceptedFragment>

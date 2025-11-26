@@ -1,0 +1,12 @@
+#Configuration
+
+basedir=../../../
+
+#Unit Tests
+
+testdir=prod/tests/UIConnectorTests
+testdir=prod/tests/UnitTests
+testdir=prod/tests/CLITests
+testdir=mtncm/tests/CreditSharingServicesTests
+
+#End

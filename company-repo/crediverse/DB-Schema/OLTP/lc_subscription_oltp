@@ -1,0 +1,17 @@
+*************************** 1. row ***************************
+       Table: lc_subscription
+Create Table: CREATE TABLE `lc_subscription` (
+  `msisdn` varchar(28) NOT NULL,
+  `serviceID` varchar(16) NOT NULL,
+  `variantID` varchar(16) NOT NULL,
+  `serviceClass` int(11) NOT NULL,
+  `nextDateTime` datetime NOT NULL,
+  `beingProcessed` bit(1) NOT NULL,
+  `state` int(11) NOT NULL,
+  `dateTime1` datetime DEFAULT NULL,
+  `dateTime2` datetime DEFAULT NULL,
+  `dateTime3` datetime DEFAULT NULL,
+  `dateTime4` datetime DEFAULT NULL,
+  `ts` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`msisdn`,`serviceID`,`variantID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

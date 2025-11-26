@@ -1,0 +1,199 @@
+<div>
+	<script id="navbarmenu">
+    <!-- User Account: style can be found in dropdown.less -->
+    <li class="dropdown user user-menu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <img src="img/avatar5.png" class="user-image" alt="User Image"/>
+        <span class="hidden-xs">{{user.fullName}}</span>
+      </a>
+      <ul class="dropdown-menu dropdown-user">
+		    <li class="userLogout"><a href="#logout"><i class="fa fa-sign-out fa-fw"></i>{{i18n "global.logout"}}</a>
+		    </li>
+		    <li class="userProfile"><a href="#profile"><i class="fa fa-sign-out fa-fw"></i>{{i18n "global.profile"}}</a>
+		    </li>
+		</ul>
+    </li>
+	</script>
+
+	<script id="mainsidebar">
+	
+	<!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- Sidebar user panel -->
+      <!-- search form -->
+      <!-- <form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="Search..."/>
+              <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+        </div>
+      </form> -->
+      <!-- /.search form -->
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+		<ul class="sidebar-menu">
+      
+			<!-- Dashboard -->
+			<li class="menuentry">
+				<a href="#dashboard">
+					<i class="fa fa-dashboard"></i> <span>{{i18n "navbar.dashboard"}}</span>
+				</a>
+			</li>
+
+		
+			<!-- Agent Lookup Pages-->
+			{{#hasPerms "Agent_View"}}
+				<li>
+					<a class="routerlink" href="#accountList">
+					<i class="fa fa-users"></i>
+						<span>{{i18n "navbar.agentAccounts"}}</span>
+					</a>
+				</li>
+			{{/hasPerms}}
+
+	<!--
+	<li class="treeview show-on-collapse">
+		<a href="#accountMenu">
+			<i class="fa fa-users"></i>
+				<span>{{i18n "navbar.agentAccounts"}}</span>
+			<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+		</a>
+		<ul class="treeview-menu menuentry">
+			<li><a href="#accountList"><i class="fa fa-circle-o"></i>List</a></li>
+			{{#if canSearch}}
+				<li><a href="#accountSearch"><i class="fa fa-circle-o"></i>Search</a></li>
+			{{/if}}
+			
+		</ul>
+	</li>
+	-->
+	
+			{{#hasPerms "Transaction_View"}}
+				<li>
+					<a class="routerlink" href="#transactionList">
+						<i class="fa fa-history"></i>
+						<span>{{i18n "navbar.transactions"}}</span>
+					</a>
+				</li>
+			{{/hasPerms}}
+      	
+		{{#hasPerms "Reports_View"}}
+        <li class="treeview">
+        	<a href="#reports">
+          		<i class="fa fa-bar-chart"></i>
+          		<span>{{i18n "navbar.reports"}}</span>
+         		<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+        	</a>
+        	<ul class="treeview-menu menuentry">
+          			<li><a href="#retailerPerformanceReportList"><i class="fa fa-circle-o"></i>{{i18n "navbar.retailerPerformanceReport"}}</a></li>
+          			<li><a href="#wholesalerPerformanceReportList"><i class="fa fa-circle-o"></i>{{i18n "navbar.wholesalerPerformanceReport"}}</a></li>
+          			<li><a href="#accountBalanceSummaryReportList"><i class="fa fa-circle-o"></i>{{i18n "navbar.accountBalanceSummaryReport"}}</a></li>
+        	</ul>
+      	</li>
+      	{{/hasPerms}}
+		
+			<!-- Transactions A -->
+			<!--
+		      	<li class="hide-on-collapse">
+					<a class="routerlink" href="#transactionAList">
+						<i class="fa fa-history"></i>
+						<span>{{i18n "navbar.transactionsA"}}</span>
+					</a>
+					<a id="transactionASearch" href="#transactionASearch" class="routerlink pull-right"><i class="fa fa-search"></i></a>
+				</li>
+			
+				<li class="treeview show-on-collapse">
+					<a href="#transactionMenu">
+						<i class="fa fa-history"></i>
+						<span>{{i18n "navbar.transactionsA"}}</span>
+						<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+					</a>
+					<ul class="treeview-menu menuentry">
+		        		<li><a href="#transactionAList"><i class="fa fa-circle-o"></i>{{i18n "navbar.transactionList"}}</a></li>
+		        		<li><a href="#transactionASearch"><i class="fa fa-circle-o"></i>{{i18n "navbar.transactionSearch"}}</a></li>
+		      		</ul>
+		    	</li>
+    		-->
+    		
+			<!-- Transactions B -->
+			<!--
+		      	<li class="hide-on-collapse">
+					<a class="routerlink" href="#transactionBList">
+						<i class="fa fa-history"></i>
+						<span>{{i18n "navbar.transactionsB"}}</span>
+					</a>
+					<a id="transactionBSearch" href="#transactionBSearch" class="routerlink pull-right"><i class="fa fa-search"></i></a>
+				</li>
+			
+				<li class="treeview show-on-collapse">
+					<a href="#transactionMenu">
+						<i class="fa fa-history"></i>
+						<span>{{i18n "navbar.transactionsB"}}</span>
+						<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+					</a>
+					<ul class="treeview-menu menuentry">
+			    		<li><a href="#transactionBList"><i class="fa fa-circle-o"></i>{{i18n "navbar.transactionList"}}</a></li>
+			    		<li><a href="#transactionBSearch"><i class="fa fa-circle-o"></i>{{i18n "navbar.transactionSearch"}}</a></li>
+			  		</ul>
+				</li>
+			-->
+	
+			<!-- Profile -->
+			<!--
+				<li class="menuentry">
+					<a href="#profile">
+						<i class="fa fa-users"></i> <span>{{i18n "navbar.profile"}}</span>
+					</a>
+				</li>
+			-->
+
+        <!-- End UL Tag for Menu -->
+		</ul>
+
+		<!-- Logo -->
+		<div class="hide-on-collapse" style="margin-top:20px; text-align:center;">
+			<img class="customerLogo" style="width:160px;" src="{{currentLogo}}" border="0"/>
+		</div>
+	  
+		<!-- Powered By -->
+		  <div class="hide-on-collapse" style="margin-top:15px; text-align:center;">
+	      	 <span class="app-powered-by">Powered by</span>
+	      	 <br/>
+	      	 <a target="_blank" href="http://concurrent.systems/">
+	      	 	<span class="cmp-powered-by">
+	      	 		Concurrent Systems (Pty) Ltd.
+	      	 	</span>
+	      	 </a>
+		  </div>
+		
+		<!-- Version Number -->
+		<div class="hide-on-collapse" style="margin-top:15px; text-align:center;">
+			<span class="app-version">{{{i18nctx "navbar.version"}}}</span>
+			<br/> 
+			<span class="app-buildNumber">{{{i18nctx "navbar.buildNumber"}}}</span>
+
+		</div>
+	  
+    </section>
+    <!-- /.sidebar -->
+    
+    </script>
+
+	<script id="dashboardContent">
+		<div class="col-xs-12">
+   		 	<div class="rootAccountDashBoard"></div>
+			<div class="col-sm-offset-2 col-sm-8"></div>
+		</div>
+		<div class="col-xs-12">
+   		 	<div class="lastTransactionsDashBoard"></div>
+		</div>	
+    </script>
+    
+	<script id="noPermissions">
+		<center>
+			<h2>{{i18n "noPermissions.heading"}}</h5>
+			<h4>{{i18n "noPermissions.content"}}</h5>
+		</center>
+	</script>
+</div>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- vim: set ft=mvn_pom sts=4 ts=4 sw=4 noexpandtab fo-=t: -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ga.csys.c4u</groupId>
+	<artifactId>EcdsProtocol</artifactId>
+	<version>1.11.7-SNAPSHOT</version>
+	<inceptionYear>2017</inceptionYear>
+	<description>ECDS Graphical User Interface</description>
+	<name>ECDS Protocol</name>
+	<packaging>jar</packaging>
+	
+	<organization>
+		<name>Concurrent Systems</name>
+		<url>www.concurrent.co.za</url>
+	</organization>
+	
+	<properties>
+		<jdk.version>11</jdk.version>
+		<build.name>EcdsProtocol</build.name>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-compiler-plugin</artifactId>
+		    <version>3.6.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/javax.ws.rs/javax.ws.rs-api -->
+		<dependency>
+    		<groupId>javax.ws.rs</groupId>
+    		<artifactId>javax.ws.rs-api</artifactId>
+    		<version>2.0.1</version>
+		</dependency>
+		
+		<!-- These references are in the Eclipse .project file thought I have no idea why-->
+		<!-- https://mvnrepository.com/artifact/org.glassfish.hk2.external/javax.inject -->
+		<!-- 
+		<dependency>
+    		<groupId>org.glassfish.hk2.external</groupId>
+    		<artifactId>javax.inject</artifactId>
+    		<version>2.4.0-b09</version>
+		</dependency>
+		 -->
+		
+		<!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
+		<!-- 
+		<dependency>
+    		<groupId>javax.mail</groupId>
+    		<artifactId>javax.mail-api</artifactId>
+    		<version>1.5.5</version>
+		</dependency>
+		 -->
+		
+	</dependencies>
+	
+	<distributionManagement>
+		<repository>
+			<id>ssh-warehouse.concurrent.systems-teams-ecds-repo</id>
+			<url>sftp://warehouse.concurrent.systems/var/opt/webdav/warehouse.concurrent.co.za/teams/ecds/maven/repo</url>
+			<layout>default</layout>
+		</repository>
+		<site>
+			<id>ssh-warehouse.concurrent.systems-teams-ecds-sites</id>
+			<url>sftp://warehouse.concurrent.systems/var/opt/webdav/warehouse.concurrent.co.za/teams/ecds/maven/sites/g${project.groupId}-a${project.artifactId}-v${project.version}</url>
+		</site>
+	</distributionManagement>
+	
+	<build>
+		<finalName>${build.name}</finalName>
+		
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+	        		</execution>
+    	  		</executions>
+    		</plugin>	
+		</plugins>
+		
+		<extensions>
+  			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ssh</artifactId>
+			</extension>
+		</extensions>
+		
+	</build>
+
+</project>

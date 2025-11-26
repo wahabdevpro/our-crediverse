@@ -1,0 +1,30 @@
+
+/* Class = "UIButton"; normalTitle = "MY SERVICES"; ObjectID = "3Hw-mZ-Maj"; */
+"3Hw-mZ-Maj.normalTitle" = "MES SERVICES";
+
+/* Class = "UIButton"; normalTitle = "AVAILABLE SERVICES"; ObjectID = "ARB-n5-igQ"; */
+"ARB-n5-igQ.normalTitle" = "SERVICES DISPONIBLES";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "Agq-66-1vz"; */
+"Agq-66-1vz.text" = "Titre";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "Cwj-Z8-D25"; */
+"Cwj-Z8-D25.text" = "Détail";
+
+/* Class = "UILabel"; text = "Service is Currently Unavailable via the Application."; ObjectID = "FHT-Ep-lEQ"; */
+"FHT-Ep-lEQ.text" = "Le service est actuellement indisponible via l'Application.";
+
+/* Class = "UINavigationItem"; title = "Services"; ObjectID = "MsY-zK-yW8"; */
+"MsY-zK-yW8.title" = "Services";
+
+/* Class = "UIButton"; normalTitle = "Call Customer Care"; ObjectID = "cZe-PW-ONV"; */
+"cZe-PW-ONV.normalTitle" = "Appelez notre Service Clientèle";
+
+/* Class = "UILabel"; text = "HxC Application"; ObjectID = "iMc-o8-ovH"; */
+"iMc-o8-ovH.text" = "French HxC Application";
+
+/* Class = "UINavigationItem"; title = "Service Unavailable"; ObjectID = "sNX-7F-7f8"; */
+"sNX-7F-7f8.title" = "Service Indisponible";
+
+/* Class = "UILabel"; text = "Please contact Customer Care."; ObjectID = "u2l-9C-Vcs"; */
+"u2l-9C-Vcs.text" = "Se il vous plaît communiquer avec le Service à la clientèle.";

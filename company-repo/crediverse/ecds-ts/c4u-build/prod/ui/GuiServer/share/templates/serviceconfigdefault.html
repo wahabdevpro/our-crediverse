@@ -1,0 +1,139 @@
+<style>
+<!--
+	.bread {
+		margin-bottom: 0;
+	}
+	
+	.tree-icon {
+		font-size: 10px;
+	}
+	
+	.content-height {
+		height: 100px;
+	}
+}
+	
+-->
+</style>
+
+<script lang="javascript">
+	var minusGlyph = "glyphicon-minus-sign";
+	var plusGlyph = "glyphicon-plus-sign";
+
+	function expandCollapse(evt) {
+		$(evt).toggleClass(minusGlyph + ' ' + plusGlyph);
+		$(evt).next().next().toggle();
+	}
+	
+	$(document).ready(function() {
+		$.ajax({
+			url:"/serviceconfiguration",
+			type:"post",
+			success: function(data, textStatus, jqXHR) {
+				
+			}
+		});
+		
+		(function ($) {
+			   var original = $.fn.val;
+			   $.fn.val = function() {
+			      if ($(this).is('*[contenteditable=true]')) {
+			         return $.fn.html.apply(this, arguments);
+			      };
+			      return original.apply(this, arguments);
+			   };
+			})(jQuery);
+
+			$(function() {
+			    var availableTags = ["{Operator}","{Justin}","Bathroom","Lounge"];
+			  $("#textarea").autocomplete({
+			      source: availableTags
+			  });
+			  $( "#date" ).datepicker();
+			});
+	});
+	
+</script>
+
+<div class="row">    
+     <div class="col-md-3">
+     	<div class="panel panel-primary">
+     		<div class="panel-heading">Technical Settings</div>
+     		<div class="panel-body">
+     			<div class="row">
+     				<div class="col-md-11 col-md-push-1">
+     					<a href="#">Air Connector</a>
+     				</div>
+     				<div class="col-md-11 col-md-push-1">
+     					<a href="#">Logger Service</a>
+     				</div>
+     				<div class="col-md-11 col-md-push-1">
+     					<span class="glyphicon glyphicon-minus-sign tree-icon" onclick="expandCollapse(this)"></span>
+     					<a href="#">Service Bus</a>
+     					<div class="row">
+     						<div class="col-md-11 col-md-push-1">
+     							<span class="glyphicon glyphicon-minus-sign tree-icon" onclick="expandCollapse(this)"></span>
+     							<a href="#">Locale</a>
+     							<div class="row">
+     								<div class="col-md-11 col-md-push-1">
+     									<a href="#">Oh, Another Locale thats string is quite long.</a>
+     								</div>
+     							</div>
+     						</div>
+     						<div class="col-md-11 col-md-push-1">
+     							<span class="glyphicon glyphicon-minus-sign tree-icon" onclick="expandCollapse(this)"></span>
+     							<a href="#">Something Else</a>
+     							<div class="row">
+     								<div class="col-md-11 col-md-push-1">
+     									<a href="#">Some Text Here</a>
+     								</div>
+     							</div>
+     						</div>
+     					</div>
+     				</div>
+     			</div>     			
+     		</div>
+     	</div>
+     </div>
+	<div class ="col-md-9">
+		<div class="tabbable">
+			<ul class="nav nav-tabs nav-justified">
+				<li class="active">
+					<a href="#tab-configuration" data-toggle="tab">Configurable Settings</a>
+				</li>
+				<li style="display:none">
+					<a href="#tab-notification" data-toggle="tab">Notifications</a>
+				</li>
+			</ul>
+			<br/>
+			<div class="tab-content">
+				<div class="tab-pane active" id="tab-configuration">
+					<form>
+						<div class="form-group">
+							<label for="directoryName">Directory Name:</label><input class="form-control" id="directoryName" type="text"/>
+						</div>
+						<div class="form-group">
+							<label for="interimFileName">Interim Filename:</label><input class="form-control" id="interimFileName" type="text"/>
+						</div>
+						<div class="form-group">
+							<label for="timeFormat">Time Format:</label><input class="form-control" id="timeFormat" type="text"/>
+						</div>
+						<div class="form-group">
+							<label for="maxQueueLength">Max Queue Length:</label><input class="form-control" id="maxQueueLength" type="text"/>
+						</div>
+						<button type="submit" class="btn btn-default">Submit</button>
+					</form>
+				</div>
+				<div class="tab-pane" id="tab-notification">
+					<div><span contenteditable="true" id="textarea"></span></div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>
+<script>
+$(document).ready(function() {
+	registerInputs();
+});
+</script>

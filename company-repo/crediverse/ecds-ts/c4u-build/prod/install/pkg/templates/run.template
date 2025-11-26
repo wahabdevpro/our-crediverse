@@ -1,0 +1,10 @@
+#!/bin/bash
+JAVA_OPTS="-cp ${JAVA_CLASSPATH}"
+JAVA_MAINCLASS_JAR="${JAVA_MAINCLASS_JAR}"
+
+if [ -z "$C4U_JAVA_HOME" ]
+then
+	exec java $JAVA_OPTS $JAVA_MAINCLASS_JAR 2>&1
+else
+	exec $C4U_JAVA_HOME/bin/java $JAVA_OPTS $JAVA_MAINCLASS_JAR 2>&1
+fi

@@ -1,0 +1,23 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.services.pin.PinService")
+   }
+}
+dependencies {
+    implementation project(':Configuration')
+    implementation project(':CoreInterfaces')
+    implementation project(':SoapProtocol')
+    implementation project(':TransactionService')
+    implementation project(':AirConnector')
+    implementation 'org.slf4j:slf4j-api'
+}

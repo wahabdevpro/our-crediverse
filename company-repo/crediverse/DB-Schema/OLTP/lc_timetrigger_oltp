@@ -1,0 +1,18 @@
+*************************** 1. row ***************************
+       Table: lc_timetrigger
+Create Table: CREATE TABLE `lc_timetrigger` (
+  `serviceID` varchar(16) NOT NULL,
+  `variantID` varchar(16) NOT NULL,
+  `msisdnA` varchar(28) NOT NULL,
+  `msisdnB` varchar(28) NOT NULL,
+  `keyValue` varchar(28) NOT NULL,
+  `nextDateTime` datetime NOT NULL,
+  `beingProcessed` bit(1) NOT NULL,
+  `state` int(11) NOT NULL,
+  `dateTime1` datetime DEFAULT NULL,
+  `dateTime2` datetime DEFAULT NULL,
+  `dateTime3` datetime DEFAULT NULL,
+  `dateTime4` datetime DEFAULT NULL,
+  `ts` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`serviceID`,`variantID`,`msisdnA`,`msisdnB`,`keyValue`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

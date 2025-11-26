@@ -1,0 +1,6 @@
+package hxc.servicebus;
+
+public enum EncodingScheme
+{
+	GSM, GSM7, GSM8, PACKED_GSM, ISO_8859_1, ISO_8859_15, UCS_2, UTF_8, MODIFIED_UTF8, AIRWIDE_IA5, VFD2_GSM, VFTR_GSM, AIRWIDE_GSM, TMOBILE_NL_GSM
+}

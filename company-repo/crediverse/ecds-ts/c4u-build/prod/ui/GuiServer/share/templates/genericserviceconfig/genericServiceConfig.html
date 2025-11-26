@@ -1,0 +1,53 @@
+<link type="text/css" href="/css/pagecss/enhancedCreditSharing.css" rel="stylesheet" />
+<link type="text/css" href="/css/pagecss/creditSharing.css" rel="stylesheet" />
+
+<div class="row">
+	<div class="col-sm-12">
+		<h1 class="page-header config-prop-headings">Service Configuration Properties</h1>
+	</div>
+</div>
+
+<div th:if="${no_config}" class="row">
+	<div class="col-sm-12">
+		<center>
+			<div class="well well-lg">		
+				<b>There is currently no configuration available for this component</b>
+			</div>
+		</center>
+	</div>
+</div>
+
+<div th:if="${session.StructAdvConfig.size &gt; 0 || session.UnStructAdvConfig.size &gt; 0}">
+	<div th:include="advconfig/advancedconfigcommon" />	
+</div>
+
+
+<div th:if="${session.StructAdvConfig.size == 0 &amp;&amp; session.UnStructAdvConfig.size == 0}">
+		<!--  General Layout -->
+		<form th:if="${not no_config}" id="configForm" name="configForm" class="form-horizontal" role="form">
+			<div th:include="advconfig/general" />
+		</form>
+</div>
+
+<!-- Update Buttons -->
+<div th:include="common :: updateAndNotify" th:with="std=${'true'}, forms=${'config,configReturnCode,Quota'}"/>
+
+<!-- Add/Edit Modals -->
+<div th:include="pinservice/variantsmodal" />
+
+<!--  Delete Modal -->
+<div th:include="common :: deleteModal" />
+
+<!-- Vas Commands Modal -->
+<div th:include="advconfig/vasCommandsModal" />
+	
+<link type="text/css" href="/css/bootstrap-select.min.css" rel="stylesheet" />
+<script src="/js/min/bootstrap-select.min.js"></script>
+<script src="/js/pagejs/mancommon.js"></script>
+
+<script type="text/javascript" src="/js/pagejs/commonAdvConfig.js"></script>
+<script type="text/javascript" src="/js/full/resultcode.js"></script>
+<script type="text/javascript" src="/js/full/vascommands.js"></script>
+<script type="text/javascript" src="/js/full/complex-config.js"></script>
+
+<script type="text/javascript" src="/js/pagejs/protoconfig.js"></script>

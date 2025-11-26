@@ -1,0 +1,38 @@
+<style>
+	.page-header-label {
+	    border-bottom: 1px solid #EEEEEE;
+	    margin: 20px 0 10px;
+	    padding-bottom: 9px;
+	}
+	.page-ref {
+		margin-left: 20px;
+	}
+</style>
+<div class="row">
+	<div class="col-cs-12 col-sm-12 col-md-12 col-lg-12">
+		<h5>The follow pages are available for configuration</h5>
+	</div>
+</div>
+
+<h3 class="page-header-label">My Details</h3>
+<h5 class="page-ref"><a href="#" onclick="javascript:navigateTo('mydetails', 'mydetails'); return false;">System version and logged in user details</a></h5>
+<h5 class="page-ref"><a href="#" onclick="javascript:navigateTo('systemdetails', 'licensing'); return false;">Licensing</a></h5>
+
+<h3 th:if="${user.canViewUsers || user.canViewRoles}"  class="page-header-label">User Management</h3>
+<h5 th:if="${user.canViewUsers}" class="page-ref"><a th:onclick="'javascript:navigateTo(\'userman\',\'manusers\');return false;'" href="#" >Manage Users</a></h5>
+<h5 th:if="${user.canViewRoles}" class="page-ref"><a th:onclick="'javascript:navigateTo(\'userman\',\'manroles\');return false;'" href="#" >Manage Roles</a></h5>
+
+<h3 id="serviceconfig" class="page-header-label">Service Configuration</h3>
+<div id="serviceconfigavail"><img class="page-ref" src='/img/load.gif'/>&nbsp;Loading available services</div>
+
+<h3 class="page-header-label" >Health and Monitoring</h3>
+<h5 class="page-ref"><a th:onclick="'javascript:navigateTo(\'actmon\',\'fitness\');return false;'" href="#" >System Fitness</a></h5>
+<h5 th:if="${islog}" class="page-ref"><a th:onclick="'javascript:navigateTo(\'actmon\',\'logview\');return false;'" href="#" >Log File Viewer</a></h5>
+<h5 th:if="${isalarm}" class="page-ref"><a th:onclick="'javascript:navigateTo(\'actmon\',\'alarmview\');return false;'" href="#" >Alarm Viewer</a></h5>
+<h5 th:if="${isbam}" class="page-ref"><a th:onclick="'javascript:navigateTo(\'actmon\',\'bamview\');return false;'" href="#" >Business Activity Monitoring</a></h5>
+<h5 th:unless="${isbam}" class="page-ref"><i>Business Activity Monitoring (License Required)</i></h5>
+
+<h3 th:if="${isreports}" class="page-header-label" >Reporting</h3>
+<h5 th:if="${isreports}" class="page-ref"><a th:onclick="'javascript:navigateTo(\'sysreps\',\'reportview\');return false;'" href="#" >Generate Reports</a></h5>
+
+<script>updateServiceConfgurationOptions();</script>

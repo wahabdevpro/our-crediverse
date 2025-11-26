@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>MySQL Connection Parameters</comment>
+<entry key="hibernate.format_sql">false</entry>
+<entry key="hibernate.hbm2ddl.auto">validate</entry>
+<entry key="hibernate.c3p0.idle_test_period">300</entry>
+<entry key="hibernate.c3p0.max_statements">500</entry>
+<entry key="hibernate.c3p0.max_size">500</entry>
+<entry key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</entry>
+<entry key="hibernate.c3p0.testConnectionOnCheckout">false</entry>
+<entry key="hibernate.c3p0.min_size">20</entry>
+<entry key="hibernate.connection.isolation">TRANSACTION_REPEATABLE_READ</entry>
+<entry key="hibernate.c3p0.timeout">500</entry>
+<entry key="hibernate.temp.use_jdbc_metadata_defaults">false</entry>
+<entry key="javax.persistence.jdbc.url">jdbc:mysql://mariadb/hxc?useSSL=false&amp;requireSSL=false&amp;verifyServerCertificate=false&amp;sendFractionalSeconds=false&amp;&amp;logger=com.mysql.jdbc.log.Slf4JLogger</entry>
+<entry key="javax.persistence.jdbc.user">root</entry>
+<entry key="hibernate.c3p0.testConnectionOnCheckin">true</entry>
+<entry key="hibernate.show_sql">false</entry>
+<entry key="javax.persistence.jdbc.password">f54OpGYeXDXEPYv+5qUvFw==</entry>
+<entry key="javax.persistence.jdbc.driver">com.mysql.jdbc.Driver</entry>
+</properties>

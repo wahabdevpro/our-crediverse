@@ -1,0 +1,19 @@
+name: Build Crediverse on PR merged or Pushed to main
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+  # Allows you to run this workflow manually from the Actions tab
+jobs:
+  Build_Crediverse_merged:
+    uses: Concurrent-Systems/Crediverse/.github/workflows/build-crediverse-base.yml@main

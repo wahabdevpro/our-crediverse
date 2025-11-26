@@ -1,0 +1,15 @@
+*************************** 1. row ***************************
+       Table: cf_notification
+Create Table: CREATE TABLE `cf_notification` (
+  `notificationsId` bigint(20) NOT NULL,
+  `notificationId` int(11) NOT NULL,
+  `parentId` int(11) DEFAULT NULL,
+  `sequenceNo` int(11) DEFAULT NULL,
+  `description` varchar(512) DEFAULT NULL,
+  `language1Text` varchar(512) DEFAULT NULL,
+  `language2Text` varchar(512) DEFAULT NULL,
+  `language3Text` varchar(512) DEFAULT NULL,
+  `language4Text` varchar(512) DEFAULT NULL,
+  `ts` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`notificationsId`,`notificationId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

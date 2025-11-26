@@ -1,0 +1,213 @@
+// vim: set sts=4 ts=4 sw=4 filetype=asciidoc noexpandtab:
+include::asciidoctor-common/settings.adi[]
+:company-name: Concurrent Systems
+:brand-name: Credit4U
+:software-name: Electronic Credit Distribution System - API
+:software-name-short: ECDS-API
+:software-version: 1.2.2
+:software-release_date: 2020-08-05
+:document-title: {software-name} {software-version}
+:document-subtitle: Release Notes
+:header-title: {document-title}: {document-subtitle}
+:document-version: 1.0
+:document-date: 2020-08-05
+:footer-version-0: {document-version}
+:footer-version-1: {document-date}
+= {document-title}: {document-subtitle}
+{company-name}
+1.0, {document-date}
+
+:sectnums!:
+
+include::asciidoctor-common/copyright.adi[]
+
+== Revision History
+
+ifdef::is-template[]
+.Template Instructions
+****
+The document revision number is separate from the software version number and must be used to track changes in the release notes for a specific version of the software and not across versions of the software.
+
+This table must only include revision history for the specific version of the software described by the release notes.
+****
+endif::[]
+
+[cols="6,8,15", options="header", frame="none", align="center"]
+|===
+
+|Version
+|Date
+|Description
+
+|{software-version}-1.0
+|{software-release_date}
+|Updated and published details of software version: {software-version} 
+
+|===
+
+:sectnums:
+
+== Preface
+
+ifdef::is-template[]
+.Template Instructions
+****
+This is an AsciiDoc template for release notes with instructions, example content and placeholders. Content of this template that is not labelled as "Template Instructions" or marked as placeholders using angle brackets (e.g. <placeholder>) is example content.
+
+Template instructions in this document will only be rendered if the `is-template` attribute is set.
+
+Throughout this template the following placeholders are used:
+
+.Placeholders
+[cols="1h,3", options="header", frame="none", align="center"]
+|===
+|Placeholder|Description
+|{software-name}|Name of the software that is described by the release notes.
+|{software-name-short}|Short name or abbreviation of the software that is described by the release notes.
+|{software-version}|Version of the software that is described by the release notes.
+|{software-release_date}|Date of the release that is described by the release notes.
+|<...>|Other placeholders.
+|===
+****
+
+endif::[]
+
+=== Software Overview
+
+ifdef::is-template[]
+.Template Instructions
+****
+This section must contain a brief description of the software.
+****
+endif::[]
+
+{company-name}' {brand-name} {software-name} is an end-to-end pin-less airtime distribution and sales system which encompasses all business processes, from the initial credit creation to the final sale of airtime to the subscriber.
+
+[IMPORTANT]
+ This Release note refers specifically to the ECDS-API release.
+
+=== Document Overview
+
+ifdef::is-template[]
+.Template Instructions
+****
+This section must describe the document itself.
+****
+endif::[]
+
+This document describes version {software-version} of {company-name}' {brand-name} {software-name}. It contains the following information:
+
+ * Supported System Configurations.
+ * Inventory of released artifacts.
+ * Features that added, enhanced, changed or removed.
+ * Any other enhancements or changes.
+ * Corrections.
+ * Impacts on compatibility and support.
+ * Any special considerations.
+
+This document should be used to determine the suitability of a specific version of this software and to determine impacts of upgrading from one version to another.
+
+== Supported System Configurations
+
+////
+System Configurations used in Testing
+
+////
+
+ifdef::is-template[]
+.Template Instructions
+****
+This section must describe all system configurations that will be supported with regards to the released software.
+
+The content of this section must not be unnecessarily specific nor should it be incorrectly generic. If possible, interface versions must be specified rather than specific implementations of interfaces and ranges of versions must be specified instead of specific versions. For example, if software will be supported on any x86-64 ISA system then specifying supported CPU as "Intel Xeon E5-2690 v4" is unnecessarily specific and specifying it as "Intel Architecture" incorrectly generic.
+
+This section must not be a dimensioning guide for the software nor should it only be a list of tested and certified configurations, these can however be included in other sections or in appendices.
+****
+endif::[]
+
+This section describes the supported system configurations for {brand-name} {software-name} {software-version}. All aspects of system configuration described here is mandatory unless explicitly indicated otherwise.
+
+[IMPORTANT]
+====
+Any system configuration not adhering to the aspects described here will not be supported.
+====
+
+Operating System and ISA::
+Any of the following operating systems are supported:
+	* Red Hat 7 from 7.2 onwards for x86-64
+
+Software::
+	* Java Platform. Any of the following implementations:
+	** Oracle Java Development Kit 7
+
+Database::
+	Any of the following databases:
+	* MySQL 5.5 or later
+
+Web Browser::
+	Any of the following:
+	* Google Chrome 50+
+  * Microsoft Internet Explorer 11+
+
+Charging System::
+	Any of the following charging systems are supported:
+	* Ericsson Charging System with the following interfaces:
+	** UCIP versions 5.0
+  ** EMA version 15
+
+Core Network::
+	* MAP Phase 2+
+
+SMSC::
+	* SMPP 3.4
+
+NMS::
+	* SNMP 2
+
+== Inventory of Released Artefacts
+
+ifdef::is-template[]
+.Template Instructions
+****
+This section must list artefacts that constitute the release. It does not have to include documentation and if it does include documentation the list should be considered as non-exhaustive as new documentation can be added at a later stage.
+
+If hyperlinks are used they may only link to locations that are accessible by anybody that have licensed the software.
+****
+endif::[]
+
+* Red Hat 7 package for Intel x86-64 architecture.
+File name:: `ecds-api-{software-version}.noarch.rpm`
+
+== Release Description
+
+include::released-artefacts.asciidoc[]
+
+////
+== Installation Instructions (*OPTIONAL*)
+
+.Template Instructions
+****
+This section must provide installation instructions for the release for both new installations and upgrades.
+
+NOTE: This section is optional and may be omitted if installation instructions are provided in another document.
+****
+
+////
+
+include::asciidoctor-common/contact_details.adi[]
+
+ifdef::is-template[]
+
+////
+
+[appendix]
+== Template Instructions
+
+This template assumes semantic versioning with trunk based development branching model.
+
+The intention of a release note
+
+TODO
+////
+
+endif::[]

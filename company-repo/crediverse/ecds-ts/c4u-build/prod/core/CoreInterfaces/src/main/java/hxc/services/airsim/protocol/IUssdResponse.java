@@ -1,0 +1,15 @@
+package hxc.services.airsim.protocol;
+
+public interface IUssdResponse
+{
+
+	// //////////////////////////////////////////////////////////////////////////////////////
+	//
+	// Fields
+	//
+	// /////////////////////////////////
+	public abstract String getText();
+
+	public abstract boolean isLast();
+
+}

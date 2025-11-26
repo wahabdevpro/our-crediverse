@@ -1,0 +1,130 @@
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides: 		${APP_NAME}
+# Required-Start:	mysql
+# Required-Stop:	
+# chkconfig: 		- 90 10
+# Default-Start:	2 3 4 5
+# Default-Stop:		0 1 6
+# Description: 		This service is provided by Concurrent Systems.
+### END INIT INFO
+
+MY_PID=$$
+MY_PATH=$(readlink -f $0)
+MY_ROOT=$(dirname $MY_PATH)
+MY_NAME=${APP_NAME} # $(basename $MY_PATH)
+MY_PIDFILE="$MY_ROOT/.$MY_NAME.pid"
+MY_ERRFILE="$MY_ROOT/.$MY_NAME.err"
+MY_LOGFILE="$MY_ROOT/.$MY_NAME.log"
+MY_KILLFILE="$MY_ROOT/.$MY_NAME.kill"
+
+function daemonise() {
+	echo $MY_PID > $MY_PIDFILE
+	exec 3>&-
+	exec 2>>$MY_ERRFILE
+	exec 1>>$MY_LOGFILE
+	echo $(date)" Daemonising" >> $MY_ERRFILE
+}
+
+function checkforterm() {
+	if [ -f $MY_KILLFILE ]; then
+		echo $(date)" Terminating." >> $MY_ERRFILE
+		kill $(cat "${INSTALL_PATH}/bin/${APP_NAME}.pid")
+		rm $MY_KILLFILE
+		rm $MY_PIDFILE
+		kill $MY_PID
+		exit 0
+	fi
+}
+
+case $1 in
+	restart)
+		$0 stop
+		$0 start
+		;;
+	start)
+		if [ -f ${INSTALL_PATH}/bin/${APP_NAME}.pid ]; then
+			$0 stop
+		fi
+		$0 run &
+		echo "${APP_NAME} has Started"
+		exec 3>&-
+		exec 2>&-
+		exec 1>&-
+		exit 0
+		;;
+	stop)
+		echo -n "Terminating app. "
+		kill $(cat "${INSTALL_PATH}/bin/${APP_NAME}.pid")
+		$0 status 1>/dev/null 2>/dev/null
+		if [ $? -ne 0 ]; then
+			echo "Process is not running."
+			exit
+		fi
+                touch $MY_KILLFILE
+		$0 status 1>/dev/null 2>/dev/null
+		ECODE=$?
+		WAITCOUNT=0
+		WAITCOUNTMAX=30
+		while [ $ECODE -eq 0 ]; do
+			sleep 1
+			let WAITCOUNT=$WAITCOUNT+1
+			if [ $WAITCOUNT -lt $WAITCOUNTMAX ]; then
+				$0 status 1>/dev/null 2>/dev/null
+				ECODE=$?
+			else
+				ECODE=1
+			fi
+		done
+		$0 status 1>/dev/null 2>/dev/null
+		if [ $? -eq 0 ]; then
+			PID=$(cat $MY_PIDFILE)
+			kill $PID
+			rm $MY_PIDFILE
+			rm $MY_KILLFILE
+			echo "${APP_NAME} Killed."
+			echo $(date)" Terminating forcefully" >> $MY_ERRFILE
+			exit 0;
+		else
+			echo "${APP_NAME} Stopped."
+		fi
+		;;
+	status)
+		if [ ! -f $MY_PIDFILE ]; then
+			echo "$MY_NAME is not Running."
+			exit 1
+		fi
+		pgrep -l -f "$MY_NAME run" | grep -q -E "^$(cat $MY_PIDFILE)"
+		if [ $? -eq 0 ]; then
+			echo "$MY_NAME is Running with PID "$($0 pid)
+			exit 0
+		else
+			echo "$MY_NAME is not Running."
+			exit 1
+		fi
+		;;
+	pid)
+		if [ -f $MY_PIDFILE ]; then
+			cat $MY_PIDFILE
+		else
+			echo "No PIDFILE Found."
+		fi
+		;;
+	run)
+		daemonise
+		java -cp ${CLASSPATH} ${MAIN_CLASS} &
+		echo $! > ${INSTALL_PATH}/bin/${APP_NAME}.pid
+		while [ true ]; do
+			checkforterm
+		done
+		;;
+	help|?|--help|-h)
+		echo "Usage: $0 [ start | stop | restart | status ]"
+		exit 0
+		;;
+	*)
+		echo "Invalid Argument."
+		echo
+		$0 help
+		;;
+esac

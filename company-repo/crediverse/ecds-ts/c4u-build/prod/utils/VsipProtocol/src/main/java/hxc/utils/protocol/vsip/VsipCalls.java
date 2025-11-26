@@ -1,0 +1,6 @@
+package hxc.utils.protocol.vsip;
+
+public enum VsipCalls
+{
+	ChangeVoucherState, DeleteChangeVoucherStateTask, DeleteGenerateVoucherTask, DeleteLoadVoucherBatchTask, DeletePurgeVoucherTask, DeleteVoucherDetailsReportTask, DeleteVoucherDistributionReportTask, DeleteVoucherUsageReportTask, EndReservation, GenerateVoucher, GenerateVoucherDetailsReport, GenerateVoucherDistributionReport, GenerateVoucherUsageReport, GetChangeVoucherStateTaskInfo, GetGenerateVoucherDetailsReportTaskInfo, GetGenerateVoucherDistributionReportTaskInfo, GetGenerateVoucherTaskInfo, GetGenerateVoucherUsageReportTaskInfo, GetLoadVoucherBatchFileTaskInfo, GetPurgeVouchersTaskInfo, GetVoucherBatchFilesList, GetVoucherDetails, GetVoucherHistory, LoadVoucherBatchFile, LoadVoucherCheck, PurgeVouchers, ReserveVoucher, UpdateVoucherState,
+}

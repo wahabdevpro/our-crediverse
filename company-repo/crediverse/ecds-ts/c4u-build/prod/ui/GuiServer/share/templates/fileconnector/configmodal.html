@@ -1,0 +1,142 @@
+<!-- Modal Server Info -->
+<div class="modal fade" id="configInfoModal" tabindex="-1" role="dialog" aria-labelledby="configInfoModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div id="configInfoModalHeader" class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="configInfomodalTitle">Add New Host</h4>
+      </div>
+      <div class="modal-body">
+      	<form id="configInfomodalForm" name="configInfomodalForm">
+			<div class="row">
+				<div class="col-md-5">
+					<label for="fileType" class="control-label">File Type</label>
+					<select id="fileType" class="selectpicker modalInput" name="fileType">
+						<option th:each="option : ${fileTypes.fileTypes}" th:value="${option}" th:text="${option}" />
+					</select>
+					<span id="fileType_error" class="error_message hide"></span>
+				</div>
+				
+				<div class="col-md-6">
+					<label for="serverRole" class="control-label">Server Role</label>
+					<input type="text" class="form-control modalInput" id="serverRole" name="serverRole" placeholder="Server Role" />
+					<span id="serverRole_error" class="error_message hide"></span>
+				</div>
+			</div>
+
+			<div class="row" style="margin-top: 10px;">
+				<div class="col-md-5">
+					<label for="filenameFilter" class="control-label">File Name Filter</label>
+					<input type="text" class="form-control modalInput" id="filenameFilter" name="filenameFilter" placeholder="File Name Filter" />
+					<span id="filenameFilter_error" class="error_message hide"></span>
+				</div>
+				<div class="col-md-6">
+					<label for="fileProcessorType" class="control-label">File Processor Type</label>
+
+					<select id="fileProcessorType" class="selectpicker modalInput" name="fileProcessorType">
+						<option th:each="option : ${fileTypes.fileProcessorTypes}" th:value="${option}" th:text="${option}" />
+					</select>
+
+					<span id="fileProcessorType_error" class="error_message hide"></span>
+				</div>
+			</div>
+
+			<div class="row" style="margin-top: 10px;">
+				<div class="col-md-8">
+					<label for="inputDirectory" class="control-label">Input Directory</label>
+					<input type="text" class="form-control modalInput" id="inputDirectory" name="inputDirectory" placeholder="Input Directory" />
+					<span id="inputDirectory_error" class="error_message hide"></span>
+				</div>		
+			</div>
+				
+			<div class="row" style="margin-top: 10px;">
+				<div class="col-md-8">
+					<label for="outputDirectory" class="control-label">Ouput Directory</label>
+					<input type="text" class="form-control modalInput" id="outputDirectory" name="outputDirectory" placeholder="Ouput Directory" />
+					<span id="outputDirectory_error" class="error_message hide"></span>
+				</div>			
+			</div>
+
+			<div class="row" style="margin-top: 10px;">
+				<div class="col-md-12" >
+					<label for="copyCommand" class="control-label">Copy Command
+					<span id='copyCommandHelpBtn' class='glyphicon glyphicon-question-sign' style='margin-left:10px; color:blue; cursor:pointer;' ></span>
+					</label>
+					<div class="alert alert-info copyCommandInfo" style="display:none; margin-bottom: 0px !important;" role="alert">
+						
+						<div class="row" style="padding-left:10px;">The following place holders are available:</div>
+						<div class="row">
+							<div class="col-sm-1 col-md-1">%1$s</div>
+							<div class="col-sm-8 col-md-8"><b>Source Computer Name</b></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-1 col-md-1">%2$s</div>
+							<div class="col-sm-8 col-md-8"><b>Input Directory</b></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-1 col-md-1">%3$s</div>
+							<div class="col-sm-8 col-md-8"><b>Filename</b></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-1 col-md-1">%4$s</div>
+							<div class="col-sm-8 col-md-8"><b>Target Computer Name</b></div>
+						</div>
+						<div class="row" style="padding-left:10px;">e.g. scp USER@%1$s:%2$s/%3$s %2$s</div>				
+					</div>
+				</div>
+			</div>
+			<div class="row" >
+				<div class="col-md-8">
+					<input type="text" class="form-control modalInput" id="copyCommand" name="copyCommand" placeholder="Copy Commmand" />
+					<span id="copyCommand_error" class="error_message hide"></span>
+				</div>
+			</div>
+				
+			<div class="row" style="margin-top: 10px;">
+				<div class="col-md-6">
+					<label for="processStartTimeOfDay" class="control-label">Process Start Time</label>
+					<div class="input-group" id="processStartTimeOfDayPicker">
+					  	<input type="text" class="form-control modalInput" id="processStartTimeOfDay" name="processStartTimeOfDay" placeholder="00:00" />
+					  	<span class="input-group-addon glyphicon glyphicon-time" style="cursor: pointer;"></span>
+					</div>
+					<span id="processStartTimeOfDay_error" class="error_message hide"></span>
+				</div>
+				<div class="col-md-6">
+					<label for="processEndTimeOfDay" class="control-label">Process End Time</label>
+					<div class="input-group" id="processEndTimeOfDayPicker">
+						<input type="text" class="form-control modalInput" id="processEndTimeOfDay" name="processEndTimeOfDay"  placeholder="00:00" />
+						<span class="input-group-addon glyphicon glyphicon-time" style="cursor: pointer;"></span>
+					</div>
+					<span id="processEndTimeOfDay_error" class="error_message hide"></span>
+				</div>
+			</div>
+				
+			<div class="row" style="margin-top: 10px;">
+				<div class="col-md-9">
+						<div class="checkbox modalcheckbox">
+						  <label>
+						    <input id="strictlySequential" class="modalInput" name="strictlySequential" type="checkbox" /><b>Strictly Sequential (by file name)</b>
+						  </label>
+						</div>
+				</div>
+			</div>
+
+			<div id="configInfomodalError" class="row alert alert-danger hide">
+					Things went wrong!!
+			</div>
+			
+			<div class="modal-footer">
+				<img id="updateWaiting" src="/img/cell_wait.gif" class="waiting hide" />
+				<button id="cancelUpdate" type="button" class="btn btn-default" data-dismiss="modal" onclick="closeServerInfoModal();">Cancel</button>
+				<button id="saveConfig" type="button" class="btn btn-primary" title="Add File Record" onclick="validateAndSendConfig()">Add Configuration</button>
+			</div>
+      	</form>
+
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script language="javascript">
+	bindDragable("configInfoModal", "configInfoModalHeader");
+</script>

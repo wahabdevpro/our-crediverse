@@ -1,0 +1,116 @@
+<!-- Modal Server Info -->
+<div class="modal fade" id="serviceClassModal" tabindex="-1" role="dialog" aria-labelledby="serviceClassModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div id="ecsserviceClassModalHeader" class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="serviceClassModalTitle">Add New Service Class</h4>
+      </div>
+      <div class="modal-body">
+      	<form id="serviceClassModalForm" name="serviceClassModalForm">
+      		<ul class="nav nav-tabs">
+			  <li class="active"><a href="#scconfig" data-toggle="tab">Configuration</a></li>
+			  <li><a href="#sctexts" data-toggle="tab">Multilingual Text</a></li>
+			</ul>
+			
+			<div class="tab-content">
+				<!-- General Configuration -->
+				<div class="tab-pane modalconent active" id="scconfig">
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+						<label for="serviceClassID" class="control-label">Service Class ID</label>
+							<input type="text" class="form-control numericfields modalInput" id="serviceClassID" name="serviceClassID" placeholder="Service Class ID" />
+							<span id="serviceClassID_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="maxRecipients" class="control-label">Maximum Recipients</label>
+							<input type="text" class="form-control numericfields modalInput" id="maxRecipients" name="maxRecipients" placeholder="Max Recipients" />
+							<span id="maxRecipients_error" class="error_message hide"></span>
+						</div>
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="addRecipientCharge" class="control-label" th:text="${'Add Recipient Charge (' + session.curSymbol + ')'}" >Add Recipient Charge (xxx)</label>
+							<input type="text" class="form-control currencyfields modalInput" id="addRecipientCharge" name="addRecipientCharge" placeholder="Add Recipient Charge" />
+							<span id="addRecipientCharge_error" class="error_message hide"></span>
+						</div>
+						
+						<div class="col-md-6">
+							<label for="removeRecipientCharge" class="control-label" th:text="${'Remove Recipient Charge (' + session.curSymbol + ')'}">Remove Recipient Charge (xxx)</label>
+							<input type="text" class="form-control currencyfields modalInput" id="removeRecipientCharge" name="removeRecipientCharge" placeholder="Remove Recipient Charge" />
+							<span id="removeRecipientCharge_error" class="error_message hide"></span>
+						</div>
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="addTransferCharge" class="control-label" th:text="${'Add Transfer Charge (' + session.curSymbol + ')'}">Add Transfer Charge (xxx)</label>
+							<input type="text" class="form-control currencyfields modalInput" id="addTransferCharge" name="addTransferCharge" placeholder="Add Transfer Charge" />
+							<span id="addTransferCharge_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="changeTransferCharge" class="control-label" th:text="${'Change Transfer Charge (' + session.curSymbol + ')'}">Change Transfer Charge (xxx)</label>
+							<input type="text" class="form-control currencyfields modalInput" id="changeTransferCharge" name="changeTransferCharge" placeholder="Change Transfer Charge" />
+							<span id="changeTransferCharge_error" class="error_message hide"></span>
+						</div>			
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="removeTransferCharge" class="control-label" th:text="${'Remove Transfer Charge (' + session.curSymbol + ')'}">Remove Transfer Charge (xxx)</label>
+							<input type="text" class="form-control currencyfields modalInput" id="removeTransferCharge" name="removeTransferCharge" placeholder="Remove Transfer Charge" />
+							<span id="removeTransferCharge_error" class="error_message hide"></span>
+						</div>
+						<div class="col-md-6">
+							<label for="unsubscribeCharge" class="control-label" th:text="${'Unsubscribe Charge (' + session.curSymbol + ')'}">Unsubscribe  Charge (xxx)</label>
+							<input type="text" class="form-control currencyfields modalInput" id="unsubscribeCharge" name="unsubscribeCharge" placeholder="Unsubscribe Charge" />
+							<span id="unsubscribeCharge_error" class="error_message hide"></span>
+						</div>						
+					</div>
+					
+					<div class="row modalrowcontent">
+						<div class="col-md-6">
+							<label for="postPaid">Post Paid</label>
+							<div class="checkbox modalcheckbox">
+							  <label>
+							    <input id="postPaid" name="postPaid" type="checkbox" />This is a post-paid account
+							  </label>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				
+				<!--  Text Configuration -->
+				 <div class="tab-pane modalconent" id="sctexts">
+				 
+					 <div class="row modalrowcontent">
+						<div class="panel-group modaltexts" id="accordion">
+						
+							<div th:include="advconfig/phraseField :: messagePanel" th:with="label=${'Name'}, field=${'name'}, tab=${'sc'}, always=${'1'}, state=${'1'}" class="panel panel-default"/>
+
+						</div>	
+					 </div>
+				 </div>
+				 
+			</div>
+      	</form>
+      	
+		<div id="serviceClassModalError" class="row alert alert-danger hide">
+				Things went wrong!!
+		</div>
+		<div class="modal-footer">
+			<img id="serviceClassModalWaiting" src="/img/cell_wait.gif" class="waiting hide" />
+			<button type="button" class="btn btn-default" data-dismiss="modal" >Cancel</button>
+			<button id="serviceClassModalSave" type="button" class="btn btn-primary savebtn" onclick="saveModalCall()">Add Host</button>
+		</div>
+		
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script language="javascript">
+	bindDragable("serviceClassModal", "ecsserviceClassModalHeader");
+</script>

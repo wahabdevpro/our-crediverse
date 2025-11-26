@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/about"
+        android:icon="@drawable/ic_outline_info_24"
+        android:title="@string/about_us_dropdown_text"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/language_en"
+        android:icon="@drawable/ic_outline_info_24"
+        android:title="English"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/language_fr"
+        android:icon="@drawable/ic_outline_info_24"
+        android:title="Français"
+        app:showAsAction="never" />
+
+</menu>

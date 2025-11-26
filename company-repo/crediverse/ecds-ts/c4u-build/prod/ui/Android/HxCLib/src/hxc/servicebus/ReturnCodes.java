@@ -1,0 +1,56 @@
+package hxc.servicebus;
+
+public enum ReturnCodes
+{
+	// @formatter:off
+	success,
+	successfulTest,
+	notSupported,
+  	invalidArguments,
+	invalidNumber,
+	insufficientBalance,
+	technicalProblem,
+	temporaryBlocked,
+	cannotBeAdded,
+	alreadyAdded,
+	timedOut,
+	authorizationFailure,
+	notEligible,
+	alreadySubscribed,
+	notSubscribed,
+	incomplete,
+	malformedRequest,
+	notMember,
+	invalidQuota,
+	quotaNotSet,
+	maxMembersExceeded,
+	alreadyMember,
+	alreadyOtherMember,
+	alreadyOwner,
+	cannotAddSelf,
+	invalidPin,
+	invalidVariant,
+	quantityTooSmall,
+	quantityTooBig,
+	serviceBusy,
+	excessiveBalance,
+	quotaReached,
+	cannotCallSelf,
+	inactiveBParty,
+	suspended,
+	invalidService,
+	inactiveAParty,
+	cannotTransferToSelf,
+	cannotReceiveCredit,
+	cannotMigrateToSameVariant,
+	memberNotEligible,
+	pinBlocked,
+	unregisteredPin,
+	cannotBeSuspended,
+	cannotBeResumed,
+	maxCountExceeded,
+	maxAmountExceeded
+
+	;
+	// @formatter:on
+}

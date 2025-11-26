@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE RootStep>
+<RootStep id="_0" name="root" version="4.0.2">
+  <include>qfs.qft</include>
+  <reference>c4u.qft</reference>
+  <reference>qfs.qft</reference>
+  <reference>c4u_main_MOZ.qft</reference>
+  <reference>c4u_main_IE.qft</reference>
+  <TestSet id="_1rg" name="firefox health check">
+    <TestCall calledtest="c4u_main_MOZ.qft#." id="_1rh"/>
+  </TestSet>
+  <TestSet id="_1ri" name="IE health check">
+    <TestCall calledtest="c4u_main_IE.qft#." id="_1rj"/>
+  </TestSet>
+  <PackageRoot id="_3">
+    <Dependency id="_3uM" name="startup CRM moz">
+      <SetupSequence id="_3uN" name="Open web page in a browser">
+        <BasicSequence id="_3uO" name="Set global variables">
+          <SetGlobalStep id="_3uP" varname="client">
+            <default>mozcrm</default>
+          </SetGlobalStep>
+          <SetGlobalStep id="_3uQ" varname="browser">
+            <default>mozilla</default>
+          </SetGlobalStep>
+          <SetGlobalStep id="_3uR" varname="mozhome">
+            <default>C:\Program Files\Mozilla Firefox</default>
+          </SetGlobalStep>
+        </BasicSequence>
+        <BasicSequence id="_3uS" name="Start browser without window">
+          <BrowserClientStarter browser="$(browser)" client="$(client)"
+                                executable="${qftest:java}" id="_3uT"
+                                mozhome="$(mozhome)" openwindow="false"
+                                windowname="mozcrm"/>
+          <ClientWaiter client="$(client)" id="_3uU"/>
+        </BasicSequence>
+        <BasicSequence id="_3uV" name="Perform browser settings">
+          <ProcedureCall id="_3uW"
+                         procedure="qfs.qft#qfs.web.browser.settings.doStartupSettings">
+            <variable name="client">$(client)</variable>
+            <variable name="browser">$(browser)</variable>
+            <variable name="mozhome">$(mozhome)</variable>
+            <variable name="emptyCache">true</variable>
+            <variable name="enableCookies">true</variable>
+            <variable name="deleteCookies">true</variable>
+            <variable name="locale">en</variable>
+            <variable name="compatibilitymode">no</variable>
+          </ProcedureCall>
+          <ProcedureCall id="_3uX"
+                         procedure="qfs.qft#qfs.web.ajax.installToolkitResolver">
+            <variable name="client">$(client)</variable>
+            <variable name="toolkit">autodetect</variable>
+            <variable name="auto_extgwt_version">1</variable>
+            <variable name="auto_extjs_version">2</variable>
+            <variable name="auto_gwt_version">1</variable>
+            <variable name="auto_icefaces_version">1</variable>
+            <variable name="auto_jqueryui_version">1</variable>
+            <variable name="auto_primefaces_version">1</variable>
+            <variable name="auto_qooxdoo_version">1</variable>
+            <variable name="auto_rap_version">2</variable>
+            <variable name="auto_rap2_version">3</variable>
+            <variable name="auto_richfaces_version">3</variable>
+            <variable name="auto_vaadin_version">1</variable>
+            <variable name="auto_zk_version">1</variable>
+          </ProcedureCall>
+        </BasicSequence>
+        <BasicSequence id="_3uY" name="Open browser window with URL">
+          <BrowserClientStarter browser="$(browser)" client="$(client)"
+                                executable="${qftest:java}" id="_3uZ"
+                                openwindow="true"
+                                url="http://172.17.5.47:8083"
+                                windowname="mozcrm"/>
+          <DocumentWaiter client="$(client)" component="genericDocument"
+                          id="_3ua" timeout="60000"/>
+        </BasicSequence>
+      </SetupSequence>
+    </Dependency>
+    <Dependency id="_3up" name="startup CRM IE8">
+      <SetupSequence id="_3ub" name="Open web page in a browser">
+        <BasicSequence id="_3uc" name="Set global variables">
+          <SetGlobalStep id="_3ud" varname="client">
+            <default>crmei8</default>
+          </SetGlobalStep>
+          <SetGlobalStep id="_3ue" varname="browser">
+            <default>ie</default>
+          </SetGlobalStep>
+          <SetGlobalStep id="_3uf" varname="mozhome"/>
+        </BasicSequence>
+        <BasicSequence id="_3ug" name="Start browser without window">
+          <BrowserClientStarter browser="$(browser)" client="$(client)"
+                                executable="${qftest:java}" id="_3uh"
+                                mozhome="$(mozhome)" openwindow="false"
+                                windowname="crmei8"/>
+          <ClientWaiter client="$(client)" id="_3ui"/>
+        </BasicSequence>
+        <BasicSequence id="_3uj" name="Perform browser settings">
+          <ProcedureCall id="_3uk"
+                         procedure="qfs.qft#qfs.web.browser.settings.doStartupSettings">
+            <variable name="client">$(client)</variable>
+            <variable name="browser">$(browser)</variable>
+            <variable name="mozhome">$(mozhome)</variable>
+            <variable name="emptyCache">true</variable>
+            <variable name="enableCookies">true</variable>
+            <variable name="deleteCookies">true</variable>
+            <variable name="locale">en</variable>
+            <variable name="compatibilitymode">ie8</variable>
+          </ProcedureCall>
+          <ProcedureCall id="_3ul"
+                         procedure="qfs.qft#qfs.web.ajax.installToolkitResolver">
+            <variable name="client">$(client)</variable>
+            <variable name="toolkit">autodetect</variable>
+            <variable name="auto_extgwt_version">1</variable>
+            <variable name="auto_extjs_version">2</variable>
+            <variable name="auto_gwt_version">1</variable>
+            <variable name="auto_icefaces_version">1</variable>
+            <variable name="auto_jqueryui_version">1</variable>
+            <variable name="auto_primefaces_version">1</variable>
+            <variable name="auto_qooxdoo_version">1</variable>
+            <variable name="auto_rap_version">2</variable>
+            <variable name="auto_rap2_version">3</variable>
+            <variable name="auto_richfaces_version">3</variable>
+            <variable name="auto_vaadin_version">1</variable>
+            <variable name="auto_zk_version">1</variable>
+          </ProcedureCall>
+        </BasicSequence>
+        <BasicSequence id="_3um" name="Open browser window with URL">
+          <BrowserClientStarter browser="$(browser)" client="$(client)"
+                                executable="${qftest:java}" id="_3un"
+                                openwindow="true"
+                                url="http://172.17.5.47:8083"
+                                windowname="crmei8"/>
+          <DocumentWaiter client="$(client)" component="genericDocument"
+                          id="_3uo" timeout="60000"/>
+        </BasicSequence>
+        <ClientScriptStep client="$(client)" id="_3uq">
+          <code>import re
+
+def getId(node, theId):
+     return ""
+
+resolvers.addIdResolver("suppress_subcribe_ids", getId)</code>
+        </ClientScriptStep>
+      </SetupSequence>
+    </Dependency>
+    <Dependency id="_1rn" name="startup">
+      <SetupSequence id="_7b" name="Open web page in a browser">
+        <ProcedureCall id="_R-" procedure="c4u.qft#vars"/>
+        <BasicSequence id="_7c" name="Set global variables">
+          <SetGlobalStep id="_7d" varname="client">
+            <default>c4umoz</default>
+          </SetGlobalStep>
+          <SetGlobalStep id="_7e" varname="browser">
+            <default>mozilla</default>
+          </SetGlobalStep>
+          <SetGlobalStep id="_7f" varname="mozhome">
+            <default>C:\Program Files\Mozilla Firefox</default>
+          </SetGlobalStep>
+        </BasicSequence>
+        <BasicSequence id="_7g" name="Start browser without window">
+          <BrowserClientStarter browser="$(browser)" client="$(client)"
+                                executable="${qftest:java}" id="_7h"
+                                mozhome="$(mozhome)" openwindow="false"
+                                windowname="c4umoz"/>
+          <ClientWaiter client="$(client)" id="_7i"/>
+        </BasicSequence>
+        <BasicSequence id="_7j" name="Perform browser settings">
+          <ProcedureCall id="_7k"
+                         procedure="qfs.qft#qfs.web.browser.settings.doStartupSettings">
+            <variable name="client">$(client)</variable>
+            <variable name="browser">$(browser)</variable>
+            <variable name="mozhome">$(mozhome)</variable>
+            <variable name="emptyCache">true</variable>
+            <variable name="enableCookies">true</variable>
+            <variable name="deleteCookies">true</variable>
+            <variable name="locale">en</variable>
+            <variable name="compatibilitymode">no</variable>
+          </ProcedureCall>
+          <ProcedureCall id="_7l"
+                         procedure="qfs.qft#qfs.web.ajax.installToolkitResolver">
+            <variable name="client">$(client)</variable>
+            <variable name="toolkit">autodetect</variable>
+          </ProcedureCall>
+        </BasicSequence>
+        <BasicSequence id="_7m" name="Open browser window with URL">
+          <BrowserClientStarter browser="$(browser)" client="$(client)"
+                                executable="${qftest:java}" id="_7n"
+                                openwindow="true" url="http://$(svrname):8082"
+                                windowname="c4umoz"/>
+          <DocumentWaiter client="$(client)" component="genericDocument"
+                          id="_7o" timeout="60000"/>
+        </BasicSequence>
+        <ClientScriptStep client="$(client)" id="_7M">
+          <code>import re
+
+def getId(node, id):
+    if not id:
+        return
+    if id.startswith("active-menu"):
+        return ""
+    if re.match(".*_[a-f\\d]+(_.*|$)", id):
+        return ""
+
+resolvers.addIdResolver("ids", getId)</code>
+        </ClientScriptStep>
+      </SetupSequence>
+    </Dependency>
+    <Dependency id="_3ur" name="startupie8">
+      <SetupSequence id="_3vK" name="Open web page in a browser">
+        <ProcedureCall id="_3vL" procedure="c4u.qft#vars"/>
+        <BasicSequence id="_3vM" name="Set global variables">
+          <SetGlobalStep id="_3vN" varname="client">
+            <default>Admin IE 8</default>
+          </SetGlobalStep>
+          <SetGlobalStep id="_3vO" varname="browser">
+            <default>ie</default>
+          </SetGlobalStep>
+          <SetGlobalStep id="_3vP" varname="mozhome"/>
+        </BasicSequence>
+        <BasicSequence id="_3vQ" name="Start browser without window">
+          <BrowserClientStarter browser="$(browser)" client="$(client)"
+                                executable="${qftest:java}" id="_3vR"
+                                mozhome="$(mozhome)" openwindow="false"
+                                windowname="Admin IE 8"/>
+          <ClientWaiter client="$(client)" id="_3vS"/>
+        </BasicSequence>
+        <BasicSequence id="_3vT" name="Perform browser settings">
+          <ProcedureCall id="_3vU"
+                         procedure="qfs.qft#qfs.web.browser.settings.doStartupSettings">
+            <variable name="client">$(client)</variable>
+            <variable name="browser">$(browser)</variable>
+            <variable name="mozhome">$(mozhome)</variable>
+            <variable name="emptyCache">true</variable>
+            <variable name="enableCookies">true</variable>
+            <variable name="deleteCookies">true</variable>
+            <variable name="locale">en</variable>
+            <variable name="compatibilitymode">ie8</variable>
+          </ProcedureCall>
+          <ProcedureCall id="_3vV"
+                         procedure="qfs.qft#qfs.web.ajax.installToolkitResolver">
+            <variable name="client">$(client)</variable>
+            <variable name="toolkit">autodetect</variable>
+            <variable name="auto_extgwt_version">1</variable>
+            <variable name="auto_extjs_version">2</variable>
+            <variable name="auto_gwt_version">1</variable>
+            <variable name="auto_icefaces_version">1</variable>
+            <variable name="auto_jqueryui_version">1</variable>
+            <variable name="auto_primefaces_version">1</variable>
+            <variable name="auto_qooxdoo_version">1</variable>
+            <variable name="auto_rap_version">2</variable>
+            <variable name="auto_rap2_version">3</variable>
+            <variable name="auto_richfaces_version">3</variable>
+            <variable name="auto_vaadin_version">1</variable>
+            <variable name="auto_zk_version">1</variable>
+          </ProcedureCall>
+        </BasicSequence>
+        <BasicSequence id="_3vW" name="Open browser window with URL">
+          <BrowserClientStarter browser="$(browser)" client="$(client)"
+                                executable="${qftest:java}" id="_3vX"
+                                openwindow="true"
+                                url="http://172.17.5.47:8082/"
+                                windowname="Admin IE 8"/>
+          <DocumentWaiter client="$(client)" component="genericDocument"
+                          id="_3vY" timeout="60000"/>
+        </BasicSequence>
+        <ClientScriptStep client="$(client)" id="_3vZ">
+          <code>import re
+
+def getId(node, id):
+    if not id:
+        return
+    if id.startswith("active-menu"):
+        return ""
+    if re.match(".*_[a-f\\d]+(_.*|$)", id):
+        return ""
+
+resolvers.addIdResolver("ids", getId)</code>
+        </ClientScriptStep>
+        <ClientScriptStep client="$(client)" id="_4vw">
+          <code>from de.qfs.apps.qftest.client.web.jni import NIBrowserPreferences
+NIBrowserPreferences().deleteCache(rc.lookup("browser"))
+</code>
+        </ClientScriptStep>
+      </SetupSequence>
+    </Dependency>
+    <Dependency id="_1sC" name="startup CRM">
+      <SetupSequence id="_3Tb" name="Open web page in a browser">
+        <BasicSequence id="_3tx" name="Set global variables">
+          <SetGlobalStep id="_3ty" varname="client">
+            <default>chrome</default>
+          </SetGlobalStep>
+          <SetGlobalStep id="_3tz" varname="browser">
+            <default>chrome</default>
+          </SetGlobalStep>
+          <SetGlobalStep id="_3t+" varname="mozhome"/>
+        </BasicSequence>
+        <BasicSequence id="_3t-" name="Start browser without window">
+          <BrowserClientStarter browser="$(browser)" client="$(client)"
+                                executable="${qftest:java}" id="_3u0"
+                                mozhome="$(mozhome)" openwindow="false"
+                                windowname="chrome"/>
+          <ClientWaiter client="$(client)" id="_3u1"/>
+        </BasicSequence>
+        <BasicSequence id="_3u2" name="Perform browser settings">
+          <ProcedureCall id="_3u3"
+                         procedure="qfs.qft#qfs.web.browser.settings.doStartupSettings">
+            <variable name="client">$(client)</variable>
+            <variable name="browser">$(browser)</variable>
+            <variable name="mozhome">$(mozhome)</variable>
+            <variable name="emptyCache">true</variable>
+            <variable name="enableCookies">true</variable>
+            <variable name="deleteCookies">true</variable>
+            <variable name="locale">en</variable>
+            <variable name="compatibilitymode">no</variable>
+          </ProcedureCall>
+          <ProcedureCall id="_3u4"
+                         procedure="qfs.qft#qfs.web.ajax.installToolkitResolver">
+            <variable name="client">$(client)</variable>
+            <variable name="toolkit">autodetect</variable>
+          </ProcedureCall>
+        </BasicSequence>
+        <BasicSequence id="_3u5" name="Open browser window with URL">
+          <BrowserClientStarter browser="$(browser)" client="$(client)"
+                                executable="${qftest:java}" id="_3u6"
+                                openwindow="true"
+                                url="http://192.168.0.149:8083/"
+                                windowname="chrome"/>
+          <DocumentWaiter client="$(client)" component="genericDocument"
+                          id="_3u7" timeout="60000"/>
+        </BasicSequence>
+        <ClientScriptStep client="$(client)" id="_3Tq">
+          <code>import re
+
+def getId(node, theId):
+     return ""
+
+resolvers.addIdResolver("suppress_subcribe_ids", getId)</code>
+        </ClientScriptStep>
+        <ClientScriptStep client="$(client)" id="_4vy">
+          <code>from de.qfs.apps.qftest.client.web.jni import NIBrowserPreferences
+NIBrowserPreferences().deleteCache(rc.lookup("browser"))
+</code>
+        </ClientScriptStep>
+      </SetupSequence>
+    </Dependency>
+    <Dependency id="_3va" name="PCC Chrome">
+      <SetupSequence id="_4vi" name="Open web page in a browser">
+        <BasicSequence id="_4vj" name="Set global variables">
+          <SetGlobalStep id="_4vk" varname="client">
+            <default>PCC</default>
+          </SetGlobalStep>
+          <SetGlobalStep id="_4vl" varname="browser">
+            <default>chrome</default>
+          </SetGlobalStep>
+          <SetGlobalStep id="_4vm" varname="mozhome"/>
+        </BasicSequence>
+        <BasicSequence id="_4vn" name="Start browser without window">
+          <BrowserClientStarter browser="$(browser)" client="$(client)"
+                                executable="${qftest:java}" id="_4vo"
+                                mozhome="$(mozhome)" openwindow="false"
+                                windowname="PCC"/>
+          <ClientWaiter client="$(client)" id="_4vp"/>
+        </BasicSequence>
+        <BasicSequence id="_4vq" name="Perform browser settings">
+          <ProcedureCall id="_4vr"
+                         procedure="qfs.qft#qfs.web.browser.settings.doStartupSettings">
+            <variable name="client">$(client)</variable>
+            <variable name="browser">$(browser)</variable>
+            <variable name="mozhome">$(mozhome)</variable>
+            <variable name="emptyCache">true</variable>
+            <variable name="enableCookies">true</variable>
+            <variable name="deleteCookies">true</variable>
+            <variable name="locale">en</variable>
+            <variable name="compatibilitymode">no</variable>
+          </ProcedureCall>
+          <ProcedureCall id="_4vs"
+                         procedure="qfs.qft#qfs.web.ajax.installToolkitResolver">
+            <variable name="client">$(client)</variable>
+            <variable name="toolkit">autodetect</variable>
+            <variable name="auto_extgwt_version">1</variable>
+            <variable name="auto_extjs_version">3</variable>
+            <variable name="auto_gwt_version">1</variable>
+            <variable name="auto_icefaces_version">1</variable>
+            <variable name="auto_jqueryui_version">1</variable>
+            <variable name="auto_primefaces_version">2</variable>
+            <variable name="auto_qooxdoo_version">1</variable>
+            <variable name="auto_rap_version">2</variable>
+            <variable name="auto_rap2_version">3</variable>
+            <variable name="auto_richfaces_version">3</variable>
+            <variable name="auto_vaadin_version">1</variable>
+            <variable name="auto_zk_version">1</variable>
+          </ProcedureCall>
+        </BasicSequence>
+        <BasicSequence id="_4vt" name="Open browser window with URL">
+          <BrowserClientStarter browser="$(browser)" client="$(client)"
+                                executable="${qftest:java}" id="_4vu"
+                                openwindow="true"
+                                url="http://testlab-sparc:8081/upi/service"
+                                windowname="PCC"/>
+          <DocumentWaiter client="$(client)" component="genericDocument"
+                          id="_4vv" timeout="60000"/>
+        </BasicSequence>
+      </SetupSequence>
+    </Dependency>
+    <Procedure id="_6U" name="vars">
+      <SetGlobalStep id="_6W" varname="svrname">
+        <default>172.17.5.47</default>
+      </SetGlobalStep>
+      <SetGlobalStep id="_W0" varname="servername">
+        <default>192.168.0.149</default>
+      </SetGlobalStep>
+      <SetGlobalStep id="_Ue" varname="srvusr">
+        <default>root</default>
+      </SetGlobalStep>
+      <SetGlobalStep id="_Uf" varname="svrpss">
+        <default>er1c$$$$$on</default>
+      </SetGlobalStep>
+    </Procedure>
+    <Procedure id="_1rk" name="vars-fo">
+      <SetGlobalStep id="_1rm" varname="servername">
+        <default>192.168.0.140</default>
+      </SetGlobalStep>
+    </Procedure>
+    <Procedure id="_6d" name="stop java">
+      <variable name="scriptname">c4u-stop-java.bat</variable>
+      <ShellClientStarter client="stopjava"
+                          command="connect.bat $(srvusr) $(servername) $(svrpss) $(scriptname)"
+                          id="_26">
+        <comment>mysql -u root -pussdgw -e "drop database hxc;"</comment>
+      </ShellClientStarter>
+      <ProcessWaiter client="stopjava" id="_6t" predelay="2000"
+                     timeout="30000"/>
+      <ReturnStep id="_1s8" retval="0"/>
+    </Procedure>
+    <Procedure id="_6i" name="reset the db">
+      <variable name="scriptname">c4u-db-reset.bat</variable>
+      <ShellClientStarter client="resetdb"
+                          command="connect.bat $(srvusr) $(servername) $(svrpss) $(scriptname)"
+                          id="_6j"/>
+      <ProcessWaiter client="resetdb" id="_6s" timeout="30000"/>
+      <ReturnStep id="_1s7" retval="0"/>
+    </Procedure>
+    <Procedure id="_1jH" name="cli testing">
+      <variable name="scriptname">c4u-cli.bat</variable>
+      <ShellClientStarter client="clitest"
+                          command="connect.bat $(srvusr) $(servername) $(svrpss) $(scriptname)"
+                          id="_1jI"/>
+      <ProcessWaiter client="clitest" id="_1sB" timeout="30000"/>
+    </Procedure>
+    <Procedure id="_6l" name="start java" postdelay="20000">
+      <variable name="scriptname">c4u-start-java.bat</variable>
+      <ShellClientStarter client="startjava"
+                          command="connect.bat $(srvusr) $(servername) $(svrpss) $(scriptname)"
+                          id="_6m">
+        <comment>mysql -u root -pussdgw -e "drop database hxc;"</comment>
+      </ShellClientStarter>
+    </Procedure>
+    <Procedure disabled="true" id="_76" name="svn up">
+      <variable name="scriptname">c4u-svn-up.bat</variable>
+      <ShellClientStarter client="svnup"
+                          command="connect.bat $(srvusr) $(svrname) $(svrpss) $(scriptname)"
+                          id="_77"/>
+      <ProcessWaiter client="svnup" id="_7C" timeout="30000"/>
+    </Procedure>
+    <Procedure disabled="true" id="_79" name="get latest build">
+      <variable name="scriptname">c4u-get-build.bat</variable>
+      <ShellClientStarter client="get latest build"
+                          command="connect.bat $(srvusr) $(svrname) $(svrpss) $(scriptname)"
+                          id="_7A" postdelay="10000"/>
+      <ProcessWaiter client="get latest build" id="_7D" timeout="10000"/>
+    </Procedure>
+    <Procedure id="_1ro" name="start">
+      <ProcedureCall id="_1rr" procedure="c4u.qft#vars"/>
+      <BasicSequence id="_1rs" name="Set global variables">
+        <SetGlobalStep id="_1rt" varname="client">
+          <default>c4umoz</default>
+        </SetGlobalStep>
+        <SetGlobalStep id="_1ru" varname="browser">
+          <default>mozilla</default>
+        </SetGlobalStep>
+        <SetGlobalStep id="_1rv" varname="mozhome">
+          <default>C:\Program Files\Mozilla Firefox</default>
+        </SetGlobalStep>
+      </BasicSequence>
+      <BasicSequence id="_1rw" name="Start browser without window">
+        <BrowserClientStarter browser="$(browser)" client="$(client)"
+                              executable="${qftest:java}" id="_1rx"
+                              mozhome="$(mozhome)" openwindow="false"
+                              windowname="c4umoz"/>
+        <ClientWaiter client="$(client)" id="_1ry"/>
+      </BasicSequence>
+      <BasicSequence id="_1rz" name="Perform browser settings">
+        <ProcedureCall id="_1r+"
+                       procedure="qfs.qft#qfs.web.browser.settings.doStartupSettings">
+          <variable name="client">$(client)</variable>
+          <variable name="browser">$(browser)</variable>
+          <variable name="mozhome">$(mozhome)</variable>
+          <variable name="emptyCache">true</variable>
+          <variable name="enableCookies">true</variable>
+          <variable name="deleteCookies">true</variable>
+          <variable name="locale">en</variable>
+          <variable name="compatibilitymode">no</variable>
+        </ProcedureCall>
+        <ProcedureCall id="_1r-"
+                       procedure="qfs.qft#qfs.web.ajax.installToolkitResolver">
+          <variable name="client">$(client)</variable>
+          <variable name="toolkit">autodetect</variable>
+        </ProcedureCall>
+      </BasicSequence>
+      <BasicSequence id="_1s0" name="Open browser window with URL">
+        <BrowserClientStarter browser="$(browser)" client="$(client)"
+                              executable="${qftest:java}" id="_1s1"
+                              openwindow="true" url="http://$(svrname):8082"
+                              windowname="c4umoz"/>
+        <DocumentWaiter client="$(client)" component="genericDocument"
+                        id="_1s2" timeout="60000"/>
+      </BasicSequence>
+      <ClientScriptStep client="$(client)" id="_1s3">
+        <code>import re
+
+def getId(node, id):
+    if not id:
+        return
+    if id.startswith("active-menu"):
+        return ""
+    if re.match(".*_[a-f\\d]+(_.*|$)", id):
+        return ""
+
+resolvers.addIdResolver("ids", getId)</code>
+      </ClientScriptStep>
+    </Procedure>
+  </PackageRoot>
+  <ExtraSequence id="_4"/>
+  <WindowList id="_5"/>
+</RootStep>

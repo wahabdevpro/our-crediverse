@@ -1,0 +1,13 @@
+*************************** 1. row ***************************
+       Table: ec_state
+Create Table: CREATE TABLE `ec_state` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) DEFAULT NULL,
+  `lm_time` datetime NOT NULL,
+  `lm_userid` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `value` bigint(20) NOT NULL,
+  `version` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ec_state_name` (`company_id`,`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8

@@ -1,0 +1,26 @@
+plugins {
+  id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+description = 'TS'
+group = 'ga.csys.c4u'
+jar {
+   manifest {
+     attributes("Main-Class": "hxc.connectors.smtp.SmtpConnector")
+   }
+}
+dependencies {
+    implementation project(':CoreInterfaces')
+    implementation project(':Configuration')
+    implementation project(':Notification')
+    implementation project(':Instrumentation')
+    implementation project(':Threads')
+    implementation 'com.sun.mail:jakarta.mail:2.0.1'
+    implementation 'com.google.guava:guava'
+    implementation 'org.apache.commons:commons-exec'
+    implementation 'org.slf4j:slf4j-api'
+}

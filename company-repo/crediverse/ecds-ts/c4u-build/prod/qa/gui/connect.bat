@@ -1,0 +1,1 @@
+"C:\Program Files\PuTTY\plink" %1@%2 -pw %3 -m "C:\Program Files\qfs\qftest\%4 %5"

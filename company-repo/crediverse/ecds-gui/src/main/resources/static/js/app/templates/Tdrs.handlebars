@@ -1,0 +1,514 @@
+<div>
+	<script id="tdrsmaster">
+	    <div class="datatablesview">
+	        <div class="box">
+				<div id="dtButtonBarTemplate" style="display:none;">
+					<!-- <button class="btn btn-primary viewTdrsButton" role="button">Test</button> -->
+					{{#hasPerms "Batch_Download"}}
+						<button class="btn btn-primary exportTdrsButton" role="button">{{i18n "global.exportBtn"}}</button>
+					{{/hasPerms}}
+	            </div>
+				<!--
+	            <div class="box-header">
+	                <h3 class="box-title">{{i18n "transactions.historyHeading"}}</h3>
+	                <div class='pull-right'>
+						<button class="btn btn-primary exportTdrsButton" role="button">{{i18n "global.exportBtn"}}</button>
+	                </div>
+	            </div>
+				-->
+	            <div class="box-body">
+					<div class="panel panel-danger form-error-panel failAgentSearch" role="alert" style="display:none;">
+						<div class="panel-heading error-panel-heading">
+						<i class="fa fa-exclamation-circle font-error-heading"></i>
+						<span class="txt-error-panel-heading">&nbsp;The following errors prevented Search</span>
+						</div>
+						<div class="panel-body error-panel-body">
+							<pre class="error-message">Unexpected Error<br></pre>
+						</div>
+					</div>
+
+					<form class="form-horizontal">
+						<div class="row"  style="margin-bottom:15px;">
+							<div class="col-sm-12">
+								<h4 id="tdrAgentInfo"></h4>
+							</div>
+						</div>
+					</form>
+	            
+		            <div class="advancedSearchInput"  style="margin-bottom:15px;">
+		        		<!-- <input id="searchInput" type="text" name="firstName" class="form-control searchInput" placeholder="{{i18n "transactions.searchInputHint"}}" /> -->
+					 	<button type="button" class="btn btn-primary tdrSearchExpandButton">{{i18n "global.advancedSearchBtn"}}</button>
+		        	</div>
+	            
+		            <div class="advancedSearchForm" style="display:none">
+					<form id="searchform" name="searchForm" class="form-horizontal">
+			        <div>
+			            <div>
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="row form-group" style="margin-bottom:15px;">
+											<label for="msisdn-a" class="col-xs-4 control-label pad-right-min">{{i18n "transactions.msisdn"}}</label>
+											<div class="col-xs-4 pad-left-min pad-right-min">
+												<input id="msisdn-a" type="text" name="msisdnA" class="form-control novalidate" placeholder="{{i18n 'transactions.msisdnAHint'}}" />
+											</div>
+											<div class="col-xs-4 pad-left-min">
+												<input id="msisdn-b" type="text" name="msisdnB" class="form-control novalidate" placeholder="{{i18n 'transactions.msisdnBHint'}}" />
+											</div>
+										</div>	
+										<div class="row form-group novalidate" style="margin-bottom:15px;">
+											<label for="groupIDA" class="col-xs-4 control-label pad-right-min">{{i18n "transactions.groupName"}}</label>
+											<div class="col-xs-4 pad-right-min pad-left-min">
+												<select id="group-id-a" style="width: 100%;" name="groupIDA" class="form-control novalidate">
+													<option value="" selected="selected">{{i18n "transactions.searchGroupHintA"}}</option>
+												</select>
+											</div>
+											<div class="col-xs-4 pad-left-min">
+												<select id="group-id-b" style="width: 100%;" name="groupIDB" class="form-control novalidate">
+													<option value="" selected="selected">{{i18n "transactions.searchGroupHintB"}}</option>
+												</select>
+											</div>
+										</div>
+										
+										<div class="row form-group novalidate" style="margin-bottom:15px;">
+											<label for="a_TierID" class="col-xs-4 control-label pad-right-min">{{i18n "transactions.transactionTierGroupName"}}</label>
+											<div class="col-xs-4 pad-right-min pad-left-min">
+												<select id="a_TierID" style="width: 100%;" name="a_TierID" class="form-control novalidate">
+													<option value="" selected="selected">{{i18n "transactions.transactionTierA"}}</option>
+												</select>
+											</div>
+											<div class="col-xs-4 pad-left-min">
+												<select id="b_TierID" style="width: 100%;" name="b_TierID" class="form-control novalidate">
+													<option value="" selected="selected">{{i18n "transactions.transactionTierB"}}</option>
+												</select>
+											</div>
+										</div>
+										
+										<div class="row form-group novalidate" style="margin-bottom:15px;">
+											<label for="a_OwnerID" class="col-xs-4 control-label pad-right-min">{{i18n "transactions.transactionOwnerName"}}</label>
+											<div class="col-xs-4 pad-right-min pad-left-min">
+												<select id="a_OwnerID" style="width: 100%;" name="a_OwnerID" class="form-control novalidate">
+													<option value="" selected="selected">{{i18n "transactions.transactionOwnerA"}}</option>
+												</select>
+											</div>
+											<div class="col-xs-4 pad-left-min">
+												<select id="b_OwnerID" style="width: 100%;" name="b_OwnerID" class="form-control novalidate">
+													<option value="" selected="selected">{{i18n "transactions.transactionOwnerB"}}</option>
+												</select>
+											</div>
+										</div>
+										
+										{{>modalInput name="number" label="transactions.tranactionNumber" hint="transactions.tranactionNumber" className="novalidate" divClassName="pad-left-min" labelClassName="pad-right-min"}}
+
+										{{>modalSelectTDS name="followUp" className="novalidate" divClassName="pad-left-min" labelClassName="pad-right-min" label="transactions.followUp" 
+											data=":enums.transactionFollowUp.IGNORE,A:enums.transactionFollowUp.ALL,P:enums.transactionFollowUp.PENDING"
+											hint="transactions.followUp"
+										}}
+										
+										<!-- {{>modalInputAgents name="callerID" label="Caller ID" hint="Transaction caller ID"}} -->
+									</div>
+									<div class="col-sm-6">
+										<div class="row" style="margin-bottom:15px;">
+												<label for="date-from" class="col-xs-4 col-sm-4 control-label pad-right-min">{{i18n "transactions.transactionDate"}}</label>
+												<div class="col-xs-4 col-sm-4 pad-right-min pad-left-min">
+													<div class="row">
+														<div class="col-xs-7" style="padding-right:1px">
+															<input id="date-from" type="text" name="dateFrom" class="form-control novalidate" placeholder="YYYY-MM-DD" data-date-format="yyyy-mm-dd"  />
+														</div>
+														<div class="col-xs-5" style="padding-left:1px;">
+															<div class="input-group clockpicker time-from-picker" data-placement="left" data-align="top" data-autoclose="true">
+														    	<input id="time-from" name="timeFrom" type="text" class="form-control novalidate" placeholder="00:00" value="">
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-xs-4 col-sm-4 pad-left-min">
+													<div class="row">
+														<div class="col-xs-7" style="padding-right:1px;">
+															<input id="date-to" type="text" name="dateTo" class="form-control novalidate" placeholder="YYYY-MM-DD" data-date-format="yyyy-mm-dd" />
+														</div>
+														<div class="col-xs-5" style="padding-left:1px;">
+															<div class="input-group clockpicker time-to-picker" data-placement="left" data-align="top" data-autoclose="true">
+														    	<input id="time-to" name="timeTo" type="text" class="form-control novalidate" placeholder="23:59" value="">
+															</div>
+														</div>
+													</div>
+												</div>
+										</div>	
+										<div class="row" style="margin-bottom:15px;">
+												<label for="amount-from" class="col-xs-4 col-sm-4 control-label pad-right-min">{{i18n "transactions.transactionAmount"}}</label>
+												<div class="col-xs-4 col-sm-4 pad-right-min pad-left-min">
+													<input id="amount-from" type="text" name="amountFrom" class="form-control novalidate" placeholder="{{i18n 'transactions.minAmount'}}" data-rule-digits="true"/>
+												</div>	
+												<div class="col-xs-4 col-sm-4 pad-left-min">
+													<input id="amount-to" type="text" name="amountTo" class="form-control novalidate" placeholder="{{i18n 'transactions.maxAmount'}}" data-rule-digits="true"/>
+												</div>	
+										</div>	
+										<div class="row" style="margin-bottom:15px;">
+												<label for="bonus-amount-from" class="col-xs-4 col-sm-4 control-label pad-right-min">{{i18n "transactions.transactionBonusAmount"}}</label>
+												<div class="col-xs-4 col-sm-4 pad-right-min pad-left-min">
+													<input id="bonus-amount-from" type="text" name="bonusAmountFrom" class="form-control novalidate" placeholder="{{i18n 'transactions.minBonus'}}" data-rule-digits="true"/>
+												</div>
+												<div class="col-xs-4 col-sm-4 pad-left-min">
+													<input id="bonus-amount-to" type="text" name="bonusAmountTo" class="form-control novalidate" placeholder="{{i18n 'transactions.maxBonus'}}" data-rule-digits="true"/>
+												</div>	
+										</div>	
+										<!-- 
+										<div class="row">
+											<div class="form-group col-xs-8">
+												<div class="row">
+													<label for="charge-amount-from" class="col-xs-6 control-label pad-right-min">Transaction charge amount</label>
+													<div class="col-xs-6">
+														<input id="charge-amount-from" type="text" name="chargeAmountFrom" class="form-control novalidate" placeholder="Min charge" data-rule-digits="true"/>
+													</div>
+												</div>
+											</div>	
+											<div class="form-group col-xs-4">
+												<div style="margin-left:30px;">
+													<input id="charge-amount-to" type="text" name="chargeAmountTo" class="form-control novalidate" placeholder="Max charge" data-rule-digits="true"/>
+												</div>	
+											</div>
+										</div>	
+										-->
+										
+										{{>modalSelectTDS name="type" className="novalidate" divClassName="pad-left-min" labelClassName="pad-right-min" label="transactions.transactionType"  data=":enums.transactionType.ALL,
+											RP:enums.transactionType.REPLENISH,
+											TX:enums.transactionType.TRANSFER,
+											SL:enums.transactionType.SELL,
+											ND:enums.transactionType.NON_AIRTIME_DEBIT,
+											NR:enums.transactionType.NON_AIRTIME_REFUND,
+											PR:enums.transactionType.REGISTER_PIN,
+											CP:enums.transactionType.CHANGE_PIN,
+											BE:enums.transactionType.BALANCE_ENQUIRY,
+											ST:enums.transactionType.SELF_TOPUP,
+											TS:enums.transactionType.TRANSACTION_STATUS_ENQUIRY,
+											LT:enums.transactionType.LAST_TRANSACTION_ENQUIRY,
+											AJ:enums.transactionType.ADJUST,
+											SQ:enums.transactionType.SALES_QUERY,
+											DQ:enums.transactionType.DEPOSITS_QUERY,
+											FR:enums.transactionType.REVERSE,
+											PA:enums.transactionType.REVERSE_PARTIALLY,
+											RW:enums.transactionType.PROMOTION_REWARD,
+											AD:enums.transactionType.ADJUDICATE"
+											hint="transactions.transactionType" 
+										}}
+										
+										
+										{{>modalSelectTDS name="channel" className="novalidate" divClassName="pad-left-min" labelClassName="pad-right-min" label="transactions.channel" 
+											data=":enums.channel.ALL,
+											A:enums.channel.API,
+											B:enums.channel.B,
+											P:enums.channel.MOBILE,
+											S:enums.channel.SMS,
+											U:enums.channel.USSD,
+											W:enums.channel.WEB" 
+											hint="transactions.transactionChannel"
+										}}
+										
+										{{>modalSelectTDS name="returnCode" className="novalidate" divClassName="pad-left-min" labelClassName="pad-right-min" label="transactions.returncode" 
+											data=":enums.returncode.ALL,
+											SUCCESS:enums.returncode.SUCCESS,
+											ACC_NOT_FOUND:enums.returncode.ACC_NOT_FOUND,
+											REFILL_FAILED:enums.returncode.REFILL_FAILED,
+											INVALID_RECIPIENT:enums.returncode.INVALID_RECIPIENT,
+											TEMPORARY_BLOCKED:enums.returncode.TEMPORARY_BLOCKED,
+											REFILL_DENIED:enums.returncode.REFILL_DENIED,
+											REFILL_NOT_ACCEPTED:enums.returncode.REFILL_NOT_ACCEPTED,
+											BUNDLE_SALE_FAILED:enums.returncode.BUNDLE_SALE_FAILED,
+											TECHNICAL_PROBLEM:enums.returncode.TECHNICAL_PROBLEM,
+											INVALID_CHANNEL:enums.returncode.INVALID_CHANNEL,
+											FORBIDDEN:enums.returncode.FORBIDDEN,
+											NO_TRANSFER_RULE:enums.returncode.NO_TRANSFER_RULE,
+											INTRATIER_TRANSFER:enums.returncode.INTRATIER_TRANSFER,
+											NO_LOCATION:enums.returncode.NO_LOCATION,
+											WRONG_LOCATION:enums.returncode.WRONG_LOCATION,
+											CO_AUTHORIZE:enums.returncode.CO_AUTHORIZE,
+											INSUFFICIENT_FUNDS:enums.returncode.INSUFFICIENT_FUNDS,
+											INSUFFICIENT_PROVISN:enums.returncode.INSUFFICIENT_PROVISN,
+											DAY_COUNT_LIMIT:enums.returncode.DAY_COUNT_LIMIT,
+											DAY_AMOUNT_LIMIT:enums.returncode.DAY_AMOUNT_LIMIT,
+											MONTH_COUNT_LIMIT:enums.returncode.MONTH_COUNT_LIMIT,
+											MONTH_AMOUNT_LIMIT:enums.returncode.MONTH_AMOUNT_LIMIT,
+											MAX_AMOUNT_LIMIT:enums.returncode.MAX_AMOUNT_LIMIT,
+											ALREADY_REGISTERED:enums.returncode.ALREADY_REGISTERED,
+											ALREADY_ADJUDICATED:enums.returncode.ALREADY_ADJUDICATED,
+											NOT_REGISTERED:enums.returncode.NOT_REGISTERED,
+											INVALID_STATE:enums.returncode.INVALID_STATE,
+											NOT_ELIGIBLE:enums.returncode.NOT_ELIGIBLE,
+											PIN_LOCKOUT:enums.returncode.PIN_LOCKOUT,
+											NOT_SELF:enums.returncode.NOT_SELF,
+											TX_NOT_FOUND:enums.returncode.TX_NOT_FOUND,
+											IMSI_LOCKOUT:enums.returncode.IMSI_LOCKOUT,
+											INVALID_AGENT:enums.returncode.INVALID_AGENT,
+											INVALID_AMOUNT:enums.returncode.INVALID_AMOUNT,
+											INVALID_TRAN_TYPE:enums.returncode.INVALID_TRAN_TYPE,
+											INVALID_BUNDLE:enums.returncode.INVALID_BUNDLE,
+											ALREADY_REVERSED:enums.returncode.ALREADY_REVERSED,
+											NOT_WEBUSER_SESSION:enums.returncode.NOT_WEBUSER_SESSION,
+											CO_SIGN_ONLY_SESSION:enums.returncode.CO_SIGN_ONLY_SESSION,
+											SESSION_EXPIRED:enums.returncode.SESSION_EXPIRED,
+											TIMED_OUT:enums.returncode.TIMED_OUT,
+											REFILL_BARRED:enums.returncode.REFILL_BARRED,
+											NO_IMSI:enums.returncode.NO_IMSI,
+											INVALID_VALUE:enums.returncode.INVALID_VALUE,
+											TOO_SMALL:enums.returncode.TOO_SMALL,
+											TOO_LARGE:enums.returncode.TOO_LARGE,
+											TOO_LONG:enums.returncode.TOO_LONG,
+											TOO_SHORT:enums.returncode.TOO_SHORT,											
+											INVALID_PASSWORD:enums.returncode.INVALID_PASSWORD,
+											PASSWORD_LOCKOUT:enums.returncode.PASSWORD_LOCKOUT,
+											OTHER_ERROR:enums.returncode.OTHER_ERROR"
+											hint="transactions.returncode"
+										}}
+										
+										
+									</div>
+								</div>
+			            </div>
+						<div class="" style="border-top:1px solid #eaeaea; padding-top:10px; margin-bottom:20px;">			  			  	
+			  			  	<div class="row">
+								<div class="col-sm-6">
+								</div>
+								<div class="col-sm-6">
+									<div class="col-xs-4 col-sm-5 col-md-8">
+										<div class="pull-left" style="margin-right:30px;">
+											<input id="withquery" name="withquery" class="custom-checkbox-fa" value="false" type="checkbox">
+											<label for="withquery" title="{{i18n "global.includeQueryTransactionsHint"}}" data-toggle="tooltip" class="">{{i18n "global.includeQueryTransactions"}} <i class="fa fa-info-circle"></i></label>									
+					  			  		</div>
+										<div class="pull-left">
+											<input id="withcount" name="withcount" class="custom-checkbox-fa" value="false" type="checkbox">
+											<label for="withcount" title="{{i18n "global.retrieveRecordCountHint"}}" data-toggle="tooltip" class="">{{i18n "global.retrieveRecordCount"}} <i class="fa fa-info-circle"></i></label>										
+				  			  			</div>
+				  			  		</div>
+				  			  		<div class="col-xs-8 col-sm-7 col-md-4 right">
+			           			 		<button type="submit" class="btn btn-primary tdrSearchButton"><i class="fa fa-search"></i> {{i18n "global.searchBtn"}}</button>
+						           		<button type="button" class="btn btn-default tdrSearchResetButton">{{i18n "global.clearBtn"}}</button>
+						           		<button type="button" class="btn btn-default tdrSearchCancelButton">{{i18n "global.hideBtn"}}</button>
+										&nbsp;&nbsp;&nbsp;
+										<div class="pull-right">
+											<div id="error_general_message" class="alert alert-danger" style="padding:6px 15px; margin-right:20px; display:none;"></div>
+										</div>
+									</div>
+								</div>
+					    	</div>
+						</div>
+			        </div>
+					</form>	
+			    </div>
+			    <div class="advancedSearchResults">
+				    <table class="tdrstable tableview table table-bordered table-hover table-striped" data-sshash-base='transactionList'>
+		            </table>
+		        </div>
+	            </div>
+	        </div>
+	    </div>
+	</script>	
+	
+	<script id="reversalView">
+		<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		    <h4 class="modal-title">{{{i18nctx "transactions.reverseModalTitle" }}}</h4>
+		</div>
+		<div class="modal-body">
+		<form id="reversalForm" class="form-horizontal">
+		
+		<div class="config-tip-panel config-tip-info">
+			<p>{{{i18n 'global.requiredNote'}}}</p>
+			{{#if this.dabonusReversalEnabled}}
+			<p>{{i18n "transactions.partialReversalNote"}}</p>
+			{{/if}}
+		</div>
+		{{#if this.dabonusReversalEnabled}}
+		<div class="box-body" style="padding-left: 0px; padding-right: 0px;">
+			<div id="transaction-account-info" class="col-md-6 col-sm-6 black-border thin-solid-border" style="padding: 0; margin-right: 0.5%; width: 49%;">
+				<table class="tdrstable tableview table table-bordered table-hover table-striped dataTable no-footer dtr-inline"
+						style="margin: 0px !important;">
+					<tr role="row" style="background: #ddffdd;">
+						<td><b>{{{i18nctx "transactions.transactionDetails" }}}</b></td>
+					</tr>
+					<tr role="row">
+						<td>
+							<b>{{{i18nctx "transactions.amount" }}}: {{this.amount}}</b>
+						</td>
+					</tr>
+				</table>
+
+					<table class="tdrstable tableview table table-bordered table-hover table-striped dataTable no-footer dtr-inline"
+							style="margin: 0px !important;">
+						<thead>
+							<tr role="row">
+								<th>DA ID</th><th>Type</th><th>Value</th>
+							</tr>
+						</thead>
+						<tbody>
+							{{#if dedicatedAccountInfo}}
+								{{#each dedicatedAccountInfo}}
+									<tr role="row">
+										<td>{{dedicatedAccountID}}</td>
+										<td>{{dedicatedAccountUnitType}}</td>
+										<td>{{refillAmount1}}</td>
+									</tr>
+								{{/each}}
+							{{else}}
+								<tr role="row">
+									<td>---</td>
+									<td>---</td>
+									<td>---</td>
+								</tr>
+							{{/if}}
+						</tbody>
+					</table>
+			</div>
+			<div id="current-account-info" class="col-md-6 col-sm-6 thin-solid-border" style="padding: 0;">
+				<table class="tdrstable tableview table table-bordered table-hover table-striped dataTable no-footer dtr-inline"
+						style="margin: 0px !important;">
+					<tr role="row" style="background: #ddffdd;">
+						<td><b>{{{i18nctx "transactions.chargingSystemDetails" }}}</b></td>
+					</tr>
+					<tr role="row">
+						<td>
+							<b>{{{i18nctx "transactions.amount" }}}: {{this.mainAccountCurrentBalance}}</b>
+						</td>
+					</tr>
+				</table>
+					<table class="tdrstable tableview table table-bordered table-hover table-striped dataTable no-footer dtr-inline"
+							style="margin: 0px !important;">
+						<thead>
+							<tr role="row">
+								<th>DA ID</th><th>Type</th><th>Value</th>
+							</tr>
+						</thead>
+						<tbody>
+							{{#if dedicatedAccountCurrentBalanceInfo}}
+								{{#each dedicatedAccountCurrentBalanceInfo}}
+									<tr role="row">
+										<td>{{dedicatedAccountID}}</td>
+										<td>{{dedicatedAccountUnitType}}</td>
+										<td>{{amount}}</td>
+									</tr>
+								{{/each}}
+							{{else}}
+								<tr role="row">
+									<td>---</td>
+									<td>---</td>
+									<td>---</td>
+								</tr>
+							{{/if}}
+						</tbody>
+					</table>
+			</div>
+		</div>
+		{{/if}}
+        		
+		<div class="authorisation-type" class="form-group">
+			<div class="row">
+				<label class="col-sm-3 control-label">{{i18n "transactions.authorizeType"}}</label>
+				<div class="input-group">
+					<div class="input-group-btn authorization-buttons">
+					  <button type="button" class="immediateBtn btn btn-default active">{{i18n "transactions.authorizeImmediate"}}</button>
+					  <button type="button" class="requestBtn btn btn-default">{{i18n "transactions.authorizeRequest"}}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		  <div class="form-group">
+		    <label for="amount_full" class="col-sm-3 control-label">{{i18n "transactions.fullReversal"}}</label>
+		    <div class="col-sm-9">
+			    <div class="input-group">
+					<span class="input-group-addon">
+						<input class="minimal" type="radio" id="amount_full" name="amount" value="full">
+				    </span>
+				    <div class="form-control reverseAmountFull" disabled="disabled">{{amount}}</div>
+				</div>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="amount_partial" class="col-sm-3 control-label">Partial Reversal</label>
+		    <div class="col-sm-9">
+			    <div class="input-group">
+				    <span class="input-group-addon">
+				    	<input class="minimal" type="radio" id="amount_partial" name="amount" value="partial">
+				    </span>
+				    
+			    	<input id="reverseAmount" type="text" name="reverseAmount" class="form-control" placeholder="Amount" disabled="disabled" />
+                  		
+			    </div>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="reason" class="col-sm-3 control-label">{{i18n "transactions.reason"}}</label>
+		    <div class="col-sm-9">
+		    	<input id="reason" type="text" name="reason" class="form-control" placeholder="{{i18n 'transactions.reasonHint'}}" disabled="disabled" />
+		    	<!-- <textarea id="reason" name="reason" class="form-control" rows="3" placeholder="Reason ?" disabled="disabled"></textarea> -->
+		    </div>
+		  </div>
+		  <div class="form-group">
+		  	<div class="col-sm-12 authorisation">
+			</div>
+		  </div>
+		</form>
+		
+	  </div>
+		</div>
+		<div class="modal-footer">
+		    <div class="form-group">
+		        <div class="col-sm-offset-2 col-sm-10">
+		        	<button type="button" class="btn btn-danger reverseButton" disabled="disabled">{{i18n "global.reverseBtn"}}</button>
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+		        </div>
+			</div>
+		</div>
+	</script>	
+	
+	<script id="adjudicateView">
+		<div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal"><i class="fa fa-remove"></i> </button>
+		    <h4 class="modal-title">{{{i18nctx "transactions.adjudicateModalTitle" }}}</h4>
+		</div>
+		<div class="modal-body">
+		<form id="adjudicateForm" class="form-horizontal">
+	
+		<div class="adjudication-type" class="form-group">
+			<div class="row">
+				<div class="col-xs-offset-1 col-xs-8">
+					<div class="input-group">
+						<div class="input-group-btn adjudication-buttons">
+						  <button type="button" class="immediateBtn btn btn-default active">{{i18n "transactions.authorizeImmediate"}}</button>
+						  <button type="button" class="requestBtn btn btn-default">{{i18n "transactions.authorizeRequest"}}</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="config-tip-info" style="display:none;">&nbsp;</div>
+		
+		<div class="adjudicate-action form-group" style="padding-top:20px; margin-bottom:0;">
+			<div class="row">
+				<div class="input-group center">
+					<div class="input-group-btn adjudicate-buttons">
+					  <button type="button" data-active-class="btn-success" class="successBtn btn btn-default" style="margin-right:10px;">{{i18n "transactions.actionSuccess"}}</button>
+					  <button type="button" data-active-class="btn-danger" class="failureBtn btn btn-default">{{i18n "transactions.actionFailure"}}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		  <div class="form-group">
+		  	<div class="col-sm-12 authorisation" style="margin-top:15px;">
+			</div>
+		  </div>
+		</form>
+		
+	  </div>
+		</div>
+		<div class="modal-footer">
+		    <div class="form-group">
+		        <div class="col-sm-offset-2 col-sm-10">
+		        	<button type="button" class="btn btn-danger adjudicateButton" disabled="disabled">{{i18n "global.adjudicateBtn"}}</button>
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">{{i18n "global.cancelBtn"}}</button>
+		        </div>
+			</div>
+		</div>
+	</script>	
+</div>

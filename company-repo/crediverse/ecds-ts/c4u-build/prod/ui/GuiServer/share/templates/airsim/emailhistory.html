@@ -1,0 +1,37 @@
+<div>
+	<div id="" th:if="${#arrays.isEmpty(emailHistory)}">
+		<p>Currently No Emails Available</p>
+	</div>
+	
+	<div th:if="${!#arrays.isEmpty(emailHistory)}" class="row">
+		<br/>
+		<table id="emailhistory_table" class="table infotable table-hover table-bordered table-striped" style="width: 100%; table-layout: fixed;">
+			<col width="100px" />
+			<col width="160px" />
+			<col width="160px" />
+			<col width="340px" />
+			<thead>
+				<tr>
+					<th>Date</th>
+					<th>From</th>
+					<th>To</th>
+					<th>Message</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="email,iterStat : ${emailHistory}">
+					<td id="sent_date" th:text="${email.getSentDate() == null ? '' : new java.text.SimpleDateFormat('dd MMM yyyy HH:mm:ss').format(email.getSentDate()) }">-</td>
+					<td id="from" th:text="${email.getFromText() == null ? '' : email.getFromText()}" style="word-wrap: break-word;">-</td>
+					<td id="recipients" th:text="${email.getRecipientsText() == null ? '' : email.getRecipientsText()}" style="word-wrap: break-word;">-</td>
+					<td id="message" th:inline="text">
+						<div id="message_subject">SUBJECT: [[${email.getSubject() == null ? '' : email.getSubject()}]]</div>
+						<br/>
+						<div id="message_body">BODY: [[${email.getBody() == null ? '' : email.getBody()}]]</div>
+						<br/>
+						<div id="message_attatchment_names">ATTATCHMENT FILE NAMES: [[${email.getAttachmentNamesText() == null ? '' : email.getAttachmentNamesText()}]]</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
