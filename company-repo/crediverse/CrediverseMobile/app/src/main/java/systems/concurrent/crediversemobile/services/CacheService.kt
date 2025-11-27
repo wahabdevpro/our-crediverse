@@ -10,22 +10,31 @@ import systems.concurrent.crediversemobile.utils.LocaleHelper
 import java.io.IOException
 import java.util.*
 
-class CacheService(private val context: Context?) {
-    private val _tag = this::class.java.kotlin.simpleName
+class CacheService(context: Context?) {
+
+    // MUST be internal + PublishedApi because inline functions touch it
+    @PublishedApi
+    internal val context = context
+
+    @PublishedApi
+    internal val _tag = CacheService::class.java.kotlin.simpleName
 
     class InvalidCacheIndexType(msg: String) : Exception(msg)
 
-    private fun getNow() = Date().time / 1000
+    @PublishedApi
+    internal fun getNow() = Date().time / 1000
 
     data class CacheItem(val createdTime: Long, val lifeTime: Int, val data: String)
 
-    private val encryptor = Encryptor()
+    @PublishedApi
+    internal val encryptor = Encryptor()
 
     data class CacheIndex(private val _name: String) {
         val name get() = _name
     }
 
-    private fun clear(index: CacheIndex) {
+    @PublishedApi
+    internal fun clear(index: CacheIndex) {
         try {
             Log.d(_tag, "Clearing cache for ${index.name}")
             val cacheDir = context?.cacheDir
@@ -36,7 +45,8 @@ class CacheService(private val context: Context?) {
         }
     }
 
-    private fun <T> rawSave(index: CacheIndex, data: T, lifeTime: Int? = null) {
+    @PublishedApi
+    internal fun <T> rawSave(index: CacheIndex, data: T, lifeTime: Int? = null) {
         Log.d(_tag, "Saving cache for ${index.name}")
         val cacheDir = context?.cacheDir
         val cacheFile = File(cacheDir, index.name)
@@ -58,12 +68,13 @@ class CacheService(private val context: Context?) {
             cacheFile.writeText(encryptedJson)
         } catch (e: IOException) {
             e.printStackTrace()
-            Log.w(_tag, "Problem occurred saving to android cache, likely fallback is in-memory!")
+            Log.w(_tag, "Problem saving cache; fallback is in-memory.")
         }
         Log.d(_tag, "Saving completed")
     }
 
-    private inline fun <reified T> rawGet(index: CacheIndex): T? {
+    @PublishedApi
+    internal inline fun <reified T> rawGet(index: CacheIndex): T? {
         Log.d(_tag, "Retrieving cache for ${index.name}")
         return try {
             val cacheDir = context?.cacheDir
@@ -71,35 +82,37 @@ class CacheService(private val context: Context?) {
             val encryptedJson = cacheFile.readText()
             val json = encryptor.decrypt(encryptedJson) ?: return null
             Log.d(_tag, "Retrieved: $json")
+
             val cacheItem = Gson().fromJson(json, CacheItem::class.java)
             val now = getNow()
 
-            val isExpired = (cacheItem.createdTime + cacheItem.lifeTime) < now
-                    && cacheItem.lifeTime != NEVER_EXPIRES
+            val isExpired =
+                (cacheItem.createdTime + cacheItem.lifeTime) < now &&
+                        cacheItem.lifeTime != NEVER_EXPIRES
+
             if (isExpired) clear(index)
 
-            Gson().fromJson(if (isExpired) "" else cacheItem.data, T::class.java)
+            Gson().fromJson(
+                if (isExpired) "" else cacheItem.data,
+                T::class.java
+            )
         } catch (e: IOException) {
-            Log.w(_tag, "CacheService.rawGet() response: " + e.message.toString())
+            Log.w(_tag, "CacheService.rawGet() error: ${e.message}")
             null
         }
     }
 
-    private inline fun <reified T> getCacheIndexType(suffix: String = ""): CacheIndex? {
-        /**
-         * Consider saving the cache index with the class name :?
-         *
-         * val className = (T::class).simpleName
-         */
+    @PublishedApi
+    internal inline fun <reified T> getCacheIndexType(suffix: String = ""): CacheIndex? {
         return when (T::class) {
             AccountInfoResponseModel::class -> CacheIndex("ACCOUNT_INFO")
             BalancesResponseModel::class -> CacheIndex("BALANCES")
             TransactionModel::class -> CacheIndex("TRANSACTION")
             LocaleHelper.Language::class -> CacheIndex("LANGUAGE")
-            SalesSummaryValue::class -> when {
-                suffix.isNotEmpty() -> CacheIndex("ACTIVITY_SUMMARY_${suffix}")
-                else -> {
-                    Log.w(_tag, "Suffix empty for caching ActivitySummaryValue, will not save")
+            SalesSummaryValue::class -> {
+                if (suffix.isNotEmpty()) CacheIndex("ACTIVITY_SUMMARY_${suffix}")
+                else {
+                    Log.w(_tag, "Suffix empty for caching ActivitySummaryValue, skipping.")
                     null
                 }
             }
@@ -107,24 +120,20 @@ class CacheService(private val context: Context?) {
         }
     }
 
-    // I know what I am doing ... we verify our calls explicitly and throw if invalid...
-    // i.e. we will not fail because of suppressing this error
-    // see https://stackoverflow.com/questions/41892715/inline-function-cannot-access-non-public-api-publishedapi-vs-suppress-vs-jvm
     @Suppress("NON_PUBLIC_CALL_FROM_PUBLIC_INLINE")
     inline fun <reified T> getOrNull(suffix: String = ""): T? {
         val cacheIndex = getCacheIndexType<T>(suffix)
         return cacheIndex?.let { rawGet(cacheIndex) }
     }
 
-    // I know what I am doing ... we verify our calls explicitly and throw if invalid...
-    // i.e. we will not fail because of suppressing this error
-    // see https://stackoverflow.com/questions/41892715/inline-function-cannot-access-non-public-api-publishedapi-vs-suppress-vs-jvm
     @Suppress("NON_PUBLIC_CALL_FROM_PUBLIC_INLINE")
     inline fun <reified T> save(data: T, lifeTime: Int? = null, suffix: String = "") {
         val classType = T::class
-        if (!classType.isInstance(data)) throw InvalidCacheIndexType("Expected $classType")
+        if (!classType.isInstance(data))
+            throw InvalidCacheIndexType("Expected $classType")
+
         val cacheIndex = getCacheIndexType<T>(suffix) ?: return
-        return rawSave(cacheIndex, data, lifeTime)
+        rawSave(cacheIndex, data, lifeTime)
     }
 
     companion object {
