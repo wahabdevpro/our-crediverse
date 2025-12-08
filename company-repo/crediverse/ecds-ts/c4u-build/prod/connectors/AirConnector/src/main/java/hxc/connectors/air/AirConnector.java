@@ -82,7 +82,14 @@ public class AirConnector implements IAirConnector
 				new AirConnectionConfig("AIR1", 6204927056154386309L, "http://127.0.0.1:10010/Air", "hxcuser/4.2/1.0", "hxcuser", "hxcuser", 1000, 30000), //
 				new AirConnectionConfig("AIR2", 3963119645709750291L), //
 				new AirConnectionConfig("AIR3", -5923903413150645870L), //
-				new AirConnectionConfig("AIR4", 2080930020101758202L), //
+			new AirConnectionConfig("AIR4", 2080930020101758202L), //
+			// add 6 more connections here
+			new AirConnectionConfig("AIR5", 5123456789012345678L), //
+			new AirConnectionConfig("AIR6", 6123456789012345678L), //
+			new AirConnectionConfig("AIR7", 7123456789012345678L), //
+			new AirConnectionConfig("AIR8", 8123456789012345678L), //
+			new AirConnectionConfig("AIR9", 9123456789012345678L), //
+			new AirConnectionConfig("AIR10", 1012345678901234567L), //
 		};
 
 		private String defaultOriginNodeType = "EXT";
