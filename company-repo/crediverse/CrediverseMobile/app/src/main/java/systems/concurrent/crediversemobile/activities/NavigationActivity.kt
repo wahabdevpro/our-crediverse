@@ -53,6 +53,7 @@ class NavigationActivity : AppCompatActivityWithIdleManager() {
     private val changePinBinding get() = _changePinBinding
 
     private val scheduler = Scheduler(Time.InSeconds.FIFTEEN_MINUTES)
+    private val tokenRenewalScheduler = Scheduler(30)
 
     private val contextThemeWrapper by lazy {
         ContextThemeWrapper(this@NavigationActivity, R.style.Theme_CrediverseMobile)
@@ -79,6 +80,8 @@ class NavigationActivity : AppCompatActivityWithIdleManager() {
     }
 
     private val uncaughtExceptionHandler by lazy { UncaughtExceptionHandler(this) }
+
+    private var isLoggingOut = false
 
     private var _updateAccountInfoBinding: UpdateAccountInfoBinding? = null
     private val updateAccountInfoBinding get() = _updateAccountInfoBinding
@@ -228,21 +231,26 @@ class NavigationActivity : AppCompatActivityWithIdleManager() {
         // If a logout is triggered anywhere in the app ... we observe the event from here
         LogoutManager.getLogoutStateLiveData()
             .observe(this@NavigationActivity) { logoutState ->
-                if (logoutState.isLoggedOut()) {
+                if (logoutState.isLoggedOut() && !isLoggingOut) {
+                    isLoggingOut = true
                     val logoutReason = when {
                         logoutState.isForcedLogoutUpgradeRequired() -> AppAnalyticsService.Event.UPGRADE_REQUIRED
                         logoutState.isForcedLogout() -> AppAnalyticsService.Event.FORCED_LOGOUT
                         else -> null
                     }
                     AppAnalyticsService.addLogoutEvent(logoutReason)
-                    flushEventsQueueBlocking()
 
-                    MasRepository.logout()
-                    startActivity(Intent(applicationContext, LoginActivity::class.java))
-                    NavigationManager.clearHistory()
-                    // completely closes the activity, removing history
-                    // prevents BACK button from coming back to the navigation activity
-                    finish()
+                    GlobalScope.launch {
+                        flushEventsQueueBlocking()
+                        withContext(Dispatchers.Main) {
+                            MasRepository.logout()
+                            startActivity(Intent(applicationContext, LoginActivity::class.java))
+                            NavigationManager.clearHistory()
+                            // completely closes the activity, removing history
+                            // prevents BACK button from coming back to the navigation activity
+                            finish()
+                        }
+                    }
                 }
             }
 
@@ -286,6 +294,24 @@ class NavigationActivity : AppCompatActivityWithIdleManager() {
             GlobalScope.launch { flushEventsQueueBlocking() }
         }
         scheduler.start()
+
+        tokenRenewalScheduler.method {
+            val now = nowEpoch()
+            val claim = MasService.getLoginTokenClaim() ?: return@method
+            val secondsUntilExpiry = claim.exp - now
+            if (secondsUntilExpiry <= 0) return@method
+            val secondsSinceLastRenewal = now - AppCompatActivityWithIdleManager.getLastRenewalTime()
+            if (secondsSinceLastRenewal > 60 || secondsUntilExpiry <= 30) {
+                Log.i(_tag, "Background renewal: secondsUntilExpiry=$secondsUntilExpiry")
+                renewJwtToken { result ->
+                    result.onSuccess {
+                        Log.i(_tag, "Background token renewal succeeded")
+                        AppCompatActivityWithIdleManager.updateLastTokenRenewalTime()
+                    }
+                }
+            }
+        }
+        tokenRenewalScheduler.start(delaySeconds = 30)
     }
 
     private var lastAnalyticsWrite = nowEpoch()
@@ -307,6 +333,7 @@ class NavigationActivity : AppCompatActivityWithIdleManager() {
 
     override fun onStop() {
         scheduler.stop()
+        tokenRenewalScheduler.stop()
         flushEventsQueueBlocking()
         super.onStop()
     }

@@ -4,43 +4,44 @@ import systems.concurrent.crediversemobile.BuildConfig
 
 object FeatureToggle {
     object Nav {
-        const val hasBundlePage = BuildConfig.nav_bundle_page_enabled
-        const val hasTransferPage: Boolean = BuildConfig.nav_transfer_page_enabled
-        const val hasStatsPage: Boolean = BuildConfig.nav_stats_page_enabled
-        const val hasExecuStatsPage: Boolean = BuildConfig.nav_execu_stats_page_enabled
-        const val hasTeamPages: Boolean = BuildConfig.nav_team_navigation_enabled
-        const val canBuyWithMobileMoney: Boolean = BuildConfig.nav_buy_with_mobile_money_enabled
-        const val hasMobileMoneyDeposit: Boolean = BuildConfig.nav_mobile_money_deposit_enabled
-        const val hasMobileMoneyWithdraw: Boolean = BuildConfig.nav_mobile_money_withdraw_enabled
+        val hasBundlePage get() = FeatureConfigStore.getBoolean("nav_bundle_page_enabled", BuildConfig.nav_bundle_page_enabled)
+        val hasTransferPage get() = FeatureConfigStore.getBoolean("nav_transfer_page_enabled", BuildConfig.nav_transfer_page_enabled)
+        val hasStatsPage get() = FeatureConfigStore.getBoolean("nav_stats_page_enabled", BuildConfig.nav_stats_page_enabled)
+        val hasExecuStatsPage get() = FeatureConfigStore.getBoolean("nav_execu_stats_page_enabled", BuildConfig.nav_execu_stats_page_enabled)
+        val hasTeamPages get() = FeatureConfigStore.getBoolean("nav_team_navigation_enabled", BuildConfig.nav_team_navigation_enabled)
+        val canBuyWithMobileMoney get() = FeatureConfigStore.getBoolean("nav_buy_with_mobile_money_enabled", BuildConfig.nav_buy_with_mobile_money_enabled)
+        val hasMobileMoneyDeposit get() = FeatureConfigStore.getBoolean("nav_mobile_money_deposit_enabled", BuildConfig.nav_mobile_money_deposit_enabled)
+        val hasMobileMoneyWithdraw get() = FeatureConfigStore.getBoolean("nav_mobile_money_withdraw_enabled", BuildConfig.nav_mobile_money_withdraw_enabled)
 
         object Team {
-            const val membersLocationMap = BuildConfig.team_agents_location_view_enabled
+            val membersLocationMap get() = FeatureConfigStore.getBoolean("team_agents_location_view_enabled", BuildConfig.team_agents_location_view_enabled)
         }
     }
     object LoginPage {
-        const val requestLocationPermission = BuildConfig.request_location_permission_enabled
+        val requestLocationPermission get() = FeatureConfigStore.getBoolean("request_location_permission_enabled", BuildConfig.request_location_permission_enabled)
     }
 
     object HomePage {
-        const val showTotalAndTradeBonus = BuildConfig.show_total_and_trade_bonus
-        const val showWeeklySalesBarGraph = BuildConfig.home_page_show_weekly_bar_graph
-        const val showTodaySalesBreakdown = BuildConfig.home_page_show_today_sales_breakdown
+        val showTotalAndTradeBonus get() = FeatureConfigStore.getBoolean("show_total_and_trade_bonus", BuildConfig.show_total_and_trade_bonus)
+        val showWeeklySalesBarGraph get() = FeatureConfigStore.getBoolean("home_page_show_weekly_bar_graph", BuildConfig.home_page_show_weekly_bar_graph)
+        val showTodaySalesBreakdown get() = FeatureConfigStore.getBoolean("home_page_show_today_sales_breakdown", BuildConfig.home_page_show_today_sales_breakdown)
+        val showSalesTarget get() = FeatureConfigStore.getBoolean("home_page_show_sales_target", BuildConfig.home_page_show_sales_target)
     }
 
     object TeamMemberPage {
-        const val showWeeklySalesBarGraph = BuildConfig.team_page_show_weekly_bar_graph
+        val showWeeklySalesBarGraph get() = FeatureConfigStore.getBoolean("team_page_show_weekly_bar_graph", BuildConfig.team_page_show_weekly_bar_graph)
     }
 
     object AgentProfile {
-        const val showsMyLocationButton = BuildConfig.my_location_enabled
-        const val showsChangeMyPinButton = BuildConfig.change_pin_enabled
-        const val showsUpdateMyProfileButton = BuildConfig.update_profile_enabled
-        const val canChangeProfileNameFields = BuildConfig.allow_editing_profile_name_fields
+        val showsMyLocationButton get() = FeatureConfigStore.getBoolean("my_location_enabled", BuildConfig.my_location_enabled)
+        val showsChangeMyPinButton get() = FeatureConfigStore.getBoolean("change_pin_enabled", BuildConfig.change_pin_enabled)
+        val showsUpdateMyProfileButton get() = FeatureConfigStore.getBoolean("update_profile_enabled", BuildConfig.update_profile_enabled)
+        val canChangeProfileNameFields get() = FeatureConfigStore.getBoolean("allow_editing_profile_name_fields", BuildConfig.allow_editing_profile_name_fields)
     }
 
     object Stats {
-        const val showSalesProfit = BuildConfig.sales_profit_enabled
-        const val showCreditPurchased = BuildConfig.credit_purchased_enabled
+        val showSalesProfit get() = FeatureConfigStore.getBoolean("sales_profit_enabled", BuildConfig.sales_profit_enabled)
+        val showCreditPurchased get() = FeatureConfigStore.getBoolean("credit_purchased_enabled", BuildConfig.credit_purchased_enabled)
     }
 }
 

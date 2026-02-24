@@ -60,6 +60,7 @@ android {
         debug_demo_server {
             debuggable true
             minifyEnabled false
+            signingConfig signingConfigs.debug
 
             buildConfigField "String", "default_app_language", "\"EN\""
         }

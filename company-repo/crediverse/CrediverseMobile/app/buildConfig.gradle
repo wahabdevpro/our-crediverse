@@ -15,7 +15,7 @@ android {
         // decide if want the primary or secondary colour to fill background of the logo
         buildConfigField "boolean", "logo_has_primary_background", "false"
         buildConfigField "boolean", "logo_has_secondary_background", "false"
-        buildConfigField "boolean", "request_location_permission_enabled", "true"
+        buildConfigField "boolean", "request_location_permission_enabled", "false"
 
         // ------------- Currency / Locale
         buildConfigField "String", "currency_locale_code", "\"fr-CI\""
@@ -55,12 +55,12 @@ android {
 
         // ------------- Navigation Toggles
         buildConfigField "boolean", "nav_bundle_page_enabled", "true"
-        buildConfigField "boolean", "nav_stats_page_enabled", "true"
+        buildConfigField "boolean", "nav_stats_page_enabled", "false"
         buildConfigField "boolean", "nav_transfer_page_enabled", "true"
-        buildConfigField "boolean", "nav_execu_stats_page_enabled", "true"
+        buildConfigField "boolean", "nav_execu_stats_page_enabled", "false"
         buildConfigField "boolean", "nav_buy_with_mobile_money_enabled", "true"
-        buildConfigField "boolean", "nav_team_navigation_enabled", "true"
-        buildConfigField "boolean", "nav_mobile_money_deposit_enabled", "true"
+        buildConfigField "boolean", "nav_team_navigation_enabled", "false"
+        buildConfigField "boolean", "nav_mobile_money_deposit_enabled", "false"
         buildConfigField "boolean", "nav_mobile_money_withdraw_enabled", "false"
 
         // ------------- Teams
@@ -70,12 +70,13 @@ android {
         // ------------- Home Dashboard
         buildConfigField "boolean", "show_total_and_trade_bonus", "true"
         buildConfigField "int", "balance_update_threshold_seconds", "90"
-        buildConfigField "boolean", "home_page_show_weekly_bar_graph", "true"
-        buildConfigField "boolean", "home_page_show_today_sales_breakdown", "true"
+        buildConfigField "boolean", "home_page_show_weekly_bar_graph", "false"
+        buildConfigField "boolean", "home_page_show_today_sales_breakdown", "false"
+        buildConfigField "boolean", "home_page_show_sales_target", "false"
         // ------------- Agent Profile
-        buildConfigField "boolean", "my_location_enabled", "true"
-        buildConfigField "boolean", "change_pin_enabled", "true"
-        buildConfigField "boolean", "update_profile_enabled", "true"
+        buildConfigField "boolean", "my_location_enabled", "false"
+        buildConfigField "boolean", "change_pin_enabled", "false"
+        buildConfigField "boolean", "update_profile_enabled", "false"
         buildConfigField "boolean", "allow_editing_profile_name_fields", "true"
 
         // ------------- Analytics

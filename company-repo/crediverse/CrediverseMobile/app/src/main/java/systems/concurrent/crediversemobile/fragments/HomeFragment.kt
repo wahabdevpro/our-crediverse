@@ -346,12 +346,8 @@ class Home : ViewBindingFragment<FragmentHomeBinding>(FragmentHomeBinding::infla
                 bonusBalance, formatParams
             )
 
-            // On Hold balance
-            if (onHoldBalance == 0.0) {
-                binding.stockBalanceCard.onHoldBalanceWrapper.visibility = View.GONE
-            } else {
-                binding.stockBalanceCard.onHoldBalanceWrapper.visibility = View.VISIBLE
-            }
+            // On Hold balance — always visible per requirement
+            binding.stockBalanceCard.onHoldBalanceWrapper.visibility = View.VISIBLE
             binding.stockBalanceCard.onHoldValue.text = Formatter.formatCustomCurrency(
                 onHoldBalance, formatParams
             )
@@ -363,6 +359,10 @@ class Home : ViewBindingFragment<FragmentHomeBinding>(FragmentHomeBinding::infla
 
             if (!FeatureToggle.HomePage.showWeeklySalesBarGraph) {
                 binding.weeklySalesBarChart.root.visibility = View.GONE
+            }
+
+            if (!FeatureToggle.HomePage.showSalesTarget) {
+                binding.salesTargetChartCard.root.visibility = View.GONE
             }
 
             toggleBalanceVisible(balanceModel)

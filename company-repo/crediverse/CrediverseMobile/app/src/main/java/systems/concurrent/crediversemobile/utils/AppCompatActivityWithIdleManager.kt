@@ -33,10 +33,14 @@ open class AppCompatActivityWithIdleManager : AppCompatActivity() {
         }
 
         private const val RENEW_EVERY_SECONDS = 60
+        private const val NEAR_EXPIRY_BUFFER_SECONDS = 30
+        private const val MIN_RENEWAL_INTERVAL_SECONDS = 10
 
         fun updateLastTokenRenewalTime() {
             lastRenewal = nowEpoch()
         }
+
+        fun getLastRenewalTime(): Long = lastRenewal
     }
 
     private fun updateLanguageInContext(context: Context, wrapper: ContextThemeWrapper): Context? {
@@ -70,12 +74,29 @@ open class AppCompatActivityWithIdleManager : AppCompatActivity() {
         val loginTokenClaim = MasService.getLoginTokenClaim() ?: return
 
         val tokenExpired = (loginTokenClaim.exp - now) <= 0
-
-        if (tokenExpired) LogoutManager.forceLogout()
-
         val secondsSinceLastRenewal = now - lastRenewal
 
-        val readyToRenew = secondsSinceLastRenewal > RENEW_EVERY_SECONDS
+        if (tokenExpired) {
+            Log.i(_tag, "Token expired. Attempting renewal before logout...")
+            NavigationActivity.renewJwtToken { result ->
+                result
+                    .onSuccess {
+                        Log.i(_tag, "Token renewed successfully after expiry")
+                        updateLastTokenRenewalTime()
+                    }
+                    .onFailure {
+                        Log.e(_tag, "Token renewal failed after expiry. Forcing logout.")
+                        LogoutManager.forceLogout()
+                    }
+            }
+            return
+        }
+
+        val secondsUntilExpiry = loginTokenClaim.exp - now
+        val nearExpiry = secondsUntilExpiry in 1..NEAR_EXPIRY_BUFFER_SECONDS
+                && secondsSinceLastRenewal >= MIN_RENEWAL_INTERVAL_SECONDS
+
+        val readyToRenew = secondsSinceLastRenewal > RENEW_EVERY_SECONDS || nearExpiry
         if (!readyToRenew) {
             val logMessage = "Not ready to renew the token... " +
                     "Seconds since last renewal? $secondsSinceLastRenewal"
@@ -83,7 +104,8 @@ open class AppCompatActivityWithIdleManager : AppCompatActivity() {
             return
         }
 
-        Log.i(_tag, "Seconds since last renewal: $secondsSinceLastRenewal")
+        Log.i(_tag, "Seconds since last renewal: $secondsSinceLastRenewal, " +
+                "seconds until expiry: $secondsUntilExpiry, nearExpiry: $nearExpiry")
         Log.i(_tag, "Begin renewal")
 
         NavigationActivity.renewJwtToken {

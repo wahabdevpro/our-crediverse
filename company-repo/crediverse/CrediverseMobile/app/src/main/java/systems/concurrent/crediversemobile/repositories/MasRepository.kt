@@ -1145,6 +1145,7 @@ class MasRepository(val context: Context) {
 
         fun logout() {
             ViewModelUtils.resetAllViewModelCaches()
+            FeatureConfigStore.clear()
             MasService.authDestroy()
         }
 

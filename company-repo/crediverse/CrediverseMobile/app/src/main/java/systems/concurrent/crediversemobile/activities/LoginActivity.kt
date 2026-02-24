@@ -284,7 +284,7 @@ class LoginActivity : AppCompatActivityWithIdleManager() {
 
         masRepository = MasRepository(applicationContext)
 
-        checkForNewAppVersion()
+        // checkForNewAppVersion() // disabled: version check popup removed per requirement
 
         val locationPermissionRequest = AndroidPermissionController.Permission(
             Manifest.permission.ACCESS_FINE_LOCATION, required = false,
@@ -507,6 +507,10 @@ class LoginActivity : AppCompatActivityWithIdleManager() {
                      * The purpose of making the getAccountInfo request is NOT to retrieve the data, it is to CACHE it
                      * The data will then be made available to the NavigationActivity without needing to "LOAD" further
                      */
+                    // Initialize runtime feature config store
+                    FeatureConfigStore.initialize(this@LoginActivity)
+                    FeatureConfigStore.syncFromRemote() // loads defaults; swap with API response when backend is ready
+
                     val accountInfoFuture = getAccountInfoAndSetLanguage()
                     val isTeamLeadFuture = isTeamLead()
 
