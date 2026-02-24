@@ -72,6 +72,7 @@ object AppFlag {
         const val masHostname = BuildConfig.mas_hostname
         const val masPort = BuildConfig.mas_port
         const val masCAPath = BuildConfig.mas_ca_path
+        const val masTlsAuthority = BuildConfig.mas_tls_authority
 
         const val ssapiHostname = BuildConfig.ssapi_hostname
         const val ssapiPort = BuildConfig.ssapi_port

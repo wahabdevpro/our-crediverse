@@ -43,9 +43,11 @@ android {
         //      Path Example: tls/ca.root.certificate
         /*********************************************************/
         // MAS
-        buildConfigField "String", "mas_hostname", "\"demo.gcp.concurrent.systems\""
+        buildConfigField "String", "mas_hostname", "\"10.0.2.2\""
         buildConfigField "int", "mas_port", "5000"
         buildConfigField "String", "mas_ca_path", "\"\""
+        // TLS authority override: when connecting via IP to a server with a hostname-based cert
+        buildConfigField "String", "mas_tls_authority", "\"demo.gcp.concurrent.systems\""
         // SSAPI
         buildConfigField "String", "ssapi_hostname", "\"demo.gcp.concurrent.systems\""
         buildConfigField "int", "ssapi_port", "14701"

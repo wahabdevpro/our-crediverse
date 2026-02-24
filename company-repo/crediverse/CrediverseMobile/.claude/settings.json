@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(export JAVA_HOME=\"C:/Program Files/Android/Android Studio/jbr\")",
+      "Bash(./gradlew build:*)",
+      "Bash(./gradlew :app:kaptGenerateStubsDebugKotlin:*)",
+      "Bash(./gradlew:*)",
+      "Bash(./gradlew clean:*)",
+      "Read(//c/Users/Dell/.gradle/daemon/8.7/**)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\Dell\\.gradle\\caches\\transforms-4"
+    ]
+  }
+}

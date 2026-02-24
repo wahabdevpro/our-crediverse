@@ -72,13 +72,13 @@ class MasService {
         val hostname = AppFlag.Network.masHostname
         val port = AppFlag.Network.masPort
 
-        val getSignedTlsChannelBuilder = {
+        val getPlaintextChannelBuilder = {
             _channelBuilder =
-                ManagedChannelBuilder.forAddress(hostname, port).useTransportSecurity()
+                ManagedChannelBuilder.forAddress(hostname, port).usePlaintext()
             _channelBuilder!!
         }
 
-        if (caPath.isEmpty()) return getSignedTlsChannelBuilder()
+        if (caPath.isEmpty()) return getPlaintextChannelBuilder()
 
         /**
          * Assuming the CA path is set ... let's try to open the certificate...
@@ -86,15 +86,19 @@ class MasService {
          */
         return try {
             val caCertStream = App.context.assets.open(caPath)
+            val tlsAuthority = AppFlag.Network.masTlsAuthority
             _channelBuilder = Grpc.newChannelBuilder(
                 "${hostname}:${port}",
                 TlsChannelCredentials.newBuilder().trustManager(caCertStream).build()
             )
+            if (tlsAuthority.isNotEmpty()) {
+                _channelBuilder = _channelBuilder!!.overrideAuthority(tlsAuthority)
+            }
             _channelBuilder!!
         } catch (e: Exception) {
             Log.e(_tag, "Unable to load CA Certificate from path: $caPath")
             Log.w(_tag, "Falling back to allow SIGNED certificates...")
-            getSignedTlsChannelBuilder()
+            getPlaintextChannelBuilder()
         }
     }
 
