@@ -73,6 +73,16 @@ class SandboxRepository {
         return CSResult.Success(versionStatus)
     }
 
+    fun getActiveFeatures(): CSResult<List<MasApi.Feature>> {
+        return CSResult.Success(listOf(
+            MasApi.Feature.FEATURE_NAV_BUNDLE_PAGE,
+            MasApi.Feature.FEATURE_NAV_TRANSFER_PAGE,
+            MasApi.Feature.FEATURE_NAV_BUY_WITH_MOBILE_MONEY,
+            MasApi.Feature.FEATURE_SHOW_TOTAL_AND_TRADE_BONUS,
+            MasApi.Feature.FEATURE_ALLOW_EDITING_PROFILE_NAME_FIELDS,
+        ))
+    }
+
     fun sell(txType: TXType, amount: Double, msisdn: String): CSResult<SellAirtimeResponse> {
         if (msisdn.endsWith("9")) {
             return getFailureResultFromError(MasRepository.ErrorMessages.INVALID_RECIPIENT)

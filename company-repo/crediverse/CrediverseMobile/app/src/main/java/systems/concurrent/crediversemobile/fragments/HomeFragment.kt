@@ -196,7 +196,7 @@ class Home : ViewBindingFragment<FragmentHomeBinding>(FragmentHomeBinding::infla
                 val balances = balancesFuture.get()
 
                 statisticsViewModel.viewModelScope.launch {
-                    if (teamMembership.isFailure) {
+                    if (!teamMembership.isSuccess) {
                         binding.salesTargetChartCard.root.visibility = View.GONE
                     }
                 }
@@ -634,6 +634,17 @@ class Home : ViewBindingFragment<FragmentHomeBinding>(FragmentHomeBinding::infla
                             }
                             salesTargetChart.pieChartData = tachometerData.mainChartData
                         }
+
+                    if (!teamMembership.isSuccess) {
+                        binding.salesTargetChartCard.weeklyTargetValue.text =
+                            getString(R.string.c_not_set)
+                        binding.salesTargetChartCard.achievedPercent.text =
+                            getString(R.string.not_applicable)
+                        val tachometerData = ChartingUtils.getTachometerChartData(
+                            requireContext(), 0f
+                        )
+                        salesTargetChart.pieChartData = tachometerData.mainChartData
+                    }
                 }
         }
     }

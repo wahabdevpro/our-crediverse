@@ -382,6 +382,9 @@
     <string name="internal_server_error">Internal Server Error</string>
     <string name="request_error">Problem with the request, please contact support for more assistance. API-CODE-%s</string>
     <string name="missing_location_permission">Location permission denied</string>
+    <string name="feature_config_failed_title">Connection Problem</string>
+    <string name="feature_config_failed_message">Unable to load your app configuration. Please check your internet connection and try again.</string>
+    <string name="retry">Retry</string>
     <string name="location_not_found">Location not found</string>
 
     <!-- Team Service Messages -->

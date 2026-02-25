@@ -47,6 +47,8 @@ service Mas {
   rpc mobileMoneyDeposit(MobileMoneyDepositRequest) returns (MobileMoneyDepositResponse);
 
   rpc formatMsisdn(Msisdn) returns (Msisdn);
+
+  rpc getActiveFeatures(ActiveFeaturesRequest) returns (ActiveFeaturesResponse);
 }
 
 message Msisdn{
@@ -420,5 +422,46 @@ message AnalyticsEvent {
 message AnalyticsRequest {
   string appVersion = 1;
   repeated AnalyticsEvent events = 2;
+}
+
+enum Feature {
+  FEATURE_UNSPECIFIED = 0;
+
+  // Navigation
+  FEATURE_NAV_BUNDLE_PAGE = 1;
+  FEATURE_NAV_STATS_PAGE = 2;
+  FEATURE_NAV_TRANSFER_PAGE = 3;
+  FEATURE_NAV_EXECU_STATS_PAGE = 4;
+  FEATURE_NAV_BUY_WITH_MOBILE_MONEY = 5;
+  FEATURE_NAV_TEAM_NAVIGATION = 6;
+  FEATURE_NAV_MOBILE_MONEY_DEPOSIT = 7;
+  FEATURE_NAV_MOBILE_MONEY_WITHDRAW = 8;
+
+  // Team
+  FEATURE_TEAM_AGENTS_LOCATION_VIEW = 9;
+  FEATURE_TEAM_PAGE_SHOW_WEEKLY_BAR_GRAPH = 10;
+
+  // Home Dashboard
+  FEATURE_SHOW_TOTAL_AND_TRADE_BONUS = 11;
+  FEATURE_HOME_PAGE_SHOW_WEEKLY_BAR_GRAPH = 12;
+  FEATURE_HOME_PAGE_SHOW_TODAY_SALES_BREAKDOWN = 13;
+
+  // Agent Profile
+  FEATURE_SHOW_LOCATION = 14;
+  FEATURE_CHANGE_PIN = 15;
+  FEATURE_UPDATE_PROFILE = 16;
+  FEATURE_ALLOW_EDITING_PROFILE_NAME_FIELDS = 17;
+
+  // Unused (kept for forward-compatibility)
+  FEATURE_SALES_PROFIT = 18;
+  FEATURE_CREDIT_PURCHASED = 19;
+}
+
+message ActiveFeaturesRequest {
+  uint32 appVersionCode = 1;
+}
+
+message ActiveFeaturesResponse {
+  repeated Feature activeFeatures = 1;
 }
 

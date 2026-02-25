@@ -11,6 +11,7 @@ import io.grpc.StatusRuntimeException
 import kotlinx.coroutines.*
 import kotlinx.coroutines.awaitAll
 import systems.concurrent.crediversemobile.R
+import systems.concurrent.masapi.MasApi
 import systems.concurrent.crediversemobile.activities.LoginActivity
 import systems.concurrent.crediversemobile.models.*
 import systems.concurrent.crediversemobile.services.*
@@ -378,6 +379,24 @@ class MasRepository(val context: Context) {
                 callback(
                     handleSpecialResultOrReason(it, ErrorMessages.INTERNAL_SERVER_ERROR, activity)
                 )
+            }
+        }
+    }
+
+    // TODO: debugging — will remove after verifying toggle data from server
+    fun getActiveFeatures(callback: (CSResult<List<MasApi.Feature>>) -> Unit) {
+        if (SandboxRepository.isSandboxEnabled) {
+            SandboxRepository.delayedCallback {
+                callback(sandboxRepository.getActiveFeatures())
+            }
+            return
+        }
+
+        masService.getActiveFeatures { result ->
+            result.onSuccess {
+                callback(CSResult.Success(it))
+            }.onFailure {
+                callback(handleSpecialResultOrReason(it))
             }
         }
     }

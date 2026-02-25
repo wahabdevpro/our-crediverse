@@ -509,12 +509,12 @@ class LoginActivity : AppCompatActivityWithIdleManager() {
                      */
                     // Initialize runtime feature config store
                     FeatureConfigStore.initialize(this@LoginActivity)
-                    FeatureConfigStore.syncFromRemote() // loads defaults; swap with API response when backend is ready
 
                     val accountInfoFuture = getAccountInfoAndSetLanguage()
                     val isTeamLeadFuture = isTeamLead()
+                    val featureConfigFuture = getActiveFeatures()
 
-                    CompletableFuture.allOf(accountInfoFuture, isTeamLeadFuture).thenRun {
+                    CompletableFuture.allOf(accountInfoFuture, isTeamLeadFuture, featureConfigFuture).thenRun {
                         runOnUiThread {
                             isTeamLeadFuture.get().onSuccess { isLead ->
                                 NavigationManager.setIsTeamLead(isLead)
@@ -613,6 +613,42 @@ class LoginActivity : AppCompatActivityWithIdleManager() {
             }
         }
         return isTeamLeadFuture
+    }
+
+    private fun getActiveFeatures(): CompletableFuture<Unit> {
+        val future = CompletableFuture<Unit>()
+        fetchActiveFeatures(future)
+        return future
+    }
+
+    private fun fetchActiveFeatures(future: CompletableFuture<Unit>) {
+        masRepository.getActiveFeatures { result ->
+            result
+                .onSuccess { features ->
+                    FeatureConfigStore.syncFromFeatureList(features)
+                    future.complete(Unit)
+                }
+                .onFailure {
+                    runOnUiThread { showRetryDialog(future) }
+                }
+        }
+    }
+
+    private fun showRetryDialog(future: CompletableFuture<Unit>) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_retry, null)
+        val alertDialog = android.app.AlertDialog.Builder(this@LoginActivity)
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+
+        alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        dialogView.findViewById<TextView>(R.id.retry_dialog_button).setOnClickListener {
+            alertDialog.dismiss()
+            fetchActiveFeatures(future)
+        }
+
+        alertDialog.show()
     }
 
     private fun getAccountInfoAndSetLanguage(): CompletableFuture<CSResult<AccountInfoResponseModel>> {

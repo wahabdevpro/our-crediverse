@@ -293,6 +293,20 @@ class MasService {
         }
     }
 
+    fun getActiveFeatures(callback: (Result<List<MasApi.Feature>>) -> Unit) {
+        val request = MasApi.ActiveFeaturesRequest
+            .newBuilder().setAppVersionCode(AppFlag.System.versionCode).build()
+
+        val futureResult = getWhitelistedAsyncStub().getActiveFeatures(request)
+
+        asCompletableFuture(futureResult).thenAcceptAsync { result ->
+            callback(Result.success(result.activeFeaturesList))
+        }.exceptionally {
+            callback(Result.failure(it))
+            null
+        }
+    }
+
     fun setAuthFromCache(loginResponseModel: LoginResponseModel) {
         agentId = loginResponseModel.agentId
         msisdn = loginResponseModel.agentMsisdn
