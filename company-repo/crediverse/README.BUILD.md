@@ -7,6 +7,6 @@ This identical concern extends to nightly builds. To address these challenges, G
 
 Here are the resolutions that have been implemented:
 
-- Whenever a PR is initiated, a build is triggered. In Github's terminology, if you subsequently push another commit to the same PR (termed a "synchronize" event), the prior build is terminated, making way for the new build to take precedence.
+- Whenever a PR is initiated, a build is trggered. In Github's terminology, if you subsequently push another commit to the same PR (termed a "synchronize" event), the prior build is terminated, making way for the new build to take precedence.
 - In the event that changes are merged into the main branch while a  main build is ongoing, and additional PRs are merged into the main branch concurrently, the running build is halted to permit the initiation of a new one.
 - A similar process is applied to nightly builds. For instance, if both the 1.4 and 1.5 builds are initiated simultaneously, one build will wait until the other has been completed before commencing.
